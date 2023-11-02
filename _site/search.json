@@ -1,0 +1,261 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Jakub Sobolewski",
+    "section": "",
+    "text": "&lt;img class=“about-image round” style=“height: 15em; width: 15em;”, src=“assets/img/author.jpg” &gt;"
+  },
+  {
+    "objectID": "posts/revealjs.html",
+    "href": "posts/revealjs.html",
+    "title": "Anatomy Of A Shiny Module Test With shiny::testServer.",
+    "section": "",
+    "text": "Modules tested with testServer run with a session that is a MockShinySession object."
+  },
+  {
+    "objectID": "posts/revealjs.html#section",
+    "href": "posts/revealjs.html#section",
+    "title": "Anatomy Of A Shiny Module Test With shiny::testServer.",
+    "section": "",
+    "text": "describe(\"server\", {\n  it(\"should subset the data with selected variables\", {\n    # Arrange\n    args &lt;- list(data = iris)\n\n    shiny::testServer(server, args = args, {\n      # Act\n      session$setInputs(select = c(\"Sepal.Length\", \"Species\"))\n\n      # Assert\n      expect_equal(\n        colnames(session$returned()),\n        c(\"Sepal.Length\", \"Species\")\n      )\n    })\n  })\n})"
+  },
+  {
+    "objectID": "posts/revealjs.html#section-1",
+    "href": "posts/revealjs.html#section-1",
+    "title": "Anatomy Of A Shiny Module Test With shiny::testServer.",
+    "section": "",
+    "text": "describe(\"server\", {\n  it(\"should subset the data with selected variables\", {\n    # Arrange\n    args &lt;- list(data = iris)\n\n    shiny::testServer(server, args = args, {\n      # Act\n      session$setInputs(select = c(\"Sepal.Length\", \"Species\"))\n\n      # Assert\n      expect_equal(\n        colnames(session$returned()),\n        c(\"Sepal.Length\", \"Species\")\n      )\n    })\n  })\n})\n\nWe arrange parameters to pass to the module."
+  },
+  {
+    "objectID": "posts/revealjs.html#section-2",
+    "href": "posts/revealjs.html#section-2",
+    "title": "Anatomy Of A Shiny Module Test With shiny::testServer.",
+    "section": "",
+    "text": "describe(\"server\", {\n  it(\"should subset the data with selected variables\", {\n    # Arrange\n    args &lt;- list(data = iris)\n\n    shiny::testServer(server, args = args, {\n      # Act\n      session$setInputs(select = c(\"Sepal.Length\", \"Species\"))\n\n      # Assert\n      expect_equal(\n        colnames(session$returned()),\n        c(\"Sepal.Length\", \"Species\")\n      )\n    })\n  })\n})\n\nArguments are passed to the module as a list."
+  },
+  {
+    "objectID": "posts/revealjs.html#section-3",
+    "href": "posts/revealjs.html#section-3",
+    "title": "Anatomy Of A Shiny Module Test With shiny::testServer.",
+    "section": "",
+    "text": "describe(\"server\", {\n  it(\"should subset the data with selected variables\", {\n    # Arrange\n    args &lt;- list(data = iris)\n\n    shiny::testServer(server, args = args, {\n      # Act\n      session$setInputs(select = c(\"Sepal.Length\", \"Species\"))\n\n      # Assert\n      expect_equal(\n        colnames(session$returned()),\n        c(\"Sepal.Length\", \"Species\")\n      )\n    })\n  })\n})\n\nCode within testServer has access to the session, inputs and outputs."
+  },
+  {
+    "objectID": "posts/revealjs.html#section-4",
+    "href": "posts/revealjs.html#section-4",
+    "title": "Anatomy Of A Shiny Module Test With shiny::testServer.",
+    "section": "",
+    "text": "describe(\"server\", {\n  it(\"should subset the data with selected variables\", {\n    # Arrange\n    args &lt;- list(data = iris)\n\n    shiny::testServer(server, args = args, {\n      # Act\n      session$setInputs(select = c(\"Sepal.Length\", \"Species\"))\n\n      # Assert\n      expect_equal(\n        colnames(session$returned()),\n        c(\"Sepal.Length\", \"Species\")\n      )\n    })\n  })\n})\n\nWe select 2 variables using an input that has \"select\" ID.\nIt will be accessed with input$select."
+  },
+  {
+    "objectID": "posts/revealjs.html#section-5",
+    "href": "posts/revealjs.html#section-5",
+    "title": "Anatomy Of A Shiny Module Test With shiny::testServer.",
+    "section": "",
+    "text": "describe(\"server\", {\n  it(\"should subset the data with selected variables\", {\n    # Arrange\n    args &lt;- list(data = iris)\n\n    shiny::testServer(server, args = args, {\n      # Act\n      session$setInputs(select = c(\"Sepal.Length\", \"Species\"))\n\n      # Assert\n      expect_equal(\n        colnames(session$returned()),\n        c(\"Sepal.Length\", \"Species\")\n      )\n    })\n  })\n})\n\nThe return value should be a column subset of the data."
+  },
+  {
+    "objectID": "posts/revealjs.html#section-6",
+    "href": "posts/revealjs.html#section-6",
+    "title": "Anatomy Of A Shiny Module Test With shiny::testServer.",
+    "section": "",
+    "text": "describe(\"server\", {\n  it(\"should subset the data with selected variables\", {\n    # Arrange\n    args &lt;- list(data = iris)\n\n    shiny::testServer(server, args = args, {\n      # Act\n      session$setInputs(select = c(\"Sepal.Length\", \"Species\"))\n\n      # Assert\n      expect_equal(\n        colnames(session$returned()),\n        c(\"Sepal.Length\", \"Species\")\n      )\n    })\n  })\n})\n\nWe use session$returned() to get the value of the returned reactive."
+  },
+  {
+    "objectID": "posts/revealjs.html#section-7",
+    "href": "posts/revealjs.html#section-7",
+    "title": "Anatomy Of A Shiny Module Test With shiny::testServer.",
+    "section": "",
+    "text": "To use shiny::testServer the module must be implemented with shiny::moduleServer.\n\n\n  \n\nserver &lt;- function(id) {\n  moduleServer(id, function(input, output, session) {\n    # ...\n  })\n}"
+  },
+  {
+    "objectID": "posts/revealjs.html#section-8",
+    "href": "posts/revealjs.html#section-8",
+    "title": "Anatomy Of A Shiny Module Test With shiny::testServer.",
+    "section": "",
+    "text": "ui &lt;- function(id) {\n  ns &lt;- NS(id)\n  fluidPage(\n    selectInput(ns(\"select\"), \"Select variables\", choices = NULL, multiple = TRUE),\n  )\n}\n\nserver &lt;- function(id, data) {\n  moduleServer(id, function(input, output, session) {\n    updateSelectInput(session, \"select\", choices = colnames(data))\n    return(reactive(data[, input$select]))\n  })\n}\n\nAnd this is the module that passes this test.\n\n\nWriting tests first for Shiny modules helps to keep them:\n\nsimple,\nfocused,\nand doing exactly what they need to do.\n\n\n\n\nTests help define what should be the input to the module.\nWhat it should do.\nAnd what it should return.\n\n\n\nSuch modules are easier to reuse and easier to compose them to build the whole app."
+  },
+  {
+    "objectID": "posts/anatomy-of-a-shiny-module-test/index.html",
+    "href": "posts/anatomy-of-a-shiny-module-test/index.html",
+    "title": "Anatomy Of A Shiny Module Test With shiny::testServer.",
+    "section": "",
+    "text": "Modules tested with testServer run with a session that is a MockShinySession object."
+  },
+  {
+    "objectID": "posts/anatomy-of-a-shiny-module-test/index.html#section",
+    "href": "posts/anatomy-of-a-shiny-module-test/index.html#section",
+    "title": "Anatomy Of A Shiny Module Test With shiny::testServer.",
+    "section": "",
+    "text": "describe(\"server\", {\n  it(\"should subset the data with selected variables\", {\n    # Arrange\n    args &lt;- list(data = iris)\n\n    shiny::testServer(server, args = args, {\n      # Act\n      session$setInputs(select = c(\"Sepal.Length\", \"Species\"))\n\n      # Assert\n      expect_equal(\n        colnames(session$returned()),\n        c(\"Sepal.Length\", \"Species\")\n      )\n    })\n  })\n})"
+  },
+  {
+    "objectID": "posts/anatomy-of-a-shiny-module-test/index.html#section-1",
+    "href": "posts/anatomy-of-a-shiny-module-test/index.html#section-1",
+    "title": "Anatomy Of A Shiny Module Test With shiny::testServer.",
+    "section": "",
+    "text": "describe(\"server\", {\n  it(\"should subset the data with selected variables\", {\n    # Arrange\n    args &lt;- list(data = iris)\n\n    shiny::testServer(server, args = args, {\n      # Act\n      session$setInputs(select = c(\"Sepal.Length\", \"Species\"))\n\n      # Assert\n      expect_equal(\n        colnames(session$returned()),\n        c(\"Sepal.Length\", \"Species\")\n      )\n    })\n  })\n})\nWe arrange parameters to pass to the module."
+  },
+  {
+    "objectID": "posts/anatomy-of-a-shiny-module-test/index.html#section-2",
+    "href": "posts/anatomy-of-a-shiny-module-test/index.html#section-2",
+    "title": "Anatomy Of A Shiny Module Test With shiny::testServer.",
+    "section": "",
+    "text": "describe(\"server\", {\n  it(\"should subset the data with selected variables\", {\n    # Arrange\n    args &lt;- list(data = iris)\n\n    shiny::testServer(server, args = args, {\n      # Act\n      session$setInputs(select = c(\"Sepal.Length\", \"Species\"))\n\n      # Assert\n      expect_equal(\n        colnames(session$returned()),\n        c(\"Sepal.Length\", \"Species\")\n      )\n    })\n  })\n})\nArguments are passed to the module as a list."
+  },
+  {
+    "objectID": "posts/anatomy-of-a-shiny-module-test/index.html#section-3",
+    "href": "posts/anatomy-of-a-shiny-module-test/index.html#section-3",
+    "title": "Anatomy Of A Shiny Module Test With shiny::testServer.",
+    "section": "",
+    "text": "describe(\"server\", {\n  it(\"should subset the data with selected variables\", {\n    # Arrange\n    args &lt;- list(data = iris)\n\n    shiny::testServer(server, args = args, {\n      # Act\n      session$setInputs(select = c(\"Sepal.Length\", \"Species\"))\n\n      # Assert\n      expect_equal(\n        colnames(session$returned()),\n        c(\"Sepal.Length\", \"Species\")\n      )\n    })\n  })\n})\nCode within testServer has access to the session, inputs and outputs."
+  },
+  {
+    "objectID": "posts/anatomy-of-a-shiny-module-test/index.html#section-4",
+    "href": "posts/anatomy-of-a-shiny-module-test/index.html#section-4",
+    "title": "Anatomy Of A Shiny Module Test With shiny::testServer.",
+    "section": "",
+    "text": "describe(\"server\", {\n  it(\"should subset the data with selected variables\", {\n    # Arrange\n    args &lt;- list(data = iris)\n\n    shiny::testServer(server, args = args, {\n      # Act\n      session$setInputs(select = c(\"Sepal.Length\", \"Species\"))\n\n      # Assert\n      expect_equal(\n        colnames(session$returned()),\n        c(\"Sepal.Length\", \"Species\")\n      )\n    })\n  })\n})\nWe select 2 variables using an input that has \"select\" ID.\nIt will be accessed with input$select."
+  },
+  {
+    "objectID": "posts/anatomy-of-a-shiny-module-test/index.html#section-5",
+    "href": "posts/anatomy-of-a-shiny-module-test/index.html#section-5",
+    "title": "Anatomy Of A Shiny Module Test With shiny::testServer.",
+    "section": "",
+    "text": "describe(\"server\", {\n  it(\"should subset the data with selected variables\", {\n    # Arrange\n    args &lt;- list(data = iris)\n\n    shiny::testServer(server, args = args, {\n      # Act\n      session$setInputs(select = c(\"Sepal.Length\", \"Species\"))\n\n      # Assert\n      expect_equal(\n        colnames(session$returned()),\n        c(\"Sepal.Length\", \"Species\")\n      )\n    })\n  })\n})\nThe return value should be a column subset of the data."
+  },
+  {
+    "objectID": "posts/anatomy-of-a-shiny-module-test/index.html#section-6",
+    "href": "posts/anatomy-of-a-shiny-module-test/index.html#section-6",
+    "title": "Anatomy Of A Shiny Module Test With shiny::testServer.",
+    "section": "",
+    "text": "describe(\"server\", {\n  it(\"should subset the data with selected variables\", {\n    # Arrange\n    args &lt;- list(data = iris)\n\n    shiny::testServer(server, args = args, {\n      # Act\n      session$setInputs(select = c(\"Sepal.Length\", \"Species\"))\n\n      # Assert\n      expect_equal(\n        colnames(session$returned()),\n        c(\"Sepal.Length\", \"Species\")\n      )\n    })\n  })\n})\nWe use session$returned() to get the value of the returned reactive."
+  },
+  {
+    "objectID": "posts/anatomy-of-a-shiny-module-test/index.html#section-7",
+    "href": "posts/anatomy-of-a-shiny-module-test/index.html#section-7",
+    "title": "Anatomy Of A Shiny Module Test With shiny::testServer.",
+    "section": "",
+    "text": "To use shiny::testServer the module must be implemented with shiny::moduleServer.\nserver &lt;- function(id) {\n  moduleServer(id, function(input, output, session) {\n    # ...\n  })\n}"
+  },
+  {
+    "objectID": "posts/anatomy-of-a-shiny-module-test/index.html#section-8",
+    "href": "posts/anatomy-of-a-shiny-module-test/index.html#section-8",
+    "title": "Anatomy Of A Shiny Module Test With shiny::testServer.",
+    "section": "",
+    "text": "ui &lt;- function(id) {\n  ns &lt;- NS(id)\n  fluidPage(\n    selectInput(ns(\"select\"), \"Select variables\", choices = NULL, multiple = TRUE),\n  )\n}\n\nserver &lt;- function(id, data) {\n  moduleServer(id, function(input, output, session) {\n    updateSelectInput(session, \"select\", choices = colnames(data))\n    return(reactive(data[, input$select]))\n  })\n}\nAnd this is the module that passes this test.\n\nWriting tests first for Shiny modules helps to keep them:\n\nsimple,\nfocused,\nand doing exactly what they need to do.\n\n\nTests help define what should be the input to the module.\nWhat it should do.\nAnd what it should return.\n\nSuch modules are easier to reuse and easier to compose them to build the whole app."
+  },
+  {
+    "objectID": "posts/anatomy-of-a-shiny-module-test/document-revealjs.html#section",
+    "href": "posts/anatomy-of-a-shiny-module-test/document-revealjs.html#section",
+    "title": "Anatomy Of A Shiny Module Test With shiny::testServer.",
+    "section": "",
+    "text": "describe(\"server\", {\n  it(\"should subset the data with selected variables\", {\n    # Arrange\n    args &lt;- list(data = iris)\n\n    shiny::testServer(server, args = args, {\n      # Act\n      session$setInputs(select = c(\"Sepal.Length\", \"Species\"))\n\n      # Assert\n      expect_equal(\n        colnames(session$returned()),\n        c(\"Sepal.Length\", \"Species\")\n      )\n    })\n  })\n})"
+  },
+  {
+    "objectID": "posts/anatomy-of-a-shiny-module-test/document-revealjs.html#section-1",
+    "href": "posts/anatomy-of-a-shiny-module-test/document-revealjs.html#section-1",
+    "title": "Anatomy Of A Shiny Module Test With shiny::testServer.",
+    "section": "",
+    "text": "describe(\"server\", {\n  it(\"should subset the data with selected variables\", {\n    # Arrange\n    args &lt;- list(data = iris)\n\n    shiny::testServer(server, args = args, {\n      # Act\n      session$setInputs(select = c(\"Sepal.Length\", \"Species\"))\n\n      # Assert\n      expect_equal(\n        colnames(session$returned()),\n        c(\"Sepal.Length\", \"Species\")\n      )\n    })\n  })\n})\nWe arrange parameters to pass to the module."
+  },
+  {
+    "objectID": "posts/anatomy-of-a-shiny-module-test/document-revealjs.html#section-2",
+    "href": "posts/anatomy-of-a-shiny-module-test/document-revealjs.html#section-2",
+    "title": "Anatomy Of A Shiny Module Test With shiny::testServer.",
+    "section": "",
+    "text": "describe(\"server\", {\n  it(\"should subset the data with selected variables\", {\n    # Arrange\n    args &lt;- list(data = iris)\n\n    shiny::testServer(server, args = args, {\n      # Act\n      session$setInputs(select = c(\"Sepal.Length\", \"Species\"))\n\n      # Assert\n      expect_equal(\n        colnames(session$returned()),\n        c(\"Sepal.Length\", \"Species\")\n      )\n    })\n  })\n})\nArguments are passed to the module as a list."
+  },
+  {
+    "objectID": "posts/anatomy-of-a-shiny-module-test/document-revealjs.html#section-3",
+    "href": "posts/anatomy-of-a-shiny-module-test/document-revealjs.html#section-3",
+    "title": "Anatomy Of A Shiny Module Test With shiny::testServer.",
+    "section": "",
+    "text": "describe(\"server\", {\n  it(\"should subset the data with selected variables\", {\n    # Arrange\n    args &lt;- list(data = iris)\n\n    shiny::testServer(server, args = args, {\n      # Act\n      session$setInputs(select = c(\"Sepal.Length\", \"Species\"))\n\n      # Assert\n      expect_equal(\n        colnames(session$returned()),\n        c(\"Sepal.Length\", \"Species\")\n      )\n    })\n  })\n})\nCode within testServer has access to the session, inputs and outputs."
+  },
+  {
+    "objectID": "posts/anatomy-of-a-shiny-module-test/document-revealjs.html#section-4",
+    "href": "posts/anatomy-of-a-shiny-module-test/document-revealjs.html#section-4",
+    "title": "Anatomy Of A Shiny Module Test With shiny::testServer.",
+    "section": "",
+    "text": "describe(\"server\", {\n  it(\"should subset the data with selected variables\", {\n    # Arrange\n    args &lt;- list(data = iris)\n\n    shiny::testServer(server, args = args, {\n      # Act\n      session$setInputs(select = c(\"Sepal.Length\", \"Species\"))\n\n      # Assert\n      expect_equal(\n        colnames(session$returned()),\n        c(\"Sepal.Length\", \"Species\")\n      )\n    })\n  })\n})\nWe select 2 variables using an input that has \"select\" ID.\nIt will be accessed with input$select."
+  },
+  {
+    "objectID": "posts/anatomy-of-a-shiny-module-test/document-revealjs.html#section-5",
+    "href": "posts/anatomy-of-a-shiny-module-test/document-revealjs.html#section-5",
+    "title": "Anatomy Of A Shiny Module Test With shiny::testServer.",
+    "section": "",
+    "text": "describe(\"server\", {\n  it(\"should subset the data with selected variables\", {\n    # Arrange\n    args &lt;- list(data = iris)\n\n    shiny::testServer(server, args = args, {\n      # Act\n      session$setInputs(select = c(\"Sepal.Length\", \"Species\"))\n\n      # Assert\n      expect_equal(\n        colnames(session$returned()),\n        c(\"Sepal.Length\", \"Species\")\n      )\n    })\n  })\n})\nThe return value should be a column subset of the data."
+  },
+  {
+    "objectID": "posts/anatomy-of-a-shiny-module-test/document-revealjs.html#section-6",
+    "href": "posts/anatomy-of-a-shiny-module-test/document-revealjs.html#section-6",
+    "title": "Anatomy Of A Shiny Module Test With shiny::testServer.",
+    "section": "",
+    "text": "describe(\"server\", {\n  it(\"should subset the data with selected variables\", {\n    # Arrange\n    args &lt;- list(data = iris)\n\n    shiny::testServer(server, args = args, {\n      # Act\n      session$setInputs(select = c(\"Sepal.Length\", \"Species\"))\n\n      # Assert\n      expect_equal(\n        colnames(session$returned()),\n        c(\"Sepal.Length\", \"Species\")\n      )\n    })\n  })\n})\nWe use session$returned() to get the value of the returned reactive."
+  },
+  {
+    "objectID": "posts/anatomy-of-a-shiny-module-test/document-revealjs.html#section-7",
+    "href": "posts/anatomy-of-a-shiny-module-test/document-revealjs.html#section-7",
+    "title": "Anatomy Of A Shiny Module Test With shiny::testServer.",
+    "section": "",
+    "text": "To use shiny::testServer the module must be implemented with shiny::moduleServer.\nserver &lt;- function(id) {\n  moduleServer(id, function(input, output, session) {\n    # ...\n  })\n}"
+  },
+  {
+    "objectID": "posts/anatomy-of-a-shiny-module-test/document-revealjs.html#section-8",
+    "href": "posts/anatomy-of-a-shiny-module-test/document-revealjs.html#section-8",
+    "title": "Anatomy Of A Shiny Module Test With shiny::testServer.",
+    "section": "",
+    "text": "ui &lt;- function(id) {\n  ns &lt;- NS(id)\n  fluidPage(\n    selectInput(ns(\"select\"), \"Select variables\", choices = NULL, multiple = TRUE),\n  )\n}\n\nserver &lt;- function(id, data) {\n  moduleServer(id, function(input, output, session) {\n    updateSelectInput(session, \"select\", choices = colnames(data))\n    return(reactive(data[, input$select]))\n  })\n}\nAnd this is the module that passes this test."
+  },
+  {
+    "objectID": "codesnap/example.html",
+    "href": "codesnap/example.html",
+    "title": "Codesnap Example",
+    "section": "",
+    "text": "This wraps code block in a &lt;div class=\"codesnap\"&gt; element.\nx &lt;- 1"
+  },
+  {
+    "objectID": "codesnap/example.html#heading",
+    "href": "codesnap/example.html#heading",
+    "title": "Codesnap Example",
+    "section": "",
+    "text": "This filter adds formatting to heading text.\nx &lt;- 1"
+  },
+  {
+    "objectID": "posts/anatomy-of-a-shiny-module-test/index.html#for-most-cases-we-only-need",
+    "href": "posts/anatomy-of-a-shiny-module-test/index.html#for-most-cases-we-only-need",
+    "title": "Anatomy Of A Shiny Module Test With shiny::testServer.",
+    "section": "For most cases we only need:",
+    "text": "For most cases we only need:\nMockShinySession$setInputs() method which simulates users interactions with widgets.\nMockShinySession$returned which contains the value returned by the module."
+  },
+  {
+    "objectID": "posts/anatomy-of-a-shiny-module-test/index.html#example",
+    "href": "posts/anatomy-of-a-shiny-module-test/index.html#example",
+    "title": "Anatomy Of A Shiny Module Test With shiny::testServer.",
+    "section": "Example",
+    "text": "Example\nWe develop a module that takes a dataset as a parameter, and returns a subset of the data based on the selected variables in a dropdown."
+  },
+  {
+    "objectID": "posts/anatomy-of-a-shiny-module-test/document-revealjs.html#for-most-cases-we-only-need",
+    "href": "posts/anatomy-of-a-shiny-module-test/document-revealjs.html#for-most-cases-we-only-need",
+    "title": "Anatomy Of A Shiny Module Test With shiny::testServer.",
+    "section": "For most cases we only need:",
+    "text": "For most cases we only need:\nMockShinySession$setInputs() method which simulates users interactions with widgets.\nMockShinySession$returned which contains the value returned by the module."
+  },
+  {
+    "objectID": "posts/anatomy-of-a-shiny-module-test/document-revealjs.html#example",
+    "href": "posts/anatomy-of-a-shiny-module-test/document-revealjs.html#example",
+    "title": "Anatomy Of A Shiny Module Test With shiny::testServer.",
+    "section": "Example",
+    "text": "Example\nWe develop a module that takes a dataset as a parameter, and returns a subset of the data based on the selected variables in a dropdown."
+  },
+  {
+    "objectID": "blog.html",
+    "href": "blog.html",
+    "title": "Jakub Sobolewski",
+    "section": "",
+    "text": "Anatomy Of A Shiny Module Test With shiny::testServer.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNo matching items"
+  }
+]

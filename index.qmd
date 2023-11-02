@@ -1,0 +1,12 @@
+---
+title: ""
+toc: true
+listing:
+  contents: posts
+  sort:
+    - "date"
+    - "title desc"
+  type: default
+  categories: true
+page-layout: full
+---
