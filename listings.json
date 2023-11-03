@@ -2,7 +2,10 @@
   {
     "listing": "/index.html",
     "items": [
-      "/posts/anatomy-of-a-shiny-module-test/index.html"
+      "/posts/anatomy-of-a-shiny-module-test/index.html",
+      "/posts/how_tdd_helps_you_build_the_right_thing/index.html",
+      "/posts/how_tdd_helps_you_prototype_faster/index.html",
+      "/posts/testing_code_with_external_dependencies/index.html"
     ]
   }
 ]

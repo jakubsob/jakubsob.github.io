@@ -1,0 +1,1636 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss  xmlns:atom="http://www.w3.org/2005/Atom" 
+      xmlns:media="http://search.yahoo.com/mrss/" 
+      xmlns:content="http://purl.org/rss/1.0/modules/content/" 
+      xmlns:dc="http://purl.org/dc/elements/1.1/" 
+      version="2.0">
+<channel>
+<title>Jakub Sobolewski</title>
+<link>https://jakubsob.github.io/</link>
+<atom:link href="https://jakubsob.github.io/index.xml" rel="self" type="application/rss+xml"/>
+<description>Jakub Sobolewski&#39;s blog.</description>
+<generator>quarto-1.4.468</generator>
+<lastBuildDate>Mon, 30 Oct 2023 23:00:00 GMT</lastBuildDate>
+<item>
+  <title>Anatomy Of A Shiny Module Test With shiny::testServer.</title>
+  <dc:creator>Jakub Sobolewski</dc:creator>
+  <link>https://jakubsob.github.io/posts/anatomy-of-a-shiny-module-test/</link>
+  <description><![CDATA[ 
+
+
+
+
+<p>Modules tested with <code>testServer</code> run with a session that is a <code>MockShinySession</code> object.</p>
+<section id="for-most-cases-we-only-need" class="level2">
+<h2 class="anchored" data-anchor-id="for-most-cases-we-only-need">For most cases we only need:</h2>
+<p><code>MockShinySession$setInputs()</code> method which simulates users interactions with widgets.</p>
+<p><code>MockShinySession$returned</code> which contains the value returned by the module.</p>
+</section>
+<section id="example" class="level2">
+<h2 class="anchored" data-anchor-id="example">Example</h2>
+<p>We develop a module that takes a dataset as a parameter, and returns a subset of the data based on the selected variables in a dropdown.</p>
+</section>
+<section id="section" class="level2" data-auto-animate="true" data-background-color="#EBCA47">
+<h2 data-auto-animate="true" data-background-color="#EBCA47" class="anchored" data-anchor-id="section"></h2>
+<div class="sourceCode" id="cb1" data-source-line-numbers="" data-code-line-numbers="" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">describe</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"server"</span>, {</span>
+<span id="cb1-2">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">it</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"should subset the data with selected variables"</span>, {</span>
+<span id="cb1-3">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Arrange</span></span>
+<span id="cb1-4">    args <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">list</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">data =</span> iris)</span>
+<span id="cb1-5"></span>
+<span id="cb1-6">    shiny<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">testServer</span>(server, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">args =</span> args, {</span>
+<span id="cb1-7">      <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Act</span></span>
+<span id="cb1-8">      session<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">setInputs</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">select =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Sepal.Length"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Species"</span>))</span>
+<span id="cb1-9"></span>
+<span id="cb1-10">      <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Assert</span></span>
+<span id="cb1-11">      <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">expect_equal</span>(</span>
+<span id="cb1-12">        <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">colnames</span>(session<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">returned</span>()),</span>
+<span id="cb1-13">        <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Sepal.Length"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Species"</span>)</span>
+<span id="cb1-14">      )</span>
+<span id="cb1-15">    })</span>
+<span id="cb1-16">  })</span>
+<span id="cb1-17">})</span></code></pre></div>
+</section>
+<section id="section-1" class="level2" data-auto-animate="true" data-background-color="#EBCA47">
+<h2 data-auto-animate="true" data-background-color="#EBCA47" class="anchored" data-anchor-id="section-1"></h2>
+<div class="sourceCode" id="cb2" data-source-line-numbers="3-4" data-code-line-numbers="3-4" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">describe</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"server"</span>, {</span>
+<span id="cb2-2">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">it</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"should subset the data with selected variables"</span>, {</span>
+<span id="cb2-3">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Arrange</span></span>
+<span id="cb2-4">    args <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">list</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">data =</span> iris)</span>
+<span id="cb2-5"></span>
+<span id="cb2-6">    shiny<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">testServer</span>(server, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">args =</span> args, {</span>
+<span id="cb2-7">      <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Act</span></span>
+<span id="cb2-8">      session<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">setInputs</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">select =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Sepal.Length"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Species"</span>))</span>
+<span id="cb2-9"></span>
+<span id="cb2-10">      <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Assert</span></span>
+<span id="cb2-11">      <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">expect_equal</span>(</span>
+<span id="cb2-12">        <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">colnames</span>(session<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">returned</span>()),</span>
+<span id="cb2-13">        <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Sepal.Length"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Species"</span>)</span>
+<span id="cb2-14">      )</span>
+<span id="cb2-15">    })</span>
+<span id="cb2-16">  })</span>
+<span id="cb2-17">})</span></code></pre></div>
+<p>We arrange parameters to pass to the module.</p>
+</section>
+<section id="section-2" class="level2" data-auto-animate="true" data-background-color="#EBCA47">
+<h2 data-auto-animate="true" data-background-color="#EBCA47" class="anchored" data-anchor-id="section-2"></h2>
+<div class="sourceCode" id="cb3" data-source-line-numbers="6" data-code-line-numbers="6" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">describe</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"server"</span>, {</span>
+<span id="cb3-2">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">it</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"should subset the data with selected variables"</span>, {</span>
+<span id="cb3-3">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Arrange</span></span>
+<span id="cb3-4">    args <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">list</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">data =</span> iris)</span>
+<span id="cb3-5"></span>
+<span id="cb3-6">    shiny<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">testServer</span>(server, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">args =</span> args, {</span>
+<span id="cb3-7">      <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Act</span></span>
+<span id="cb3-8">      session<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">setInputs</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">select =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Sepal.Length"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Species"</span>))</span>
+<span id="cb3-9"></span>
+<span id="cb3-10">      <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Assert</span></span>
+<span id="cb3-11">      <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">expect_equal</span>(</span>
+<span id="cb3-12">        <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">colnames</span>(session<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">returned</span>()),</span>
+<span id="cb3-13">        <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Sepal.Length"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Species"</span>)</span>
+<span id="cb3-14">      )</span>
+<span id="cb3-15">    })</span>
+<span id="cb3-16">  })</span>
+<span id="cb3-17">})</span></code></pre></div>
+<p>Arguments are passed to the module as a list.</p>
+</section>
+<section id="section-3" class="level2" data-auto-animate="true" data-background-color="#EBCA47">
+<h2 data-auto-animate="true" data-background-color="#EBCA47" class="anchored" data-anchor-id="section-3"></h2>
+<div class="sourceCode" id="cb4" data-source-line-numbers="6-15" data-code-line-numbers="6-15" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">describe</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"server"</span>, {</span>
+<span id="cb4-2">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">it</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"should subset the data with selected variables"</span>, {</span>
+<span id="cb4-3">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Arrange</span></span>
+<span id="cb4-4">    args <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">list</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">data =</span> iris)</span>
+<span id="cb4-5"></span>
+<span id="cb4-6">    shiny<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">testServer</span>(server, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">args =</span> args, {</span>
+<span id="cb4-7">      <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Act</span></span>
+<span id="cb4-8">      session<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">setInputs</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">select =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Sepal.Length"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Species"</span>))</span>
+<span id="cb4-9"></span>
+<span id="cb4-10">      <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Assert</span></span>
+<span id="cb4-11">      <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">expect_equal</span>(</span>
+<span id="cb4-12">        <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">colnames</span>(session<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">returned</span>()),</span>
+<span id="cb4-13">        <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Sepal.Length"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Species"</span>)</span>
+<span id="cb4-14">      )</span>
+<span id="cb4-15">    })</span>
+<span id="cb4-16">  })</span>
+<span id="cb4-17">})</span></code></pre></div>
+<p>Code within <code>testServer</code> has access to the session, inputs and outputs.</p>
+</section>
+<section id="section-4" class="level2" data-auto-animate="true" data-background-color="#EBCA47">
+<h2 data-auto-animate="true" data-background-color="#EBCA47" class="anchored" data-anchor-id="section-4"></h2>
+<div class="sourceCode" id="cb5" data-source-line-numbers="7-8" data-code-line-numbers="7-8" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">describe</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"server"</span>, {</span>
+<span id="cb5-2">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">it</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"should subset the data with selected variables"</span>, {</span>
+<span id="cb5-3">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Arrange</span></span>
+<span id="cb5-4">    args <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">list</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">data =</span> iris)</span>
+<span id="cb5-5"></span>
+<span id="cb5-6">    shiny<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">testServer</span>(server, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">args =</span> args, {</span>
+<span id="cb5-7">      <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Act</span></span>
+<span id="cb5-8">      session<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">setInputs</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">select =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Sepal.Length"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Species"</span>))</span>
+<span id="cb5-9"></span>
+<span id="cb5-10">      <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Assert</span></span>
+<span id="cb5-11">      <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">expect_equal</span>(</span>
+<span id="cb5-12">        <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">colnames</span>(session<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">returned</span>()),</span>
+<span id="cb5-13">        <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Sepal.Length"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Species"</span>)</span>
+<span id="cb5-14">      )</span>
+<span id="cb5-15">    })</span>
+<span id="cb5-16">  })</span>
+<span id="cb5-17">})</span></code></pre></div>
+<p>We select 2 variables using an input that has <code>"select"</code> ID.</p>
+<p>It will be accessed with <code>input$select</code>.</p>
+</section>
+<section id="section-5" class="level2" data-auto-animate="true" data-background-color="#EBCA47">
+<h2 data-auto-animate="true" data-background-color="#EBCA47" class="anchored" data-anchor-id="section-5"></h2>
+<div class="sourceCode" id="cb6" data-source-line-numbers="10-14" data-code-line-numbers="10-14" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">describe</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"server"</span>, {</span>
+<span id="cb6-2">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">it</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"should subset the data with selected variables"</span>, {</span>
+<span id="cb6-3">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Arrange</span></span>
+<span id="cb6-4">    args <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">list</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">data =</span> iris)</span>
+<span id="cb6-5"></span>
+<span id="cb6-6">    shiny<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">testServer</span>(server, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">args =</span> args, {</span>
+<span id="cb6-7">      <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Act</span></span>
+<span id="cb6-8">      session<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">setInputs</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">select =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Sepal.Length"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Species"</span>))</span>
+<span id="cb6-9"></span>
+<span id="cb6-10">      <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Assert</span></span>
+<span id="cb6-11">      <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">expect_equal</span>(</span>
+<span id="cb6-12">        <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">colnames</span>(session<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">returned</span>()),</span>
+<span id="cb6-13">        <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Sepal.Length"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Species"</span>)</span>
+<span id="cb6-14">      )</span>
+<span id="cb6-15">    })</span>
+<span id="cb6-16">  })</span>
+<span id="cb6-17">})</span></code></pre></div>
+<p>The return value should be a column subset of the <code>data</code>.</p>
+</section>
+<section id="section-6" class="level2" data-auto-animate="true" data-background-color="#EBCA47">
+<h2 data-auto-animate="true" data-background-color="#EBCA47" class="anchored" data-anchor-id="section-6"></h2>
+<div class="sourceCode" id="cb7" data-source-line-numbers="10-14" data-code-line-numbers="10-14" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">describe</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"server"</span>, {</span>
+<span id="cb7-2">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">it</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"should subset the data with selected variables"</span>, {</span>
+<span id="cb7-3">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Arrange</span></span>
+<span id="cb7-4">    args <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">list</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">data =</span> iris)</span>
+<span id="cb7-5"></span>
+<span id="cb7-6">    shiny<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">testServer</span>(server, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">args =</span> args, {</span>
+<span id="cb7-7">      <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Act</span></span>
+<span id="cb7-8">      session<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">setInputs</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">select =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Sepal.Length"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Species"</span>))</span>
+<span id="cb7-9"></span>
+<span id="cb7-10">      <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Assert</span></span>
+<span id="cb7-11">      <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">expect_equal</span>(</span>
+<span id="cb7-12">        <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">colnames</span>(session<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">returned</span>()),</span>
+<span id="cb7-13">        <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Sepal.Length"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Species"</span>)</span>
+<span id="cb7-14">      )</span>
+<span id="cb7-15">    })</span>
+<span id="cb7-16">  })</span>
+<span id="cb7-17">})</span></code></pre></div>
+<p>We use <code>session$returned()</code> to get the value of the returned <code>reactive</code>.</p>
+<hr>
+</section>
+<section id="section-7" class="level2" data-background-color="#EBCA47">
+<h2 data-background-color="#EBCA47" class="anchored" data-anchor-id="section-7"></h2>
+<p>To use <code>shiny::testServer</code> the module must be implemented with <code>shiny::moduleServer</code>.</p>
+<div class="sourceCode" id="cb8" data-code-line-numbers="" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1">server <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">function</span>(id) {</span>
+<span id="cb8-2">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">moduleServer</span>(id, <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">function</span>(input, output, session) {</span>
+<span id="cb8-3">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># ...</span></span>
+<span id="cb8-4">  })</span>
+<span id="cb8-5">}</span></code></pre></div>
+</section>
+<section id="section-8" class="level2" data-auto-animate="true" data-background-color="#EBCA47">
+<h2 data-auto-animate="true" data-background-color="#EBCA47" class="anchored" data-anchor-id="section-8"></h2>
+<div class="sourceCode" id="cb9" data-code-line-numbers="" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1">ui <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">function</span>(id) {</span>
+<span id="cb9-2">  ns <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">NS</span>(id)</span>
+<span id="cb9-3">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">fluidPage</span>(</span>
+<span id="cb9-4">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">selectInput</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ns</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"select"</span>), <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Select variables"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">choices =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">NULL</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">multiple =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span>),</span>
+<span id="cb9-5">  )</span>
+<span id="cb9-6">}</span>
+<span id="cb9-7"></span>
+<span id="cb9-8">server <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">function</span>(id, data) {</span>
+<span id="cb9-9">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">moduleServer</span>(id, <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">function</span>(input, output, session) {</span>
+<span id="cb9-10">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">updateSelectInput</span>(session, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"select"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">choices =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">colnames</span>(data))</span>
+<span id="cb9-11">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">return</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">reactive</span>(data[, input<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span>select]))</span>
+<span id="cb9-12">  })</span>
+<span id="cb9-13">}</span></code></pre></div>
+<p>And this is the module that passes this test.</p>
+<hr>
+<p>Writing tests first for Shiny modules helps to keep them:</p>
+<ul>
+<li>simple,</li>
+<li>focused,</li>
+<li>and doing exactly what they need to do.</li>
+</ul>
+<hr>
+<p>Tests help define what should be the input to the module.</p>
+<p>What it should do.</p>
+<p>And what it should return.</p>
+<hr>
+<p>Such modules are easier to reuse <br>and easier to compose them to build the whole app.</p>
+
+
+</section>
+
+ ]]></description>
+  <category>R</category>
+  <category>Test Driven Development</category>
+  <category>Testing</category>
+  <guid>https://jakubsob.github.io/posts/anatomy-of-a-shiny-module-test/</guid>
+  <pubDate>Mon, 30 Oct 2023 23:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>How Test Driven Development Helps You Get Things Right</title>
+  <link>https://jakubsob.github.io/posts/how_tdd_helps_you_build_the_right_thing/</link>
+  <description><![CDATA[ 
+
+
+
+
+<p>On the first try. No rewrites.</p>
+<section id="writing-test-cases-first-helps-us-understand-better-what-we-need-to-build." class="level2">
+<h2 class="anchored" data-anchor-id="writing-test-cases-first-helps-us-understand-better-what-we-need-to-build.">Writing test cases first helps us understand better what we need to build.</h2>
+<section id="tests-allow-us-to-express-how-the-code-should-behave." class="level3">
+<h3 class="anchored" data-anchor-id="tests-allow-us-to-express-how-the-code-should-behave.">Tests allow us to express how the code should behave.</h3>
+<p>If we focus on asserting the behavior of code, we end up with tests that are also a functional documentation.</p>
+<p>A business expert or other developer can read the tests and quickly understand what the code does, making it easier to correct any misunderstandings.</p>
+</section>
+</section>
+<section id="section" class="level2" data-background-color="#EBCA47">
+<h2 data-background-color="#EBCA47" class="anchored" data-anchor-id="section"></h2>
+<p>❌ Change your tests like these:</p>
+<div class="sourceCode" id="cb1" data-code-line-numbers="" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">describe</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"validate"</span>, {</span>
+<span id="cb1-2">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">it</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"should work correctly"</span>, {</span>
+<span id="cb1-3">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Complex setup</span></span>
+<span id="cb1-4">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Many expectations</span></span>
+<span id="cb1-5">  })</span>
+<span id="cb1-6">})</span></code></pre></div>
+</section>
+<section id="section-1" class="level2" data-background-color="#EBCA47">
+<h2 data-background-color="#EBCA47" class="anchored" data-anchor-id="section-1"></h2>
+<p>✅ To tests like these:</p>
+<div class="sourceCode" id="cb2" data-code-line-numbers="" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">describe</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"validate"</span>, {</span>
+<span id="cb2-2">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">it</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"should return TRUE if data passes validation"</span>, {</span>
+<span id="cb2-3">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Arrange</span></span>
+<span id="cb2-4"></span>
+<span id="cb2-5">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Act</span></span>
+<span id="cb2-6"></span>
+<span id="cb2-7">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Assert</span></span>
+<span id="cb2-8"></span>
+<span id="cb2-9">  })</span>
+<span id="cb2-10"></span>
+<span id="cb2-11">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">it</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"should return FALSE if data does not pass validation"</span>, {</span>
+<span id="cb2-12">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># ...</span></span>
+<span id="cb2-13">  })</span>
+<span id="cb2-14"></span>
+<span id="cb2-15">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">it</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"should throw an error if input is not a table"</span>, {</span>
+<span id="cb2-16">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># ...</span></span>
+<span id="cb2-17">  })</span>
+<span id="cb2-18">})</span></code></pre></div>
+<hr>
+</section>
+<section id="before-writing-each-test-case-ask-yourself" class="level2">
+<h2 class="anchored" data-anchor-id="before-writing-each-test-case-ask-yourself">Before writing each test case, ask yourself:</h2>
+<ul>
+<li>What is the input to the system? → <code>Arrange</code></li>
+<li>How it interacts with other code? → <code>Act</code></li>
+<li>What is the expected outcome? → <code>Assert</code></li>
+</ul>
+<hr>
+</section>
+<section id="answering-those-questions" class="level2">
+<h2 class="anchored" data-anchor-id="answering-those-questions">Answering those questions:</h2>
+<ul>
+<li>Reduces the risk of not understanding the requirements correctly.</li>
+<li>Reduces the risk of not handling critical edge cases.</li>
+<li>Reduces the risk of having to go back and rewrite the code.</li>
+</ul>
+<hr>
+</section>
+<section id="and-it-all-comes-down-to-writing-tests-first." class="level2">
+<h2 class="anchored" data-anchor-id="and-it-all-comes-down-to-writing-tests-first.">And it all comes down to writing tests first.</h2>
+<p>Build the right thing on the first try.</p>
+
+
+</section>
+
+ ]]></description>
+  <category>R</category>
+  <category>Test Driven Development</category>
+  <category>Testing</category>
+  <guid>https://jakubsob.github.io/posts/how_tdd_helps_you_build_the_right_thing/</guid>
+  <pubDate>Mon, 23 Oct 2023 22:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>How Test Driven Development Makes You Faster.</title>
+  <link>https://jakubsob.github.io/posts/how_tdd_helps_you_prototype_faster/</link>
+  <description><![CDATA[ 
+
+
+
+
+<p>By Allowing You To Experiment With Your Code</p>
+<hr>
+<section id="starting-from-tests-allows-us-to-instantly-get-feedback-on-our-ideas." class="level2">
+<h2 class="anchored" data-anchor-id="starting-from-tests-allows-us-to-instantly-get-feedback-on-our-ideas.">Starting from tests allows us to instantly get feedback on our ideas.</h2>
+<p>We can test many ideas and select the one which works best for us.</p>
+<p>It is fast because only test code changes.</p>
+</section>
+<section id="section" class="level2" data-background-color="#EBCA47">
+<h2 data-background-color="#EBCA47" class="anchored" data-anchor-id="section"></h2>
+<p>Let’s imagine we need to write code that validates a <code>data.frame</code> against some rules.</p>
+<div class="sourceCode" id="cb1" data-code-line-numbers="" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">describe</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"validate"</span>, {</span>
+<span id="cb1-2">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">it</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"should return TRUE if data passes validation"</span>, {</span>
+<span id="cb1-3"></span>
+<span id="cb1-4">  })</span>
+<span id="cb1-5">})</span></code></pre></div>
+</section>
+<section id="section-1" class="level2" data-background-color="#EBCA47">
+<h2 data-background-color="#EBCA47" class="anchored" data-anchor-id="section-1"></h2>
+<p>We need data and validation rules. We don’t need to know how to represent validation rules yet. It may be just a <code>ValidationRules</code> object. We can come back to it later.</p>
+<div class="sourceCode" id="cb2" data-source-line-numbers="3-8" data-code-line-numbers="3-8" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">describe</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"validate"</span>, {</span>
+<span id="cb2-2">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">it</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"should return TRUE if data passes validation"</span>, {</span>
+<span id="cb2-3">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Arrange</span></span>
+<span id="cb2-4">    data <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">data.frame</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">x =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">y =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"a"</span>)</span>
+<span id="cb2-5">    validation_rules <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">structure</span>(</span>
+<span id="cb2-6">      <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">list</span>(),</span>
+<span id="cb2-7">      <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">class =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ValidationRules"</span></span>
+<span id="cb2-8">    )</span>
+<span id="cb2-9">  })</span>
+<span id="cb2-10">})</span></code></pre></div>
+</section>
+<section id="section-2" class="level2" data-background-color="#EBCA47">
+<h2 data-background-color="#EBCA47" class="anchored" data-anchor-id="section-2"></h2>
+<p>What matters is that we know we need a representation for those rules. We obtain a <strong>separation of concerns</strong>, rules are <strong>decoupled</strong> from this validator.</p>
+<div class="sourceCode" id="cb3" data-source-line-numbers="3-8" data-code-line-numbers="3-8" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">describe</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"validate"</span>, {</span>
+<span id="cb3-2">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">it</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"should return TRUE if data passes validation"</span>, {</span>
+<span id="cb3-3">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Arrange</span></span>
+<span id="cb3-4">    data <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">data.frame</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">x =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">y =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"a"</span>)</span>
+<span id="cb3-5">    validation_rules <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">structure</span>(</span>
+<span id="cb3-6">      <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">list</span>(),</span>
+<span id="cb3-7">      <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">class =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ValidationRules"</span></span>
+<span id="cb3-8">    )</span>
+<span id="cb3-9">  })</span>
+<span id="cb3-10">})</span></code></pre></div>
+<hr>
+</section>
+<section id="section-3" class="level2" data-background-color="#EBCA47">
+<h2 data-background-color="#EBCA47" class="anchored" data-anchor-id="section-3"></h2>
+<p>We might want to represent the validator with <code>R6</code> class object. Let’s initialize it with data and validation rules.</p>
+<div class="sourceCode" id="cb4" data-source-line-numbers="9" data-code-line-numbers="9" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">describe</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"validate"</span>, {</span>
+<span id="cb4-2">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">it</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"should return TRUE if data passes validation"</span>, {</span>
+<span id="cb4-3">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Arrange</span></span>
+<span id="cb4-4">    data <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">data.frame</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">x =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">y =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"a"</span>)</span>
+<span id="cb4-5">    validation_rules <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">structure</span>(</span>
+<span id="cb4-6">      <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">list</span>(),</span>
+<span id="cb4-7">      <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">class =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ValidationRules"</span></span>
+<span id="cb4-8">    )</span>
+<span id="cb4-9">    validator <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> data_validator<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">new</span>(data, validation_rules)</span>
+<span id="cb4-10">  })</span>
+<span id="cb4-11">})</span></code></pre></div>
+</section>
+<section id="section-4" class="level2" data-background-color="#EBCA47">
+<h2 data-background-color="#EBCA47" class="anchored" data-anchor-id="section-4"></h2>
+<p>It may have a <code>validate</code> method that returns a flag indicating if the data passes validation.</p>
+<div class="sourceCode" id="cb5" data-source-line-numbers="11-15" data-code-line-numbers="11-15" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">describe</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"validate"</span>, {</span>
+<span id="cb5-2">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">it</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"should return TRUE if data passes validation"</span>, {</span>
+<span id="cb5-3">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Arrange</span></span>
+<span id="cb5-4">    data <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">data.frame</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">x =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">y =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"a"</span>)</span>
+<span id="cb5-5">    validation_rules <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">structure</span>(</span>
+<span id="cb5-6">      <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">list</span>(),</span>
+<span id="cb5-7">      <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">class =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ValidationRules"</span></span>
+<span id="cb5-8">    )</span>
+<span id="cb5-9">    validator <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> data_validator<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">new</span>(data, validation_rules)</span>
+<span id="cb5-10"></span>
+<span id="cb5-11">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Act</span></span>
+<span id="cb5-12">    result <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> validator<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">validate</span>()</span>
+<span id="cb5-13"></span>
+<span id="cb5-14">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Assert</span></span>
+<span id="cb5-15">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">expect_true</span>(result)</span>
+<span id="cb5-16">  })</span>
+<span id="cb5-17">})</span></code></pre></div>
+<hr>
+</section>
+<section id="section-5" class="level2" data-background-color="#EBCA47">
+<h2 data-background-color="#EBCA47" class="anchored" data-anchor-id="section-5"></h2>
+<p>We can already see that this may be not flexible enough. We construct the object with data and validation rules.</p>
+<div class="sourceCode" id="cb6" data-source-line-numbers="9" data-code-line-numbers="9" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">describe</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"validate"</span>, {</span>
+<span id="cb6-2">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">it</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"should return TRUE if data passes validation"</span>, {</span>
+<span id="cb6-3">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Arrange</span></span>
+<span id="cb6-4">    data <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">data.frame</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">x =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">y =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"a"</span>)</span>
+<span id="cb6-5">    validation_rules <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">structure</span>(</span>
+<span id="cb6-6">      <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">list</span>(),</span>
+<span id="cb6-7">      <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">class =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ValidationRules"</span></span>
+<span id="cb6-8">    )</span>
+<span id="cb6-9">    validator <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> data_validator<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">new</span>(data, validation_rules)</span>
+<span id="cb6-10"></span>
+<span id="cb6-11">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Act</span></span>
+<span id="cb6-12">    result <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> validator<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">validate</span>()</span>
+<span id="cb6-13"></span>
+<span id="cb6-14">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Assert</span></span>
+<span id="cb6-15">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">expect_true</span>(result)</span>
+<span id="cb6-16">  })</span>
+<span id="cb6-17">})</span></code></pre></div>
+</section>
+<section id="section-6" class="level2" data-background-color="#EBCA47">
+<h2 data-background-color="#EBCA47" class="anchored" data-anchor-id="section-6"></h2>
+<p>Let’s pass data to the <code>validate</code> method, instead of the constructor, to be able to validate many datasets with the same rules.</p>
+<div class="sourceCode" id="cb7" data-source-line-numbers="9-12" data-code-line-numbers="9-12" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">describe</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"validate"</span>, {</span>
+<span id="cb7-2">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">it</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"should return TRUE if data passes validation"</span>, {</span>
+<span id="cb7-3">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Arrange</span></span>
+<span id="cb7-4">    data <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">data.frame</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">x =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">y =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"a"</span>)</span>
+<span id="cb7-5">    validation_rules <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">structure</span>(</span>
+<span id="cb7-6">      <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">list</span>(),</span>
+<span id="cb7-7">      <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">class =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ValidationRules"</span></span>
+<span id="cb7-8">    )</span>
+<span id="cb7-9">    validator <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> data_validator<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">new</span>(validation_rules)</span>
+<span id="cb7-10"></span>
+<span id="cb7-11">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Act</span></span>
+<span id="cb7-12">    result <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> validator<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">validate</span>(data)</span>
+<span id="cb7-13"></span>
+<span id="cb7-14">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Assert</span></span>
+<span id="cb7-15">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">expect_true</span>(result)</span>
+<span id="cb7-16">  })</span>
+<span id="cb7-17">})</span></code></pre></div>
+</section>
+<section id="section-7" class="level2" data-background-color="#EBCA47">
+<h2 data-background-color="#EBCA47" class="anchored" data-anchor-id="section-7"></h2>
+<p>Let’s go back to validation rules. We might experiment with them being a list of <code>checkmate</code> assertions.</p>
+<div class="sourceCode" id="cb8" data-source-line-numbers="5-10" data-code-line-numbers="5-10" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">describe</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"validate"</span>, {</span>
+<span id="cb8-2">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">it</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"should return TRUE if data passes validation"</span>, {</span>
+<span id="cb8-3">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Arrange</span></span>
+<span id="cb8-4">    data <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">data.frame</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">x =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">y =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"a"</span>)</span>
+<span id="cb8-5">    validation_rules <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">structure</span>(</span>
+<span id="cb8-6">      <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">list</span>(</span>
+<span id="cb8-7">        \(x) checkmate<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">test_data_frame</span>(x),</span>
+<span id="cb8-8">        \(x) checkmate<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">test_subset</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"x"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"y"</span>), <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">colnames</span>(x))</span>
+<span id="cb8-9">      ),</span>
+<span id="cb8-10">      <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">class =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ValidationRules"</span></span>
+<span id="cb8-11">    )</span>
+<span id="cb8-12">    validator <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> data_validator<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">new</span>(validation_rules)</span>
+<span id="cb8-13"></span>
+<span id="cb8-14">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Act</span></span>
+<span id="cb8-15">    result <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> validator<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">validate</span>(data)</span>
+<span id="cb8-16"></span>
+<span id="cb8-17">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Assert</span></span>
+<span id="cb8-18">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">expect_true</span>(result)</span>
+<span id="cb8-19">  })</span>
+<span id="cb8-20">})</span></code></pre></div>
+</section>
+<section id="section-8" class="level2" data-background-color="#EBCA47">
+<h2 data-background-color="#EBCA47" class="anchored" data-anchor-id="section-8"></h2>
+<p>Or an object that provides a <code>{pointblank}</code> agent.</p>
+<div class="sourceCode" id="cb9" data-source-line-numbers="5-11" data-code-line-numbers="5-11" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">describe</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"validate"</span>, {</span>
+<span id="cb9-2">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">it</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"should return TRUE if data passes validation"</span>, {</span>
+<span id="cb9-3">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Arrange</span></span>
+<span id="cb9-4">    data <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">data.frame</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">x =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">y =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"a"</span>)</span>
+<span id="cb9-5">    validation_rules <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">structure</span>(</span>
+<span id="cb9-6">      <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">list</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">get =</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">function</span>() {</span>
+<span id="cb9-7">        pointblank<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">create_agent</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">tbl =</span> <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span> x) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb9-8">          pointblank<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">col_exists</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">columns =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"x"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"y"</span>))</span>
+<span id="cb9-9">      }),</span>
+<span id="cb9-10">      <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">class =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ValidationRules"</span></span>
+<span id="cb9-11">    )</span>
+<span id="cb9-12">    validator <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> data_validator<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">new</span>(validation_rules)</span>
+<span id="cb9-13"></span>
+<span id="cb9-14">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Act</span></span>
+<span id="cb9-15">    result <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> validator<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">validate</span>(data)</span>
+<span id="cb9-16"></span>
+<span id="cb9-17">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Assert</span></span>
+<span id="cb9-18">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">expect_true</span>(result)</span>
+<span id="cb9-19">  })</span>
+<span id="cb9-20">})</span></code></pre></div>
+<hr>
+<p>If we take the time to write tests first we can quickly iterate different ideas and arrive at a better solution faster.</p>
+<p>We’ll probably end up with code that is easy to use.</p>
+<p>One that has better separation of concerns.</p>
+<p>One that promotes dependency injection.</p>
+<hr>
+<section id="start-development-from-tests-and-save-time-on-rewrites-and-refactors." class="level3">
+<h3 class="anchored" data-anchor-id="start-development-from-tests-and-save-time-on-rewrites-and-refactors.">Start development from tests and save time on rewrites and refactors.</h3>
+<p>Writing tests first pays off very quickly.</p>
+
+
+</section>
+</section>
+
+ ]]></description>
+  <category>R</category>
+  <category>Test Driven Development</category>
+  <category>Testing</category>
+  <guid>https://jakubsob.github.io/posts/how_tdd_helps_you_prototype_faster/</guid>
+  <pubDate>Wed, 18 Oct 2023 22:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Testing Code With External Dependencies.</title>
+  <link>https://jakubsob.github.io/posts/testing_code_with_external_dependencies/</link>
+  <description><![CDATA[ 
+
+
+
+
+<p>A stub is a controllable replacement of a dependency in your system.</p>
+<p>Stubbing helps you test your code without directly interacting with a dependency, e.g., an API.</p>
+<section id="section" class="level2" data-background-color="#EBCA47">
+<h2 data-background-color="#EBCA47" class="anchored" data-anchor-id="section"></h2>
+<p>How to test the function if <code>the_answer</code>:</p>
+<ul>
+<li>Requires a connection to an external service?</li>
+<li>Or it takes millions of years to compute?</li>
+</ul>
+<div class="sourceCode" id="cb1" data-code-line-numbers="" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#' R/the_ultimate_question_of.R</span></span>
+<span id="cb1-2">the_ultimate_question_of <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">function</span>(</span>
+<span id="cb1-3">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">x =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Life"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Universe"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Everything"</span>)</span>
+<span id="cb1-4">) {</span>
+<span id="cb1-5">  x <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">match.arg</span>(x)</span>
+<span id="cb1-6">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">the_answer</span>(x)</span>
+<span id="cb1-7">}</span></code></pre></div>
+</section>
+<section id="section-1" class="level2" data-auto-animate="true" data-background-color="#EBCA47">
+<h2 data-auto-animate="true" data-background-color="#EBCA47" class="anchored" data-anchor-id="section-1"></h2>
+<div class="sourceCode" id="cb2" data-code-line-numbers="" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#' tests/testthat/test-the_ultimate_question_of.R</span></span>
+<span id="cb2-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">test_that</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"the_ultimate_question_of returns 42"</span>, {</span>
+<span id="cb2-3">  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Arrange</span></span>
+<span id="cb2-4">  input <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Everything"</span></span>
+<span id="cb2-5"></span>
+<span id="cb2-6">  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Act</span></span>
+<span id="cb2-7">  result <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">the_ultimate_question_of</span>(input)</span>
+<span id="cb2-8"></span>
+<span id="cb2-9">  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Assert</span></span>
+<span id="cb2-10">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">expect_equal</span>(result, ???)</span>
+<span id="cb2-11">})</span></code></pre></div>
+</section>
+<section id="section-2" class="level2" data-auto-animate="true" data-background-color="#EBCA47">
+<h2 data-auto-animate="true" data-background-color="#EBCA47" class="anchored" data-anchor-id="section-2"></h2>
+<p>We need to stub the <code>the_answer</code>.</p>
+<p>We can use <code>testthat::local_mocked_bindings</code>.</p>
+<div class="sourceCode" id="cb3" data-source-line-numbers="3-6" data-code-line-numbers="3-6" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#' tests/testthat/test-the_ultimate_question_of.R</span></span>
+<span id="cb3-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">test_that</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"the_ultimate_question_of returns 42"</span>, {</span>
+<span id="cb3-3">  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Arrange</span></span>
+<span id="cb3-4">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">local_mocked_bindings</span>(</span>
+<span id="cb3-5">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">the_answer =</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">function</span>(x) <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">42</span></span>
+<span id="cb3-6">  )</span>
+<span id="cb3-7">  input <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Everything"</span></span>
+<span id="cb3-8"></span>
+<span id="cb3-9">  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Act</span></span>
+<span id="cb3-10">  result <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">the_ultimate_question_of</span>(input)</span>
+<span id="cb3-11"></span>
+<span id="cb3-12">  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Assert</span></span>
+<span id="cb3-13">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">expect_equal</span>(result, ???)</span>
+<span id="cb3-14">})</span></code></pre></div>
+</section>
+<section id="section-3" class="level2" data-auto-animate="true" data-background-color="#EBCA47">
+<h2 data-auto-animate="true" data-background-color="#EBCA47" class="anchored" data-anchor-id="section-3"></h2>
+<p>Then we can assert that the answer to <br> <code>"Everything"</code> is <code>42</code>.</p>
+<div class="sourceCode" id="cb4" data-source-line-numbers="13-14" data-code-line-numbers="13-14" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#' tests/testthat/test-the_ultimate_question_of.R</span></span>
+<span id="cb4-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">test_that</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"the_ultimate_question_of returns 42"</span>, {</span>
+<span id="cb4-3">  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Arrange</span></span>
+<span id="cb4-4">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">local_mocked_bindings</span>(</span>
+<span id="cb4-5">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">the_answer =</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">function</span>(x) <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">42</span></span>
+<span id="cb4-6">  )</span>
+<span id="cb4-7"></span>
+<span id="cb4-8">  input <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Everything"</span></span>
+<span id="cb4-9"></span>
+<span id="cb4-10">  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Act</span></span>
+<span id="cb4-11">  result <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">the_ultimate_question_of</span>(input)</span>
+<span id="cb4-12"></span>
+<span id="cb4-13">  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Assert</span></span>
+<span id="cb4-14">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">expect_equal</span>(result, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">42</span>)</span>
+<span id="cb4-15">})</span></code></pre></div>
+</section>
+<section id="section-4" class="level2" data-auto-animate="true" data-background-color="#EBCA47">
+<h2 data-auto-animate="true" data-background-color="#EBCA47" class="anchored" data-anchor-id="section-4"></h2>
+<p>Before <code>{testthat}</code> version 3.2.0, <code>mockery::stub</code> had to be used.</p>
+<div class="sourceCode" id="cb5" data-source-line-numbers="3-8" data-code-line-numbers="3-8" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#' tests/testthat/test-my_function.R</span></span>
+<span id="cb5-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">test_that</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"the_ultimate_question_of returns 42"</span>, {</span>
+<span id="cb5-3">  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Arrange</span></span>
+<span id="cb5-4">  mockery<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">stub</span>(</span>
+<span id="cb5-5">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">where =</span> the_ultimate_question_of,</span>
+<span id="cb5-6">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">what =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"the_answer"</span>,</span>
+<span id="cb5-7">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">how =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">42</span></span>
+<span id="cb5-8">  )</span>
+<span id="cb5-9">  input <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Everything"</span></span>
+<span id="cb5-10"></span>
+<span id="cb5-11">  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Act</span></span>
+<span id="cb5-12">  result <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">the_ultimate_question_of</span>(input)</span>
+<span id="cb5-13"></span>
+<span id="cb5-14">  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Assert</span></span>
+<span id="cb5-15">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">expect_equal</span>(result, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">42</span>)</span>
+<span id="cb5-16">})</span></code></pre></div>
+<hr>
+<p><code>testthat::local_mocked_bindings</code>:</p>
+<ul>
+<li>Allows you to stub functions without adding new dependencies.</li>
+<li>It works with packages only – <code>{mockery}</code> doesn’t have this constraint.</li>
+<li>Stubbed function must be declared in the environment.</li>
+</ul>
+<hr>
+<p><code>testthat::local_mocked_bindings</code> let’s you quickly start with stubbing in your tests.</p>
+<p>For more advanced use cases you still need to rely on <code>{mockery}</code>.</p>
+
+
+</section>
+
+ ]]></description>
+  <category>R</category>
+  <category>Test Driven Development</category>
+  <category>Testing</category>
+  <guid>https://jakubsob.github.io/posts/testing_code_with_external_dependencies/</guid>
+  <pubDate>Sun, 15 Oct 2023 22:00:00 GMT</pubDate>
+</item>
+</channel>
+</rss>

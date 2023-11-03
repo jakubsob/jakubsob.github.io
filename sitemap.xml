@@ -2,14 +2,38 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://jakubsob.github.io/index.html</loc>
-    <lastmod>2023-11-03T12:04:37.579Z</lastmod>
+    <lastmod>2023-11-03T15:37:42.574Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jakubsob.github.io/posts/how_tdd_helps_you_prototype_faster/index.html</loc>
+    <lastmod>2023-11-03T15:36:36.200Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jakubsob.github.io/posts/how_tdd_helps_you_prototype_faster/document-revealjs.html</loc>
+    <lastmod>2023-11-03T15:36:36.200Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jakubsob.github.io/posts/how_tdd_helps_you_build_the_right_thing/index.html</loc>
+    <lastmod>2023-11-03T15:36:31.678Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jakubsob.github.io/posts/how_tdd_helps_you_build_the_right_thing/document-revealjs.html</loc>
+    <lastmod>2023-11-03T15:36:31.678Z</lastmod>
   </url>
   <url>
     <loc>https://jakubsob.github.io/posts/anatomy-of-a-shiny-module-test/document-revealjs.html</loc>
-    <lastmod>2023-11-03T12:01:36.852Z</lastmod>
+    <lastmod>2023-11-03T15:36:24.037Z</lastmod>
   </url>
   <url>
     <loc>https://jakubsob.github.io/posts/anatomy-of-a-shiny-module-test/index.html</loc>
-    <lastmod>2023-11-03T12:01:36.852Z</lastmod>
+    <lastmod>2023-11-03T15:36:24.037Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jakubsob.github.io/posts/testing_code_with_external_dependencies/document-revealjs.html</loc>
+    <lastmod>2023-11-03T15:36:42.420Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jakubsob.github.io/posts/testing_code_with_external_dependencies/index.html</loc>
+    <lastmod>2023-11-03T15:36:42.420Z</lastmod>
   </url>
 </urlset>
