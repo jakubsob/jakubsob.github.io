@@ -2,38 +2,46 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://jakubsob.github.io/index.html</loc>
-    <lastmod>2023-11-03T15:37:42.574Z</lastmod>
+    <lastmod>2023-11-03T15:56:42.468Z</lastmod>
   </url>
   <url>
-    <loc>https://jakubsob.github.io/posts/how_tdd_helps_you_prototype_faster/index.html</loc>
-    <lastmod>2023-11-03T15:36:36.200Z</lastmod>
+    <loc>https://jakubsob.github.io/posts/how-to-not-get-frustrated-working-with-legacy-code/index.html</loc>
+    <lastmod>2023-11-03T15:49:53.757Z</lastmod>
   </url>
   <url>
-    <loc>https://jakubsob.github.io/posts/how_tdd_helps_you_prototype_faster/document-revealjs.html</loc>
-    <lastmod>2023-11-03T15:36:36.200Z</lastmod>
+    <loc>https://jakubsob.github.io/posts/how-to-not-get-frustrated-working-with-legacy-code/document-revealjs.html</loc>
+    <lastmod>2023-11-03T15:49:53.757Z</lastmod>
   </url>
   <url>
-    <loc>https://jakubsob.github.io/posts/how_tdd_helps_you_build_the_right_thing/index.html</loc>
+    <loc>https://jakubsob.github.io/posts/how-tdd-helps-you-build-the-right-thing/index.html</loc>
     <lastmod>2023-11-03T15:36:31.678Z</lastmod>
   </url>
   <url>
-    <loc>https://jakubsob.github.io/posts/how_tdd_helps_you_build_the_right_thing/document-revealjs.html</loc>
+    <loc>https://jakubsob.github.io/posts/how-tdd-helps-you-build-the-right-thing/document-revealjs.html</loc>
     <lastmod>2023-11-03T15:36:31.678Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jakubsob.github.io/posts/how_tdd_makes-you-faster/document-revealjs.html</loc>
+    <lastmod>2023-11-03T15:36:36.200Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jakubsob.github.io/posts/how_tdd_makes-you-faster/index.html</loc>
+    <lastmod>2023-11-03T15:36:36.200Z</lastmod>
   </url>
   <url>
     <loc>https://jakubsob.github.io/posts/anatomy-of-a-shiny-module-test/document-revealjs.html</loc>
-    <lastmod>2023-11-03T15:42:15.982Z</lastmod>
+    <lastmod>2023-11-03T15:45:04.065Z</lastmod>
   </url>
   <url>
     <loc>https://jakubsob.github.io/posts/anatomy-of-a-shiny-module-test/index.html</loc>
-    <lastmod>2023-11-03T15:42:15.982Z</lastmod>
+    <lastmod>2023-11-03T15:45:04.065Z</lastmod>
   </url>
   <url>
-    <loc>https://jakubsob.github.io/posts/testing_code_with_external_dependencies/document-revealjs.html</loc>
+    <loc>https://jakubsob.github.io/posts/testing-code-with-external-dependencies/document-revealjs.html</loc>
     <lastmod>2023-11-03T15:36:42.420Z</lastmod>
   </url>
   <url>
-    <loc>https://jakubsob.github.io/posts/testing_code_with_external_dependencies/index.html</loc>
+    <loc>https://jakubsob.github.io/posts/testing-code-with-external-dependencies/index.html</loc>
     <lastmod>2023-11-03T15:36:42.420Z</lastmod>
   </url>
 </urlset>

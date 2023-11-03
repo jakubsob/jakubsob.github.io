@@ -651,7 +651,7 @@ font-style: inherit;">$</span>select]))</span>
 </item>
 <item>
   <title>How Test Driven Development Helps You Get Things Right</title>
-  <link>https://jakubsob.github.io/posts/how_tdd_helps_you_build_the_right_thing/</link>
+  <link>https://jakubsob.github.io/posts/how-tdd-helps-you-build-the-right-thing/</link>
   <description><![CDATA[ 
 
 
@@ -766,12 +766,12 @@ font-style: inherit;"># ...</span></span>
   <category>R</category>
   <category>Test Driven Development</category>
   <category>Testing</category>
-  <guid>https://jakubsob.github.io/posts/how_tdd_helps_you_build_the_right_thing/</guid>
+  <guid>https://jakubsob.github.io/posts/how-tdd-helps-you-build-the-right-thing/</guid>
   <pubDate>Mon, 23 Oct 2023 22:00:00 GMT</pubDate>
 </item>
 <item>
   <title>How Test Driven Development Makes You Faster.</title>
-  <link>https://jakubsob.github.io/posts/how_tdd_helps_you_prototype_faster/</link>
+  <link>https://jakubsob.github.io/posts/how_tdd_makes-you-faster/</link>
   <description><![CDATA[ 
 
 
@@ -1368,12 +1368,12 @@ font-style: inherit;">expect_true</span>(result)</span>
   <category>R</category>
   <category>Test Driven Development</category>
   <category>Testing</category>
-  <guid>https://jakubsob.github.io/posts/how_tdd_helps_you_prototype_faster/</guid>
+  <guid>https://jakubsob.github.io/posts/how_tdd_makes-you-faster/</guid>
   <pubDate>Wed, 18 Oct 2023 22:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Testing Code With External Dependencies.</title>
-  <link>https://jakubsob.github.io/posts/testing_code_with_external_dependencies/</link>
+  <link>https://jakubsob.github.io/posts/testing-code-with-external-dependencies/</link>
   <description><![CDATA[ 
 
 
@@ -1629,8 +1629,41 @@ font-style: inherit;">42</span>)</span>
   <category>R</category>
   <category>Test Driven Development</category>
   <category>Testing</category>
-  <guid>https://jakubsob.github.io/posts/testing_code_with_external_dependencies/</guid>
+  <guid>https://jakubsob.github.io/posts/testing-code-with-external-dependencies/</guid>
   <pubDate>Sun, 15 Oct 2023 22:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>How To Not Get Frustrated Working With Legacy Code.</title>
+  <dc:creator>Jakub Sobolewski</dc:creator>
+  <link>https://jakubsob.github.io/posts/how-to-not-get-frustrated-working-with-legacy-code/</link>
+  <description><![CDATA[ 
+
+
+
+
+<p>There’s no doubt that working with Legacy Code can get frustrating.</p>
+<p>We, developers much prefer building software from scratch. It gives you the feeling of control, speed, and satisfaction once you’re done. The contrary holds for working with Legacy — we lack control. We lack speed if we need to rerun the system to see our changes. We fear breaking something. This inevitably leads to dissatisfaction and frustration.</p>
+<p>But it doesn’t need to be this way — there are ways of making work with legacy code more satisfactory, faster, and safer — Sprout Technique is one of them.</p>
+<p>The technique is as follows:</p>
+<ol type="1">
+<li>Write your code in isolation — for example with Test Driven Development.</li>
+<li>Identify where the code should be called.</li>
+<li>Call your code from the Legacy Code.</li>
+</ol>
+<p>It is the way of working with Legacy.</p>
+<p>No more reloading your system to observe the change.</p>
+<p>No more fears that you break something — you have full control over the new code — it can be covered with tests perfectly.</p>
+<p>No more frustration.</p>
+<p>Or at least way less of it.</p>
+<p>Read more about Sprout Technique and others for working with legacy code at <a href="https://understandlegacycode.com/">https://understandlegacycode.com/</a>.</p>
+<p>I’ve worked with legacy systems for over 2 years and this has been my go-to place to get advice on what to do. Save this resource and save yourself a lot of frustration. And even if you’re not working with Legacy right now, you can find a ton of useful tips there. Don’t miss out!</p>
+
+
+
+ ]]></description>
+  <category>R</category>
+  <guid>https://jakubsob.github.io/posts/how-to-not-get-frustrated-working-with-legacy-code/</guid>
+  <pubDate>Mon, 09 Oct 2023 22:00:00 GMT</pubDate>
 </item>
 </channel>
 </rss>
