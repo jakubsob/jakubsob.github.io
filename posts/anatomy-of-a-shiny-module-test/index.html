@@ -9,7 +9,7 @@
 <meta name="author" content="Jakub Sobolewski">
 <meta name="dcterms.date" content="2023-10-31">
 
-<title>Jakub Sobolewski - Anatomy Of A Shiny Module Test With shiny::testServer.</title>
+<title>Jakub Sobolewski - Anatomy Of A Shiny Module Test With shiny::testServer</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -106,7 +106,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 
 
-<link rel="stylesheet" href="../../styles.css">
 </head>
 
 <body class="nav-fixed">
@@ -150,30 +149,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#for-most-cases-we-only-need" id="toc-for-most-cases-we-only-need" class="nav-link active" data-scroll-target="#for-most-cases-we-only-need">For most cases we only need:</a></li>
-  <li><a href="#example" id="toc-example" class="nav-link" data-scroll-target="#example">Example</a></li>
-  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"></a></li>
-  <li><a href="#section-1" id="toc-section-1" class="nav-link" data-scroll-target="#section-1"></a></li>
-  <li><a href="#section-2" id="toc-section-2" class="nav-link" data-scroll-target="#section-2"></a></li>
-  <li><a href="#section-3" id="toc-section-3" class="nav-link" data-scroll-target="#section-3"></a></li>
-  <li><a href="#section-4" id="toc-section-4" class="nav-link" data-scroll-target="#section-4"></a></li>
-  <li><a href="#section-5" id="toc-section-5" class="nav-link" data-scroll-target="#section-5"></a></li>
-  <li><a href="#section-6" id="toc-section-6" class="nav-link" data-scroll-target="#section-6"></a></li>
-  <li><a href="#section-7" id="toc-section-7" class="nav-link" data-scroll-target="#section-7"></a></li>
-  <li><a href="#section-8" id="toc-section-8" class="nav-link" data-scroll-target="#section-8"></a></li>
-  </ul>
-<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="document-revealjs.html"><i class="bi bi-file-slides"></i>RevealJS</a></li></ul></div></nav>
-    </div>
+        
+    <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="document-revealjs.html"><i class="bi bi-file-slides"></i>RevealJS</a></li></ul></div></div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Anatomy Of A Shiny Module Test With <code>shiny::testServer</code>.</h1>
+<h1 class="title">Anatomy Of A Shiny Module Test With <code>shiny::testServer</code></h1>
   <div class="quarto-categories">
     <div class="quarto-category">R</div>
     <div class="quarto-category">Test Driven Development</div>
@@ -363,7 +346,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-16"><a href="#cb7-16"></a>  })</span>
 <span id="cb7-17"><a href="#cb7-17"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>We use <code>session$returned()</code> to get the value of the returned <code>reactive</code>.</p>
-<hr>
 </section>
 <section id="section-7" class="level2" data-background-color="#EBCA47">
 <h2 data-background-color="#EBCA47" class="anchored" data-anchor-id="section-7"></h2>
@@ -390,19 +372,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb9-12"><a href="#cb9-12"></a>  })</span>
 <span id="cb9-13"><a href="#cb9-13"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>And this is the module that passes this test.</p>
-<hr>
+</section>
+<section id="section-9" class="level2">
+<h2 class="anchored" data-anchor-id="section-9"></h2>
 <p>Writing tests first for Shiny modules helps to keep them:</p>
 <ul>
 <li>simple,</li>
 <li>focused,</li>
 <li>and doing exactly what they need to do.</li>
 </ul>
-<hr>
+</section>
+<section id="section-10" class="level2">
+<h2 class="anchored" data-anchor-id="section-10"></h2>
 <p>Tests help define what should be the input to the module.</p>
 <p>What it should do.</p>
 <p>And what it should return.</p>
-<hr>
-<p>Such modules are easier to reuse <br>and easier to compose them to build the whole app.</p>
+</section>
+<section id="section-11" class="level2">
+<h2 class="anchored" data-anchor-id="section-11"></h2>
+<p>Such modules are easier to reuse and easier to compose them to build the whole app.</p>
 
 
 </section>

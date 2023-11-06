@@ -1,0 +1,48 @@
+<svg role="img" width="100%" height="100%" viewBox="0 0 3 3" version="1.1" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <clipPath id="square">
+          <rect width="1" height="1" />
+        </clipPath>
+      </defs>
+      undefined
+        <g transform="matrix(1,0,0,1,0,0)" style="clip-path: url(#square); ">
+          <rect x="0" y="0" width="0.5" height="1" style="fill:#d04338;" />
+  <rect width="0.5" height="1" x="0.5" y="0" style="fill:#d04338;" /><rect x="0.25" y="0.25" width="0.25" height="0.5" style="fill:#d04338;" />
+  <rect width="0.25" height="0.5" x="0.5" y="0.25" style="fill:#d04338;" />
+        </g>
+      
+        <g transform="matrix(1,0,0,1,1,0)" style="clip-path: url(#square); ">
+          <polygon points="0.5,0 0,0.5 0.5,1 1,0.5" style="fill:#d04338;"/>
+        </g>
+      
+        <g transform="matrix(1,0,0,1,2,0)" style="clip-path: url(#square); ">
+          <rect width="0.5" height="0.5" style="fill:#d04338;" /><rect width="0.5" height="0.5" x="0.5" y="0.5" style="fill:#d04338;" />
+        </g>
+      
+        <g transform="matrix(1,0,0,1,0,1)" style="clip-path: url(#square); ">
+          undefined<circle cx="0.25" cy="0.25" r="0.125" style="fill:#d04338;" /><circle cx="0.75" cy="0.25" r="0.125" style="fill:#d04338;" /><circle cx="0.25" cy="0.75" r="0.125" style="fill:#d04338;" /><circle cx="0.75" cy="0.75" r="0.125" style="fill:#d04338;" />
+        </g>
+      
+        <g transform="matrix(1,0,0,1,1,1)" style="clip-path: url(#square); ">
+          <circle cx="0.5" cy="0.5" r="0.5" style="fill:#d04338;"/><circle cx="0.5" cy="0.5" r="0.25" style="fill:#d04338;"/>
+        </g>
+      
+        <g transform="matrix(1,0,0,1,2,1)" style="clip-path: url(#square); ">
+          <circle cx="0.5" cy="0.5" r="0.5" style="fill:#d04338;"/>
+        </g>
+      
+        <g transform="matrix(1,0,0,1,0,2)" style="clip-path: url(#square); ">
+          undefined<circle cx="0.5" cy="0" r="0.5" style="fill:#d04338;" /><circle cx="0.5" cy="1" r="0.5" style="fill:#d04338;" />
+        </g>
+      
+        <g transform="matrix(1,0,0,1,1,2)" style="clip-path: url(#square); ">
+          <rect x="0" y="0" width="1" height="0.5" style="fill:#d04338;" />
+  <rect width="1" height="0.5" x="0" y="0.5" style="fill:#d04338;" /><rect x="0.25" y="0.25" width="0.5" height="0.25" style="fill:#d04338;" />
+  <rect width="0.5" height="0.25" x="0.25" y="0.5" style="fill:#d04338;" />
+        </g>
+      
+        <g transform="matrix(1,0,0,1,2,2)" style="clip-path: url(#square); ">
+          <circle cx="0.5" cy="0.5" r="0.5" style="fill:#d04338;"/>
+        </g>
+      
+    </svg>

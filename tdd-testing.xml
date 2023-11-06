@@ -6,8 +6,8 @@
       version="2.0">
 <channel>
 <title>Jakub Sobolewski</title>
-<link>https://jakubsob.github.io/#category=Testing</link>
-<atom:link href="https://jakubsob.github.io/index-testing.xml" rel="self" type="application/rss+xml"/>
+<link>https://jakubsob.github.io/tdd.html#category=Testing</link>
+<atom:link href="https://jakubsob.github.io/tdd-testing.xml" rel="self" type="application/rss+xml"/>
 <description>Jakub Sobolewski&#39;s blog.</description>
 <generator>quarto-1.4.468</generator>
 <lastBuildDate>Mon, 30 Oct 2023 23:00:00 GMT</lastBuildDate>
@@ -653,7 +653,6 @@ font-style: inherit;">$</span>select]))</span>
   <category>Testing</category>
   <guid>https://jakubsob.github.io/posts/anatomy-of-a-shiny-module-test/</guid>
   <pubDate>Mon, 30 Oct 2023 23:00:00 GMT</pubDate>
-  <media:content url="https://jakubsob.github.io/posts/anatomy-of-a-shiny-module-test/img/thumb.svg" medium="image" type="image/svg+xml"/>
 </item>
 <item>
   <title>How Test Driven Development Helps You Get Things Right</title>
@@ -774,7 +773,6 @@ font-style: inherit;"># ...</span></span>
   <category>Testing</category>
   <guid>https://jakubsob.github.io/posts/how-tdd-helps-you-build-the-right-thing/</guid>
   <pubDate>Mon, 23 Oct 2023 22:00:00 GMT</pubDate>
-  <media:content url="https://jakubsob.github.io/posts/how-tdd-helps-you-build-the-right-thing/img/thumb.svg" medium="image" type="image/svg+xml"/>
 </item>
 <item>
   <title>How Test Driven Development Makes You Faster.</title>
@@ -1377,7 +1375,6 @@ font-style: inherit;">expect_true</span>(result)</span>
   <category>Testing</category>
   <guid>https://jakubsob.github.io/posts/how_tdd_makes-you-faster/</guid>
   <pubDate>Wed, 18 Oct 2023 22:00:00 GMT</pubDate>
-  <media:content url="https://jakubsob.github.io/posts/how_tdd_makes-you-faster/img/thumb.svg" medium="image" type="image/svg+xml"/>
 </item>
 <item>
   <title>Testing Code With External Dependencies.</title>
@@ -1639,7 +1636,6 @@ font-style: inherit;">42</span>)</span>
   <category>Testing</category>
   <guid>https://jakubsob.github.io/posts/testing-code-with-external-dependencies/</guid>
   <pubDate>Sun, 15 Oct 2023 22:00:00 GMT</pubDate>
-  <media:content url="https://jakubsob.github.io/posts/testing-code-with-external-dependencies/img/thumb.svg" medium="image" type="image/svg+xml"/>
 </item>
 </channel>
 </rss>

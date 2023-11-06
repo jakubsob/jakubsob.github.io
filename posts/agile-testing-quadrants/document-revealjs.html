@@ -12,7 +12,7 @@
 
   <meta name="author" content="Jakub Sobolewski">
   <meta name="dcterms.date" content="2023-10-31">
-  <title>Jakub Sobolewski - Anatomy Of A Shiny Module Test With shiny::testServer</title>
+  <title>Jakub Sobolewski - Agile Testing Quadrants</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -30,71 +30,6 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
-    /* CSS for syntax highlighting */
-    pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { line-height: 1.25; }
-    pre > code.sourceCode > span:empty { height: 1.2em; }
-    .sourceCode { overflow: visible; }
-    code.sourceCode > span { color: inherit; text-decoration: inherit; }
-    div.sourceCode { margin: 1em 0; }
-    pre.sourceCode { margin: 0; }
-    @media screen {
-    div.sourceCode { overflow: auto; }
-    }
-    @media print {
-    pre > code.sourceCode { white-space: pre-wrap; }
-    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-    }
-    pre.numberSource code
-      { counter-reset: source-line 0; }
-    pre.numberSource code > span
-      { position: relative; left: -4em; counter-increment: source-line; }
-    pre.numberSource code > span > a:first-child::before
-      { content: counter(source-line);
-        position: relative; left: -1em; text-align: right; vertical-align: baseline;
-        border: none; display: inline-block;
-        -webkit-touch-callout: none; -webkit-user-select: none;
-        -khtml-user-select: none; -moz-user-select: none;
-        -ms-user-select: none; user-select: none;
-        padding: 0 4px; width: 4em;
-      }
-    pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-    div.sourceCode
-      { color: #f8f8f2;  }
-    @media screen {
-    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-    }
-    code span { color: #f8f8f2; } /* Normal */
-    code span.al { color: #f07178; background-color: #2a0f15; font-weight: bold; } /* Alert */
-    code span.an { color: #d4d0ab; } /* Annotation */
-    code span.at { color: #00e0e0; } /* Attribute */
-    code span.bn { color: #d4d0ab; } /* BaseN */
-    code span.bu { color: #abe338; } /* BuiltIn */
-    code span.cf { color: #ffa07a; font-weight: bold; } /* ControlFlow */
-    code span.ch { color: #abe338; } /* Char */
-    code span.cn { color: #ffd700; } /* Constant */
-    code span.co { color: #f8f8f2; font-style: italic; } /* Comment */
-    code span.cv { color: #ffd700; } /* CommentVar */
-    code span.do { color: #f8f8f2; } /* Documentation */
-    code span.dt { color: #ffa07a; } /* DataType */
-    code span.dv { color: #d4d0ab; } /* DecVal */
-    code span.er { color: #f07178; text-decoration: underline; } /* Error */
-    code span.ex { color: #00e0e0; font-weight: bold; } /* Extension */
-    code span.fl { color: #d4d0ab; } /* Float */
-    code span.fu { color: #ffa07a; } /* Function */
-    code span.im { color: #abe338; } /* Import */
-    code span.in { color: #d4d0ab; } /* Information */
-    code span.kw { color: #ffa07a; font-weight: bold; } /* Keyword */
-    code span.op { color: #ffa07a; } /* Operator */
-    code span.ot { color: #00e0e0; } /* Other */
-    code span.pp { color: #dcc6e0; } /* Preprocessor */
-    code span.re { color: #00e0e0; background-color: #f8f8f2; } /* RegionMarker */
-    code span.sc { color: #abe338; } /* SpecialChar */
-    code span.ss { color: #abe338; } /* SpecialString */
-    code span.st { color: #abe338; } /* String */
-    code span.va { color: #00e0e0; } /* Variable */
-    code span.vs { color: #abe338; } /* VerbatimString */
-    code span.wa { color: #dcc6e0; } /* Warning */
   </style>
   <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto.css">
   <link href="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
@@ -392,7 +327,7 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">Anatomy Of A Shiny Module Test With <code>shiny::testServer</code></h1>
+  <h1 class="title">Agile Testing Quadrants</h1>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -406,208 +341,38 @@ Jakub Sobolewski
 </section>
 <section class="slide level2">
 
-<p>Modules tested with <code>testServer</code> run with a session that is a <code>MockShinySession</code> object.</p>
+<p>To get confidence in the product, we need more than unit tests.</p>
+<p>I was first exposed to Agile Testing Quadrants in “ATDD by Example: A Practical Guide to Acceptance Test-Driven Development” by Markus Gärtner. They are a visual representation of different types of tests used during software development. They are split into four quadrants, each serving a specific purpose and role in the software development process. These quadrants can help teams understand which tests to conduct and when to conduct them.</p>
 </section>
-<section id="for-most-cases-we-only-need" class="slide level2">
-<h2>For most cases we only need:</h2>
-<p><code>MockShinySession$setInputs()</code> method which simulates users interactions with widgets.</p>
-<p><code>MockShinySession$returned</code> which contains the value returned by the module.</p>
+<section id="q1-technology-facing-tests-tf" class="slide level2">
+<h2>Q1: Technology-Facing Tests (TF)</h2>
+<p>Quadrant I consists of tests that are focused on the technical aspects of the system. These tests ensure that the system functions as expected, adhering to the defined technical requirements. Common examples of tests in this quadrant include unit tests, component tests, and API tests. They are typically automated and run frequently during the development process.</p>
 </section>
-<section id="example" class="slide level2">
-<h2>Example</h2>
-<p>We develop a module that takes a dataset as a parameter, and returns a subset of the data based on the selected variables in a dropdown.</p>
+<section id="q2-business-facing-tests-bf" class="slide level2">
+<h2>Q2: Business-Facing Tests (BF)</h2>
+<p>Quadrant II comprises tests that validate the system’s functionality from a business perspective. These tests ensure that the software meets the intended business goals and requirements. Examples of tests in this quadrant include acceptance tests, user story tests, and user journey tests.</p>
 </section>
-<section id="section" class="slide level2" data-auto-animate="true" data-background-color="#EBCA47">
-<h2 data-id="quarto-animate-title"></h2>
-<div class="sourceCode" id="cb1" data-source-line-numbers="" data-code-line-numbers=""><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb1-1" class="hljs-ln-code"><a href="#cb1-1"></a><span class="fu">describe</span>(<span class="st">"server"</span>, {</span>
-<span id="cb1-2" class="hljs-ln-code"><a href="#cb1-2"></a>  <span class="fu">it</span>(<span class="st">"should subset the data with selected variables"</span>, {</span>
-<span id="cb1-3" class="hljs-ln-code"><a href="#cb1-3"></a>    <span class="co"># Arrange</span></span>
-<span id="cb1-4" class="hljs-ln-code"><a href="#cb1-4"></a>    args <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">data =</span> iris)</span>
-<span id="cb1-5" class="hljs-ln-code"><a href="#cb1-5"></a></span>
-<span id="cb1-6" class="hljs-ln-code"><a href="#cb1-6"></a>    shiny<span class="sc">::</span><span class="fu">testServer</span>(server, <span class="at">args =</span> args, {</span>
-<span id="cb1-7" class="hljs-ln-code"><a href="#cb1-7"></a>      <span class="co"># Act</span></span>
-<span id="cb1-8" class="hljs-ln-code"><a href="#cb1-8"></a>      session<span class="sc">$</span><span class="fu">setInputs</span>(<span class="at">select =</span> <span class="fu">c</span>(<span class="st">"Sepal.Length"</span>, <span class="st">"Species"</span>))</span>
-<span id="cb1-9" class="hljs-ln-code"><a href="#cb1-9"></a></span>
-<span id="cb1-10" class="hljs-ln-code"><a href="#cb1-10"></a>      <span class="co"># Assert</span></span>
-<span id="cb1-11" class="hljs-ln-code"><a href="#cb1-11"></a>      <span class="fu">expect_equal</span>(</span>
-<span id="cb1-12" class="hljs-ln-code"><a href="#cb1-12"></a>        <span class="fu">colnames</span>(session<span class="sc">$</span><span class="fu">returned</span>()),</span>
-<span id="cb1-13" class="hljs-ln-code"><a href="#cb1-13"></a>        <span class="fu">c</span>(<span class="st">"Sepal.Length"</span>, <span class="st">"Species"</span>)</span>
-<span id="cb1-14" class="hljs-ln-code"><a href="#cb1-14"></a>      )</span>
-<span id="cb1-15" class="hljs-ln-code"><a href="#cb1-15"></a>    })</span>
-<span id="cb1-16" class="hljs-ln-code"><a href="#cb1-16"></a>  })</span>
-<span id="cb1-17" class="hljs-ln-code"><a href="#cb1-17"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="q3-technology-facing-tests-tf" class="slide level2">
+<h2>Q3: Technology-Facing Tests (TF)</h2>
+<p>Quadrant IV includes tests that verify the system’s compliance with regulatory and legal requirements. These tests are essential for industries with strict compliance regulations, such as healthcare or finance. They encompass tests like compliance testing, data privacy testing, and legal requirement testing.</p>
 </section>
-<section id="section-1" class="slide level2" data-auto-animate="true" data-background-color="#EBCA47">
-<h2 data-id="quarto-animate-title"></h2>
-<div class="sourceCode" id="cb2" data-source-line-numbers="3-4" data-code-line-numbers="3-4"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb2-1" class="hljs-ln-code"><a href="#cb2-1"></a><span class="fu">describe</span>(<span class="st">"server"</span>, {</span>
-<span id="cb2-2" class="hljs-ln-code"><a href="#cb2-2"></a>  <span class="fu">it</span>(<span class="st">"should subset the data with selected variables"</span>, {</span>
-<span id="cb2-3" class="hljs-ln-code"><a href="#cb2-3"></a>    <span class="co"># Arrange</span></span>
-<span id="cb2-4" class="hljs-ln-code"><a href="#cb2-4"></a>    args <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">data =</span> iris)</span>
-<span id="cb2-5" class="hljs-ln-code"><a href="#cb2-5"></a></span>
-<span id="cb2-6" class="hljs-ln-code"><a href="#cb2-6"></a>    shiny<span class="sc">::</span><span class="fu">testServer</span>(server, <span class="at">args =</span> args, {</span>
-<span id="cb2-7" class="hljs-ln-code"><a href="#cb2-7"></a>      <span class="co"># Act</span></span>
-<span id="cb2-8" class="hljs-ln-code"><a href="#cb2-8"></a>      session<span class="sc">$</span><span class="fu">setInputs</span>(<span class="at">select =</span> <span class="fu">c</span>(<span class="st">"Sepal.Length"</span>, <span class="st">"Species"</span>))</span>
-<span id="cb2-9" class="hljs-ln-code"><a href="#cb2-9"></a></span>
-<span id="cb2-10" class="hljs-ln-code"><a href="#cb2-10"></a>      <span class="co"># Assert</span></span>
-<span id="cb2-11" class="hljs-ln-code"><a href="#cb2-11"></a>      <span class="fu">expect_equal</span>(</span>
-<span id="cb2-12" class="hljs-ln-code"><a href="#cb2-12"></a>        <span class="fu">colnames</span>(session<span class="sc">$</span><span class="fu">returned</span>()),</span>
-<span id="cb2-13" class="hljs-ln-code"><a href="#cb2-13"></a>        <span class="fu">c</span>(<span class="st">"Sepal.Length"</span>, <span class="st">"Species"</span>)</span>
-<span id="cb2-14" class="hljs-ln-code"><a href="#cb2-14"></a>      )</span>
-<span id="cb2-15" class="hljs-ln-code"><a href="#cb2-15"></a>    })</span>
-<span id="cb2-16" class="hljs-ln-code"><a href="#cb2-16"></a>  })</span>
-<span id="cb2-17" class="hljs-ln-code"><a href="#cb2-17"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>We arrange parameters to pass to the module.</p>
+<section id="q4-business-facing-tests-bf" class="slide level2">
+<h2>Q4: Business-Facing Tests (BF)</h2>
+<p>Quadrant III involves tests that ensure the software performs well in terms of scalability, performance, and security. Common tests in this quadrant include load testing, security testing, and stress testing. These tests are crucial for identifying performance bottlenecks and security vulnerabilities.</p>
 </section>
-<section id="section-2" class="slide level2" data-auto-animate="true" data-background-color="#EBCA47">
-<h2 data-id="quarto-animate-title"></h2>
-<div class="sourceCode" id="cb3" data-source-line-numbers="6" data-code-line-numbers="6"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb3-1" class="hljs-ln-code"><a href="#cb3-1"></a><span class="fu">describe</span>(<span class="st">"server"</span>, {</span>
-<span id="cb3-2" class="hljs-ln-code"><a href="#cb3-2"></a>  <span class="fu">it</span>(<span class="st">"should subset the data with selected variables"</span>, {</span>
-<span id="cb3-3" class="hljs-ln-code"><a href="#cb3-3"></a>    <span class="co"># Arrange</span></span>
-<span id="cb3-4" class="hljs-ln-code"><a href="#cb3-4"></a>    args <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">data =</span> iris)</span>
-<span id="cb3-5" class="hljs-ln-code"><a href="#cb3-5"></a></span>
-<span id="cb3-6" class="hljs-ln-code"><a href="#cb3-6"></a>    shiny<span class="sc">::</span><span class="fu">testServer</span>(server, <span class="at">args =</span> args, {</span>
-<span id="cb3-7" class="hljs-ln-code"><a href="#cb3-7"></a>      <span class="co"># Act</span></span>
-<span id="cb3-8" class="hljs-ln-code"><a href="#cb3-8"></a>      session<span class="sc">$</span><span class="fu">setInputs</span>(<span class="at">select =</span> <span class="fu">c</span>(<span class="st">"Sepal.Length"</span>, <span class="st">"Species"</span>))</span>
-<span id="cb3-9" class="hljs-ln-code"><a href="#cb3-9"></a></span>
-<span id="cb3-10" class="hljs-ln-code"><a href="#cb3-10"></a>      <span class="co"># Assert</span></span>
-<span id="cb3-11" class="hljs-ln-code"><a href="#cb3-11"></a>      <span class="fu">expect_equal</span>(</span>
-<span id="cb3-12" class="hljs-ln-code"><a href="#cb3-12"></a>        <span class="fu">colnames</span>(session<span class="sc">$</span><span class="fu">returned</span>()),</span>
-<span id="cb3-13" class="hljs-ln-code"><a href="#cb3-13"></a>        <span class="fu">c</span>(<span class="st">"Sepal.Length"</span>, <span class="st">"Species"</span>)</span>
-<span id="cb3-14" class="hljs-ln-code"><a href="#cb3-14"></a>      )</span>
-<span id="cb3-15" class="hljs-ln-code"><a href="#cb3-15"></a>    })</span>
-<span id="cb3-16" class="hljs-ln-code"><a href="#cb3-16"></a>  })</span>
-<span id="cb3-17" class="hljs-ln-code"><a href="#cb3-17"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Arguments are passed to the module as a list.</p>
+<section id="benefits-of-the-agile-testing-quadrants" class="slide level2">
+<h2>Benefits of the Agile Testing Quadrants</h2>
+<ol type="1">
+<li><p><strong>Clear Test Strategy:</strong> The quadrants provide a clear structure for the testing process, making it easier to plan and execute tests throughout the development cycle.</p></li>
+<li><p><strong>Effective Collaboration:</strong> The quadrants promote collaboration between developers and testers. Teams can work together to decide which tests are most relevant for each user story.</p></li>
+<li><p><strong>Risk Mitigation:</strong> By systematically covering all quadrants, teams reduce the risk of overlooking critical aspects of testing, such as business requirements, non-functional aspects, and compliance.</p></li>
+<li><p><strong>Adaptability:</strong> Agile Testing Quadrants are flexible and can be tailored to fit the specific needs of your project, making them compatible with a wide range of development methodologies.</p></li>
+</ol>
 </section>
-<section id="section-3" class="slide level2" data-auto-animate="true" data-background-color="#EBCA47">
-<h2 data-id="quarto-animate-title"></h2>
-<div class="sourceCode" id="cb4" data-source-line-numbers="6-15" data-code-line-numbers="6-15"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb4-1" class="hljs-ln-code"><a href="#cb4-1"></a><span class="fu">describe</span>(<span class="st">"server"</span>, {</span>
-<span id="cb4-2" class="hljs-ln-code"><a href="#cb4-2"></a>  <span class="fu">it</span>(<span class="st">"should subset the data with selected variables"</span>, {</span>
-<span id="cb4-3" class="hljs-ln-code"><a href="#cb4-3"></a>    <span class="co"># Arrange</span></span>
-<span id="cb4-4" class="hljs-ln-code"><a href="#cb4-4"></a>    args <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">data =</span> iris)</span>
-<span id="cb4-5" class="hljs-ln-code"><a href="#cb4-5"></a></span>
-<span id="cb4-6" class="hljs-ln-code"><a href="#cb4-6"></a>    shiny<span class="sc">::</span><span class="fu">testServer</span>(server, <span class="at">args =</span> args, {</span>
-<span id="cb4-7" class="hljs-ln-code"><a href="#cb4-7"></a>      <span class="co"># Act</span></span>
-<span id="cb4-8" class="hljs-ln-code"><a href="#cb4-8"></a>      session<span class="sc">$</span><span class="fu">setInputs</span>(<span class="at">select =</span> <span class="fu">c</span>(<span class="st">"Sepal.Length"</span>, <span class="st">"Species"</span>))</span>
-<span id="cb4-9" class="hljs-ln-code"><a href="#cb4-9"></a></span>
-<span id="cb4-10" class="hljs-ln-code"><a href="#cb4-10"></a>      <span class="co"># Assert</span></span>
-<span id="cb4-11" class="hljs-ln-code"><a href="#cb4-11"></a>      <span class="fu">expect_equal</span>(</span>
-<span id="cb4-12" class="hljs-ln-code"><a href="#cb4-12"></a>        <span class="fu">colnames</span>(session<span class="sc">$</span><span class="fu">returned</span>()),</span>
-<span id="cb4-13" class="hljs-ln-code"><a href="#cb4-13"></a>        <span class="fu">c</span>(<span class="st">"Sepal.Length"</span>, <span class="st">"Species"</span>)</span>
-<span id="cb4-14" class="hljs-ln-code"><a href="#cb4-14"></a>      )</span>
-<span id="cb4-15" class="hljs-ln-code"><a href="#cb4-15"></a>    })</span>
-<span id="cb4-16" class="hljs-ln-code"><a href="#cb4-16"></a>  })</span>
-<span id="cb4-17" class="hljs-ln-code"><a href="#cb4-17"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Code within <code>testServer</code> has access to the session, inputs and outputs.</p>
-</section>
-<section id="section-4" class="slide level2" data-auto-animate="true" data-background-color="#EBCA47">
-<h2 data-id="quarto-animate-title"></h2>
-<div class="sourceCode" id="cb5" data-source-line-numbers="7-8" data-code-line-numbers="7-8"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb5-1" class="hljs-ln-code"><a href="#cb5-1"></a><span class="fu">describe</span>(<span class="st">"server"</span>, {</span>
-<span id="cb5-2" class="hljs-ln-code"><a href="#cb5-2"></a>  <span class="fu">it</span>(<span class="st">"should subset the data with selected variables"</span>, {</span>
-<span id="cb5-3" class="hljs-ln-code"><a href="#cb5-3"></a>    <span class="co"># Arrange</span></span>
-<span id="cb5-4" class="hljs-ln-code"><a href="#cb5-4"></a>    args <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">data =</span> iris)</span>
-<span id="cb5-5" class="hljs-ln-code"><a href="#cb5-5"></a></span>
-<span id="cb5-6" class="hljs-ln-code"><a href="#cb5-6"></a>    shiny<span class="sc">::</span><span class="fu">testServer</span>(server, <span class="at">args =</span> args, {</span>
-<span id="cb5-7" class="hljs-ln-code"><a href="#cb5-7"></a>      <span class="co"># Act</span></span>
-<span id="cb5-8" class="hljs-ln-code"><a href="#cb5-8"></a>      session<span class="sc">$</span><span class="fu">setInputs</span>(<span class="at">select =</span> <span class="fu">c</span>(<span class="st">"Sepal.Length"</span>, <span class="st">"Species"</span>))</span>
-<span id="cb5-9" class="hljs-ln-code"><a href="#cb5-9"></a></span>
-<span id="cb5-10" class="hljs-ln-code"><a href="#cb5-10"></a>      <span class="co"># Assert</span></span>
-<span id="cb5-11" class="hljs-ln-code"><a href="#cb5-11"></a>      <span class="fu">expect_equal</span>(</span>
-<span id="cb5-12" class="hljs-ln-code"><a href="#cb5-12"></a>        <span class="fu">colnames</span>(session<span class="sc">$</span><span class="fu">returned</span>()),</span>
-<span id="cb5-13" class="hljs-ln-code"><a href="#cb5-13"></a>        <span class="fu">c</span>(<span class="st">"Sepal.Length"</span>, <span class="st">"Species"</span>)</span>
-<span id="cb5-14" class="hljs-ln-code"><a href="#cb5-14"></a>      )</span>
-<span id="cb5-15" class="hljs-ln-code"><a href="#cb5-15"></a>    })</span>
-<span id="cb5-16" class="hljs-ln-code"><a href="#cb5-16"></a>  })</span>
-<span id="cb5-17" class="hljs-ln-code"><a href="#cb5-17"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>We select 2 variables using an input that has <code>"select"</code> ID.</p>
-<p>It will be accessed with <code>input$select</code>.</p>
-</section>
-<section id="section-5" class="slide level2" data-auto-animate="true" data-background-color="#EBCA47">
-<h2 data-id="quarto-animate-title"></h2>
-<div class="sourceCode" id="cb6" data-source-line-numbers="10-14" data-code-line-numbers="10-14"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb6-1" class="hljs-ln-code"><a href="#cb6-1"></a><span class="fu">describe</span>(<span class="st">"server"</span>, {</span>
-<span id="cb6-2" class="hljs-ln-code"><a href="#cb6-2"></a>  <span class="fu">it</span>(<span class="st">"should subset the data with selected variables"</span>, {</span>
-<span id="cb6-3" class="hljs-ln-code"><a href="#cb6-3"></a>    <span class="co"># Arrange</span></span>
-<span id="cb6-4" class="hljs-ln-code"><a href="#cb6-4"></a>    args <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">data =</span> iris)</span>
-<span id="cb6-5" class="hljs-ln-code"><a href="#cb6-5"></a></span>
-<span id="cb6-6" class="hljs-ln-code"><a href="#cb6-6"></a>    shiny<span class="sc">::</span><span class="fu">testServer</span>(server, <span class="at">args =</span> args, {</span>
-<span id="cb6-7" class="hljs-ln-code"><a href="#cb6-7"></a>      <span class="co"># Act</span></span>
-<span id="cb6-8" class="hljs-ln-code"><a href="#cb6-8"></a>      session<span class="sc">$</span><span class="fu">setInputs</span>(<span class="at">select =</span> <span class="fu">c</span>(<span class="st">"Sepal.Length"</span>, <span class="st">"Species"</span>))</span>
-<span id="cb6-9" class="hljs-ln-code"><a href="#cb6-9"></a></span>
-<span id="cb6-10" class="hljs-ln-code"><a href="#cb6-10"></a>      <span class="co"># Assert</span></span>
-<span id="cb6-11" class="hljs-ln-code"><a href="#cb6-11"></a>      <span class="fu">expect_equal</span>(</span>
-<span id="cb6-12" class="hljs-ln-code"><a href="#cb6-12"></a>        <span class="fu">colnames</span>(session<span class="sc">$</span><span class="fu">returned</span>()),</span>
-<span id="cb6-13" class="hljs-ln-code"><a href="#cb6-13"></a>        <span class="fu">c</span>(<span class="st">"Sepal.Length"</span>, <span class="st">"Species"</span>)</span>
-<span id="cb6-14" class="hljs-ln-code"><a href="#cb6-14"></a>      )</span>
-<span id="cb6-15" class="hljs-ln-code"><a href="#cb6-15"></a>    })</span>
-<span id="cb6-16" class="hljs-ln-code"><a href="#cb6-16"></a>  })</span>
-<span id="cb6-17" class="hljs-ln-code"><a href="#cb6-17"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>The return value should be a column subset of the <code>data</code>.</p>
-</section>
-<section id="section-6" class="slide level2" data-auto-animate="true" data-background-color="#EBCA47">
-<h2 data-id="quarto-animate-title"></h2>
-<div class="sourceCode" id="cb7" data-source-line-numbers="10-14" data-code-line-numbers="10-14"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb7-1" class="hljs-ln-code"><a href="#cb7-1"></a><span class="fu">describe</span>(<span class="st">"server"</span>, {</span>
-<span id="cb7-2" class="hljs-ln-code"><a href="#cb7-2"></a>  <span class="fu">it</span>(<span class="st">"should subset the data with selected variables"</span>, {</span>
-<span id="cb7-3" class="hljs-ln-code"><a href="#cb7-3"></a>    <span class="co"># Arrange</span></span>
-<span id="cb7-4" class="hljs-ln-code"><a href="#cb7-4"></a>    args <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">data =</span> iris)</span>
-<span id="cb7-5" class="hljs-ln-code"><a href="#cb7-5"></a></span>
-<span id="cb7-6" class="hljs-ln-code"><a href="#cb7-6"></a>    shiny<span class="sc">::</span><span class="fu">testServer</span>(server, <span class="at">args =</span> args, {</span>
-<span id="cb7-7" class="hljs-ln-code"><a href="#cb7-7"></a>      <span class="co"># Act</span></span>
-<span id="cb7-8" class="hljs-ln-code"><a href="#cb7-8"></a>      session<span class="sc">$</span><span class="fu">setInputs</span>(<span class="at">select =</span> <span class="fu">c</span>(<span class="st">"Sepal.Length"</span>, <span class="st">"Species"</span>))</span>
-<span id="cb7-9" class="hljs-ln-code"><a href="#cb7-9"></a></span>
-<span id="cb7-10" class="hljs-ln-code"><a href="#cb7-10"></a>      <span class="co"># Assert</span></span>
-<span id="cb7-11" class="hljs-ln-code"><a href="#cb7-11"></a>      <span class="fu">expect_equal</span>(</span>
-<span id="cb7-12" class="hljs-ln-code"><a href="#cb7-12"></a>        <span class="fu">colnames</span>(session<span class="sc">$</span><span class="fu">returned</span>()),</span>
-<span id="cb7-13" class="hljs-ln-code"><a href="#cb7-13"></a>        <span class="fu">c</span>(<span class="st">"Sepal.Length"</span>, <span class="st">"Species"</span>)</span>
-<span id="cb7-14" class="hljs-ln-code"><a href="#cb7-14"></a>      )</span>
-<span id="cb7-15" class="hljs-ln-code"><a href="#cb7-15"></a>    })</span>
-<span id="cb7-16" class="hljs-ln-code"><a href="#cb7-16"></a>  })</span>
-<span id="cb7-17" class="hljs-ln-code"><a href="#cb7-17"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>We use <code>session$returned()</code> to get the value of the returned <code>reactive</code>.</p>
-</section>
-<section id="section-7" class="slide level2" data-background-color="#EBCA47">
-<h2></h2>
-<p>To use <code>shiny::testServer</code> the module must be implemented with <code>shiny::moduleServer</code>.</p>
-<div class="sourceCode" id="cb8" data-code-line-numbers=""><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(id) {</span>
-<span id="cb8-2"><a href="#cb8-2"></a>  <span class="fu">moduleServer</span>(id, <span class="cf">function</span>(input, output, session) {</span>
-<span id="cb8-3"><a href="#cb8-3"></a>    <span class="co"># ...</span></span>
-<span id="cb8-4"><a href="#cb8-4"></a>  })</span>
-<span id="cb8-5"><a href="#cb8-5"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="section-8" class="slide level2" data-auto-animate="true" data-background-color="#EBCA47">
-<h2 data-id="quarto-animate-title"></h2>
-<div class="sourceCode" id="cb9" data-code-line-numbers=""><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb9-1" class="hljs-ln-code"><a href="#cb9-1"></a>ui <span class="ot">&lt;-</span> <span class="cf">function</span>(id) {</span>
-<span id="cb9-2" class="hljs-ln-code"><a href="#cb9-2"></a>  ns <span class="ot">&lt;-</span> <span class="fu">NS</span>(id)</span>
-<span id="cb9-3" class="hljs-ln-code"><a href="#cb9-3"></a>  <span class="fu">fluidPage</span>(</span>
-<span id="cb9-4" class="hljs-ln-code"><a href="#cb9-4"></a>    <span class="fu">selectInput</span>(<span class="fu">ns</span>(<span class="st">"select"</span>), <span class="st">"Select variables"</span>, <span class="at">choices =</span> <span class="cn">NULL</span>, <span class="at">multiple =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb9-5" class="hljs-ln-code"><a href="#cb9-5"></a>  )</span>
-<span id="cb9-6" class="hljs-ln-code"><a href="#cb9-6"></a>}</span>
-<span id="cb9-7" class="hljs-ln-code"><a href="#cb9-7"></a></span>
-<span id="cb9-8" class="hljs-ln-code"><a href="#cb9-8"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(id, data) {</span>
-<span id="cb9-9" class="hljs-ln-code"><a href="#cb9-9"></a>  <span class="fu">moduleServer</span>(id, <span class="cf">function</span>(input, output, session) {</span>
-<span id="cb9-10" class="hljs-ln-code"><a href="#cb9-10"></a>    <span class="fu">updateSelectInput</span>(session, <span class="st">"select"</span>, <span class="at">choices =</span> <span class="fu">colnames</span>(data))</span>
-<span id="cb9-11" class="hljs-ln-code"><a href="#cb9-11"></a>    <span class="fu">return</span>(<span class="fu">reactive</span>(data[, input<span class="sc">$</span>select]))</span>
-<span id="cb9-12" class="hljs-ln-code"><a href="#cb9-12"></a>  })</span>
-<span id="cb9-13" class="hljs-ln-code"><a href="#cb9-13"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>And this is the module that passes this test.</p>
-</section>
-<section id="section-9" class="slide level2">
-<h2></h2>
-<p>Writing tests first for Shiny modules helps to keep them:</p>
-<ul>
-<li>simple,</li>
-<li>focused,</li>
-<li>and doing exactly what they need to do.</li>
-</ul>
-</section>
-<section id="section-10" class="slide level2">
-<h2></h2>
-<p>Tests help define what should be the input to the module.</p>
-<p>What it should do.</p>
-<p>And what it should return.</p>
-</section>
-<section id="section-11" class="slide level2">
-<h2></h2>
-<p>Such modules are easier to reuse and easier to compose them to build the whole app.</p>
+<section id="practical-implementation" class="slide level2">
+<h2>Practical Implementation</h2>
+<p>To put the Agile Testing Quadrants into practice, start by identifying the relevant tests for each user story or feature. Determine whether the emphasis should be on technology-facing or business-facing tests, and consider non-functional and compliance tests as necessary. It’s crucial to find the right balance to ensure that the software is not only functional but also meets business and non-functional requirements.</p>
+<p>In conclusion, the Agile Testing Quadrants are a valuable resource for Agile development teams. They provide a structured approach to testing, fostering collaboration, reducing risk, and ensuring comprehensive test coverage. By understanding and applying these quadrants effectively, your team can enhance the quality of your software and deliver products that meet both technical and business objectives. Embrace the Agile Testing Quadrants and watch your testing process become more efficient and effective.</p>
 
 <div class="footer footer-default">
 

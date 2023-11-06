@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Jakub Sobolewski">
+<meta name="dcterms.date" content="2023-10-31">
 
-<title>Jakub Sobolewski -</title>
+<title>Jakub Sobolewski - Agile Testing Quadrants</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,26 +25,25 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/quarto-contrib/line-highlight-1.0.0/line-highlight.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -69,40 +70,9 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
 
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
 
-    const options = {
-      valueNames: ['listing-title','listing-subtitle','listing-date','listing-description','listing-categories','listing-reading-time','listing-image',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
-
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<link rel="alternate" type="application/rss+xml" title="Jakub Sobolewski" href="index.xml" data-external="1"></head>
+</head>
 
 <body class="nav-fixed">
 
@@ -111,7 +81,7 @@ ul.task-list li input[type="checkbox"] {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Jakub Sobolewski</span>
     </a>
   </div>
@@ -122,13 +92,13 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page"> 
+    <a class="nav-link" href="../../index.html"> 
 <span class="menu-text">Blog</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
-    <a class="nav-link" href="./index.xml"> <i class="bi bi-rss" role="img">
+    <a class="nav-link" href="../../index.xml"> <i class="bi bi-rss" role="img">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
@@ -141,218 +111,86 @@ ul.task-list li input[type="checkbox"] {
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(5)</span></div><div class="category" data-category="R">R <span class="quarto-category-count">(5)</span></div><div class="category" data-category="Test Driven Development">Test Driven Development <span class="quarto-category-count">(4)</span></div><div class="category" data-category="Testing">Testing <span class="quarto-category-count">(4)</span></div></div></div>
+    <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="document-revealjs.html"><i class="bi bi-file-slides"></i>RevealJS</a></li></ul></div></div>
 <!-- main -->
-<main class="content column-page-left" id="quarto-document-content">
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Agile Testing Quadrants</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">R</div>
+    <div class="quarto-category">Testing</div>
+  </div>
+  </div>
 
 
 
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Jakub Sobolewski </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">October 31, 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
 
 
+</header>
 
 
+<p>To get confidence in the product, we need more than unit tests.</p>
+<p>I was first exposed to Agile Testing Quadrants in “ATDD by Example: A Practical Guide to Acceptance Test-Driven Development” by Markus Gärtner. They are a visual representation of different types of tests used during software development. They are split into four quadrants, each serving a specific purpose and role in the software development process. These quadrants can help teams understand which tests to conduct and when to conduct them.</p>
+<section id="q1-technology-facing-tests-tf" class="level2">
+<h2 class="anchored" data-anchor-id="q1-technology-facing-tests-tf">Q1: Technology-Facing Tests (TF)</h2>
+<p>Quadrant I consists of tests that are focused on the technical aspects of the system. These tests ensure that the system functions as expected, adhering to the defined technical requirements. Common examples of tests in this quadrant include unit tests, component tests, and API tests. They are typically automated and run frequently during the development process.</p>
+</section>
+<section id="q2-business-facing-tests-bf" class="level2">
+<h2 class="anchored" data-anchor-id="q2-business-facing-tests-bf">Q2: Business-Facing Tests (BF)</h2>
+<p>Quadrant II comprises tests that validate the system’s functionality from a business perspective. These tests ensure that the software meets the intended business goals and requirements. Examples of tests in this quadrant include acceptance tests, user story tests, and user journey tests.</p>
+</section>
+<section id="q3-technology-facing-tests-tf" class="level2">
+<h2 class="anchored" data-anchor-id="q3-technology-facing-tests-tf">Q3: Technology-Facing Tests (TF)</h2>
+<p>Quadrant IV includes tests that verify the system’s compliance with regulatory and legal requirements. These tests are essential for industries with strict compliance regulations, such as healthcare or finance. They encompass tests like compliance testing, data privacy testing, and legal requirement testing.</p>
+</section>
+<section id="q4-business-facing-tests-bf" class="level2">
+<h2 class="anchored" data-anchor-id="q4-business-facing-tests-bf">Q4: Business-Facing Tests (BF)</h2>
+<p>Quadrant III involves tests that ensure the software performs well in terms of scalability, performance, and security. Common tests in this quadrant include load testing, security testing, and stress testing. These tests are crucial for identifying performance bottlenecks and security vulnerabilities.</p>
+</section>
+<section id="benefits-of-the-agile-testing-quadrants" class="level2">
+<h2 class="anchored" data-anchor-id="benefits-of-the-agile-testing-quadrants">Benefits of the Agile Testing Quadrants</h2>
+<ol type="1">
+<li><p><strong>Clear Test Strategy:</strong> The quadrants provide a clear structure for the testing process, making it easier to plan and execute tests throughout the development cycle.</p></li>
+<li><p><strong>Effective Collaboration:</strong> The quadrants promote collaboration between developers and testers. Teams can work together to decide which tests are most relevant for each user story.</p></li>
+<li><p><strong>Risk Mitigation:</strong> By systematically covering all quadrants, teams reduce the risk of overlooking critical aspects of testing, such as business requirements, non-functional aspects, and compliance.</p></li>
+<li><p><strong>Adaptability:</strong> Agile Testing Quadrants are flexible and can be tailored to fit the specific needs of your project, making them compatible with a wide range of development methodologies.</p></li>
+</ol>
+</section>
+<section id="practical-implementation" class="level2">
+<h2 class="anchored" data-anchor-id="practical-implementation">Practical Implementation</h2>
+<p>To put the Agile Testing Quadrants into practice, start by identifying the relevant tests for each user story or feature. Determine whether the emphasis should be on technology-facing or business-facing tests, and consider non-functional and compliance tests as necessary. It’s crucial to find the right balance to ensure that the software is not only functional but also meets business and non-functional requirements.</p>
+<p>In conclusion, the Agile Testing Quadrants are a valuable resource for Agile development teams. They provide a structured approach to testing, fostering collaboration, reducing risk, and ensuring comprehensive test coverage. By understanding and applying these quadrants effectively, your team can enhance the quality of your software and deliver products that meet both technical and business objectives. Embrace the Agile Testing Quadrants and watch your testing process become more efficient and effective.</p>
 
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="R,Test Driven Development,Testing" data-listing-date-sort="1698706800000" data-listing-file-modified-sort="1699296152477" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="902">
-<div class="thumbnail">
-<p><a href="./posts/anatomy-of-a-shiny-module-test/index.html" class="no-external"></a></p><a href="./posts/anatomy-of-a-shiny-module-test/index.html" class="no-external">
-<p><img src="./posts/anatomy-of-a-shiny-module-test/img/thumb.svg" class="thumbnail-image"></p>
-</a><p><a href="./posts/anatomy-of-a-shiny-module-test/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/anatomy-of-a-shiny-module-test/index.html" class="no-external">Anatomy Of A Shiny Module Test With <code>shiny::testServer</code></a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/anatomy-of-a-shiny-module-test/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('R'); return false;">
-R
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Test Driven Development'); return false;">
-Test Driven Development
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Testing'); return false;">
-Testing
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/anatomy-of-a-shiny-module-test/index.html" class="no-external">Modules tested with <code>testServer</code> run with a session that is a <code>MockShinySession</code> object.</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/anatomy-of-a-shiny-module-test/index.html" class="no-external">
-<div class="listing-date">
-Oct 31, 2023
-</div>
-<div class="listing-reading-time">
-5 min
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-categories="R,Test Driven Development,Testing" data-listing-date-sort="1698098400000" data-listing-file-modified-sort="1699295684192" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="233">
-<div class="thumbnail">
-<p><a href="./posts/how-tdd-helps-you-build-the-right-thing/index.html" class="no-external"></a></p><a href="./posts/how-tdd-helps-you-build-the-right-thing/index.html" class="no-external">
-<p><img src="./posts/how-tdd-helps-you-build-the-right-thing/img/thumb.svg" class="thumbnail-image"></p>
-</a><p><a href="./posts/how-tdd-helps-you-build-the-right-thing/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/how-tdd-helps-you-build-the-right-thing/index.html" class="no-external">How Test Driven Development Helps You Get Things Right</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/how-tdd-helps-you-build-the-right-thing/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('R'); return false;">
-R
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Test Driven Development'); return false;">
-Test Driven Development
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Testing'); return false;">
-Testing
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/how-tdd-helps-you-build-the-right-thing/index.html" class="no-external">On the first try. No rewrites.</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/how-tdd-helps-you-build-the-right-thing/index.html" class="no-external">
-<div class="listing-date">
-Oct 24, 2023
-</div>
-<div class="listing-reading-time">
-2 min
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="2" data-categories="R,Test Driven Development,Testing" data-listing-date-sort="1697666400000" data-listing-file-modified-sort="1699295711212" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="901">
-<div class="thumbnail">
-<p><a href="./posts/how_tdd_makes-you-faster/index.html" class="no-external"></a></p><a href="./posts/how_tdd_makes-you-faster/index.html" class="no-external">
-<p><img src="./posts/how_tdd_makes-you-faster/img/thumb.svg" class="thumbnail-image"></p>
-</a><p><a href="./posts/how_tdd_makes-you-faster/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/how_tdd_makes-you-faster/index.html" class="no-external">How Test Driven Development Makes You Faster.</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/how_tdd_makes-you-faster/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('R'); return false;">
-R
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Test Driven Development'); return false;">
-Test Driven Development
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Testing'); return false;">
-Testing
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/how_tdd_makes-you-faster/index.html" class="no-external">By Allowing You To Experiment With Your Code</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/how_tdd_makes-you-faster/index.html" class="no-external">
-<div class="listing-date">
-Oct 19, 2023
-</div>
-<div class="listing-reading-time">
-5 min
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="3" data-categories="R,Test Driven Development,Testing" data-listing-date-sort="1697407200000" data-listing-file-modified-sort="1699295706436" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="292">
-<div class="thumbnail">
-<p><a href="./posts/testing-code-with-external-dependencies/index.html" class="no-external"></a></p><a href="./posts/testing-code-with-external-dependencies/index.html" class="no-external">
-<p><img src="./posts/testing-code-with-external-dependencies/img/thumb.svg" class="thumbnail-image"></p>
-</a><p><a href="./posts/testing-code-with-external-dependencies/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/testing-code-with-external-dependencies/index.html" class="no-external">Testing Code With External Dependencies.</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/testing-code-with-external-dependencies/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('R'); return false;">
-R
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Test Driven Development'); return false;">
-Test Driven Development
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Testing'); return false;">
-Testing
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/testing-code-with-external-dependencies/index.html" class="no-external">A stub is a controllable replacement of a dependency in your system.</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/testing-code-with-external-dependencies/index.html" class="no-external">
-<div class="listing-date">
-Oct 16, 2023
-</div>
-<div class="listing-reading-time">
-2 min
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="4" data-categories="R" data-listing-date-sort="1696888800000" data-listing-file-modified-sort="1699295698066" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="239">
-<div class="thumbnail">
-<p><a href="./posts/how-to-not-get-frustrated-working-with-legacy-code/index.html" class="no-external"></a></p><a href="./posts/how-to-not-get-frustrated-working-with-legacy-code/index.html" class="no-external">
-<p><img src="./posts/how-to-not-get-frustrated-working-with-legacy-code/img/thumb.svg" class="thumbnail-image"></p>
-</a><p><a href="./posts/how-to-not-get-frustrated-working-with-legacy-code/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/how-to-not-get-frustrated-working-with-legacy-code/index.html" class="no-external">How To Not Get Frustrated Working With Legacy Code.</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/how-to-not-get-frustrated-working-with-legacy-code/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('R'); return false;">
-R
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/how-to-not-get-frustrated-working-with-legacy-code/index.html" class="no-external">There’s no doubt that working with Legacy Code can get frustrating.</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/how-to-not-get-frustrated-working-with-legacy-code/index.html" class="no-external">
-<div class="listing-date">
-Oct 10, 2023
-</div>
-<div class="listing-reading-time">
-2 min
-</div>
-</a>
-</div>
-</div>
-</div>
-<div class="listing-no-matching d-none">
-No matching items
-</div>
-</div></main> <!-- /main -->
+
+</section>
+
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -892,4 +730,5 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
+<script src="../../site_libs/quarto-contrib/line-highlight-1.0.0/line-highlight.js" defer="true"></script>
 </body></html>

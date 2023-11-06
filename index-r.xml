@@ -12,7 +12,7 @@
 <generator>quarto-1.4.468</generator>
 <lastBuildDate>Mon, 30 Oct 2023 23:00:00 GMT</lastBuildDate>
 <item>
-  <title>Anatomy Of A Shiny Module Test With shiny::testServer.</title>
+  <title>Anatomy Of A Shiny Module Test With shiny::testServer</title>
   <dc:creator>Jakub Sobolewski</dc:creator>
   <link>https://jakubsob.github.io/posts/anatomy-of-a-shiny-module-test/</link>
   <description><![CDATA[ 
@@ -540,7 +540,6 @@ font-style: inherit;">"Species"</span>)</span>
 <span id="cb7-16">  })</span>
 <span id="cb7-17">})</span></code></pre></div>
 <p>We use <code>session$returned()</code> to get the value of the returned <code>reactive</code>.</p>
-<hr>
 </section>
 <section id="section-7" class="level2" data-background-color="#EBCA47">
 <h2 data-background-color="#EBCA47" class="anchored" data-anchor-id="section-7"></h2>
@@ -625,19 +624,25 @@ font-style: inherit;">$</span>select]))</span>
 <span id="cb9-12">  })</span>
 <span id="cb9-13">}</span></code></pre></div>
 <p>And this is the module that passes this test.</p>
-<hr>
+</section>
+<section id="section-9" class="level2">
+<h2 class="anchored" data-anchor-id="section-9"></h2>
 <p>Writing tests first for Shiny modules helps to keep them:</p>
 <ul>
 <li>simple,</li>
 <li>focused,</li>
 <li>and doing exactly what they need to do.</li>
 </ul>
-<hr>
+</section>
+<section id="section-10" class="level2">
+<h2 class="anchored" data-anchor-id="section-10"></h2>
 <p>Tests help define what should be the input to the module.</p>
 <p>What it should do.</p>
 <p>And what it should return.</p>
-<hr>
-<p>Such modules are easier to reuse <br>and easier to compose them to build the whole app.</p>
+</section>
+<section id="section-11" class="level2">
+<h2 class="anchored" data-anchor-id="section-11"></h2>
+<p>Such modules are easier to reuse and easier to compose them to build the whole app.</p>
 
 
 </section>
@@ -648,6 +653,7 @@ font-style: inherit;">$</span>select]))</span>
   <category>Testing</category>
   <guid>https://jakubsob.github.io/posts/anatomy-of-a-shiny-module-test/</guid>
   <pubDate>Mon, 30 Oct 2023 23:00:00 GMT</pubDate>
+  <media:content url="https://jakubsob.github.io/posts/anatomy-of-a-shiny-module-test/img/thumb.svg" medium="image" type="image/svg+xml"/>
 </item>
 <item>
   <title>How Test Driven Development Helps You Get Things Right</title>
@@ -768,6 +774,7 @@ font-style: inherit;"># ...</span></span>
   <category>Testing</category>
   <guid>https://jakubsob.github.io/posts/how-tdd-helps-you-build-the-right-thing/</guid>
   <pubDate>Mon, 23 Oct 2023 22:00:00 GMT</pubDate>
+  <media:content url="https://jakubsob.github.io/posts/how-tdd-helps-you-build-the-right-thing/img/thumb.svg" medium="image" type="image/svg+xml"/>
 </item>
 <item>
   <title>How Test Driven Development Makes You Faster.</title>
@@ -1370,6 +1377,7 @@ font-style: inherit;">expect_true</span>(result)</span>
   <category>Testing</category>
   <guid>https://jakubsob.github.io/posts/how_tdd_makes-you-faster/</guid>
   <pubDate>Wed, 18 Oct 2023 22:00:00 GMT</pubDate>
+  <media:content url="https://jakubsob.github.io/posts/how_tdd_makes-you-faster/img/thumb.svg" medium="image" type="image/svg+xml"/>
 </item>
 <item>
   <title>Testing Code With External Dependencies.</title>
@@ -1631,6 +1639,7 @@ font-style: inherit;">42</span>)</span>
   <category>Testing</category>
   <guid>https://jakubsob.github.io/posts/testing-code-with-external-dependencies/</guid>
   <pubDate>Sun, 15 Oct 2023 22:00:00 GMT</pubDate>
+  <media:content url="https://jakubsob.github.io/posts/testing-code-with-external-dependencies/img/thumb.svg" medium="image" type="image/svg+xml"/>
 </item>
 <item>
   <title>How To Not Get Frustrated Working With Legacy Code.</title>
@@ -1664,6 +1673,7 @@ font-style: inherit;">42</span>)</span>
   <category>R</category>
   <guid>https://jakubsob.github.io/posts/how-to-not-get-frustrated-working-with-legacy-code/</guid>
   <pubDate>Mon, 09 Oct 2023 22:00:00 GMT</pubDate>
+  <media:content url="https://jakubsob.github.io/posts/how-to-not-get-frustrated-working-with-legacy-code/img/thumb.svg" medium="image" type="image/svg+xml"/>
 </item>
 </channel>
 </rss>
