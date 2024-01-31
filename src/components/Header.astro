@@ -5,12 +5,12 @@ import { SITE_TITLE } from '../consts';
 
 <header>
 	<nav>
-		<h2><a href="/">{SITE_TITLE}</a></h2>
-		<div class="internal-links">
-			<HeaderLink href="/">Home</HeaderLink>
-			<HeaderLink href="/blog">Blog</HeaderLink>
-		</div>
-    <div class="social-links">
+    <div class="flex flex-row items-center">
+      <a href="/">{SITE_TITLE}</a>
+      <HeaderLink href="/">Home</HeaderLink>
+      <HeaderLink href="/blog">Blog</HeaderLink>
+    </div>
+		<div class="social-links">
       <a href="https://www.linkedin.com/in/jakub-sobolewski-r/" target="_blank">
         <span class="sr-only">Follow Jakub on Linkedin</span>
         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">

@@ -1,7 +1,8 @@
 ---
 title: Anatomy Of A Shiny Module Test With shiny::testServer
-description: 'Lorem ipsum dolor sit amet'
+description: ''
 pubDate: 'Oct 31 2023'
+tags: ["tests"]
 ---
 
 Modules tested with `testServer` run with a session that is a `MockShinySession` object.

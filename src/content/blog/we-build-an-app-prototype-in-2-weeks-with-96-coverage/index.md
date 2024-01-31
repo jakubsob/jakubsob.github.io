@@ -2,6 +2,7 @@
 title: 'We Built An App Prototype In 2 Weeks With 96% Code Coverage. Here’s How We Did It.'
 description: ''
 pubDate:  'Oct 6 2023'
+tags: ["tests"]
 ---
 
 **The project had unknowns that would affect the development, but since we only had 2 weeks we didn’t have time to wait for all the business experts’ answers — we had to work around them.**

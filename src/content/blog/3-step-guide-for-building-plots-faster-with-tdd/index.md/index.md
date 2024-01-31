@@ -2,6 +2,7 @@
 title: '3-Step Guide For Building Plots Faster With Test Driven Development.'
 description: ''
 pubDate: 'Oct 29 2023'
+tags: ["tests", "ui"]
 ---
 
 Unit-testing plots is challenging, as images are difficult to describe in code.

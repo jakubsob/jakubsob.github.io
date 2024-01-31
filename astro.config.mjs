@@ -11,14 +11,15 @@ import {
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://example.com',
+  site: 'https://jakubsob.github.io',
+  base: '/jakub_sobolewski',
   integrations: [mdx(), sitemap(), tailwind()],
   markdown: {
     syntaxHighlight: 'shiki',
     shikiConfig: {
       theme: 'github-dark',
       experimentalThemes: {
-        light: 'github-dark',
+        light: 'github-light',
         dark: 'github-dark',
       },
       langs: [],

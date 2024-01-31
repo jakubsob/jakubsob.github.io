@@ -1,8 +1,9 @@
 ---
 title: Agile Testing Quadrants
 author: Jakub Sobolewski
-description: 'Lorem ipsum dolor sit amet'
+description: ''
 pubDate: 'Nov 13 2023'
+tags: ["tests"]
 ---
 
 To get confidence in the product, we need more than unit tests.

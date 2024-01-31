@@ -2,6 +2,7 @@
 title: '3 Types of Unit Tests Everyone Should Know'
 description: ''
 pubDate: 'Sep 25 2023'
+tags: ["tests"]
 ---
 
 When approaching to write a unit test, we might ask ourselves:

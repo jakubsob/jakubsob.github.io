@@ -1,7 +1,8 @@
 ---
 title: How Test Driven Development Helps You Get Things Right
-description: 'Lorem ipsum dolor sit amet'
+description: ''
 pubDate: 'Oct 12 2023'
+tags: ["tests"]
 ---
 
 On the first try. No rewrites.

@@ -2,14 +2,17 @@
 title: Simple Input Validation With Bootstrap Validation API
 description: ''
 pubDate: 'Jan 29 2024'
+tags: ["ui"]
 ---
 
 [Bootstrap allows you to build forms with validation.](https://www.notion.so/Instantaneous-Input-Validation-By-Reusing-Bootstrap-Form-Validation-79a88401c6234583beed97e12c75fcc5?pvs=21) But by default, it only works if inputs are collected in a `<form>` and the validation is triggered by clicking a button with `type="submit"`. What if we want to continuously validate inputs as they change?
 
-We can leverage how Bootstrap uses `.is-invalid`  and `.invalid-feedback` classes to add validation feedback and show them on custom events, for example:
+We can leverage how Bootstrap uses `.is-invalid`  and `.invalid-feedback` classes to add validation feedback and show them on selected events.
+For a text input, we could use:
+- `oninput` to validate each time we add a new character, for immediate feedback.
+- `onchange` to validate after the input loses focus.
 
-- `oninput` to validate each time input is added.
-- `onchange` to validate after we confirm the change — when the input loses focus.
+We can create a validate function that takes a component and adds the validation attributes to the input.
 
 ```r
 library(shiny)
@@ -57,7 +60,13 @@ shinyApp(
 )
 ```
 
+It's super simple requires no additional dependencies.
+We can easily extend the code to include additional validation rules.
+The same approach could be used to validate any type of input, not just text inputs.
+
+import video from "./video.mp4";
+
 <video width="720" height="540" controls>
-  <source src="./video.mp4" type="video/mp4" >
+  <source src={video} type="video/mp4" >
   </source>
 </video>

@@ -2,6 +2,7 @@
 title: How TDD Helps You Prototype Faster By Allowing You To Experiment With Your Code.
 description: ''
 pubDate: 'Oct 29 2023'
+tags: ["tests"]
 ---
 
 Writing tests may be seen as a thing that slows you down because it makes you write more code.
