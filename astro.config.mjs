@@ -12,7 +12,6 @@ import {
 // https://astro.build/config
 export default defineConfig({
   site: 'https://jakubsob.github.io',
-  base: '/jakub_sobolewski',
   integrations: [mdx(), sitemap(), tailwind()],
   markdown: {
     syntaxHighlight: 'shiki',
