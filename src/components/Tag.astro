@@ -1,0 +1,16 @@
+---
+const { value } = Astro.props;
+---
+
+<span>
+  <a
+    class="min-w-16
+    border-[1px] border-solid border-gray-400 rounded-full px-3
+    text-gray-500 text-center text-sm uppercase
+    hover:border-gray-800
+    hover:text-gray-800"
+    href={`/tags/${value}`}
+  >
+    {value}
+  </a>
+</span>

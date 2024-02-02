@@ -4,6 +4,7 @@ import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
+import Tag from '../components/Tag.astro'
 
 type Props = CollectionEntry<'blog'>['data'];
 
@@ -22,32 +23,23 @@ const { title, description, pubDate, updatedDate, heroImage, tags } = Astro.prop
         <header class="border-b-[1px] border-solid border-gray-400 pb-2">
           <h1 class="text-balance">{title}</h1>
           { description && <h2>{description}</h2>}
-          <div class="flex flex-row justify-between">
+          <div class="flex flex-row items-baseline gap-6">
             <div>
               { pubDate && <FormattedDate date={pubDate} /> }
               {
                 updatedDate && (
-                  <div class="italic">
+                  <div>
                     Last updated on <FormattedDate date={updatedDate} />
                   </div>
                 )
               }
             </div>
-            <div class="flex flex-row">
-              {tags.map((tag) => (
-                <a
-                  class="flex justify-center min-w-16
-                  border-[1px] border-solid border-gray-400 rounded-full px-3
-                  text-gray-500"
-                  href={`/tags/${tag}`}
-                >
-                  {tag}
-                </a>
-              ))}
-            </div>
+            <span class="flex gap-2">
+              {tags.map((tag) => (<Tag value={tag}/>))}
+            </span>
           </div>
         </header>
-				<div class="mt-2 text-justify">
+				<div class="prose mt-2 text-justify">
 					<slot />
 				</div>
 			</article>

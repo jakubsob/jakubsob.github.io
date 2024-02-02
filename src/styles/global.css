@@ -3,6 +3,25 @@
   https://github.com/HermanMartinus/bearblog/blob/297026a877bc2ab2b3bdfbd6b9f7961c350917dd/templates/styles/blog/default.css
   License MIT: https://github.com/HermanMartinus/bearblog/blob/master/LICENSE.md
  */
+@import '@fontsource-variable/syne';
+@import '@fontsource/geist-sans/100.css';
+@import '@fontsource/geist-sans/200.css';
+@import '@fontsource/geist-sans/300.css';
+@import '@fontsource/geist-sans/400.css';
+@import '@fontsource/geist-sans/500.css';
+@import '@fontsource/geist-sans/600.css';
+@import '@fontsource/geist-sans/700.css';
+@import '@fontsource/geist-sans/800.css';
+@import '@fontsource/geist-sans/900.css';
+@import '@fontsource/geist-mono/100.css';
+@import '@fontsource/geist-mono/200.css';
+@import '@fontsource/geist-mono/300.css';
+@import '@fontsource/geist-mono/400.css';
+@import '@fontsource/geist-mono/500.css';
+@import '@fontsource/geist-mono/600.css';
+@import '@fontsource/geist-mono/700.css';
+@import '@fontsource/geist-mono/800.css';
+@import '@fontsource/geist-mono/900.css';
 
 :root {
   --accent: #93a273;
@@ -15,22 +34,7 @@
 	--box-shadow: 0 2px 6px rgba(var(--gray), 25%), 0 8px 24px rgba(var(--gray), 33%),
 		0 16px 32px rgba(var(--gray), 33%);
 }
-@font-face {
-	font-family: 'Atkinson';
-	src: url('/fonts/atkinson-regular.woff') format('woff');
-	font-weight: 400;
-	font-style: normal;
-	font-display: swap;
-}
-@font-face {
-	font-family: 'Atkinson';
-	src: url('/fonts/atkinson-bold.woff') format('woff');
-	font-weight: 700;
-	font-style: normal;
-	font-display: swap;
-}
 body {
-	font-family: 'Atkinson', sans-serif;
 	margin: 0;
 	padding: 0;
 	text-align: left;
@@ -57,21 +61,28 @@ h6 {
 	margin: 0 0 0.5rem 0;
 	color: rgb(var(--black));
 	line-height: 1.2;
+  font-family: 'Syne Variable', sans-serif;
+  font-weight: 500;
 }
 h1 {
-	font-size: 3.052em;
+  font-size: 3.052em;
+  font-weight: 600;
+  text-transform: uppercase;
 }
 h2 {
-	font-size: 2.441em;
+  font-size: 2.441em;
 }
+
 h3 {
-	font-size: 1.953em;
+  font-size: 1.953em;
 }
+
 h4 {
-	font-size: 1.563em;
+  font-size: 1.563em;
 }
+
 h5 {
-	font-size: 1.25em;
+  font-size: 1.25em;
 }
 strong,
 b {
@@ -87,8 +98,10 @@ p {
   margin-top: 1em;
 	margin-bottom: 1em;
 }
-.prose p {
+.prose {
   margin-bottom: 1em;
+  font-family: 'Geist Mono', monospace;
+  font-weight: 300;
 }
 textarea {
 	width: 100%;
@@ -109,14 +122,17 @@ code {
 	padding: 2px 5px;
 	background-color: rgb(var(--gray-light));
   border-radius: 2px;
+  font-family: 'Geist Mono', monospace;
+  font-weight: 400;
 }
 pre {
-	padding: 1.5em;
+  padding: 1.5em 0;
   text-align: left;
-  /* border-radius: 8px; */
 }
 pre > code {
 	all: unset;
+  font-family: 'Geist Mono', monospace;
+  font-weight: 400;
 }
 blockquote {
 	border-left: 4px solid var(--accent);
