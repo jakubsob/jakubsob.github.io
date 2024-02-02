@@ -2,17 +2,13 @@ import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import tailwind from "@astrojs/tailwind";
-import {
-  transformerNotationHighlight,
-  transformerNotationFocus,
-  transformerMetaHighlight,
-  transformerNotationDiff
-} from '@shikijs/transformers';
+import { transformerNotationHighlight, transformerNotationFocus, transformerMetaHighlight, transformerNotationDiff } from '@shikijs/transformers';
+import react from "@astrojs/react";
 
 // https://astro.build/config
 export default defineConfig({
   site: 'https://jakubsob.github.io',
-  integrations: [mdx(), sitemap(), tailwind()],
+  integrations: [mdx(), sitemap(), tailwind(), react()],
   markdown: {
     syntaxHighlight: 'shiki',
     shikiConfig: {
@@ -23,12 +19,7 @@ export default defineConfig({
       },
       langs: [],
       wrap: true,
-      transformers: [
-        transformerMetaHighlight(),
-        transformerNotationFocus(),
-        transformerNotationHighlight(),
-        transformerNotationDiff(),
-      ],
-    },
-  },
+      transformers: [transformerMetaHighlight(), transformerNotationFocus(), transformerNotationHighlight(), transformerNotationDiff()]
+    }
+  }
 });

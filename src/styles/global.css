@@ -112,6 +112,7 @@ code {
 }
 pre {
 	padding: 1.5em;
+  text-align: left;
   /* border-radius: 8px; */
 }
 pre > code {
