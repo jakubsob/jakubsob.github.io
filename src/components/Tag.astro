@@ -6,11 +6,25 @@ const { value } = Astro.props;
   <a
     class="min-w-16
     border-[1px] border-solid border-gray-400 rounded-full px-3
-    text-gray-500 text-center text-sm uppercase
-    hover:border-gray-800
-    hover:text-gray-800"
+    text-gray-500 text-center text-sm uppercase"
     href={`/tags/${value}`}
   >
     {value}
   </a>
 </span>
+
+<style>
+  a {
+    background-image: linear-gradient(var(--lt-color-gray-800) 0 0);
+    background-size: 200% 0;
+    background-position: 100% 100%;
+    background-repeat: no-repeat;
+    transition: background-size .3s, background-position .3s .3s;
+  }
+  a:hover {
+    transition: background-size .3s, background-position .3s, color .5s;
+    background-size: 200% 100%;
+    background-position: 100% 100%;
+    color: var(--lt-color-gray-100);
+  }
+</style>
