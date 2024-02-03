@@ -128,6 +128,7 @@ code {
 pre {
   padding: 1.5em 0;
   text-align: left;
+  border-right: 1px solid var(--lt-color-gray-400);
 }
 pre > code {
 	all: unset;
