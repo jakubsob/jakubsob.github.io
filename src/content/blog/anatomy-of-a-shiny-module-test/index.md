@@ -7,11 +7,10 @@ tags: ["tests"]
 
 Modules tested with `testServer` run with a session that is a `MockShinySession` object.
 
-## For most cases we only need:
+For most cases we only need:
 
-`MockShinySession$setInputs()` method which simulates users interactions with widgets.
-
-`MockShinySession$returned` which contains the value returned by the module.
+- `MockShinySession$setInputs()` method which simulates users interactions with widgets.
+- `MockShinySession$returned` which contains the value returned by the module.
 
 ## Example
 
@@ -37,7 +36,7 @@ describe("server", {
 })
 ```
 
-```r {3-4}
+```r
 describe("server", {
   it("should subset the data with selected variables", {
     # Arrange

@@ -11,6 +11,11 @@ To get confidence in the product, we need more than unit tests.
 I was first exposed to Agile Testing Quadrants in "ATDD by Example: A Practical Guide to Acceptance Test-Driven Development" by Markus Gärtner.
 They are a visual representation of different types of tests used during software development. They are split into four quadrants, each serving a specific purpose and role in the software development process. These quadrants can help teams understand which tests to conduct and when to conduct them.
 
+import { Picture } from 'astro:assets';
+import image from './agile-testing-quadrants.png'
+
+<Picture src={image} formats={['png']} alt="A description of my image." />
+
 ## Q1
 
 Quadrant I consists of tests that are focused on the technical aspects of the system. These tests ensure that the system functions as expected, adhering to the defined technical requirements. Common examples of tests in this quadrant include unit tests, component tests, and API tests. They are typically automated and run frequently during the development process.

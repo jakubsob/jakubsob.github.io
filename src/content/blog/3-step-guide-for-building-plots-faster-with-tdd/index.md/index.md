@@ -11,24 +11,25 @@ We need to rely on [approval testing](https://understandlegacycode.com/approval-
 
 Let’s see how we can get the most benefits of TDD and approval testing to rapidly develop a plot.
 
-# 1. Start with a test
+## 1. Start with a test
 
 We start in (almost) the same way as we would do with any other piece of software using TDD:
 
 - Write test first:
-    - **Arrange:** setup test environment.
-    - **Act:** run tested code.
-    - **Assert:** capture output.
+    - Arrange: setup test environment.
+    - Act: run tested code.
+    - Assert: capture output.
 - Run it to see if it fails 🔴.
 - Write production code to pass the test 🟢.
 - Refactor ♻️.
 
 Make sure to do those steps in order, as only as you unlock the full potential of this approach!
 
-**When writing tests, focus on:**
+### Things to focus on when writing tests
 
-- Describing what the plot **should** look like — make different outcomes separate test cases. Be verbose, use as many words as you need to describe **how** the plot **should behave.**
-- Creating **a minimal setup** to satisfy the requirements — remember about **chicken counting: zero, one, many.** If you want to test rendering of multiple series, two will probably suffice. Add a separate case to test limits of how much data can be plotted.
+Describe what the plot should look like — make different outcomes separate test cases. Be verbose, use as many words as you need to describe **how** the plot **should behave.**
+
+Create **a minimal setup** to satisfy the requirements — remember about **chicken counting: zero, one, many.** If you want to test rendering of multiple series, two will probably suffice. Add a separate case to test limits of how much data can be plotted.
 
 Let’s create a simple scatter plot with a regression line.
 
@@ -87,7 +88,7 @@ scatterplot <- function(data, x, y, threshold = 10) {
 }
 ```
 
-# 2. Preview results for iterating quickly
+## 2. Preview results for iterating quickly
 
 We could add snapshots assertions at this stage, but since we’re still developing the plot:
 
@@ -104,7 +105,7 @@ To make development more rapid, we can just add `print` calls before each `fail(
 
 So don’t linger in this stage for too long!
 
-# 3. Add assertions on plot snapshots
+## 3. Add assertions on plot snapshots
 
 Once we get to a stage when most features are stable, and we can finally add actual snapshot tests.
 
@@ -126,7 +127,7 @@ Assertion set up in such a way will do the following:
 - If the figure is the same, the test passes! 🟢
 - If the figure is different, the test will fail 🔴 — you will be prompted to check the difference (e.g., using `testthat::snapshot_review()`) and either:
     - Reject the change — the change is not an expected one, we still want to use previous snapshot as the correct one.
-    - Approve the change —  ****new snapshot will override previous one and will be used for subsequent test runs. That’s why it’s called an **Approval Test.**
+    - Approve the change — new snapshot will override previous one and will be used for subsequent test runs. That’s why it’s called an **Approval Test.**
 
 Make sure to encode your system information into the snapshot (e.g., with `shinytest2::platform_variant()`) — if you use a different system in CI, snapshots generated locally can be different from ones in the CI and the pipeline will fail.
 

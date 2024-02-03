@@ -1,6 +1,6 @@
 ---
-title: How TDD Helps You Prototype Faster By Allowing You To Experiment With Your Code.
-description: ''
+title: How TDD Helps You Prototype Faster.
+description: 'By Allowing You To Experiment With Your Code.'
 pubDate: 'Oct 29 2023'
 tags: ["tests"]
 ---
