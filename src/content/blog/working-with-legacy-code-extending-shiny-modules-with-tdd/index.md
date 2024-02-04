@@ -2,7 +2,7 @@
 title: 'Working With Legacy Code.'
 description: 'Extending Shiny Modules with the Sprout Technique and Test Driven Development.'
 pubDate:  'Oct 28 2023'
-tags: ["tests"]
+tags: ["tests", "tdd"]
 ---
 
 Making changes to a legacy system can be daunting.
