@@ -1,14 +1,16 @@
 ---
-const { frontmatter } = Astro.props;
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+
+const { title, description } = Astro.props;
 ---
 
-<html>
-  <head>
-    <title>{frontmatter.title}</title>
-  </head>
-  <body>
-    <h1>{frontmatter.title} by {frontmatter.author}</h1>
+<html lang="en">
+  <BaseHead title={title} description={description} />
+	<body>
+		<Header />
     <slot />
-    <p>Written on: {frontmatter.date}</p>
-  </body>
+		<Footer />
+	</body>
 </html>

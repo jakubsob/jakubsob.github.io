@@ -1,23 +1,18 @@
 ---
 import type { CollectionEntry } from 'astro:content';
-import BaseHead from '../components/BaseHead.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
+import BaseLayout from './BaseLayout.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import Tag from '../components/Tag.astro'
 
 type Props = CollectionEntry<'blog'>['data'];
 
-const { title, description, pubDate, updatedDate, heroImage, tags } = Astro.props;
+const { title, description, pubDate, updatedDate, tags } = Astro.props;
 ---
 
 <html lang="en">
-  <BaseHead title={title} description={description} />
-
-	<body>
-		<Header />
-		<main class="border-l-[1px] border-solid border-gray-400">
-			<article class="mx-auto max-w-[720px] max-w-100">
+  <BaseLayout title={title} description={description} >
+    <main class="border-l-[1px] border-solid border-gray-400">
+      <article class="mx-auto max-w-[720px] max-w-100">
         <header class="border-b-[1px] border-solid border-gray-400 pb-2">
           <h1 class="text-balance">{title}</h1>
           { description && <h2>{description}</h2>}
@@ -37,11 +32,10 @@ const { title, description, pubDate, updatedDate, heroImage, tags } = Astro.prop
             </span>
           </div>
         </header>
-				<div class="prose mt-2 text-justify">
-					<slot />
-				</div>
-			</article>
-		</main>
-		<Footer />
-	</body>
+        <div class="prose mt-2 text-justify">
+          <slot />
+        </div>
+      </article>
+    </main>
+  </BaseLayout/>
 </html>

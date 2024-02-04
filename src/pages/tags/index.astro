@@ -1,7 +1,5 @@
 ---
-import BaseHead from "../../components/BaseHead.astro";
-import Header from "../../components/Header.astro";
-import Footer from "../../components/Footer.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../../consts";
 
@@ -11,9 +9,7 @@ const tags = [...new Set(posts.map((post) => post.data.tags).flat())];
 
 <!doctype html>
 <html lang="en">
-  <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-  <body>
-    <Header />
+  <BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION} >
     <main>
       <section>
         <ul class="list-none">
@@ -31,7 +27,5 @@ const tags = [...new Set(posts.map((post) => post.data.tags).flat())];
         </ul>
       </section>
     </main>
-
-    <Footer />
-  </body>
+  </BaseLayout>
 </html>

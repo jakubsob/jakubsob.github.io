@@ -1,7 +1,5 @@
 ---
-import BaseHead from "../../components/BaseHead.astro";
-import Header from "../../components/Header.astro";
-import Footer from "../../components/Footer.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
 import PostList from "../../components/PostList.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../../consts";
 import { getCollection } from "astro:content";
@@ -26,9 +24,7 @@ const { posts } = Astro.props;
 
 <!doctype html>
 <html lang="en">
-  <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-  <body>
-    <Header />
+  <BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION} >
     <main class="border-l-[1px] border-solid border-gray-400">
       <header class="border-b-[1px] border-solid border-gray-400 mb-4">
         <h1 class="uppercase">
@@ -39,6 +35,5 @@ const { posts } = Astro.props;
         <PostList posts={posts} />
       </section>
     </main>
-    <Footer />
-  </body>
+  </BaseLayout/>
 </html>
