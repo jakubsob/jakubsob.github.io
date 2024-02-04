@@ -1,0 +1,49 @@
+---
+import BaseHead from "../../components/BaseHead.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import { SITE_TITLE, SITE_DESCRIPTION } from "../../consts";
+import FormattedDate from "../../components/FormattedDate.astro";
+
+import { experience } from "./_data.json";
+---
+
+<!doctype html>
+<html lang="en">
+  <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+  <body>
+    <Header />
+    <main class="border-l-[1px] border-solid border-gray-400">
+      <h1>Experience</h1>
+      <ul>
+        {
+          experience
+            .map((item) => ({
+              ...item,
+              startDate: new Date(item.startDate),
+              endDate: item.endDate ? new Date(item.endDate) : "Present",
+            }))
+            .sort((a, b) => b.startDate.valueOf() - a.startDate.valueOf())
+            .map((item) => (
+              <dl>
+                <dt>
+                  <h2 class="uppercase">{item.title}</h2>
+                </dt>
+                <dd>
+                  <h4>{item.company}</h4>
+                </dd>
+                <dd>
+                  <FormattedDate date={item.startDate} />
+
+                  {item.endDate instanceof Date && (
+                    <FormattedDate date={item.endDate} />
+                  )}
+                </dd>
+              </dl>
+            ))
+        }
+      </ul>
+    </main>
+    <Footer />
+  </body>
+</html>
