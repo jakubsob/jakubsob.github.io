@@ -2,7 +2,7 @@
 title: BDD Style Shiny Module Server Tests
 description: ''
 pubDate: Jan 30 2024
-tags: ["tests"]
+tags: ["r", "tests"]
 ---
 
 Writing tests for Shiny modules can be difficult, especially when multiple actions need to be taken to bring the system to the desired state.

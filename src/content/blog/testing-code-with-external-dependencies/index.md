@@ -2,7 +2,7 @@
 title: 'Testing Code With External Dependencies.'
 description: ''
 pubDate:  'Oct 17 2023'
-tags: ["tests"]
+tags: ["r", "tests"]
 ---
 
 A stub is a controllable replacement of a dependency in your system.

@@ -2,7 +2,7 @@
 title: Want Cleaner Unit Tests? Try Arrange, Act, Assert comments.
 description: '3 essential parts of a unit test.'
 pubDate:  'Oct 12 2023'
-tags: ["tests"]
+tags: ["r", "tests"]
 ---
 
 A unit test should check one behaviour of your code. It should do 3 things:

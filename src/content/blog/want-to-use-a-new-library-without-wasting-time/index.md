@@ -2,7 +2,7 @@
 title: 'Want To Use A New Library, But Don’t Want To Waste Time Browsing Documentation?'
 description: 'Here’s How To Do It.'
 pubDate:  'Oct 18 2023'
-tags: ["tests", "llm"]
+tags: ["r", "tests", "llm"]
 ---
 
 🤕 2 hours of debugging can save you 5 minutes of reading documentation.

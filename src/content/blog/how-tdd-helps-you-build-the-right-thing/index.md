@@ -2,7 +2,7 @@
 title: How Test Driven Development Helps You Get Things Right
 description: 'On the first try. No rewrites.'
 pubDate: 'Oct 12 2023'
-tags: ["tests", "tdd"]
+tags: ["r", "tests", "tdd"]
 ---
 
 Writing test cases first helps us understand better what we need to build.

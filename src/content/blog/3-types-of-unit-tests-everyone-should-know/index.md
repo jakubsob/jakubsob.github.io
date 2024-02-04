@@ -2,7 +2,7 @@
 title: '3 Types of Unit Tests Everyone Should Know'
 description: ''
 pubDate: 'Sep 25 2023'
-tags: ["tests"]
+tags: ["r", "tests"]
 ---
 
 When approaching to write a unit test, we might ask ourselves:
@@ -21,12 +21,12 @@ To make it easier to think about **what** to test and to make a more informed de
 
 Let’s see in what circumstances should each type be used.
 
-# Direct Response Tests
+## Direct Response Tests
 
 - They check whether a return value or an exception matches the expectation.
 - These tests ensure that the core functionality of the code works correctly.
 
-## Example
+### Example
 
 ```r
 library(testthat)
@@ -46,18 +46,18 @@ describe("Stack", {
 })
 ```
 
-## **Tips**
+### Tips
 
 - Don’t test a lot of different values if the new combination doesn’t test new behavior. E.g., testing `mean(1:10)` and then `mean(1:100)` doesn’t improve our confidence that `mean` function works as expected.
 - Use assertions to convey intent. E.g., if you don’t care about the order of a vector, consider using `testthat::expect_setequal` instead of `testthat::expect_equal` to only assert on its content.
 - Don’t duplicate assertions. E.g., if you already use `testthat::expect_equal` on a vector, does adding an assertion on its length with `testthat::expect_length` add more safety?
 
-# State Change Tests
+## State Change Tests
 
 - These tests help validate the impact of certain actions on the system's state.
 - They confirm that the behavior results in the expected changes, such as modifying a list and confirming its size change.
 
-## Example
+### Example
 
 ```r
 library(testthat)
@@ -76,17 +76,17 @@ describe("Stack", {
 })
 ```
 
-## **Tips**
+### Tips
 
 - Don’t share state between tests. It may make tests more fragile and more difficult to understand.
 - Avoid iteration. Don’t check if `Stack` can handle 0, 1, 2, 3, 4, …, calls to `push`. Use chicken counting: **zero, one, or many.**
 
-# **Interaction Tests**
+## Interaction Tests
 
 - These tests ensure proper communication and integration between different parts of the system.
 - These tests examine how code interacts with external components, often simulating dependencies or external services. **[Mocks, Fakes, Stubs and Dummies](http://xunitpatterns.com/Mocks,%20Fakes,%20Stubs%20and%20Dummies.html)** are used to control these interactions and validate that the code interacts correctly with external entities.
 
-## Example
+### Example
 
 ```r
 library(testthat)
@@ -110,7 +110,7 @@ describe("Stack", {
 })
 ```
 
-## **Tips**
+### Tips
 
 - Complex mock will make tests brittle and difficult to understand. They typically need to be created when interactions in the code are complex or not defined well enough.
 - Notice how much setup is needed to run a test. Use this feedback to improve and simplify production code. Code that is easy to test is easier to maintain.
