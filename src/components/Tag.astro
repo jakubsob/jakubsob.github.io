@@ -2,7 +2,7 @@
 const { value } = Astro.props;
 ---
 
-<span>
+<button role="button" aria-label={value}>
   <a
     class="min-w-16
     border-[1px] border-solid border-gray-400 rounded-full px-3
@@ -11,7 +11,7 @@ const { value } = Astro.props;
   >
     {value}
   </a>
-</span>
+</button>
 
 <style>
   a {
