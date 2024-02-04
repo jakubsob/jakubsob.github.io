@@ -1,6 +1,6 @@
 ---
-title: 'We Built An App Prototype In 2 Weeks With 96% Code Coverage. Here’s How We Did It.'
-description: ''
+title: 'We Built An App Prototype In 2 Weeks With 96% Code Coverage.'
+description: 'Here’s How We Did It.'
 pubDate:  'Oct 6 2023'
 tags: ["tests"]
 ---

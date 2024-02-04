@@ -20,7 +20,7 @@ Why should you do that?
 3. It helps to produce more meaningful tests output.
 4. It’s cheap.
 
-# How to refactor
+## How to refactor
 
 We have a `factorial` function, it has a test with 5 assertions describing how it should work:
 
@@ -136,7 +136,7 @@ It produces more lines of code, but remember, we **optimise the code for human r
 
 Each test case describes only one expected behavior. Notice how **test titles resemble natural language** and how each test case has the same structure, allowing the reader to easily skim through the test and learn how the tested function works.
 
-# Tests output before refactoring
+## Tests output before refactoring
 
 Let’s change `factorial` function implementation to return `2` instead of `1` when input is `0` to make tests fail:
 
@@ -166,7 +166,7 @@ It contains 5 assertions in a single test case and 2 of them failed, that’s wh
 
 We can use assertions to identify which cases failed, but in more complex functions with more complex outputs it may not be so trivial
 
-# Tests output after refactoring
+## Tests output after refactoring
 
 For the refactored test case, we obtain an explicit message which behavior of the function is broken, allowing us to address the issue quickly.
 
@@ -180,4 +180,4 @@ For the refactored test case, we obtain an explicit message which behavior of th
 
 We pay a lot of attention to production code style, why not extend this care to test code?
 
-Try using Arrange, Act, Assert next time you’ll write a unit test and see yourself how it changes your approach to testing!
+**Try using Arrange, Act, Assert next time you’ll write a unit test and see yourself how it changes your approach to testing!**

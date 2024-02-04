@@ -1,6 +1,6 @@
 ---
-title: 'Working With Legacy Code: Extending Shiny Modules with the Sprout Technique and Test Driven Development.'
-description: ''
+title: 'Working With Legacy Code.'
+description: 'Extending Shiny Modules with the Sprout Technique and Test Driven Development.'
 pubDate:  'Oct 28 2023'
 tags: ["tests"]
 ---
