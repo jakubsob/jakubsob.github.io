@@ -3,3 +3,4 @@
 
 export const SITE_TITLE = 'jakub::sobolewski';
 export const SITE_DESCRIPTION = 'Welcome to my website!';
+export const R_BLOG_DESCRIPTION = 'All things R/Shiny and beyond.'
