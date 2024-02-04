@@ -126,10 +126,12 @@ code {
   font-family: 'Geist Mono', monospace;
   font-weight: 400;
 }
+.prose pre {
+  border-right: 1px solid var(--lt-color-gray-400);
+}
 pre {
   padding: 1.5em 0;
   text-align: left;
-  border-right: 1px solid var(--lt-color-gray-400);
 }
 pre > code {
 	all: unset;
@@ -179,4 +181,13 @@ menu {
   list-style: unset;
   margin: 0;
   padding: 0 1rem;
+}
+
+.dark .astro-code,
+.dark .astro-code span {
+  color: var(--shiki-dark) !important;
+  background-color: var(--shiki-dark-bg) !important;
+  font-style: var(--shiki-dark-font-style) !important;
+  font-weight: var(--shiki-dark-font-weight) !important;
+  text-decoration: var(--shiki-dark-text-decoration) !important;
 }
