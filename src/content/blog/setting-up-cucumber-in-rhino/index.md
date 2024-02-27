@@ -19,63 +19,54 @@ End-to-end testing, compared to unit testing requires more setup to get the syst
 Pure Cypress test?
 
 ```js
-// cypress/integration/login.cy.js
-describe('login', () => {
-  it('user should be able to log in', () => {
-    cy.visit('/')
+// cypress/e2e/featureDsiplay.cy.js
+describe('Feature display', () => {
+  it('Selecting Transmission as the grouping variable', () => {
+    cy.visit('http://localhost:3333');
+    cy.get('#variable_select').select('Transmission');
+    cy.get('#formula_display').should('have.text', 'mpg ~ am');
+  });
 
-    // open the login modal
-    cy.get('button').contains('Login').click()
-
-    // fill in the form
-    cy.get('input[type="email"]').type('test@test.com')
-    cy.get('input[type="password"]').type('test123')
-
-    // submit the form
-    cy.get('button').contains('Sign in').click()
-    cy.contains('button', 'Logout').should('be.visible')
-  })
-})
+  it('Selecting Gears as the grouping variable', () => {
+    cy.visit('http://localhost:3333');
+    cy.get('#variable_select').select('Gears');
+    cy.get('#formula_display').should('have.text', 'mpg ~ gear');
+  });
+});
 ```
 
 Or a Cucumber specification:
 
 ```gherkin
-// cypress/integration/login.feature
-Feature: login
-  Scenario: user should be able to log in
-    Given I visit the homepage
-    When I open the login modal
-    And I fill in the form
-    And I submit the form
-    Then I should be logged in
+# cypress/e2e/featureDisplay.feature
+Feature: Formula display
+  Scenario: Selecting Transmission as the grouping variable
+    Given I am on the main page
+    When I select Transmission variable
+    Then the formula display should show 'mpg ~ am'
+
+  Scenario: Selecting Gears as the grouping variable
+    Given I am on the main page
+    When I select Gears variable
+    Then the formula display should show 'mpg ~ gear'
 ```
 
 with support JS code?
 
 ```js
-// cypress/integration/login.js
-const { Given, When, Then } = require("@cypress/cucumber-preprocessor");
+// cypress/e2e/featureDisplay.js
+const { Given, When, Then } = require('@cypress/cucumber-preprocessor');
 
-Given("I visit the homepage", () => {
-  cy.visit("/");
+Given('I am on the main page', () => {
+  cy.visit('http://localhost:3333');
 });
 
-When("I open the login modal", () => {
-  cy.get("button").contains("Login").click();
+When('I select {string} variable', (variable) => {
+  cy.get('#variable_select').select(variable);
 });
 
-When("I fill in the form", (email, password) => {
-  cy.get('input[type="email"]').type(email);
-  cy.get('input[type="password"]').type(password);
-});
-
-When("I submit the form", () => {
-  cy.get("button").contains("Sign in").click();
-});
-
-Then("I should be logged in", () => {
-  cy.contains("button", "Logout").should("be.visible");
+Then('the formula display should show {string}', (formula) => {
+  cy.get('#formula_display').should('have.text', formula);
 });
 ```
 
@@ -93,7 +84,7 @@ If you like the latter, read on. 👇
 
 [Rhino](https://appsilon.github.io/rhino/index.html) comes packaged with [Cypress](https://appsilon.github.io/rhino/articles/tutorial/write-end-to-end-tests-with-cypress.html) for end-to-end testing. To use Cucumber we can use the [cypress-cucumber-preprocessor](https://github.com/badeball/cypress-cucumber-preprocessor) that will parse Gherkin files and run them as Cypress tests.
 
-Since Rhino uses `webpack` we can follow the [webpack-cjs](https://github.com/badeball/cypress-cucumber-preprocessor/tree/master/examples/webpack-cjs) example to set up the preprocessor.
+Since Rhino uses webpack to bundle its JS dependencies, we can follow the [webpack-cjs](https://github.com/badeball/cypress-cucumber-preprocessor/tree/master/examples/webpack-cjs) example to set up the preprocessor.
 
 The structure of the `tests/` directory in a rhino (>=1.6.0) project looks like this:
 
@@ -108,7 +99,7 @@ tests/
   cypress.config.js
 ```
 
-### 1. Adding the preprocessor package
+### 1. Initialize package in tests directory
 
 In `tests/` directory we need to add a `package.json`:
 
@@ -123,13 +114,15 @@ In `tests/` directory we need to add a `package.json`:
 }
 ```
 
-### 2. Installing dependencies
+### 2. Install dependencies
 
 Run `cd tests & npm install` to install those dependencies. A `tests/package-lock.json` will be created.
 
 *💡 Why not install those dependencies with the rest of JavaScript dependencies in `.rhino/` directory?*
 
 *This directory is git-ingored by design. When a newer version of `rhino` is released, the `package.json` is overwritten.*
+
+*If you modify rhino/package.json you'll loose those changes after an upgrade.*
 
 ### 3. Adjust Cypress config to use the preporcessor
 
@@ -179,46 +172,43 @@ module.exports = defineConfig({
 });
 ```
 
-### 4. Adding required support file
+This change tells Cypress preprocess `.feature` files before running tests.
+
+### 4. Add required support file
 
 We also need to add an empty `e2e.js` file to `tests/cypress/support/` directory.
 
-### 5. Adding feature files and step implementations
+### 5. Add feature files and step implementations
 
-Now we should be ready to start adding `.feature` files and their corresponding `.js` step definitions.
-
+Now we're ready to start adding `.feature` files and their corresponding `.js` step definitions.
 
 ```feature
-# cypress/e2e/duckduckgo.feature
-Feature: duckduckgo.com
-  Scenario: visiting the frontpage
-    When I visit duckduckgo.com
-    Then I should see a search bar
+# cypress/e2e/featureDisplay.feature
+Feature: Formula display
+  Scenario: Selecting Transmission as the grouping variable
+    Given I am on the main page
+    When I select Transmission variable
+    Then the formula display should show 'mpg ~ am'
 ```
 
 ```js
-// cypress/e2e/duckduckgo.ts
-const { When, Then } = require("@badeball/cypress-cucumber-preprocessor");
+// cypress/e2e/featureDisplay.js
+const { Given, When, Then } = require('@cypress/cucumber-preprocessor');
 
-const { When, Then } = require("@badeball/cypress-cucumber-preprocessor");
-
-When("I visit duckduckgo.com", () => {
-  cy.visit("https://duckduckgo.com/");
+Given('I am on the main page', () => {
+  cy.visit('http://localhost:3333');
 });
 
-Then("I should see a search bar", () => {
-  cy.get("input[type=text]")
-    .should("have.attr", "placeholder")
-    .and(
-      "match",
-      /Search the web without being tracked|Search without being tracked/
-    );
+When('I select {string} variable', (variable) => {
+  cy.get('#variable_select').select(variable);
+});
 
-  assert.deepEqual({}, {});
+Then('the formula display should show {string}', (formula) => {
+  cy.get('#formula_display').should('have.text', formula);
 });
 ```
 
-### 6. Making tests run on CI
+### 6. Make it run on CI
 
 If you push those changes to CI you'll notice that they fail because we don't have the preprocessor installed.
 
@@ -233,4 +223,11 @@ At any step before one that runs Cypress tests we need to install the preprocess
     cd tests && npm install
 ```
 
-After that tests should run 🚀.
+*💡 Note that we're modifying one of the rhino files.*
+
+*If a new version of rhino changes the CI configuration, you'll need to bring back this step.*
+
+
+🚀 **And that's it!**
+
+After completing these steps your should run flawlessly.
