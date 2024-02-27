@@ -2,7 +2,7 @@
 title: Acceptance Test-Driven Development of Shiny Modules
 description: ''
 pubDate: Dec 12 2023
-tags: ["r", "tests"]
+tags: ["r", "tests", "shiny"]
 ---
 
 Tests can be a slow you down or increase your confidence and speed up your development. It all depends on the way you write them. We should aim to have tests that are independent from implementation detail.

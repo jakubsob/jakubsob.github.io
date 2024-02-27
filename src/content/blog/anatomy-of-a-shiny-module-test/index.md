@@ -2,7 +2,7 @@
 title: Anatomy Of A Shiny Module Test With shiny::testServer
 description: ''
 pubDate: 'Oct 31 2023'
-tags: ["r", "tests"]
+tags: ["r", "tests", "shiny"]
 ---
 
 Modules tested with `testServer` run with a session that is a `MockShinySession` object.
