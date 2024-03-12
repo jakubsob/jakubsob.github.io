@@ -2,7 +2,6 @@
 title: 'Exporting Excel Workbooks From Your Shiny App? Snapshot Test Them!'
 description: 'And make it easy to inspect if things go wrong'
 pubDate: 'Mar 6 2024'
-draft: true
 tags: ["r", "tests", "tdd", "shiny"]
 ---
 
