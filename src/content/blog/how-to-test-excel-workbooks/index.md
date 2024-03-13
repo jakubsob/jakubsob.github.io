@@ -5,17 +5,19 @@ pubDate: 'Mar 6 2024'
 tags: ["r", "tests", "tdd", "shiny"]
 ---
 
-**Let's imagine the worst case scenario a developer – you're told users want to export data from your app to Excel.** 😭
+**Let's imagine the worst case scenario for a Shiny apps developer – your users want to export data from the app to Excel.** 😭
 
 Imagine you have the following requirements for this feature:
+
 1. Users should be able to add variables to export: there is a set of fixed columns that are always exported and optional columns they can add.
 2. Users should be able to download data in an Excel Workbook.
 
 Based on those assumptions about the feature we can establish 2 base test cases:
+
 1. I go to the page and then download the data.
 1. I go to the page, select additional variables, and then download the data.
 
-Those test could look like this:
+Those tests could look like this:
 
 ```r
 describe("export", {
@@ -56,7 +58,7 @@ We assume there is an `ExcelWorkbook` class that allows us to interact with the 
 
 Having those tests in place, an automated way of running the code we want to get working, we can start implementing the module.
 
-The `test_app` is a function that runs the module as a standalone Shiny app, as in [this post](../how-to-use-tests-to-develop-shiny-modules/). We implement the R6 `ExportPage` object and use it to interact with the page.
+The `test_app` is a function that runs the module as a standalone Shiny app, as in [this post](../how-to-use-tests-to-develop-shiny-modules/). We implement the R6 `ExportPage` object that drives the `test_app` and use it to interact with the page.
 
 **The output of the module we need to test is an Excel file.**
 
@@ -104,4 +106,4 @@ expect_snapshot.ExcelWorkbook <- function(x, name, variant = NULL, ...) {
 
 Using S3 method dispatch, I can easily add new types of objects to snapshot test. I already had a method to capture data frames in CSV files, so I just needed to add a method to capture Excel workbooks.
 
-I decided that this is the behavior I want for comparing Excel files, but I leave doors open. If I change my mind in the future, and for example decide that it’s enough to treat Excel files as binary files, I’ll just update the implementation of expect_snapshot function. My test scenarios will remain intact.
+I decided that this is the behavior I want for comparing Excel files, but I leave doors open. If I change my mind in the future, and for example decide that it’s enough to treat Excel files as binary files, I’ll just update the implementation of `expect_snapshot` function. My test scenarios will remain intact.
