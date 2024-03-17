@@ -1,16 +1,19 @@
 ---
 import FormattedDate from "./FormattedDate.astro";
 import Tag from "./Tag.astro";
+import { getReadingTime } from "../utils/getReadingTime";
 
 const { posts } = Astro.props;
 
 interface Post {
   slug: string;
+  body: any;
   data: {
     title: string;
     description: string;
     pubDate: Date;
     tags: string[];
+    readingTime: string;
   };
 }
 ---
@@ -26,10 +29,15 @@ interface Post {
         <div class="flex flex-row items-baseline gap-6">
           <FormattedDate date={post.data.pubDate} />
           <span class="flex gap-2">
-            {post.data.tags.sort((a, b) => b.localeCompare(a)).map((tag) => (
-              <Tag value={tag} />
-            ))}
+            {post.data.tags
+              .sort((a, b) => b.localeCompare(a))
+              .map((tag) => (
+                <Tag value={tag} />
+              ))}
           </span>
+          <div class="ms-auto text-gray-500 text-sm uppercase">
+            {getReadingTime(post.body)}
+          </div>
         </div>
       </li>
     ))

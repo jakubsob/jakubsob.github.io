@@ -1,25 +1,25 @@
 ---
-import type { CollectionEntry } from 'astro:content';
-import BaseLayout from './BaseLayout.astro';
-import Comments from '../components/Comments.astro';
-import FormattedDate from '../components/FormattedDate.astro';
-import Tag from '../components/Tag.astro'
+import BaseLayout from "./BaseLayout.astro";
+import Comments from "../components/Comments.astro";
+import FormattedDate from "../components/FormattedDate.astro";
+import Tag from "../components/Tag.astro";
+import { getReadingTime } from "../utils/getReadingTime";
 
-type Props = CollectionEntry<'blog'>['data'];
-
-const { title, description, pubDate, updatedDate, tags } = Astro.props;
+const { post } = Astro.props;
+const readingTime = getReadingTime(post.body);
+const { title, description, pubDate, updatedDate, tags } = post.data;
 ---
 
 <html lang="en">
-  <BaseLayout title={title} description={description} >
+  <BaseLayout title={title} description={description}>
     <main class="border-l-[1px] border-solid border-gray-400">
       <article class="mx-auto max-w-[720px] max-w-100">
         <header class="border-b-[1px] border-solid border-gray-400 pb-2">
           <h1 class="text-balance">{title}</h1>
-          { description && <h2>{description}</h2>}
+          {description && <h2>{description}</h2>}
           <div class="flex flex-row items-baseline gap-6">
             <div>
-              { pubDate && <FormattedDate date={pubDate} /> }
+              {pubDate && <FormattedDate date={pubDate} />}
               {
                 updatedDate && (
                   <div>
@@ -29,8 +29,15 @@ const { title, description, pubDate, updatedDate, tags } = Astro.props;
               }
             </div>
             <span class="flex gap-2">
-              {tags.sort((a, b) => b.localeCompare(a)).map((tag) => (<Tag value={tag}/>))}
+              {
+                tags
+                  .sort((a: string, b: string): any => b.localeCompare(a))
+                  .map((tag: any): any => <Tag value={tag} />)
+              }
             </span>
+            <div class="ms-auto text-gray-500 text-sm uppercase">
+              {readingTime}
+            </div>
           </div>
         </header>
         <div class="prose mt-2 text-justify">
@@ -39,5 +46,5 @@ const { title, description, pubDate, updatedDate, tags } = Astro.props;
         <Comments />
       </article>
     </main>
-  </BaseLayout/>
+  </BaseLayout>
 </html>
