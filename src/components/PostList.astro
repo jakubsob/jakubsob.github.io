@@ -23,8 +23,8 @@ interface Post {
     posts.map((post: Post) => (
       <li class="mb-8">
         <a href={`/blog/${post.slug}/`}>
-          <h4>{post.data.title}</h4>
-          <h6>{post.data.description}</h6>
+          <h1 class="uppercase">{post.data.title}</h1>
+          <h2>{post.data.description}</h2>
         </a>
         <div class="flex flex-row items-baseline gap-6">
           <FormattedDate date={post.data.pubDate} />

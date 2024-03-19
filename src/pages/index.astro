@@ -1,24 +1,22 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import { Code } from 'astro:components';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { Code } from "astro:components";
+import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
 
 const code = `describe("R/Shiny Developer", {
   it("should write efficient backend", { })
   it("should write aesthetic frontend", { })
   it("should write automated tests", { })
 })
-`
+`;
 ---
 
 <!doctype html>
 <html lang="en">
-  <BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION} >
-		<main class="w-[720px] mx-auto">
-      <h1 class="lowercase">
-        jakub::sobolewski
-      </h1>
-      <Code code={code}, lang="r" theme="github-light"/>
+  <BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
+    <main class="w-[65ch] mx-auto">
+      <h1 class="lowercase">jakub::sobolewski</h1>
+      <Code code={code} , lang="r" theme="github-light" />
     </main>
   </BaseLayout>
 </html>

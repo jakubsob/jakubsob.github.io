@@ -6,7 +6,7 @@ import { getCollection } from "astro:content";
 
 export async function getStaticPaths() {
   const posts = (await getCollection("blog")).sort(
-    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
   );
   const uniqueTags = [...new Set(posts.map((post) => post.data.tags).flat())];
   return uniqueTags.map((tag) => {
@@ -24,10 +24,10 @@ const { posts } = Astro.props;
 
 <!doctype html>
 <html lang="en">
-  <BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION} >
-    <main class="border-l-[1px] border-solid border-gray-400">
+  <BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
+    <main class="w-[65ch] mx-auto">
       <header class="border-b-[1px] border-solid border-gray-400 mb-4">
-        <h1 class="uppercase">
+        <h1 class="font-monoton text-8xl uppercase">
           {tag}
         </h1>
       </header>
@@ -35,5 +35,5 @@ const { posts } = Astro.props;
         <PostList posts={posts} />
       </section>
     </main>
-  </BaseLayout/>
+  </BaseLayout>
 </html>

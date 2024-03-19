@@ -12,11 +12,25 @@ const { title, description, pubDate, updatedDate, tags } = post.data;
 
 <html lang="en">
   <BaseLayout title={title} description={description}>
-    <main class="border-l-[1px] border-solid border-gray-400">
-      <article class="mx-auto max-w-[720px] max-w-100">
+    <main>
+      <article
+        class="prose
+          prose-headings:font-syne
+          prose-h1:uppercase
+          prose-h1:font-syne
+          prose-h1:font-semibold
+          prose-p:my-2
+          prose-pre:font-code
+          prose-pre:rounded-none
+          prose-pre:border-x-[1px]
+          prose-pre:border-border-solid
+          prose-pre:border-border-gray-400
+          prose-blockquote:font-light
+          mx-auto"
+      >
         <header class="border-b-[1px] border-solid border-gray-400 pb-2">
-          <h1 class="text-balance">{title}</h1>
-          {description && <h2>{description}</h2>}
+          <h1 class="lead text-balance">{title}</h1>
+          {description && <h2 class="m-0">{description}</h2>}
           <div class="flex flex-row items-baseline gap-6">
             <div>
               {pubDate && <FormattedDate date={pubDate} />}
@@ -40,9 +54,7 @@ const { title, description, pubDate, updatedDate, tags } = post.data;
             </div>
           </div>
         </header>
-        <div class="prose mt-2 text-justify">
-          <slot />
-        </div>
+        <slot />
         <Comments />
       </article>
     </main>

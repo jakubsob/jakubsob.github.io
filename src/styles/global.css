@@ -1,18 +1,5 @@
-/*
-  The CSS in this style tag is based off of Bear Blog's default CSS.
-  https://github.com/HermanMartinus/bearblog/blob/297026a877bc2ab2b3bdfbd6b9f7961c350917dd/templates/styles/blog/default.css
-  License MIT: https://github.com/HermanMartinus/bearblog/blob/master/LICENSE.md
- */
+@import '@fontsource-variable/fira-code';
 @import '@fontsource-variable/syne';
-@import '@fontsource/geist-sans/100.css';
-@import '@fontsource/geist-sans/200.css';
-@import '@fontsource/geist-sans/300.css';
-@import '@fontsource/geist-sans/400.css';
-@import '@fontsource/geist-sans/500.css';
-@import '@fontsource/geist-sans/600.css';
-@import '@fontsource/geist-sans/700.css';
-@import '@fontsource/geist-sans/800.css';
-@import '@fontsource/geist-sans/900.css';
 @import '@fontsource/geist-mono/100.css';
 @import '@fontsource/geist-mono/200.css';
 @import '@fontsource/geist-mono/300.css';
@@ -22,155 +9,17 @@
 @import '@fontsource/geist-mono/700.css';
 @import '@fontsource/geist-mono/800.css';
 @import '@fontsource/geist-mono/900.css';
+@import '@fontsource/geist-sans/100.css';
+@import '@fontsource/geist-sans/200.css';
+@import '@fontsource/geist-sans/300.css';
+@import '@fontsource/geist-sans/400.css';
+@import '@fontsource/geist-sans/500.css';
+@import '@fontsource/geist-sans/600.css';
+@import '@fontsource/geist-sans/700.css';
+@import '@fontsource/geist-sans/800.css';
+@import '@fontsource/geist-sans/900.css';
+@import '@fontsource/monoton';
 
-:root {
-  --accent: #93a273;
-    --accent-dark: #5e6254;
-	--black: 15, 18, 25;
-  --gray: #e2e2e2;
-    --gray-light: #e2e2e2;
-	--gray-dark: 34, 41, 57;
-	--gray-gradient: rgba(var(--gray-light), 50%), #fff;
-	--box-shadow: 0 2px 6px rgba(var(--gray), 25%), 0 8px 24px rgba(var(--gray), 33%),
-		0 16px 32px rgba(var(--gray), 33%);
-}
-body {
-	margin: 0;
-	padding: 0;
-	text-align: left;
-	background: linear-gradient(var(--gray-gradient)) no-repeat;
-	background-size: 100% 600px;
-	word-wrap: break-word;
-	overflow-wrap: break-word;
-	color: rgb(var(--gray-dark));
-	font-size: 20px;
-	line-height: 1.7;
-}
-main {
-	width: 720px;
-	max-width: calc(100% - 2em);
-	margin: auto;
-	padding: 3em 1em;
-}
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-	margin: 0 0 0.5rem 0;
-	color: rgb(var(--black));
-	line-height: 1.2;
-  font-family: 'Syne Variable', sans-serif;
-  font-weight: 500;
-  text-align: left
-}
-h1 {
-  font-size: 3.052em;
-  font-weight: 600;
-  text-transform: uppercase;
-}
-h2 {
-  font-size: 2.441em;
-}
-
-h3 {
-  font-size: 1.953em;
-}
-
-h4 {
-  font-size: 1.563em;
-}
-
-h5 {
-  font-size: 1.25em;
-}
-strong,
-b {
-	font-weight: 700;
-}
-a {
-	color: var(--accent);
-}
-a:hover {
-	color: var(--accent);
-}
-p {
-  margin-top: 1em;
-	margin-bottom: 1em;
-}
-.prose {
-  margin-bottom: 1em;
-  font-family: 'Geist Mono', monospace;
-  font-weight: 300;
-}
-textarea {
-	width: 100%;
-	font-size: 16px;
-}
-input {
-	font-size: 16px;
-}
-table {
-	width: 100%;
-}
-img {
-	max-width: 100%;
-	height: auto;
-	border-radius: 8px;
-}
-code {
-	padding: 2px 5px;
-	background-color: rgb(var(--gray-light));
-  border-radius: 2px;
-  font-family: 'Geist Mono', monospace;
-  font-weight: 400;
-}
-.prose pre {
-  border-right: 1px solid var(--lt-color-gray-400);
-}
-pre {
-  padding: 1.5em 0;
-  text-align: left;
-}
-pre > code {
-	all: unset;
-  font-family: 'Geist Mono', monospace;
-  font-weight: 400;
-}
-blockquote {
-  font-weight: unset;
-  border-left: 2px solid var(--gray-light);
-	padding: 0 0 0 20px;
-	margin: 0px;
-  font-size: 0.85em;
-}
-hr {
-	border: none;
-	border-top: 1px solid rgb(var(--gray-light));
-}
-@media (max-width: 720px) {
-	body {
-		font-size: 18px;
-	}
-	main {
-		padding: 1em;
-	}
-}
-
-ol,
-ul,
-menu {
-  list-style: unset;
-  margin: 0;
-  padding: 0 1rem;
-}
-
-.dark .astro-code,
-.dark .astro-code span {
-  color: var(--shiki-dark) !important;
-  background-color: var(--shiki-dark-bg) !important;
-  font-style: var(--shiki-dark-font-style) !important;
-  font-weight: var(--shiki-dark-font-weight) !important;
-  text-decoration: var(--shiki-dark-text-decoration) !important;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

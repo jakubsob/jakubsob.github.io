@@ -1,11 +1,11 @@
 ---
-import HeaderLink from './HeaderLink.astro';
-import SearchBar from './SearchBar.astro';
-import { SITE_TITLE } from '../consts';
+import HeaderLink from "./HeaderLink.astro";
+import SearchBar from "./SearchBar.astro";
+import { SITE_TITLE } from "../consts";
 ---
 
 <header class="m-0 px-4 py-2">
-	<nav class="flex flex-row items-center justify-between w-100 max-w-[720px] mx-auto">
+  <nav class="flex flex-row items-center justify-between w-[65ch] mx-auto">
     <div class="flex flex-row gap-4">
       <HeaderLink href="/">{SITE_TITLE}</HeaderLink>
       <HeaderLink href="/blog">Blog</HeaderLink>
@@ -13,5 +13,5 @@ import { SITE_TITLE } from '../consts';
     <div>
       <SearchBar />
     </div>
-	</nav>
+  </nav>
 </header>
