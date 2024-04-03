@@ -12,7 +12,7 @@ const posts = (await getCollection("blog"))
 <!doctype html>
 <html lang="en">
   <BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
-    <main class="w-[65ch] mx-auto">
+    <main class="max-w-[65ch] px-2 mx-auto">
       <PostList posts={posts} />
     </main>
   </BaseLayout>

@@ -14,9 +14,11 @@ const code = `describe("R/Shiny Developer", {
 <!doctype html>
 <html lang="en">
   <BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
-    <main class="w-[65ch] mx-auto">
-      <h1 class="lowercase">jakub::sobolewski</h1>
-      <Code code={code} , lang="r" theme="github-light" />
+    <main class="max-w-[65ch] px-2 mx-auto">
+      <h1 class="lowercase font-code text-5xl mt-6">jakub::sobolewski</h1>
+      <div class="mt-6 text-xl sm:text-md">
+        <Code code={code} , lang="r" theme="github-light" />
+      </div>
     </main>
   </BaseLayout>
 </html>
