@@ -12,8 +12,58 @@ const posts = (await getCollection("blog"))
 <!doctype html>
 <html lang="en">
   <BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
-    <main class="max-w-[65ch] px-2 mx-auto">
-      <PostList posts={posts} />
-    </main>
+    <div
+      class="grid grid-cols-1 grid-rows-[1fr_auto]
+      lg:grid-cols-[1fr_minmax(65ch,_1fr)_1fr] lg:grid-rows-1"
+    >
+      <main
+        class="col-start-1 max-w-[65ch] px-2 mx-auto order-1
+    lg:col-start-2 lg:row-start-1 lg:order-1"
+      >
+        <PostList posts={posts} />
+      </main>
+      <div
+        class="col-start-1 order-2 h-fit max-w-[65ch] px-2 mx-auto
+        lg:col-start-3 lg:row-start-1 lg:order-2
+        grid grid-cols-2 grid-rows-1
+        lg:grid-cols-1 lg:grid-rows-2 lg:gap-4"
+      >
+        <div>
+          <h1 class="text-xl uppercase">Check out</h1>
+          <ul>
+            <li>
+              <a class="underline" href="https://www.r-bloggers.com"
+                >R-Bloggers</a
+              >
+            </li>
+            <li>
+              <a class="underline" href="https://rweekly.org/">R-Weekly</a>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h1 class="text-xl uppercase">Follow me on</h1>
+          <ul>
+            <li>
+              <a
+                class="underline"
+                href="https://www.linkedin.com/in/jakub-sobolewski-r/"
+                >LinkedIn</a
+              >
+            </li>
+            <li>
+              <a class="underline" href="https://medium.com/@jakubsobolewski"
+                >Medium</a
+              >
+            </li>
+            <li>
+              <a class="underline" href="https://jakubsobolewski.substack.com/"
+                >Substack</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
   </BaseLayout>
 </html>
