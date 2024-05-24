@@ -5,9 +5,8 @@ const { value } = Astro.props;
 <button role="button" aria-label={value}>
   <a
     class="min-w-16
-    no-underline
-    border-[1px] border-solid border-gray-400 rounded-full px-3
-    text-center text-sm uppercase"
+    border-[1px] border-solid border-gray-800 rounded-full px-3
+    text-center text-sm no-underline uppercase"
     href={`/tags/${value}`}
   >
     {value}
@@ -16,8 +15,8 @@ const { value } = Astro.props;
 
 <style>
   a {
-    color: var(--lt-color-gray-800);
-    background-image: linear-gradient(var(--lt-color-gray-800) 0 0);
+    color: var(--color-gray-800);
+    background-image: linear-gradient(var(--color-gray-800) 0 0);
     background-size: 200% 0;
     background-position: 100% 100%;
     background-repeat: no-repeat;
@@ -26,12 +25,12 @@ const { value } = Astro.props;
       background-position 0.3s 0.3s;
   }
   a:hover {
-    color: var(--lt-color-gray-100);
+    color: var(--color-gray-100);
     background-size: 200% 100%;
     background-position: 100% 100%;
     transition:
       background-size 0.3s,
       background-position 0.3s,
-      color 0.5s;
+      color 0.3s ease-out 0.1s;
   }
 </style>

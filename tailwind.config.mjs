@@ -34,6 +34,28 @@ export default {
           fontSize: theme('fontSize.lg')
         },
       })
+    }),
+    plugin(function({ addUtilities, theme }) {
+      function extractVars (obj, group = '', prefix) {
+        return Object.keys(obj).reduce((vars, key) => {
+          const value = obj[key];
+          const cssVariable = key === "DEFAULT" ? `--${prefix}${group}` : `--${prefix}${group}-${key}`;
+
+          const newVars =
+          typeof value === 'string'
+          ? { [cssVariable]: value }
+          : extractVars(value, `-${key}`, prefix);
+
+          return { ...vars, ...newVars };
+        }, {});
+      }
+
+      addUtilities({
+        ':root': {
+          ...extractVars(theme('colors'), '', 'color'),
+          ...extractVars(theme('boxShadow'), '', 'box-shadow')
+        }
+      })
     })
   ],
 }
