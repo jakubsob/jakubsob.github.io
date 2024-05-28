@@ -5,7 +5,7 @@ pubDate:  'May 23 2024'
 tags: ["r", "tests"]
 ---
 
-Components in Shiny not only need to be rendered with correct markup, but also need to successfuly communicate with the server. This means that testing the markup only may be not enough to ensure they function correctly.
+Components in Shiny not only need to be rendered with correct markup, but also need to successfully communicate with the server. This means that testing the markup only may be not enough to ensure they function correctly.
 
 In the newest addition to [shiny.blueprint](https://appsilon.github.io/shiny.blueprint/), server update functions are added to some of its components. To test that they work correctly, we must:
 - render the component with initial values,
@@ -20,7 +20,7 @@ Such choice was made for component tests in [shiny.fluent](https://appsilon.gith
 
 This approach is a bit tricky to maintain, as there are a lot of things rendered on the page.
 
-**To other approach is to run a small Shiny app with only the tested component.**
+**The other approach is to run a small Shiny app with only the tested component.**
 
 ## Running components in isolation
 
@@ -139,7 +139,7 @@ Test code for both cases is similar, and it's good, as they test the same behavi
 - ✅ **Clarity**: it’s easy to see which behaviors are tested for each component.
 - ✅ **Flexibility**: we can control how each component is tested in its own test file.
 - ✅ **Reduced cognitive load**: tests that test the same behavior are implemented using the same approach.
-- ❌ **Slower tests**: it takes a moment to spin up each test app. The time it takes to run al tests increases with each added test case.
+- ❌ **Slower tests**: it takes a moment to spin up each test app. The time it takes to run all tests increases with each added test case.
 - ✅ **No state sharing between tests**: each test runs in isolation, so there are no side effects.
 - ⚠️ **More test code**: test code is split into more files and has more boilerplate. There is a fine line between too much test code and too much abstraction. I think in this case it's a good trade-off.
 
