@@ -3,6 +3,7 @@ import BaseLayout from "./BaseLayout.astro";
 import Comments from "../components/Comments.astro";
 import FormattedDate from "../components/FormattedDate.astro";
 import Tag from "../components/Tag.astro";
+import SubscribeButton from "../components/SubscribeButton.astro";
 import { getReadingTime } from "../utils/getReadingTime";
 
 const { post } = Astro.props;
@@ -52,6 +53,9 @@ const { title, description, pubDate, updatedDate, tags } = post.data;
           </div>
         </header>
         <slot />
+        <center>
+          <SubscribeButton />
+        </center>
         <Comments />
       </article>
     </main>

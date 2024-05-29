@@ -337,5 +337,3 @@ Key takeaways
 ℹ Is `shiny::runApp(test.mode = TRUE)` enabled?
 - When running `testthat` tests in parallel, [test files are run in parallel](https://testthat.r-lib.org/articles/parallel.html#basic-operation). Sharing an app instance between test files introduces a risk of tests interfering with each other, leading to flaky tests.
 - If there is logic that restores the state of the app after a refresh implemented, when the app stores some persistent data that will be displayed during the next session, you won't obtain a clean state by only refreshing the page.
-
----
