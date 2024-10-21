@@ -1,24 +1,77 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { Code } from "astro:components";
+import PostList from "../components/PostList.astro";
+import SubscribeButton from "../components/SubscribeButton.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
+import { getCollection } from "astro:content";
 
-const code = `describe("R/Shiny Developer", {
-  it("should write efficient backend", { })
-  it("should write aesthetic frontend", { })
-  it("should write automated tests", { })
-})
-`;
+const posts = (await getCollection("blog"))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .filter((post) => post.data.draft !== true);
 ---
 
 <!doctype html>
 <html lang="en">
   <BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
-    <main class="max-w-[65ch] px-2 mx-auto">
-      <h1 class="lowercase font-code text-5xl mt-6">jakub::sobolewski</h1>
-      <div class="mt-6 text-xl sm:text-md">
-        <Code code={code} , lang="r" theme="github-light" />
+    <div
+      class="grid grid-cols-1 grid-rows-[1fr_auto]
+      lg:grid-cols-[1fr_minmax(65ch,_1fr)_1fr] lg:grid-rows-1"
+    >
+      <main
+        class="col-start-1 max-w-[65ch] px-2 mx-auto order-1
+    lg:col-start-2 lg:row-start-1 lg:order-1"
+      >
+        <header class="my-6 border-b-1">
+          <h1 class="text-xl font-bold">
+            I write about Test-Driven Development and testing in R.
+          </h1>
+          <h2 class="italic">R/Shiny Developer & Tech Leader @ Appsilon</h2>
+          <SubscribeButton />
+        </header>
+        <PostList posts={posts} />
+      </main>
+      <div
+        class="col-start-1 order-2 h-fit max-w-[65ch] px-2 mx-auto
+        lg:col-start-3 lg:row-start-1 lg:order-2
+        grid grid-cols-2 grid-rows-1
+        lg:grid-cols-1 lg:grid-rows-2 lg:gap-4"
+      >
+        <div>
+          <h1 class="text-xl uppercase">Check out</h1>
+          <ul>
+            <li>
+              <a class="underline" href="https://www.r-bloggers.com"
+                >R-Bloggers</a
+              >
+            </li>
+            <li>
+              <a class="underline" href="https://rweekly.org/">R-Weekly</a>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h1 class="text-xl uppercase">Follow me on</h1>
+          <ul>
+            <li>
+              <a
+                class="underline"
+                href="https://www.linkedin.com/in/jakub-sobolewski-r/"
+                >LinkedIn</a
+              >
+            </li>
+            <li>
+              <a class="underline" href="https://medium.com/@jakubsobolewski"
+                >Medium</a
+              >
+            </li>
+            <li>
+              <a class="underline" href="https://jakubsobolewski.substack.com/"
+                >Substack</a
+              >
+            </li>
+          </ul>
+        </div>
       </div>
-    </main>
+    </div>
   </BaseLayout>
 </html>

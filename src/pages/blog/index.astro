@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import PostList from "../../components/PostList.astro";
+import SubscribeButton from "../../components/SubscribeButton.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../../consts";
 import { getCollection } from "astro:content";
 
@@ -20,6 +21,13 @@ const posts = (await getCollection("blog"))
         class="col-start-1 max-w-[65ch] px-2 mx-auto order-1
     lg:col-start-2 lg:row-start-1 lg:order-1"
       >
+        <header class="my-6 border-b-1">
+          <h1 class="text-xl font-bold">
+            I write about Test-Driven Development and testing in R.
+          </h1>
+          <h2 class="italic">R/Shiny Developer & Tech Leader @ Appsilon</h2>
+          <SubscribeButton />
+        </header>
         <PostList posts={posts} />
       </main>
       <div
