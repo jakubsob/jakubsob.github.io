@@ -1,14 +1,15 @@
 ---
-
+const { center } = Astro.props;
+const paddingX = 28;
+const posX = center
+  ? `left: 50%; transform: translateX(-50%);`
+  : `left: -${paddingX}px;`;
 ---
 
-<div
-  class="w-full my-4 py-8
-  border-y-[1px] border-solid border-gray-200
-  grid place-content-center"
->
+<div class="h-[43px] relative overflow-hidden">
   <iframe
     src="https://jakubsobolewski.substack.com/embed"
-    width="480"
-    height="150"></iframe>
+    width="400"
+    style=`position: absolute; top: -4px; ${posX}`
+    height="110"></iframe>
 </div>
