@@ -23,8 +23,12 @@ const posts = (await getCollection("blog"))
       >
         <header class="my-6">
           <div class="flex flex-row items-end gap-4">
-            <div class="size-40 rounded-full border">
-              <img class="size-40 object-cover grayscale" src="author.png" />
+            <div
+              class="size-40 rounded-full bg-[#262b36] bg-opacity-5 min-w-40 flex items-center justify-center"
+            >
+              <div class="size-40 rounded-lg overflow-hidden min-w-36">
+                <img class="size-40 object-cover grayscale" src="author.png" />
+              </div>
             </div>
             <div class="flex flex-col justify-end">
               <h2 class="">I'm Jakub Sobolewski</h2>
