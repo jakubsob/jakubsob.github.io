@@ -21,7 +21,7 @@ interface Post {
 <ul class="list-none">
   {
     posts.map((post: Post) => (
-      <li class="mb-8">
+      <li class="mb-2 p-4 transition-all hover:shadow-lg">
         <a href={`/blog/${post.slug}/`}>
           <h1 class="uppercase">{post.data.title}</h1>
           <h2>{post.data.description}</h2>
