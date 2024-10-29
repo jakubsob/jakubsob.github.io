@@ -21,7 +21,7 @@ interface Post {
 <ul class="list-none">
   {
     posts.map((post: Post) => (
-      <li class="mb-2 p-4 transition-all hover:shadow-lg">
+      <li class="mb-2 p-4 rounded-lg transition-all hover:shadow-lg">
         <a href={`/blog/${post.slug}/`}>
           <h1 class="uppercase">{post.data.title}</h1>
           <h2>{post.data.description}</h2>
@@ -35,7 +35,7 @@ interface Post {
                 <Tag value={tag} />
               ))}
           </span>
-          <div class="ms-auto text-gray-500 text-sm uppercase">
+          <div class="ms-auto text-sky text-sm uppercase">
             {getReadingTime(post.body)}
           </div>
         </div>
