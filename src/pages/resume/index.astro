@@ -1,6 +1,5 @@
 ---
 import BaseHead from "../../components/BaseHead.astro";
-import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../../consts";
 import FormattedDate from "../../components/FormattedDate.astro";
@@ -12,7 +11,6 @@ import { experience } from "./_data.json";
 <html lang="en">
   <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
   <body>
-    <Header />
     <main class="border-l-[1px] border-solid border-gray-400">
       <h1>Experience</h1>
       <ul>

@@ -1,7 +1,8 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
+import BaseHead from "../components/BaseHead.astro";
 import PostList from "../components/PostList.astro";
-import SubscribeButton from "../components/SubscribeButton.astro";
+import Header from "../components/Header.jsx";
+import HeaderLink from "../components/HeaderLink.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
 import { getCollection } from "astro:content";
 
@@ -12,42 +13,120 @@ const posts = (await getCollection("blog"))
 
 <!doctype html>
 <html lang="en">
-  <BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
+  <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+    .line {
+      width: 100%;
+      max-width: 800px;
+      height: 8px;
+      margin: 0 0 10px 0;
+      position: relative;
+      display: inline-block;
+      background-color: rgba(255, 255, 255, 1);
+    }
+  </style>
+  <main class="relative">
+    <Header client:only="react">
+      <HeaderLink href="#hero">jakub::sobolewski</HeaderLink>
+      <HeaderLink href="#blog">blog</HeaderLink>
+    </Header>
     <div
-      class="grid grid-cols-1 grid-rows-[1fr_auto]
-      lg:grid-cols-[1fr_minmax(65ch,_1fr)_1fr] lg:grid-rows-1"
+      id="hero"
+      class="bg-sky h-[100vh]
+        relative
+        overflow-hidden
+        text-white
+        grid
+        items-center justify-items-start
+        grid-cols-1 grid-rows-1
+        lg:grid-cols-1 lg:grid-rows-1
+        p-4"
+      style="
+        z-index: 0;
+        opacity: 1;
+        mix-blend-mode: overlay;
+        background-image: url(cover.svg);
+        background-position: 0 0;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-attachment: scroll;
+        inset: 0%;"
     >
-      <main
-        class="col-start-1 max-w-[65ch] px-2 mx-auto order-1
-    lg:col-start-2 lg:row-start-1 lg:order-1"
+      <div
+        class="absolute bottom-0 left-0 -translate-x-1/3
+          rotate-30
+          h-[clamp(200px,20vw,500px)] w-[clamp(200px,100vw,500px)]
+          bg-[#77C0CA] opacity-10
+          rounded-full border-none blur-[400px]"
       >
-        <header class="my-6">
-          <div class="flex flex-row items-end gap-4">
-            <div
-              class="size-40 rounded-full bg-[#262b36] bg-opacity-5 min-w-40 flex items-center justify-center"
-            >
-              <div class="size-40 rounded-lg overflow-hidden min-w-36">
-                <img class="size-40 object-cover grayscale" src="author.png" />
-              </div>
-            </div>
-            <div class="flex flex-col justify-end">
-              <h2 class="">I'm Jakub Sobolewski</h2>
-              <h3 class="italic">
-                Senior R/Shiny Developer & Tech Leader @ Appsilon
-              </h3>
-              <h1 class="mt-3 text-2xl font-bold">
-                I write about Test-Driven Development <br /> and testing in R.
-              </h1>
-            </div>
-          </div>
-        </header>
-        <section class="my-4">
-          <SubscribeButton center={true} />
-        </section>
+      </div>
+      <div
+        class="absolute top-0 right-0 translate-x-1/2
+          rotate-3 5
+          h-[clamp(200px,10vw,500px)] w-[clamp(200px,50vw,500px)]
+          bg-[#77C0CA] opacity-20
+          rounded-full border-none blur-[400px]"
+      >
+      </div>
+      <div
+        class="self-center justify-self-center
+        lg:self-center lg:justify-self-center lg:col-span-2"
+      >
+        <h3 class="font-syne text-gray-300 mb-3">
+          Hi, my name is <span class="text-marine font-semibold"
+            >Jakub Sobolewski</span
+          > and this is
+        </h3>
+        <h1 class="text-clamp font-code font-bold">
+          Building quality by testing.
+        </h1>
+        <h3 class="text-gray-300 font-syne font-light mt-3">
+          <p>I’m a software engineer specialising in R.</p>
+          <p>
+            I teach and preach using testing as a driving force to efficiently
+            develop code.
+          </p>
+        </h3>
+        <button
+          class="border border-marine border-2 rounded-lg
+          py-3 px-6 mt-8
+          text-marine font-code tracking-[0.35rem] font-bold text-xl uppercase
+          transition-all duration-300 ease-in-out
+          hover:border-white hover:text-white"
+        >
+          <a href="https://jakubsobolewski.substack.com/subscribe">Subscribe</a>
+        </button>
+        <button
+          class="text-gray-300
+            py-3 px-6 mt-8 ml-3
+            font-code tracking-[0.35rem] font-bold text-xl uppercase
+            hover:text-marine"
+        >
+          <a href="#blog"> Read </a>
+        </button>
+      </div>
+    </div>
+    <div
+      id="blog"
+      class="grid
+        grid-cols-1
+        grid-rows-[1fr_auto]
+        bg-marine-50
+        lg:grid-cols-[1fr_minmax(65ch,_1fr)_1fr]
+        lg:grid-rows-1
+        pt-16"
+    >
+      <article
+        class="col-start-1 max-w-[65ch] mx-auto order-1
+  lg:col-start-2 lg:row-start-1 lg:order-1"
+      >
         <section>
           <PostList posts={posts} />
         </section>
-      </main>
+      </article>
       <div
         class="col-start-1 order-2 h-fit max-w-[65ch] px-2 mx-auto
         lg:col-start-3 lg:row-start-1 lg:order-2
@@ -91,5 +170,5 @@ const posts = (await getCollection("blog"))
         </div>
       </div>
     </div>
-  </BaseLayout>
+  </main>
 </html>

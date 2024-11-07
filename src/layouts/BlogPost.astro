@@ -4,6 +4,8 @@ import Comments from "../components/Comments.astro";
 import FormattedDate from "../components/FormattedDate.astro";
 import Tag from "../components/Tag.astro";
 import SubscribeButton from "../components/SubscribeButton.astro";
+import Header from "../components/Header.jsx";
+import HeaderLink from "../components/HeaderLink.astro";
 import { getReadingTime } from "../utils/getReadingTime";
 
 const { post } = Astro.props;
@@ -13,7 +15,11 @@ const { title, description, pubDate, updatedDate, tags } = post.data;
 
 <html lang="en">
   <BaseLayout title={title} description={description}>
-    <main>
+    <Header client:only="react">
+      <HeaderLink href="/">jakub::sobolewski</HeaderLink>
+      <HeaderLink href="/#blog">blog</HeaderLink>
+    </Header>
+    <main class="pt-16 bg-marine-50">
       <article
         class="prose
           prose-headings:font-syne
@@ -68,16 +74,13 @@ const { title, description, pubDate, updatedDate, tags } = post.data;
       let header = document.createElement("div");
       header.className = "flex flex-row items-center gap-1 w-full h-12";
       let dot = document.createElement("div");
-      dot.className =
-        "rounded-full w-3 h-3 border-[2px] border-solid border-red-200";
+      dot.className = "rounded-full w-3 h-3 bg-red-400";
       header.appendChild(dot);
       dot = document.createElement("div");
-      dot.className =
-        "rounded-full w-3 h-3 border-[2px] border-solid border-yellow-200";
+      dot.className = "rounded-full w-3 h-3 bg-yellow-400";
       header.appendChild(dot);
       dot = document.createElement("div");
-      dot.className =
-        "rounded-full w-3 h-3 border-[2px] border-solid border-green-200";
+      dot.className = "rounded-full w-3 h-3 bg-green-400";
       header.appendChild(dot);
 
       let copyButton = document.createElement("button");
@@ -92,6 +95,7 @@ const { title, description, pubDate, updatedDate, tags } = post.data;
       wrapper.className = "flex flex-col shadow-md p-2";
       codeBlock.parentNode.insertBefore(wrapper, codeBlock);
       codeBlock.className = "mt-0";
+      codeBlock.style.backgroundColor = "transparent";
       wrapper.prepend(header);
       wrapper.appendChild(codeBlock);
 
