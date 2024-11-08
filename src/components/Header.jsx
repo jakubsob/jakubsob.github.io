@@ -14,7 +14,7 @@ export default function Header({ children }) {
         scrub: true,
         toggleActions: "play none none reverse",
       },
-      color: "var(--color-marine)",
+      color: "var(--color-gray-300)",
     });
   }, []);
 
