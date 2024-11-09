@@ -68,13 +68,11 @@ export default {
       addBase({
         h1: {
           fontFamily: theme("fontFamily.uppercase"),
-          fontFamily: theme("fontFamily.syne"),
           fontWeight: theme("fontWeight.semibold"),
           fontSize: theme("fontSize.2xl"),
         },
         h2: {
           fontFamily: theme("fontFamily.uppercase"),
-          fontFamily: theme("fontFamily.syne"),
           fontSize: theme("fontSize.xl"),
         },
         h3: {
