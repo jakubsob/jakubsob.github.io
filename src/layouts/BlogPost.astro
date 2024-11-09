@@ -22,10 +22,9 @@ const { title, description, pubDate, updatedDate, tags } = post.data;
     <main class="pt-16 bg-marine-50">
       <article
         class="prose
-          prose-headings:font-syne
           prose-h1:uppercase
-          prose-h1:font-syne
           prose-h1:font-semibold
+          prose-h2:font-regular
           prose-p:my-2
           prose-pre:font-code
           prose-pre:rounded-none
@@ -59,7 +58,7 @@ const { title, description, pubDate, updatedDate, tags } = post.data;
           </div>
         </header>
         <slot />
-        <center>
+        <center class="py-4">
           <SubscribeButton center={true} />
         </center>
         <Comments />
@@ -85,14 +84,14 @@ const { title, description, pubDate, updatedDate, tags } = post.data;
 
       let copyButton = document.createElement("button");
       copyButton.className =
-        "ml-auto border-[1px] border-solid border-gray-200 text-sm text-gray-400 p-1";
+        "ml-auto rounded-md border-[1px] border-solid border-gray-400 text-sm text-gray-400 p-1 hover:bg-gray-200 hover:text-black";
       copyButton.innerHTML = copyButtonLabel;
 
       header.appendChild(copyButton);
       codeBlock.setAttribute("tabindex", "0");
 
       let wrapper = document.createElement("div");
-      wrapper.className = "flex flex-col shadow-md p-2";
+      wrapper.className = "flex flex-col px-2 bg-sky rounded-md";
       codeBlock.parentNode.insertBefore(wrapper, codeBlock);
       codeBlock.className = "mt-0";
       codeBlock.style.backgroundColor = "transparent";

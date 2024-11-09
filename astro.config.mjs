@@ -6,15 +6,15 @@ import react from "@astrojs/react";
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://jakubsob.github.io',
+  site: "https://jakubsob.github.io",
   integrations: [mdx(), sitemap(), tailwind(), react()],
   markdown: {
-    syntaxHighlight: 'shiki',
+    syntaxHighlight: "shiki",
     shikiConfig: {
-      theme: 'github-light',
+      theme: "github-dark",
       langs: [],
       wrap: true,
-      transformers: []
+      transformers: [],
     },
-  }
+  },
 });
