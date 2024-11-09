@@ -1,22 +1,22 @@
 ---
-const { value } = Astro.props;
+const { value, label, href } = Astro.props;
 ---
 
-<button role="button" aria-label={value}>
+<button role="button" aria-label={value || href}>
   <a
     class="min-w-16
-    border-[1px] border-solid border-sky rounded-full px-3
-    text-center text-sm no-underline uppercase"
-    href={`/tags/${value}`}
+    border-[1px] border-solid border-sky-400 rounded-full px-3
+    text-sky-400 text-center text-sm no-underline uppercase"
+    href={`/tags/${value || href}`}
   >
-    {value}
+    {value || label}
   </a>
 </button>
 
 <style>
   a {
-    color: var(--color-sky);
-    background-image: linear-gradient(var(--color-sky) 0 0);
+    color: var(--color-sky-400);
+    background-image: linear-gradient(var(--color-sky-400) 0 0);
     background-size: 200% 0;
     background-position: 100% 100%;
     background-repeat: no-repeat;

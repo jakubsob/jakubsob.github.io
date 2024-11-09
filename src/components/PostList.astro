@@ -26,18 +26,16 @@ interface Post {
           <h1 class="uppercase">{post.data.title}</h1>
           <h2>{post.data.description}</h2>
         </a>
-        <div class="flex flex-row items-baseline gap-6">
+        <div class="flex flex-row items-baseline gap-6 text-sm text-sky-400 mt-2">
           <FormattedDate date={post.data.pubDate} />
-          <span class="flex gap-2">
+          <div class="uppercase">{getReadingTime(post.body)}</div>
+          <span class="ms-auto flex gap-2 pt-2">
             {post.data.tags
               .sort((a, b) => b.localeCompare(a))
               .map((tag) => (
                 <Tag value={tag} />
               ))}
           </span>
-          <div class="ms-auto text-sky text-sm uppercase">
-            {getReadingTime(post.body)}
-          </div>
         </div>
       </li>
     ))
