@@ -88,35 +88,48 @@ const tags = getTagsWithCounts(posts).sort((a, b) => b.count - a.count);
       class="self-center justify-self-center
         lg:self-center lg:justify-self-center lg:col-span-2"
     >
-      <h3 class="text-gray-300 mb-3">
-        Hi, my name is <span class="text-marine font-semibold"
+      <h3 class="text-gray-400 mb-3 font-light">
+        Hi, my name is <span class="text-white font-semibold"
           >Jakub Sobolewski</span
         > and this is
       </h3>
-      <h1 class="text-clamp font-code font-bold">
-        Building quality by testing.
+      <h1 class="text-clamp font-code text-white mb-3 relative">
+        Building quality by
+        <span
+          class="text-marine underline underline-offset-[15px] decoration-2 decoration-wavy decoration-marine"
+          >testing</span
+        >
       </h1>
-      <h3 class="text-gray-300 font-light mt-3">
+      <h3 class="text-gray-400 font-light mb-12">
         <p>I’m a software engineer specialising in R.</p>
-        <p>I teach and preach using testing to efficiently develop code.</p>
+        <p>I teach and preach using testing to develop code efficiently.</p>
       </h3>
-      <button
-        class="border border-marine border-2 rounded-lg
-          py-3 px-6 mt-8
-          text-marine font-code tracking-[0.35rem] font-bold text-xl uppercase
-          transition-all duration-300 ease-in-out
-          hover:border-white hover:text-white"
-      >
-        <a href="https://jakubsobolewski.substack.com/subscribe">Subscribe</a>
-      </button>
-      <button
-        class="text-gray-300
-            py-3 px-6 mt-8 ml-3
-            font-code tracking-[0.35rem] font-bold text-xl uppercase
-            hover:text-marine"
-      >
-        <a href="#blog"> Read </a>
-      </button>
+      <div class="flex gap-4">
+        <button
+          class="outline outline-marine outline-1
+            rounded-lg
+            text-marine font-code tracking-[0.35rem] font-bold text-clamp-md uppercase
+            py-3 px-6
+            transition-all duration-400 ease
+            hover:text-white
+            hover:outline-2
+            hover:outline-white
+            hover:shadow-[0px_0px_12px_-2px_#77C0CA]"
+        >
+          <a href="https://jakubsobolewski.substack.com/subscribe">Subscribe</a>
+        </button>
+        <button
+          class="py-3 px-6
+            outline outline-0
+            rounded-lg
+            transition-all duration-600 ease-in-out
+            text-gray-400 font-code tracking-[0.35rem] font-bold text-clamp-md uppercase
+            hover:text-gray-400
+            hover:shadow-[0px_0px_5px_-1px_#77C0CA]"
+        >
+          <a href="#blog"> Read </a>
+        </button>
+      </div>
     </div>
   </div>
   <div

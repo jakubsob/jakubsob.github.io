@@ -16,6 +16,7 @@ export default {
       },
       fontSize: {
         clamp: "clamp(2rem, 5vw, 3rem)",
+        "clamp-md": "clamp(1.25rem, 2vw, 1.5rem)",
       },
       colors: {
         sky: {
