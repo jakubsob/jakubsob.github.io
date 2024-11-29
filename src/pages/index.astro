@@ -30,6 +30,44 @@ const tags = getTagsWithCounts(posts).sort((a, b) => b.count - a.count);
       display: inline-block;
       background-color: rgba(255, 255, 255, 1);
     }
+    .wavy {
+      padding-bottom: clamp(1rem, 2vw, 2rem);
+      background: url("wave.svg");
+      background-repeat: repeat;
+      background-position-x: 0%;
+      background-position-y: 0%;
+      background-size: auto auto;
+      background-repeat: repeat-x;
+      background-size: 20px 100%;
+      background-position: 0px 0px;
+      animation: move 10s linear infinite;
+      -webkit-animation: move 20s linear infinite;
+      animation-play-state: running;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+
+    .wave {
+      fill: var(--color-marine);
+    }
+
+    @-webkit-keyframes move {
+      from {
+        background-position: 0px 2rem;
+      }
+      to {
+        background-position: 500px 2rem;
+      }
+    }
+
+    @keyframes move {
+      from {
+        background-position: 2px 19px;
+      }
+      to {
+        background-position: 500px 19px;
+      }
+    }
   </style>
   <main class="relative">
     <Header client:only="react">
@@ -88,17 +126,14 @@ const tags = getTagsWithCounts(posts).sort((a, b) => b.count - a.count);
       class="self-center justify-self-center
         lg:self-center lg:justify-self-center lg:col-span-2"
     >
-      <h3 class="text-gray-400 mb-3 font-light">
+      <h3 class="text-gray-400 mb-5 font-light">
         Hi, my name is <span class="text-white font-semibold"
           >Jakub Sobolewski</span
         > and this is
       </h3>
-      <h1 class="text-clamp font-code text-white mb-3 relative">
+      <h1 class="text-clamp font-code text-white mb-5 relative">
         Building quality by
-        <span
-          class="text-marine underline underline-offset-[15px] decoration-2 decoration-wavy decoration-marine"
-          >testing</span
-        >
+        <span class="text-marine wavy">testing</span>
       </h1>
       <h3 class="text-gray-400 font-light mb-12">
         <p>I’m a software engineer specialising in R.</p>
