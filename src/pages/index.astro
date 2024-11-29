@@ -44,7 +44,6 @@ const tags = getTagsWithCounts(posts).sort((a, b) => b.count - a.count);
       -webkit-animation: move 20s linear infinite;
       animation-play-state: running;
       text-decoration: none;
-      transition: all 0.3s;
     }
 
     .wave {
@@ -124,18 +123,22 @@ const tags = getTagsWithCounts(posts).sort((a, b) => b.count - a.count);
     </div>
     <div
       class="self-center justify-self-center
-        lg:self-center lg:justify-self-center lg:col-span-2"
+    lg:self-center lg:justify-self-center lg:col-span-2"
     >
-      <h3 class="text-gray-400 mb-5 font-light">
+      <h3 class="text-gray-200 mb-5 font-light">
         Hi, my name is <span class="text-white font-semibold"
           >Jakub Sobolewski</span
         > and this is
       </h3>
       <h1 class="text-clamp font-code text-white mb-5 relative">
+        <img
+          src="test.svg"
+          class="absolute z-[-1] right-0 translate-x-[50%] top-10 h-[clamp(200px,20vw,500px)]"
+        />
         Building quality by
         <span class="text-marine wavy">testing</span>
       </h1>
-      <h3 class="text-gray-400 font-light mb-12">
+      <h3 class="text-gray-200 font-light mb-12">
         <p>I’m a software engineer specialising in R.</p>
         <p>I teach and preach using testing to develop code efficiently.</p>
       </h3>
@@ -168,6 +171,33 @@ const tags = getTagsWithCounts(posts).sort((a, b) => b.count - a.count);
     </div>
   </div>
   <div
+    id="testimonials"
+    class="h-[50vh]
+    p-4
+    bg-marine-200
+    flex items-center justify-center"
+  >
+    <div class="rounded-lg p-10 bg-white shadow-md">
+      <div class="text-xl mb-5">
+        <img src="fa_quote-left.svg" class="py-2 opacity-10" />
+        <span>
+          [...] many <span class="font-bold">thought provoking posts</span> that
+          he has on his blog [...]
+        </span>
+      </div>
+      <p class="text-md">
+        Eric Nantz,
+        <a
+          class="text-marine-700"
+          href="https://serve.podhome.fm/episodepage/r-weekly-highlights/issue-2024-w43-highlights"
+        >
+          R Weekly Podcast, Issue 2024-W43
+        </a>
+      </p>
+    </div>
+  </div>
+
+  <div
     id="blog"
     class="grid
         grid-cols-1
@@ -176,6 +206,16 @@ const tags = getTagsWithCounts(posts).sort((a, b) => b.count - a.count);
         lg:grid-cols-[1fr_minmax(65ch,_1fr)_1fr]
         lg:grid-rows-1
         pt-16"
+    style="
+    z-index: 0;
+    opacity: 1;
+    mix-blend-mode: overlay;
+    background-image: url(noise-sky.svg);
+    background-position: 0 0;
+    background-repeat: repeat-x;
+    background-size: contain;
+    background-attachment: scroll;
+    inset: 0%;"
   >
     <article
       class="col-start-1 max-w-[65ch] mx-auto order-1
@@ -187,7 +227,7 @@ const tags = getTagsWithCounts(posts).sort((a, b) => b.count - a.count);
     </article>
     <article class="col-start-1 order-1 max-w-[65ch] lg:max-w-full mx-auto">
       <div class="sticky top-16">
-        <h1>Topics</h1>
+        <h1>There are {posts.length} posts on</h1>
         <div class="flex flex-row flex-wrap gap-1
           lg:max-w-[300px]">
           {

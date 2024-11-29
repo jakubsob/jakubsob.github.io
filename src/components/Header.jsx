@@ -8,7 +8,7 @@ export default function Header({ children }) {
   useEffect(() => {
     gsap.from("#header", {
       scrollTrigger: {
-        trigger: "#blog",
+        trigger: "#testimonials",
         start: "top bottom",
         end: "top top",
         scrub: true,

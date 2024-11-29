@@ -5,8 +5,8 @@ const { value, label, href } = Astro.props;
 <button role="button" aria-label={value || href}>
   <a
     class="min-w-16
-    border-[1px] border-solid border-sky-400 rounded-full px-3
-    text-sky-400 text-center text-sm no-underline uppercase"
+    border-[1px] border-solid border-marine-900 rounded-lg px-3
+    border-marine-900 text-center text-sm no-underline uppercase"
     href={`/tags/${value || href}`}
   >
     {value || label}
@@ -15,8 +15,8 @@ const { value, label, href } = Astro.props;
 
 <style>
   a {
-    color: var(--color-sky-400);
-    background-image: linear-gradient(var(--color-sky-400) 0 0);
+    color: var(--color-marine-900);
+    background-image: linear-gradient(var(--color-marine-900) 0 0);
     background-size: 200% 0;
     background-position: 100% 100%;
     background-repeat: no-repeat;
