@@ -5,8 +5,8 @@ const { value, label, href } = Astro.props;
 <button role="button" aria-label={value || href}>
   <a
     class="min-w-16
-    border-[1px] border-solid border-marine-900 rounded-lg px-3
-    border-marine-900 text-center text-sm no-underline uppercase"
+    border-[1px] border-solid border-sky-400 rounded-full px-3
+    text-center text-sm no-underline uppercase"
     href={`/tags/${value || href}`}
   >
     {value || label}
