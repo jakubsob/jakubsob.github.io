@@ -25,8 +25,11 @@ function Search({ searchList, maxResults = 5 }) {
 	}
 
   return (
-    <div className="w-96">
-      <label htmlFor="search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">
+    <div className="">
+      <label
+        htmlFor="search"
+        className="mb-2 text-sm text-sky-900 sr-only dark:text-white"
+      >
         Search
       </label>
       <div className="relative">
@@ -38,34 +41,35 @@ function Search({ searchList, maxResults = 5 }) {
           id="search"
           value={query}
           onChange={handleOnSearch}
-          className="block w-full p-4 pl-10 text-sm
+          className="p-4 pl-10 text-sm
             text-gray-900
-            border border-gray-300
-          bg-gray-50
-
-            focus:outline-none
+            rounded-lg
+            outline outline-[1px] outline-sky-200
+            focus:outline focus:outline-sky-900
             focus:border-gray-dark"
-          placeholder="Search for anything..."
+          placeholder="Search"
         />
       </div>
 
       {query.length > 1 && (
         <div className="my-4 ps-4 pe-4">
-          Found {posts.length} {posts.length === 1 ? 'result' : 'results'} for '{query}'
+          Found {posts.length} {posts.length === 1 ? "result" : "results"} for '
+          {query}'
         </div>
       )}
 
-      <ul className="list-none w-100">
+      <ul className="list-none">
         {posts &&
           posts.map((post) => (
-            <li className="py-1">
-              <a
-                className="text-wrap text-lg text-green-700 hover:text-green-900 hover:underline underline-offset-2"
-                href={`/blog/${post.slug}`}
-              >
+            <li
+              className="p-2 my-2 rounded-lg bg-white shadow-md
+                transition duration-300 ease-in-out
+                border border-[1px] border-transparent
+                hover:border-[1px] hover:border-sky-800"
+            >
+              <a className="text-wrap text-black" href={`/blog/${post.slug}`}>
                 {post.data.title}
               </a>
-              <p className="text-sm text-gray-800 my-0">{post.data.description}</p>
             </li>
           ))}
       </ul>
