@@ -21,6 +21,11 @@ const tags = getTagsWithCounts(posts).sort((a, b) => b.count - a.count);
   <style>
     html {
       scroll-behavior: smooth;
+      scroll-snap-type: y proximity;
+    }
+
+    section {
+      scroll-snap-align: start;
     }
 
     .wavy {
@@ -43,12 +48,16 @@ const tags = getTagsWithCounts(posts).sort((a, b) => b.count - a.count);
       fill: var(--color-marine);
     }
 
+    #test {
+      filter: brightness(0.8);
+    }
+
     @-webkit-keyframes move {
       from {
         background-position: 0px 2rem;
       }
       to {
-        background-position: 500px 2rem;
+        background-position: 200px 2rem;
       }
     }
 
@@ -57,7 +66,7 @@ const tags = getTagsWithCounts(posts).sort((a, b) => b.count - a.count);
         background-position: 2px 19px;
       }
       to {
-        background-position: 500px 19px;
+        background-position: 200px 19px;
       }
     }
   </style>
@@ -99,34 +108,35 @@ const tags = getTagsWithCounts(posts).sort((a, b) => b.count - a.count);
     >
       <div
         class="absolute bottom-0 left-0 -translate-x-1/3
-          rotate-30
-          h-[clamp(200px,20vw,500px)] w-[clamp(200px,100vw,500px)]
-          bg-[#77C0CA] opacity-10
-          rounded-full border-none blur-[400px]"
+    rotate-30
+    h-[clamp(200px,20vw,500px)] w-[clamp(200px,100vw,500px)]
+    bg-[#77C0CA] opacity-10
+    rounded-full border-none blur-[400px]"
       >
       </div>
       <div
         class="absolute top-0 right-0 translate-x-1/2
-          rotate-3 5
-          h-[clamp(200px,10vw,500px)] w-[clamp(200px,50vw,500px)]
-          bg-[#77C0CA] opacity-20
-          rounded-full border-none blur-[400px]"
+  rotate-3 5
+  h-[clamp(200px,10vw,500px)] w-[clamp(200px,50vw,500px)]
+  bg-[#77C0CA] opacity-20
+  rounded-full border-none blur-[400px]"
       >
       </div>
       <div
         class="self-center justify-self-center
-    lg:self-center lg:justify-self-center lg:col-span-2"
+lg:self-center lg:justify-self-center lg:col-span-2"
       >
-        <h3 class="text-gray-200 mb-5 font-light">
+        <h3 class="text-gray-200 mb-5 font-light relative">
+          <img
+            id="test"
+            src="test.svg"
+            class="absolute z-[-1] left-[40ch] top-0 h-[clamp(200px,50vw,400px)]"
+          />
           Hi, my name is <span class="text-white font-semibold"
             >Jakub Sobolewski</span
           > and this is
         </h3>
         <h1 class="text-clamp font-code text-white mb-5 relative">
-          <img
-            src="test.svg"
-            class="absolute z-[-1] right-0 translate-x-[50%] top-10 h-[clamp(200px,20vw,500px)]"
-          />
           Building quality by
           <span class="text-marine wavy">testing</span>
         </h1>
@@ -252,8 +262,19 @@ const tags = getTagsWithCounts(posts).sort((a, b) => b.count - a.count);
       </article>
     </section>
   </main>
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
+  <script
+    is:inline
+    src="https://cdn.jsdelivr.net/npm/motion@11.11.13/dist/motion.js"></script>
+  <script is:inline>
+    const { animate, scroll } = Motion;
+    document.querySelectorAll("#test").forEach((item) => {
+      scroll(animate(item, { y: 50 }, { ease: "linear" }), {
+        target: item,
+      });
+    });
+  </script>
+  <script is:inline>
+    window.addEventListener("load", () => {
       const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
