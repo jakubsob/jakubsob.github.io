@@ -1,23 +1,4 @@
-import { useEffect } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
-
 export default function Header({ children }) {
-  useEffect(() => {
-    gsap.from("#header", {
-      scrollTrigger: {
-        trigger: "#testimonials",
-        start: "top bottom",
-        end: "top top",
-        scrub: true,
-        toggleActions: "play none none reverse",
-      },
-      color: "var(--color-gray-400)",
-    });
-  }, []);
-
   return (
     <div
       id="header"
