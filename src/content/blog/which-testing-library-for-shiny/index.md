@@ -1,5 +1,5 @@
 ---
-title: 'Which Library Should You Choose To Acceptance Tests Shiny Apps?'
+title: 'Which Library Should You Choose To Acceptance Test Shiny Apps?'
 description: '{shinytest2} vs Cypress'
 pubDate:  'Dec 02 2024'
 tags: ["r", "tests"]
