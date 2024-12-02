@@ -19,7 +19,19 @@ const { title, description, pubDate, updatedDate, tags } = post.data;
       <HeaderLink href="/">jakub::sobolewski</HeaderLink>
       <HeaderLink href="/#blog">blog</HeaderLink>
     </Header>
-    <main class="pt-16 bg-marine-50">
+    <main
+      class="pt-16 bg-marine-50"
+      style="
+      z-index: 0;
+      opacity: 1;
+      mix-blend-mode: overlay;
+      background-image: url(/noise-sky.svg);
+      background-position: 0 0;
+      background-repeat: repeat-y;
+      background-size: contain;
+      background-attachment: scroll;
+      inset: 0%;"
+    >
       <article
         class="prose
           prose-h1:uppercase
