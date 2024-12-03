@@ -5,7 +5,7 @@ pubDate:  'Dec 02 2024'
 tags: ["r", "tests"]
 ---
 
-There are a few library options when it comes to writing [acceptance tests](http://localhost:4321/blog/acceptance_test_driven_development_of_shiny_modules/) for Shiny apps.
+There are a few library options when it comes to writing [acceptance tests](../acceptance_test_driven_development_of_shiny_modules/) for Shiny apps.
 
 It's a good idea to make a conscious decision which one to use at the start of the project as changing the library after writing a lot of tests will be costly.
 
