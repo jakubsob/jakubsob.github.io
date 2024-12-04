@@ -177,9 +177,9 @@ lg:self-center lg:justify-self-center lg:col-span-2"
     <section
       id="testimonials"
       class="h-[50vh]
-    p-4
-    bg-marine-200
-    flex items-center justify-center"
+        p-4
+        bg-marine-200
+        flex items-center justify-center"
     >
       <div class="rounded-lg p-10 bg-white shadow-md">
         <div class="text-xl mb-5">
@@ -210,36 +210,37 @@ lg:self-center lg:justify-self-center lg:col-span-2"
         lg:grid-rows-1
         pt-16"
       style="
-    z-index: 0;
-    opacity: 1;
-    mix-blend-mode: overlay;
-    background-image: url(noise-sky.svg);
-    background-position: 0 0;
-    background-repeat: repeat-y;
-    background-size: contain;
-    background-attachment: scroll;
-    inset: 0%;"
+        z-index: 0;
+        opacity: 1;
+        mix-blend-mode: overlay;
+        background-image: url(noise-sky.svg);
+        background-position: 0 0;
+        background-repeat: repeat-y;
+        background-size: contain;
+        background-attachment: scroll;
+        inset: 0%;"
     >
       <article
-        class="col-start-1 max-w-[65ch] mx-auto order-1
-  lg:col-start-2 lg:row-start-1 lg:order-1"
+        class="col-start-1 max-w-[65ch] mx-auto order-2
+          lg:col-start-2 lg:row-start-1 lg:order-1"
       >
         <section>
           <PostList posts={posts} />
         </section>
       </article>
-      <article class="col-start-1 order-1 max-w-[65ch] lg:max-w-full mx-auto">
-        <div class="sticky top-16">
+      <article
+        class="col-start-1 order-1 max-w-[65ch] w-full px-4 mx-auto mb-8"
+      >
+        <div class="lg:sticky lg:top-16 lg:ml-4 w-full">
           <h1>There are {posts.length} posts on</h1>
-          <div class="flex flex-row flex-wrap gap-1
-          lg:max-w-[300px]">
+          <div class="flex flex-row flex-wrap gap-1">
             {
               tags.map((tag) => {
                 return <Tag href={tag.tag} label={`${tag.tag} ${tag.count}`} />;
               })
             }
           </div>
-          <div class="mt-4 lg:max-w-[300px]">
+          <div class="mt-4">
             <Search client:load searchList={posts} />
           </div>
         </div>
@@ -261,36 +262,37 @@ lg:self-center lg:justify-self-center lg:col-span-2"
         </div>
       </article>
     </section>
-  </main>
-  <script
-    is:inline
-    src="https://cdn.jsdelivr.net/npm/motion@11.11.13/dist/motion.js"></script>
-  <script is:inline>
-    const { animate, scroll } = Motion;
-    document.querySelectorAll("#test").forEach((item) => {
-      scroll(animate(item, { y: 50 }, { ease: "linear" }), {
-        target: item,
+    <script
+      is:inline
+      src="https://cdn.jsdelivr.net/npm/motion@11.11.13/dist/motion.js"
+    ></script>
+    <script is:inline>
+      const { animate, scroll } = Motion;
+      document.querySelectorAll("#test").forEach((item) => {
+        scroll(animate(item, { y: 50 }, { ease: "linear" }), {
+          target: item,
+        });
       });
-    });
-  </script>
-  <script is:inline>
-    window.addEventListener("load", () => {
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            const header = document.querySelector("#header");
-            if (entry.isIntersecting) {
-              header.style.color = "var(--color-marine-100)";
-            } else {
-              header.style.color = "black";
-            }
-          });
-        },
-        {
-          threshold: 0.01,
-        }
-      );
-      observer.observe(document.querySelector("#hero"));
-    });
-  </script>
+    </script>
+    <script is:inline>
+      window.addEventListener("load", () => {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              const header = document.querySelector("#header");
+              if (entry.isIntersecting) {
+                header.style.color = "var(--color-marine-100)";
+              } else {
+                header.style.color = "black";
+              }
+            });
+          },
+          {
+            threshold: 0.01,
+          }
+        );
+        observer.observe(document.querySelector("#hero"));
+      });
+    </script>
+  </main>
 </html>

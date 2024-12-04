@@ -41,7 +41,9 @@ function Search({ searchList, maxResults = 5 }) {
           id="search"
           value={query}
           onChange={handleOnSearch}
+          autocomplete="off"
           className="p-4 pl-10 text-sm
+            w-full
             text-gray-900
             rounded-lg
             outline outline-[1px] outline-sky-200
@@ -49,30 +51,34 @@ function Search({ searchList, maxResults = 5 }) {
             focus:border-gray-dark"
           placeholder="Search"
         />
-      </div>
+        <div className="absolute translate-y-1 bg-white w-full shadow-lg">
+          {query.length > 1 && (
+            <div className="my-4 ps-4 pe-4">
+              Found {posts.length} {posts.length === 1 ? "result" : "results"}{" "}
+              for '{query}'
+            </div>
+          )}
 
-      {query.length > 1 && (
-        <div className="my-4 ps-4 pe-4">
-          Found {posts.length} {posts.length === 1 ? "result" : "results"} for '
-          {query}'
+          <ul className="list-none">
+            {posts &&
+              posts.map((post) => (
+                <li
+                  className="p-2
+                    transition duration-300 ease-in-out
+                    last:rounded-b-lg
+                    hover:bg-marine-200 hover:text-white"
+                >
+                  <a
+                    className="text-wrap text-black"
+                    href={`/blog/${post.slug}`}
+                  >
+                    {post.data.title}
+                  </a>
+                </li>
+              ))}
+          </ul>
         </div>
-      )}
-
-      <ul className="list-none">
-        {posts &&
-          posts.map((post) => (
-            <li
-              className="p-2 my-2 rounded-lg bg-white shadow-md
-                transition duration-300 ease-in-out
-                border border-[1px] border-transparent
-                hover:border-[1px] hover:border-sky-800"
-            >
-              <a className="text-wrap text-black" href={`/blog/${post.slug}`}>
-                {post.data.title}
-              </a>
-            </li>
-          ))}
-      </ul>
+      </div>
     </div>
   );
 }
