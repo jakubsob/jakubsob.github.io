@@ -18,7 +18,11 @@ const tags = getTagsWithCounts(posts).sort((a, b) => b.count - a.count);
 <!doctype html>
 <html lang="en">
   <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-  <style>
+  <style is:global>
+    :root {
+      --underline-size: 5px;
+    }
+
     html {
       scroll-behavior: smooth;
       scroll-snap-type: y proximity;
@@ -50,6 +54,23 @@ const tags = getTagsWithCounts(posts).sort((a, b) => b.count - a.count);
 
     #test {
       filter: brightness(0.8);
+    }
+
+    .un {
+      display: inline-block;
+      background-image: linear-gradient(var(--color-marine) 0 0);
+      background-position: 0 100%;
+      background-size: 0% var(--underline-size);
+      background-repeat: no-repeat;
+      transition:
+        background-size 0.3s,
+        background-position 0s 0.3s,
+        color 0.3s;
+    }
+
+    .un-active {
+      background-position: 100% 100%;
+      background-size: 100% var(--underline-size);
     }
 
     @-webkit-keyframes move {
@@ -137,8 +158,10 @@ lg:self-center lg:justify-self-center lg:col-span-2"
           > and this is
         </h3>
         <h1 class="text-clamp font-code text-white mb-5 relative">
-          Building quality by
-          <span class="text-marine wavy">testing</span>
+          <span id="title" class="absolute top-0 left-0"> </span>
+          <span class="opacity-0">
+            Building quality by <span class="italic">testing</span>
+          </span>
         </h1>
         <h3 class="text-gray-200 font-light mb-12">
           <p>I’m a software engineer specialising in R.</p>
@@ -262,14 +285,32 @@ lg:self-center lg:justify-self-center lg:col-span-2"
         </div>
       </article>
     </section>
+    <script is:inline src="https://unpkg.com/typeit@8.7.1/dist/index.umd.js"
+    ></script>
     <script
       is:inline
       src="https://cdn.jsdelivr.net/npm/motion@11.11.13/dist/motion.js"
     ></script>
     <script is:inline>
+      new TypeIt("#title", {
+        speed: 50,
+        loop: false,
+        afterComplete: (instance) => {
+          const title = document.querySelector("#title-testing");
+          title.classList.add("un-active");
+          title.classList.add("text-marine");
+          instance.destroy();
+        },
+      })
+        .type("Building quality by ")
+        .pause(400)
+        .type("<span id='title-testing' class='un'>testing</span>")
+        .go();
+    </script>
+    <script is:inline>
       const { animate, scroll } = Motion;
       document.querySelectorAll("#test").forEach((item) => {
-        scroll(animate(item, { y: 50 }, { ease: "linear" }), {
+        scroll(animate(item, { y: 70 }, { ease: "linear" }), {
           target: item,
         });
       });
