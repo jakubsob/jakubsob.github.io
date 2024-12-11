@@ -29,8 +29,6 @@ Let’s see in what circumstances should each type be used.
 ### Example
 
 ```r
-library(testthat)
-
 describe("Stack", {
   it("should return the last pushed value when popping an item", {
     # Arrange
@@ -60,18 +58,16 @@ describe("Stack", {
 ### Example
 
 ```r
-library(testthat)
-
 describe("Stack", {
-	it("should not be empty after pushing an item", {
-	  # Arrange
-	  my_stack <- Stack$new()
+  it("should not be empty after pushing an item", {
+    # Arrange
+    my_stack <- Stack$new()
 
-	  # Act
-	  my_stack$push(1)
+    # Act
+    my_stack$push(1)
 
-	  # Assert
-	  expect_false(my_stack$empty())
+    # Assert
+    expect_false(my_stack$empty())
 	})
 })
 ```
@@ -89,8 +85,6 @@ describe("Stack", {
 ### Example
 
 ```r
-library(testthat)
-
 describe("Stack", {
   it("should log what item has been pushed", {
     # Arrange
