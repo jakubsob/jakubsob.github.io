@@ -63,7 +63,7 @@ const { title, description, pubDate, updatedDate, tags } = post.data;
             <span class="flex gap-2">
               {
                 tags
-                  .sort((a: string, b: string): any => b.localeCompare(a))
+                  .sort((a: string, b: string): any => a.localeCompare(b))
                   .map((tag: any): any => <Tag value={tag} />)
               }
             </span>
