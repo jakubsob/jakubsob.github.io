@@ -58,7 +58,7 @@ Let’s identify Arrange, Act and Assert blocks in this test:
 
 ```r
 describe("factorial", {
-	it("should work", {
+  it("should work", {
     # Arrange
     input1 <- 0
     input2 <- 5
@@ -85,50 +85,50 @@ Once split into Arrange, Act, Assert, we can easily refactor this test into case
 ```r
 describe("factorial", {
   it("should return 1 when input is 0", {
-	  # Arrange
-	  input <- 0
+    # Arrange
+    input <- 0
 
-	  # Act
-	  output <- factorial(input)
+    # Act
+    output <- factorial(input)
 
-	  # Assert
-	  expect_equal(output, 1)
-	})
+    # Assert
+    expect_equal(output, 1)
+  })
 
-	it("should return 120 when input is 5", {
-	  # Arrange
-	  input <- 5
+  it("should return 120 when input is 5", {
+    # Arrange
+    input <- 5
 
-	  # Act
-	  output <- factorial(input)
+    # Act
+    output <- factorial(input)
 
-	  # Assert
-	  expect_equal(output, 120)
-	})
+    # Assert
+    expect_equal(output, 120)
+  })
 
-	it("should throw an error when input is not numeric", {
-	  # Arrange
-	  input <- "a"
+  it("should throw an error when input is not numeric", {
+    # Arrange
+    input <- "a"
 
-	  # Act & Assert
-	  expect_error(factorial(input), "Input must be a numeric")
-	})
+    # Act & Assert
+    expect_error(factorial(input), "Input must be a numeric")
+  })
 
-	it("should throw an error when input is a vector", {
-	  # Arrange
-	  input <- c(1:10)
+  it("should throw an error when input is a vector", {
+    # Arrange
+    input <- c(1:10)
 
-	  # Act & Assert
-	  expect_error(factorial(input), "Input must be a single number")
-	})
+    # Act & Assert
+    expect_error(factorial(input), "Input must be a single number")
+  })
 
-	it("should throw an error when input is a negative number", {
-	  # Arrange
-	  input <- -1
+  it("should throw an error when input is a negative number", {
+    # Arrange
+    input <- -1
 
-	  # Act & Assert
-	  expect_error(factorial(input), "Input must be a non-negative integer")
-	})
+    # Act & Assert
+    expect_error(factorial(input), "Input must be a non-negative integer")
+  })
 })
 ```
 
