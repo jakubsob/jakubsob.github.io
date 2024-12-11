@@ -70,12 +70,14 @@ export default {
     plugin(function ({ addBase, theme }) {
       addBase({
         h1: {
-          fontFamily: theme("fontFamily.uppercase"),
-          fontWeight: theme("fontWeight.semibold"),
+          fontFamily: theme("fontFamily.sans"),
+          fontWeight: theme("fontWeight.regular"),
+          fontTracking: theme("fontTracking.widest"),
           fontSize: theme("fontSize.2xl"),
+          color: theme("colors.black"),
         },
         h2: {
-          fontFamily: theme("fontFamily.uppercase"),
+          fontFamily: theme("fontFamily.sans"),
           fontSize: theme("fontSize.xl"),
         },
         h3: {
