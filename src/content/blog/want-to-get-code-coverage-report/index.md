@@ -42,6 +42,6 @@ You can always create a more detailed report locally or export it as an artifact
 
 I highly recommend setting up coverage report in your project, one way or the other, especially when dealing with legacy code. This way you can continuously get feedback how well you're doing in your testing efforts.
 
-But remember, hoverer many tests you have, they don't prove your system is good.
+But remember, however many tests you have, they don't prove your system is good.
 
 Find the coverage that makes you feel comfortable.
