@@ -252,10 +252,10 @@ lg:self-center lg:justify-self-center lg:col-span-2"
         </section>
       </article>
       <article
-        class="col-start-1 order-1 max-w-[65ch] w-full px-4 mx-auto mb-8"
+        class="col-start-1 order-1 max-w-[65ch] w-full px-4 mx-auto mb-8 text-sky-500"
       >
-        <div class="lg:sticky lg:top-16 lg:ml-4 w-full">
-          <h1>There are {posts.length} posts on</h1>
+        <div class="lg:sticky lg:top-16 lg:ml-4 lg:w-80 mx-auto">
+          <h1 class="text-sky-800">There are {posts.length} posts on</h1>
           <div class="flex flex-row flex-wrap gap-1">
             {
               tags.map((tag) => {
