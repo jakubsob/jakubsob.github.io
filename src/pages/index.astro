@@ -321,10 +321,21 @@ lg:self-center lg:justify-self-center lg:col-span-2"
           (entries) => {
             entries.forEach((entry) => {
               const header = document.querySelector("#header");
+              const menu = document.querySelector("#header > header");
               if (entry.isIntersecting) {
                 header.style.color = "var(--color-marine-100)";
+                menu.classList.remove("shadow-md");
+                menu.classList.remove("bg-gradient-to-r");
+                menu.classList.remove("from-sky-100/10");
+                menu.classList.remove("to-sky-100/20");
+                menu.classList.remove("backdrop-blur-md");
               } else {
                 header.style.color = "black";
+                menu.classList.add("shadow-md");
+                menu.classList.add("bg-gradient-to-r");
+                menu.classList.add("from-sky-100/10");
+                menu.classList.add("to-sky-100/20");
+                menu.classList.add("backdrop-blur-md");
               }
             });
           },
