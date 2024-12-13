@@ -46,6 +46,7 @@ function Search({ searchList, maxResults = 5 }) {
             w-full
             text-gray-900
             rounded-lg
+            bg-transparent
             outline outline-[1px] outline-sky-200
             focus:outline focus:outline-sky-900
             focus:border-gray-dark"
