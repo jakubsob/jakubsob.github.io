@@ -9,6 +9,9 @@ export default function Header({ children }) {
         className="max-w-[65ch]
         mx-auto mt-2
         px-4 py-4
+        shadow-md
+        bg-gradient-to-r from-sky-100/10 to-sky-100/20
+        backdrop-blur-md
         tracking-wider
         rounded-lg"
       >
