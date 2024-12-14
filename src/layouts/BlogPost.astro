@@ -4,7 +4,7 @@ import Comments from "../components/Comments.astro";
 import FormattedDate from "../components/FormattedDate.astro";
 import Tag from "../components/Tag.astro";
 import SubscribeButton from "../components/SubscribeButton.astro";
-import Header from "../components/Header.jsx";
+import Header from "../components/Header.astro";
 import HeaderLink from "../components/HeaderLink.astro";
 import { getReadingTime } from "../utils/getReadingTime";
 
@@ -15,23 +15,23 @@ const { title, description, pubDate, updatedDate, tags } = post.data;
 
 <html lang="en">
   <BaseLayout title={title} description={description}>
-    <Header client:only="react">
-      <HeaderLink href="/">jakub::sobolewski</HeaderLink>
-      <HeaderLink href="/#blog">blog</HeaderLink>
-    </Header>
     <main
-      class="pt-16 bg-marine-50"
+      class="bg-marine-50"
       style="
-      z-index: 0;
-      opacity: 1;
-      mix-blend-mode: overlay;
-      background-image: url(/noise-sky.svg);
-      background-position: 0 0;
-      background-repeat: repeat-y;
-      background-size: contain;
-      background-attachment: scroll;
-      inset: 0%;"
+        z-index: 0;
+        opacity: 1;
+        mix-blend-mode: overlay;
+        background-image: url(/noise-sky.svg);
+        background-position: 0 0;
+        background-repeat: repeat-y;
+        background-size: contain;
+        background-attachment: scroll;
+        inset: 0%;"
     >
+      <Header>
+        <HeaderLink href="/">jakub::sobolewski</HeaderLink>
+        <HeaderLink href="/#blog">blog</HeaderLink>
+      </Header>
       <article
         class="prose
           prose-h1:capitalize

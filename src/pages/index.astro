@@ -1,7 +1,7 @@
 ---
 import BaseHead from "../components/BaseHead.astro";
 import PostList from "../components/PostList.astro";
-import Header from "../components/Header.jsx";
+import Header from "../components/Header.astro";
 import HeaderLink from "../components/HeaderLink.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
 import { getCollection } from "astro:content";
@@ -92,7 +92,7 @@ const tags = getTagsWithCounts(posts).sort((a, b) => b.count - a.count);
     }
   </style>
   <main class="relative">
-    <Header client:only="react">
+    <Header class="fixed top-0 z-10">
       <HeaderLink href="#hero">jakub::sobolewski</HeaderLink>
       <HeaderLink href="#blog">blog</HeaderLink>
       <HeaderLink
@@ -325,17 +325,11 @@ lg:self-center lg:justify-self-center lg:col-span-2"
               if (entry.isIntersecting) {
                 header.style.color = "var(--color-marine-100)";
                 menu.classList.remove("shadow-md");
-                menu.classList.remove("bg-gradient-to-r");
-                menu.classList.remove("from-sky-100/10");
-                menu.classList.remove("to-sky-100/20");
-                menu.classList.remove("backdrop-blur-md");
+                menu.classList.remove("bg-white");
               } else {
                 header.style.color = "black";
                 menu.classList.add("shadow-md");
-                menu.classList.add("bg-gradient-to-r");
-                menu.classList.add("from-sky-100/10");
-                menu.classList.add("to-sky-100/20");
-                menu.classList.add("backdrop-blur-md");
+                menu.classList.add("bg-white");
               }
             });
           },

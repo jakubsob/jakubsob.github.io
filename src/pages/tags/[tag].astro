@@ -4,7 +4,7 @@ import PostList from "../../components/PostList.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../../consts";
 import { getCollection } from "astro:content";
 import HeaderLink from "../../components/HeaderLink.astro";
-import Header from "../../components/Header.jsx";
+import Header from "../../components/Header.astro";
 
 export async function getStaticPaths() {
   const posts = (await getCollection("blog"))
@@ -27,7 +27,7 @@ const { posts } = Astro.props;
 <!doctype html>
 <html lang="en">
   <BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
-    <Header client:only="react">
+    <Header>
       <HeaderLink href="/">jakub::sobolewski</HeaderLink>
       <HeaderLink href="/#blog">blog</HeaderLink>
     </Header>

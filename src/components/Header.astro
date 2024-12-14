@@ -1,0 +1,20 @@
+---
+const { class: className } = Astro.props;
+---
+
+<div
+  id="header"
+  class:list={["text-black transition-all duration-500 w-full", className]}
+>
+  <header
+    class="max-w-[65ch]
+      transition-all duration-500
+      mx-auto px-4 py-4
+      tracking-wider
+      rounded-b-lg"
+  >
+    <nav class="flex flex-row gap-4 items-center justify-start">
+      <slot />
+    </nav>
+  </header>
+</div>
