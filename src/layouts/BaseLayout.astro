@@ -6,6 +6,16 @@ const { title, description } = Astro.props;
 ---
 
 <html lang="en">
+  <style is:global>
+    main > section {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+
+    hmtl {
+      scroll-behavior: smooth;
+    }
+  </style>
   <BaseHead title={title} description={description} />
   <body>
     <slot />
