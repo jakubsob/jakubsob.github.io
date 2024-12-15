@@ -25,14 +25,14 @@ function Search({ searchList, maxResults = 5 }) {
 	}
 
   return (
-    <div className="">
+    <div className="overflow-visible">
       <label
         htmlFor="search"
         className="mb-2 text-sm text-sky-900 sr-only dark:text-white"
       >
         Search
       </label>
-      <div className="relative">
+      <div className="relative overflow-visible">
         <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
           <MagnifyingGlass />
         </div>
@@ -52,7 +52,7 @@ function Search({ searchList, maxResults = 5 }) {
             focus:border-gray-dark"
           placeholder="Search"
         />
-        <div className="absolute translate-y-1 bg-white w-full shadow-lg">
+        <div className="absolute z-100 translate-y-1 bg-white w-full shadow-lg">
           {query.length > 1 && (
             <div className="my-4 ps-4 pe-4">
               Found {posts.length} {posts.length === 1 ? "result" : "results"}{" "}

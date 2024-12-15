@@ -29,13 +29,17 @@ const { title, description, pubDate, updatedDate, tags } = post.data;
         background-attachment: scroll;
         inset: 0%;"
     >
-      <Header>
+      <Header class="">
         <HeaderLink href="/">jakub::sobolewski</HeaderLink>
-        <HeaderLink href="/" class="ms-auto">home</HeaderLink>
-        <HeaderLink href="/#blog">blog</HeaderLink>
-        <HeaderButton href="https://jakubsobolewski.substack.com/subscribe"
-          >subscribe</HeaderButton
+        <HeaderLink href="/">home</HeaderLink>
+        <HeaderLink href="/blog">blog</HeaderLink>
+        <HeaderButton
+          href="https://jakubsobolewski.substack.com/subscribe"
+          class="ms-auto"
+          id="subscribe"
         >
+          subscribe
+        </HeaderButton>
       </Header>
       <article
         class="prose
@@ -81,7 +85,9 @@ const { title, description, pubDate, updatedDate, tags } = post.data;
         <center class="py-4">
           <SubscribeButton center={true} />
         </center>
-        <Comments />
+        <center class="py-4">
+          <Comments />
+        </center>
       </article>
     </main>
   </BaseLayout>

@@ -11,7 +11,8 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
 const posts = (await getCollection("blog"))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-  .filter((post) => post.data.draft !== true);
+  .filter((post) => post.data.draft !== true)
+  .filter((post, index) => index < 3);
 const tags = getTagsWithCounts(posts).sort((a, b) => b.count - a.count);
 ---
 
@@ -19,86 +20,26 @@ const tags = getTagsWithCounts(posts).sort((a, b) => b.count - a.count);
 <html lang="en">
   <BaseLayout>
     <style is:global>
-      :root {
-        --underline-size: 5px;
-      }
-
-      html {
-        scroll-behavior: smooth;
-        scroll-snap-type: y proximity;
-      }
-
-      section {
-        scroll-snap-align: start;
-      }
-
-      .wavy {
-        padding-bottom: clamp(1rem, 2vw, 2rem);
-        background: url("wave.svg");
-        background-repeat: repeat;
-        background-position-x: 0%;
-        background-position-y: 0%;
-        background-size: auto auto;
-        background-repeat: repeat-x;
-        background-size: 20px 100%;
-        background-position: 0px 0px;
-        animation: move 10s linear infinite;
-        -webkit-animation: move 20s linear infinite;
-        animation-play-state: running;
-        text-decoration: none;
-      }
-
-      .wave {
-        fill: var(--color-marine);
-      }
-
       #test {
         filter: brightness(0.8);
       }
 
-      .un {
-        display: inline-block;
-        background-image: linear-gradient(var(--color-marine) 0 0);
-        background-position: 0 100%;
-        background-size: 0% var(--underline-size);
-        background-repeat: no-repeat;
-        transition:
-          background-size 0.3s,
-          background-position 0s 0.3s,
-          color 0.3s;
-      }
-
-      .un-active {
-        background-position: 100% 100%;
-        background-size: 100% var(--underline-size);
-      }
-
-      @-webkit-keyframes move {
-        from {
-          background-position: 0px 2rem;
-        }
-        to {
-          background-position: 200px 2rem;
-        }
-      }
-
-      @keyframes move {
-        from {
-          background-position: 2px 19px;
-        }
-        to {
-          background-position: 200px 19px;
-        }
+      hmtl {
+        scroll-behavior: smooth;
       }
     </style>
     <main class="relative">
       <Header class="fixed top-0 z-10">
         <HeaderLink href="#hero">jakub::sobolewski</HeaderLink>
-        <HeaderLink href="#hero" class="ms-auto">home</HeaderLink>
-        <HeaderLink href="#blog">blog</HeaderLink>
-        <HeaderButton href="https://jakubsobolewski.substack.com/subscribe"
-          >subscribe</HeaderButton
+        <HeaderLink href="#hero">home</HeaderLink>
+        <HeaderLink href="/blog">blog</HeaderLink>
+        <HeaderButton
+          href="https://jakubsobolewski.substack.com/subscribe"
+          class="ms-auto"
+          id="subscribe"
         >
+          subscribe
+        </HeaderButton>
       </Header>
       <section
         id="hero"
@@ -164,30 +105,23 @@ lg:self-center lg:justify-self-center lg:col-span-2"
           </h3>
           <div class="flex gap-4">
             <button
-              class="outline outline-malibu outline-1
-            rounded-lg
-            text-malibu font-code tracking-[0.35rem] font-bold text-clamp-md uppercase
-            py-3 px-6
-            transition-all duration-400 ease
-            hover:text-white
-            hover:outline-2
-            hover:outline-white
-            hover:shadow-[0px_0px_12px_-2px_#77C0CA]"
+              class="rounded-full px-6 py-4 bg-malibu w-fit
+              text-white font-code tracking-widest font-bold text-clamp-md uppercase
+              transition-all duration-300
+              border-4 border-white/0
+              hover:border-white hover:bg-transparent"
             >
-              <a href="https://jakubsobolewski.substack.com/subscribe"
-                >Subscribe</a
-              >
+              <a href="/blog">Subscribe</a>
             </button>
             <button
               class="py-3 px-6
-            outline outline-0
-            rounded-lg
-            transition-all duration-600 ease-in-out
-            text-gray-400 font-code tracking-[0.35rem] font-bold text-clamp-md uppercase
-            hover:text-gray-400
-            hover:shadow-[0px_0px_5px_-1px_#77C0CA]"
+              rounded-full
+              transition-all duration-300
+              text-sky-200 font-code tracking-[0.35rem] font-bold text-clamp-md uppercase
+              border-4 border-white/0
+              hover:border-sky-200"
             >
-              <a href="#blog"> Read </a>
+              <a href="/blog"> Read </a>
             </button>
           </div>
         </div>
@@ -195,11 +129,10 @@ lg:self-center lg:justify-self-center lg:col-span-2"
       <section
         id="testimonials"
         class="h-[50vh]
-        p-4
-        bg-marine-200
+        bg-sky-100/20
         flex items-center justify-center"
       >
-        <div class="rounded-lg p-10 bg-white shadow-md">
+        <div class="rounded-lg p-10 bg-white w-full max-w-[65ch]">
           <div class="text-xl mb-5">
             <img src="fa_quote-left.svg" class="py-2 opacity-10" />
             <span>
@@ -220,13 +153,6 @@ lg:self-center lg:justify-self-center lg:col-span-2"
       </section>
       <section
         id="blog"
-        class="grid
-        grid-cols-1
-        grid-rows-[1fr_auto]
-        bg-marine-50
-        lg:grid-cols-[1fr_minmax(65ch,_1fr)_1fr]
-        lg:grid-rows-1
-        pt-20"
         style="
         z-index: 0;
         opacity: 1;
@@ -240,46 +166,38 @@ lg:self-center lg:justify-self-center lg:col-span-2"
       >
         <article
           class="col-start-1 max-w-[65ch] mx-auto order-2
-          lg:col-start-2 lg:row-start-1 lg:order-1"
+          h-[100vh]
+          flex flex-col justify-center gap-8"
         >
+          <h1 class="flex gap-2 align-baseline text-3xl">
+            <div class="size-8">
+              <svg
+                width="100%"
+                height="100%"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M12 2V22M19.0711 4.92893L4.92893 19.0711M22 12H2M19.0711 19.0711L4.92893 4.92893"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"></path>
+              </svg>
+            </div>
+            Explore what's new on the blog
+          </h1>
           <section>
             <PostList posts={posts} />
           </section>
-        </article>
-        <article
-          class="col-start-1 order-1 max-w-[65ch] w-full px-4 mx-auto mb-8 text-sky-500"
-        >
-          <div class="lg:sticky lg:top-16 lg:ml-4 lg:w-80 mx-auto">
-            <h1 class="text-sky-800">There are {posts.length} posts on</h1>
-            <div class="flex flex-row flex-wrap gap-1">
-              {
-                tags.map((tag) => {
-                  return (
-                    <Tag href={tag.tag} label={`${tag.tag} ${tag.count}`} />
-                  );
-                })
-              }
-            </div>
-            <div class="mt-4">
-              <Search client:load searchList={posts} />
-            </div>
-          </div>
-        </article>
-        <article
-          class="col-start-1 order-2 mx-auto hidden lg:block
-        lg:col-start-3 lg:row-start-1 lg:order-2"
-        >
-          <div class="sticky top-16">
-            <h1>Check out</h1>
-            <ul>
-              <li>
-                <a href="https://rweekly.org/">R-Weekly</a>
-              </li>
-              <li>
-                <a href="https://www.r-bloggers.com">R-Bloggers</a>
-              </li>
-            </ul>
-          </div>
+          <button
+            class="rounded-full px-6 py-4 bg-sky-900 text-white text-xl w-fit
+              transition-all duration-300
+              hover:text-sky-900 hover:bg-white hover:outline hover:outline-2"
+          >
+            <a href="/blog">Read more →</a>
+          </button>
         </article>
       </section>
       <script is:inline src="https://unpkg.com/typeit@8.7.1/dist/index.umd.js"
@@ -293,15 +211,12 @@ lg:self-center lg:justify-self-center lg:col-span-2"
           speed: 50,
           loop: false,
           afterComplete: (instance) => {
-            const title = document.querySelector("#title-testing");
-            title.classList.add("un-active");
-            title.classList.add("text-marine");
             instance.destroy();
           },
         })
           .type("Building quality by ")
           .pause(400)
-          .type("<span id='title-testing' class='un'>testing</span>")
+          .type("<span id='title-testing'>testing</span>")
           .go();
       </script>
       <script is:inline>

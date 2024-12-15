@@ -3,7 +3,7 @@ const today = new Date();
 ---
 
 <footer
-  class="bg-sky text-white h-[50vh] w-full"
+  class="bg-sky text-white h-[40vh] w-full"
   style="
   z-index: 0;
   opacity: 1;
@@ -27,52 +27,67 @@ const today = new Date();
       </div>
       <div class="order-2">
         <div class="h-20 color-sky-400">
-          <h1 class="text-sky-100 text-2xl mb-4">
+          <h1 class="text-sky-200 text-2xl mb-1 font-syne">
             Learn efficient R development
           </h1>
           <button
-            class="outline outline-malibu outline-1
-        rounded-lg
-        text-malibu font-code tracking-[0.35rem] font-bold text-clamp-md uppercase
-        py-3 px-6
-        transition-all duration-400 ease
-        hover:text-white
-        hover:outline-2
-        hover:outline-white
-        hover:shadow-[0px_0px_12px_-2px_#77C0CA]"
+            class="rounded-full py-2 w-fit text-malibu
+          font-code tracking-widest font-bold text-clamp-md uppercase
+          transition-all duration-300
+          hover:text-white"
           >
-            <a href="https://jakubsobolewski.substack.com/subscribe"
-              >Subscribe</a
-            >
+            <a href="https://jakubsobolewski.substack.com/subscribe">
+              Subscribe
+            </a>
           </button>
         </div>
       </div>
       <div class="order-3 justify-self-end">
-        <ul class="list-none text-sky-100">
-          <li class="transition-colors hover:text-white">
-            <a href="https://www.linkedin.com/in/jakub-sobolewski-r/">
-              LinkedIn
-            </a>
-            ↗
-          </li>
-          <li class="transition-colors hover:text-white">
-            <a href="https://bsky.app/profile/jakub-sobolewski.bsky.social/">
-              Bluesky
-            </a>
-            ↗
-          </li>
-          <li class="transition-colors hover:text-white">
-            <a href="https://jakubsobolewski.medium.com/"> Medium </a>
-            ↗
-          </li>
-          <li class="transition-colors hover:text-white">
-            <a href="https://www.github.com/jakubsob/"> Github </a>
-            ↗
-          </li>
-        </ul>
+        <div class="flex flex-row gap-10">
+          <ul class="list-none text-sky-200 leading-10">
+            <li class="transition-colors hover:text-white">
+              <a href="/"> Home </a>
+            </li>
+            <li class="transition-colors hover:text-white">
+              <a href="/blog"> Blog </a>
+            </li>
+          </ul>
+          <ul class="list-none text-sky-200 leading-10">
+            <li class="transition-colors hover:text-white">
+              <a
+                href="https://www.linkedin.com/in/jakub-sobolewski-r/"
+                target="_blank"
+              >
+                LinkedIn
+              </a>
+              ↗
+            </li>
+            <li class="transition-colors hover:text-white">
+              <a
+                href="https://bsky.app/profile/jakub-sobolewski.bsky.social/"
+                target="_blank"
+              >
+                Bluesky
+              </a>
+              ↗
+            </li>
+            <li class="transition-colors hover:text-white">
+              <a href="https://jakubsobolewski.medium.com/" target="_blank">
+                Medium
+              </a>
+              ↗
+            </li>
+            <li class="transition-colors hover:text-white">
+              <a href="https://www.github.com/jakubsob/" target="_blank">
+                Github
+              </a>
+              ↗
+            </li>
+          </ul>
+        </div>
       </div>
       <div class="order-4 col-span-2 flex flex-col text-base">
-        <span class="text-sky-400 mt-auto">
+        <span class="text-sky-200 mt-auto">
           &copy; {today.getFullYear()} Jakub Sobolewski. All rights reserved.
         </span>
       </div>
