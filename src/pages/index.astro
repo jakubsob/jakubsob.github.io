@@ -4,16 +4,12 @@ import Header from "../components/Header.astro";
 import HeaderLink from "../components/HeaderLink.astro";
 import HeaderButton from "../components/HeaderButton.astro";
 import { getCollection } from "astro:content";
-import { getTagsWithCounts } from "../utils/getTagsWithCounts";
-import Tag from "../components/Tag.astro";
-import Search from "../components/Search";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
 const posts = (await getCollection("blog"))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
   .filter((post) => post.data.draft !== true)
   .filter((post, index) => index < 3);
-const tags = getTagsWithCounts(posts).sort((a, b) => b.count - a.count);
 ---
 
 <!doctype html>
