@@ -13,8 +13,10 @@ const { class: className } = Astro.props;
       tracking-wider
       rounded-b-lg"
   >
-    <nav class="flex flex-row gap-4 items-center justify-start">
-      <slot />
+    <nav>
+      <ul class="list-none flex flex-row gap-4 items-center justify-start">
+        <slot />
+      </ul>
     </nav>
   </header>
 </div>

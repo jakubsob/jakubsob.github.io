@@ -6,6 +6,7 @@ import Tag from "../components/Tag.astro";
 import SubscribeButton from "../components/SubscribeButton.astro";
 import Header from "../components/Header.astro";
 import HeaderLink from "../components/HeaderLink.astro";
+import HeaderButton from "../components/HeaderButton.astro";
 import { getReadingTime } from "../utils/getReadingTime";
 
 const { post } = Astro.props;
@@ -30,7 +31,11 @@ const { title, description, pubDate, updatedDate, tags } = post.data;
     >
       <Header>
         <HeaderLink href="/">jakub::sobolewski</HeaderLink>
+        <HeaderLink href="/" class="ms-auto">home</HeaderLink>
         <HeaderLink href="/#blog">blog</HeaderLink>
+        <HeaderButton href="https://jakubsobolewski.substack.com/subscribe"
+          >subscribe</HeaderButton
+        >
       </Header>
       <article
         class="prose

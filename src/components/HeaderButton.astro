@@ -10,7 +10,9 @@ const isActive = href === pathname || href === pathname.replace(/\/$/, "");
 ---
 
 <li class:list={["flex items-baseline", className, { active: isActive }]}>
-  <a href={href} {...props}>
-    <slot />
-  </a>
+  <button class="rounded-lg bg-malibu px-5 py-2">
+    <a href={href} {...props}>
+      <slot />
+    </a>
+  </button>
 </li>
