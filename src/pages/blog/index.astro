@@ -22,7 +22,7 @@ const tags = getTagsWithCounts(posts).sort((a, b) => b.count - a.count);
       <Header class="fixed top-0 z-10 text-white">
         <HeaderLink href="/">jakub::sobolewski</HeaderLink>
         <HeaderLink href="/">home</HeaderLink>
-        <HeaderLink href="#blog">blog</HeaderLink>
+        <HeaderLink href="/blog/">blog</HeaderLink>
         <HeaderButton
           href="https://jakubsobolewski.substack.com/subscribe"
           class="ms-auto"
@@ -33,7 +33,7 @@ const tags = getTagsWithCounts(posts).sort((a, b) => b.count - a.count);
       </Header>
       <section
         id="hero"
-        class="bg-sky h-[50vh]
+        class="bg-sky-700 h-[50vh]
         relative
         overflow-hidden
         text-white
@@ -152,31 +152,4 @@ const tags = getTagsWithCounts(posts).sort((a, b) => b.count - a.count);
       </section>
     </main>
   </BaseLayout>
-  <script is:inline>
-    window.addEventListener("load", () => {
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            const header = document.querySelector("#header");
-            const menu = document.querySelector("#header > header");
-            if (entry.isIntersecting) {
-              header.style.color = "var(--color-marine-100)";
-              menu.classList.remove("shadow-md");
-              menu.classList.remove("bg-white");
-            } else {
-              header.style.color = "black";
-              menu.classList.add("shadow-md");
-              menu.classList.add("bg-white");
-            }
-          });
-        },
-        {
-          threshold: 0.01,
-        }
-      );
-      observer.observe(document.querySelector("#hero"));
-    });
-  </script>
-
-
 </html>

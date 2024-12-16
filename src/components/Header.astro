@@ -1,22 +1,72 @@
 ---
+import { parseHTML } from "linkedom";
+
+const html = await Astro.slots.render("default");
+const { document } = parseHTML(html);
+const currentPath = Astro.url.pathname;
+[
+  ...document.querySelectorAll<HTMLAnchorElement>("a:not([data-nav-ignore])"),
+].forEach((a: HTMLAnchorElement) => {
+  if (a.href === currentPath) {
+    a.classList.add("border-b-2", "border-white");
+  }
+  a.classList.add(
+    "transition-colors",
+    "hover:text-sky-200",
+    "hover:border-sky-200"
+  );
+});
 const { class: className } = Astro.props;
 ---
 
-<div
+<header
   id="header"
-  class:list={["text-black transition-all w-full gap-4 px-4", className]}
+  class:list={[
+    "text-white transition-colors transition-transform duration-500 w-full gap-4 px-4",
+    className,
+  ]}
 >
-  <header
+  <nav
     class="max-w-[65ch]
-      transition-all
-      mx-auto px-4 py-4
+      transition-colors transition-transform
+      duration-600
+      mx-auto px-4
       tracking-wider
       rounded-b-lg"
   >
-    <nav>
-      <ul class="list-none flex flex-row gap-4 items-center justify-start">
-        <slot />
-      </ul>
-    </nav>
-  </header>
-</div>
+    <ul class="list-none flex flex-row gap-4 items-center justify-start">
+      <Fragment set:html={document} />
+    </ul>
+  </nav>
+</header>
+<script is:inline>
+  var prevScrollpos = window.scrollY;
+  window.onscroll = function () {
+    var currentScrollPos = window.scrollY;
+    if (prevScrollpos > currentScrollPos) {
+      document.getElementById("header").style.transform = "translateY(0)";
+    } else {
+      document.getElementById("header").style.transform = "translateY(-100%)";
+    }
+    prevScrollpos = currentScrollPos;
+  };
+
+  window.addEventListener("load", () => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const menu = document.querySelector("#header > nav");
+          if (entry.isIntersecting) {
+            menu.classList.remove("bg-sky-700");
+          } else {
+            menu.classList.add("bg-sky-700");
+          }
+        });
+      },
+      {
+        threshold: 0.01,
+      }
+    );
+    observer.observe(document.querySelector("#hero"));
+  });
+</script>

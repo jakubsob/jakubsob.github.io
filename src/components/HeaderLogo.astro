@@ -3,11 +3,11 @@ import type { HTMLAttributes } from "astro/types";
 
 type Props = HTMLAttributes<"a">;
 
-const { href, class: className, ...props } = Astro.props;
+const { class: className, ...props } = Astro.props;
 ---
 
 <li class:list={["flex items-baseline py-4", className]}>
-  <a href={href} {...props}>
+  <a href="/" {...props} data-nav-ignore="true">
     <slot />
   </a>
 </li>
