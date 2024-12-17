@@ -53,8 +53,10 @@ const { class: className } = Astro.props;
           const menu = document.querySelector("#header > nav");
           if (entry.isIntersecting) {
             menu.classList.remove("bg-sky-700");
+            menu.classList.add("backdrop-blur-md");
           } else {
             menu.classList.add("bg-sky-700");
+            menu.classList.remove("backdrop-blur-md");
           }
         });
       },
