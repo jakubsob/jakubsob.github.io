@@ -10,11 +10,6 @@ const currentPath = Astro.url.pathname;
   if (a.href === currentPath) {
     a.classList.add("border-b-2", "border-white");
   }
-  a.classList.add(
-    "transition-colors",
-    "hover:text-sky-200",
-    "hover:border-sky-200"
-  );
 });
 const { class: className } = Astro.props;
 ---

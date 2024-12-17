@@ -3,11 +3,12 @@ import type { HTMLAttributes } from "astro/types";
 
 type Props = HTMLAttributes<"a">;
 
-const { href, ...props } = Astro.props;
+const { href, class: className, ...props } = Astro.props;
 ---
 
 <a
   href={href}
+  class:list={[className]}
   {...props}
   class="relative whitespace-nowrap overflow-hidden group"
 >

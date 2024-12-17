@@ -5,7 +5,10 @@ const { href, class: className } = Astro.props;
 ---
 
 <li class:list={["flex items-baseline py-4", className]}>
-  <AnimatedHeaderLink href={href} }>
+  <AnimatedHeaderLink
+    href={href}
+    class="transition-colors hover:text-sky-200 hover:border-sky-200"
+  >
     <slot />
   </AnimatedHeaderLink>
 </li>
