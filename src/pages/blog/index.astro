@@ -2,6 +2,7 @@
 import PostList from "../../components/PostList.astro";
 import Header from "../../components/Header.astro";
 import HeaderLink from "../../components/HeaderLink.astro";
+import HeaderLogo from "../../components/HeaderLogo.astro";
 import HeaderButton from "../../components/HeaderButton.astro";
 import { getCollection } from "astro:content";
 import { getTagsWithCounts } from "../../utils/getTagsWithCounts";
@@ -20,7 +21,7 @@ const tags = getTagsWithCounts(posts).sort((a, b) => b.count - a.count);
   <BaseLayout>
     <main>
       <Header class="fixed top-0 z-10 text-white">
-        <HeaderLink href="/">jakub::sobolewski</HeaderLink>
+        <HeaderLogo href="/">jakub::sobolewski</HeaderLogo>
         <HeaderLink href="/">home</HeaderLink>
         <HeaderLink href="/blog/">blog</HeaderLink>
         <HeaderButton

@@ -1,13 +1,11 @@
 ---
-import type { HTMLAttributes } from "astro/types";
+import AnimatedHeaderLink from "./AnimatedHeaderLink.astro";
 
-type Props = HTMLAttributes<"a">;
-
-const { href, class: className, ...props } = Astro.props;
+const { href, class: className } = Astro.props;
 ---
 
 <li class:list={["flex items-baseline py-4", className]}>
-  <a href={href} {...props}>
+  <AnimatedHeaderLink href={href} }>
     <slot />
-  </a>
+  </AnimatedHeaderLink>
 </li>
