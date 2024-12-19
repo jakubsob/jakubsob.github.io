@@ -67,10 +67,10 @@ function Search({ searchList, maxResults = 5 }) {
                   className="p-2
                     transition duration-300 ease-in-out
                     last:rounded-b-lg
-                    hover:bg-marine-200 hover:text-white"
+                    hover:bg-sky-900 hover:text-white group"
                 >
                   <a
-                    className="text-wrap text-black"
+                    className="text-wrap text-black group-hover:text-white"
                     href={`/blog/${post.slug}`}
                   >
                     {post.data.title}

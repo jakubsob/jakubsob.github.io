@@ -78,42 +78,42 @@ const tags = getTagsWithCounts(posts).sort((a, b) => b.count - a.count);
           <h2 class="font-syne tracking-wider text-sky-200">
             And what I'm still learning.
           </h2>
-          <!-- <h2 class="text-white">There are {posts.length} articles about:</h2>
-        <div class="flex flex-row flex-wrap gap-1">
-          {
-            tags.map((tag) => {
-              return <Tag href={tag.tag} label={`${tag.tag} ${tag.count}`} />;
-            })
-          }
-        </div>
-        <div class="mt-4">
-          <Search client:load searchList={posts} />
-        </div> -->
         </div>
       </section>
       <section
         id="blog"
         class="grid
-        grid-cols-1
-        grid-rows-[1fr_auto]
-        bg-marine-50 bg-noise-sky
-        lg:grid-cols-[1fr_minmax(65ch,_1fr)_1fr]
-        lg:grid-rows-1
-        pt-4"
+          grid-cols-1
+          grid-rows-[1fr_auto]
+          bg-marine-50 bg-noise-sky
+          lg:grid-cols-[1fr_minmax(65ch,_1fr)_1fr]
+          lg:grid-rows-1
+          pt-4"
       >
-        <article
+        <div
           class="col-start-1 max-w-[65ch] mx-auto order-2
-          lg:col-start-2 lg:row-start-1 lg:order-1"
+      lg:col-start-2 lg:row-start-1 lg:order-1"
         >
-          <section>
+          <h2 class="text-sky">There are {posts.length} articles about:</h2>
+          <div class="flex flex-row flex-wrap gap-1">
+            {
+              tags.map((tag) => {
+                return <Tag href={tag.tag} label={`${tag.tag} ${tag.count}`} />;
+              })
+            }
+          </div>
+          <div class="mt-4">
+            <Search client:load searchList={posts} />
+          </div>
+          <div class="mt-4">
             <PostList posts={posts} />
-          </section>
-        </article>
-        <article
+          </div>
+        </div>
+        <div
           class="col-start-1 order-1 max-w-[65ch] w-full px-4 mx-auto mb-8 text-sky-500"
         >
-        </article>
-        <article
+        </div>
+        <div
           class="col-start-1 order-2 mx-auto hidden lg:block
         lg:col-start-3 lg:row-start-1 lg:order-2 text-sky-600"
         >
@@ -128,7 +128,7 @@ const tags = getTagsWithCounts(posts).sort((a, b) => b.count - a.count);
               </li>
             </ul>
           </div>
-        </article>
+        </div>
       </section>
     </main>
   </BaseLayout>
