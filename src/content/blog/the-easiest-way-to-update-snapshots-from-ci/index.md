@@ -7,7 +7,7 @@ tags: ["r", "tests"]
 
 Snapshot testing gets difficult when there is more than one variant of the same result.
 
-The reason why snapshot testing might be discouraing is due to the fact that snapshots will most likely fail due to environment settings. If one person runs the tests on a Mac and another on a Linux machine, the snapshots of rendered images will almost certainly be different. Comparing these snapshots will result in a failed test even though the code is correct.
+The reason why snapshot testing might be discouraging is due to the fact that snapshots will most likely fail due to environment settings. If one person runs the tests on a Mac and another on a Linux machine, the snapshots of rendered images will almost certainly be different. Comparing these snapshots will result in a failed test even though the code is correct.
 
 Add CI to the mix, and you have a hot mess.
 
