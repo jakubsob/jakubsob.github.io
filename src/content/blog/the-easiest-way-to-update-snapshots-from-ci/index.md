@@ -87,6 +87,10 @@ tests/testthat/_snaps/linux-4.4
 
 This way we can still generate snapshots locally to get fast feedback, but we'll only keep a single source of truth checked in the repository.
 
+Since you don't track changes in local snapshots, you need to regenerate them before you start making changes to see if they change. It adds some complexity to the process, but it allows to keep the number of shared snapshots in the version control minimal.
+
+Alternatively, you can keep local snapshots, but when doing code review, focus only on the ones generated on CI.
+
 ### Step 4: Automate downloading snapshots from CI
 
 To update snapshots generated on CI in Github, we need to:
@@ -141,7 +145,7 @@ The `.download_ci_snaps` function will:
   invisible(NULL)
 }
 
-.get_active_branch <- function() {
+.get_active_branch <- **function**() {
   res <- system("git status", intern = TRUE)
   stringr::str_remove(res[1], "On branch ")
 }
