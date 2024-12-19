@@ -3,19 +3,7 @@ import AnimatedLink from "./AnimatedLink.astro";
 const today = new Date();
 ---
 
-<footer
-  class="bg-sky-700 text-white h-[40vh] w-full"
-  style="
-  z-index: 0;
-  opacity: 1;
-  mix-blend-mode: overlay;
-  background-image: url(/cover.svg);
-  background-position: 0 0;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-attachment: scroll;
-  inset: 0%;"
->
+<footer class="bg-sky-700 bg-noise text-white h-[40vh] w-full">
   <div class="max-w-[65ch] mx-auto h-full">
     <div
       class="grid grid-cols-2 grid-rows-[100px_1fr_1fr]

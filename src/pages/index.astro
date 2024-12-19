@@ -41,20 +41,11 @@ const posts = (await getCollection("blog"))
         overflow-hidden
         text-white
         grid
+        bg-noise
         items-center justify-items-start
         grid-cols-1 grid-rows-1
         lg:grid-cols-1 lg:grid-rows-1
         p-4"
-        style="
-        z-index: 0;
-        opacity: 1;
-        mix-blend-mode: overlay;
-        background-image: url(/cover.svg);
-        background-position: 0 0;
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-attachment: scroll;
-        inset: 0%;"
       >
         <div
           class="self-center justify-self-center
@@ -72,9 +63,7 @@ lg:self-center lg:justify-self-center lg:col-span-2"
           </h3>
           <h1 class="text-clamp font-code font-bold text-white mb-5 relative">
             <span id="title" class="absolute top-0 left-0"> </span>
-            <span class="opacity-0">
-              Building quality by <span class="italic">testing</span>
-            </span>
+            <span class="opacity-0"> Building quality by testing </span>
           </h1>
           <h3 class="text-sky-200 font-light font-syne mb-12">
             <p>
@@ -82,9 +71,9 @@ lg:self-center lg:justify-self-center lg:col-span-2"
               experience.
             </p>
             <p>
-              I teach and preach using automated testing for efficient code
-              development.
+              I practice automated testing to develop software more efficiently.
             </p>
+            <p>I share what I've learned</p>
           </h3>
           <div class="flex gap-4">
             <button
@@ -112,18 +101,8 @@ lg:self-center lg:justify-self-center lg:col-span-2"
       <section
         id="testimonials"
         class="h-[60vh]
-        bg-sky-50
+        bg-sky-50 bg-noise-sky
         flex items-center justify-center"
-        style="
-        z-index: 0;
-        opacity: 1;
-        mix-blend-mode: overlay;
-        background-image: url(/noise-sky.svg);
-        background-position: 0 0;
-        background-repeat: repeat-y;
-        background-size: contain;
-        background-attachment: scroll;
-        inset: 0%;"
       >
         <div class="rounded-lg p-10 bg-sky-700 text-white w-full max-w-[65ch]">
           <div class="text-xl mb-5">
@@ -143,19 +122,7 @@ lg:self-center lg:justify-self-center lg:col-span-2"
           </p>
         </div>
       </section>
-      <section
-        id="blog"
-        style="
-        z-index: 0;
-        opacity: 1;
-        mix-blend-mode: overlay;
-        background-image: url(/noise-sky.svg);
-        background-position: 0 0;
-        background-repeat: repeat-y;
-        background-size: contain;
-        background-attachment: scroll;
-        inset: 0%;"
-      >
+      <section id="blog" class="bg-noise-sky">
         <article
           class="col-start-1 max-w-[65ch] mx-auto order-2
           h-[100vh]
@@ -209,7 +176,7 @@ lg:self-center lg:justify-self-center lg:col-span-2"
         })
           .type("Building quality by ")
           .pause(400)
-          .type("<span id='title-testing'>testing</span>")
+          .type("testing")
           .go();
       </script>
       <script is:inline>

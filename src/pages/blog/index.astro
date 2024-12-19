@@ -34,7 +34,7 @@ const tags = getTagsWithCounts(posts).sort((a, b) => b.count - a.count);
       </Header>
       <section
         id="hero"
-        class="bg-sky-700 h-[50vh]
+        class="bg-sky-700 bg-noise h-[50vh]
         relative
         overflow-hidden
         text-white
@@ -43,16 +43,6 @@ const tags = getTagsWithCounts(posts).sort((a, b) => b.count - a.count);
         grid-cols-1 grid-rows-1
         lg:grid-cols-1 lg:grid-rows-1
         p-4"
-        style="
-        z-index: 0;
-        opacity: 1;
-        mix-blend-mode: overlay;
-        background-image: url(/cover.svg);
-        background-position: 0 0;
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-attachment: scroll;
-        inset: 0%;"
       >
         <div class="mx-auto text-white">
           <h1
@@ -106,20 +96,10 @@ const tags = getTagsWithCounts(posts).sort((a, b) => b.count - a.count);
         class="grid
         grid-cols-1
         grid-rows-[1fr_auto]
-        bg-marine-50
+        bg-marine-50 bg-noise-sky
         lg:grid-cols-[1fr_minmax(65ch,_1fr)_1fr]
         lg:grid-rows-1
         pt-4"
-        style="
-        z-index: 0;
-        opacity: 1;
-        mix-blend-mode: overlay;
-        background-image: url(/noise-sky.svg);
-        background-position: 0 0;
-        background-repeat: repeat-y;
-        background-size: contain;
-        background-attachment: scroll;
-        inset: 0%;"
       >
         <article
           class="col-start-1 max-w-[65ch] mx-auto order-2
