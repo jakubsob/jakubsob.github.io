@@ -140,8 +140,10 @@ The `.download_ci_snaps` function will:
   ))
   unzip("_snaps.zip", exdir = "_snaps")
   fs::file_delete("_snaps.zip")
-  fs::file_delete("tests/testthat/_snaps")
-  fs::file_move("_snaps", "tests/testthat/")
+  dir_variant_new <- fs::dir_ls("_snaps")[1]
+  dir_variant_old <- fs::path("tests", "testthat", dir_variant_new)
+  fs::file_delete(dir_variant_old)
+  fs::file_move(dir_variant_new, dir_variant_old)
   invisible(NULL)
 }
 
