@@ -24,26 +24,21 @@
 @tailwind components;
 @tailwind utilities;
 
-.bg-noise {
-  z-index: 0;
-  opacity: 1;
-  mix-blend-mode: overlay;
-  background-image: url(/cover.svg);
-  background-position: 0 0;
-  background-repeat: repeat-y;
-  background-size: cover;
-  background-attachment: scroll;
-  inset: 0%;
-}
-
+.bg-noise,
 .bg-noise-sky {
   z-index: 0;
   opacity: 1;
-  mix-blend-mode: overlay;
-  background-image: url(/noise-sky.svg);
   background-position: 0 0;
   background-repeat: repeat-y;
   background-size: contain;
   background-attachment: scroll;
   inset: 0%;
+}
+
+.bg-noise {
+  background-image: url(/cover.svg);
+}
+
+.bg-noise-sky {
+  background-image: url(/noise-sky.svg);
 }
