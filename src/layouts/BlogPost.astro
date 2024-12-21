@@ -4,6 +4,7 @@ import Comments from "../components/Comments.astro";
 import FormattedDate from "../components/FormattedDate.astro";
 import Tag from "../components/Tag.astro";
 import SubscribeButton from "../components/SubscribeButton.astro";
+import HeaderDefault from "../components/HeaderDefault.astro";
 import Header from "../components/Header.astro";
 import HeaderLink from "../components/HeaderLink.astro";
 import HeaderLogo from "../components/HeaderLogo.astro";
@@ -34,6 +35,7 @@ const { title, description, pubDate, updatedDate, tags } = post.data;
         <HeaderLogo class="text-black">jakub::sobolewski</HeaderLogo>
         <HeaderLink class="text-black" href="/">home</HeaderLink>
         <HeaderLink class="text-black" href="/blog/">blog</HeaderLink>
+        <HeaderLink class="text-black" href="/resources/">resources</HeaderLink>
         <HeaderButton
           href="https://jakubsobolewski.substack.com/subscribe"
           class="text-black ms-auto"

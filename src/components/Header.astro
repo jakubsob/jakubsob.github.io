@@ -14,6 +14,17 @@ const currentPath = Astro.url.pathname;
 const { class: className } = Astro.props;
 ---
 
+<style>
+  .backdrop {
+    transition:
+      backdrop-filter 0.6s,
+      background-color 0.6s;
+    backdrop-filter: blur(4px) opacity(0);
+  }
+  .backdrop-show {
+    backdrop-filter: blur(4px) opacity(1);
+  }
+</style>
 <header
   id="header"
   class:list={[
@@ -23,7 +34,9 @@ const { class: className } = Astro.props;
 >
   <nav
     class="max-w-[65ch]
-      transition-colors transition-transform
+      transition-colors transition-transform tranistion-[backdrop-filter]
+      duration-500
+      backdrop
       duration-600
       mx-auto px-4
       tracking-wider
@@ -53,15 +66,15 @@ const { class: className } = Astro.props;
           const menu = document.querySelector("#header > nav");
           if (entry.isIntersecting) {
             menu.classList.remove("bg-sky-700");
-            menu.classList.add("backdrop-blur-md");
+            menu.classList.add("backdrop-show");
           } else {
             menu.classList.add("bg-sky-700");
-            menu.classList.remove("backdrop-blur-md");
+            menu.classList.remove("backdrop-show");
           }
         });
       },
       {
-        threshold: 0.01,
+        threshold: 0.02,
       }
     );
     observer.observe(document.querySelector("#hero"));

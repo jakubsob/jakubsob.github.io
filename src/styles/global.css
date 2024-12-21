@@ -29,16 +29,17 @@
   z-index: 0;
   opacity: 1;
   background-position: 0 0;
-  background-repeat: repeat-y;
-  background-size: contain;
   background-attachment: scroll;
   inset: 0%;
 }
 
 .bg-noise {
   background-image: url(/cover.svg);
+  background-size: cover;
 }
 
 .bg-noise-sky {
   background-image: url(/noise-sky.svg);
+  background-size: contain;
+  background-repeat: repeat-y;
 }
