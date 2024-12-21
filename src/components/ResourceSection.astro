@@ -1,0 +1,37 @@
+---
+import ResourceCard from "./ResourceCard.astro";
+const { title, items } = Astro.props;
+
+type Resource = {
+  title: string;
+  type: string;
+  href: string;
+  description: string;
+};
+---
+
+<section class="bg-white bg-noise-sky
+grid items-center">
+  <div class="py-4 max-w-[65ch] mx-auto">
+    <h1 class="flex gap-2 align-baseline text-3xl font-syne my-4">
+      <div class="size-8">
+        <img src="/asterisk.svg" />
+      </div>
+      {title}
+    </h1>
+    <div class="space-y-4">
+      {
+        items.map((item: Resource) => {
+          return (
+            <ResourceCard
+              title={item.title}
+              type={item.type}
+              href={item.href}
+              description={item.description}
+            />
+          );
+        })
+      }
+    </div>
+  </div>
+</section>

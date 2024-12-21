@@ -41,5 +41,5 @@
 .bg-noise-sky {
   background-image: url(/noise-sky.svg);
   background-size: contain;
-  background-repeat: repeat-y;
+  background-repeat: repeat-y repeat-x;
 }
