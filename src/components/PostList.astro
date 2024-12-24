@@ -28,8 +28,8 @@ interface Post {
         hover:border-[1px] hover:border-sky-800"
       >
         <a href={`/blog/${post.slug}/`}>
-          <h1 class="capitalize">{post.data.title}</h1>
-          <h2>{post.data.description}</h2>
+          <h3 class="capitalize">{post.data.title}</h3>
+          <h4>{post.data.description}</h4>
         </a>
         <div class="flex flex-row items-baseline gap-6 text-sm text-sky-400 mt-2">
           <FormattedDate date={post.data.pubDate} />

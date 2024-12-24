@@ -80,7 +80,7 @@ const tags = getTagsWithCounts(posts).sort((a, b) => b.count - a.count);
           class="col-start-1 max-w-[65ch] mx-auto order-2
       lg:col-start-2 lg:row-start-1 lg:order-1"
         >
-          <h2 class="text-sky">There are {posts.length} articles about:</h2>
+          <h3 class="text-sky">There are {posts.length} articles about:</h3>
           <div class="flex flex-row flex-wrap gap-1">
             {
               tags.map((tag) => {
@@ -104,7 +104,7 @@ const tags = getTagsWithCounts(posts).sort((a, b) => b.count - a.count);
         lg:col-start-3 lg:row-start-1 lg:order-2 text-sky-600"
         >
           <div class="sticky top-16">
-            <h1 class="text-sky-600">Also read</h1>
+            <h3 class="text-sky-600">Also read</h3>
             <ul>
               <li>
                 <a href="https://rweekly.org/">R-Weekly</a>

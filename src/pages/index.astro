@@ -37,7 +37,7 @@ const posts = (await getCollection("blog"))
           class="self-center justify-self-center
 lg:self-center lg:justify-self-center lg:col-span-2"
         >
-          <h3 class="text-sky-200 mb-5 font-light relative font-syne">
+          <h2 class="text-sky-200 mb-5 font-light relative font-syne">
             <img
               id="test"
               src="test.svg"
@@ -46,12 +46,12 @@ lg:self-center lg:justify-self-center lg:col-span-2"
             Hi, my name is <span class="text-white font-semibold"
               >Jakub Sobolewski</span
             > and this is
-          </h3>
+          </h2>
           <h1 class="text-clamp font-code font-bold text-white mb-5 relative">
             <span id="title" class="absolute top-0 left-0"> </span>
             <span class="opacity-0 mr-1">Building quality by testing </span>
           </h1>
-          <h3 class="text-sky-200 font-light font-syne mb-12">
+          <h2 class="text-sky-200 font-light font-syne mb-12">
             <p>
               I’m a software engineer specialising in R with 5+ years of
               experience.
@@ -60,7 +60,7 @@ lg:self-center lg:justify-self-center lg:col-span-2"
               I practice automated testing to develop software more efficiently.
             </p>
             <p>I share what I've learned</p>
-          </h3>
+          </h2>
           <div class="flex gap-4">
             <button
               class="rounded-full px-6 py-4 bg-ocean-green-500 w-fit
@@ -114,7 +114,7 @@ lg:self-center lg:justify-self-center lg:col-span-2"
           h-[100vh]
           flex flex-col justify-center gap-8"
         >
-          <h1 class="flex gap-2 align-baseline text-3xl font-syne">
+          <h2 class="flex gap-2 align-baseline text-3xl font-syne">
             <div class="size-8">
               <svg
                 width="100%"
@@ -132,7 +132,7 @@ lg:self-center lg:justify-self-center lg:col-span-2"
               </svg>
             </div>
             Explore what's new on the blog
-          </h1>
+          </h2>
           <section>
             <PostList posts={posts} />
           </section>
