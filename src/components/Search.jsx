@@ -41,7 +41,7 @@ function Search({ searchList, maxResults = 5 }) {
           id="search"
           value={query}
           onChange={handleOnSearch}
-          autocomplete="off"
+          autoComplete="off"
           className="p-4 pl-10 text-sm
             w-full
             text-gray-900
