@@ -49,8 +49,7 @@ lg:self-center lg:justify-self-center lg:col-span-2"
             > and this is
           </h2>
           <h1 class="text-clamp font-code font-bold text-white mb-5 relative">
-            <span id="title" class="absolute top-0 left-0"> </span>
-            <span class="opacity-0 mr-1">Building quality by testing </span>
+            <span>Building quality by testing </span>
           </h1>
           <h2 class="text-sky-200 font-light font-syne mb-12">
             <p>
@@ -153,25 +152,10 @@ lg:self-center lg:justify-self-center lg:col-span-2"
           </button>
         </article>
       </section>
-      <script is:inline src="https://unpkg.com/typeit@8.7.1/dist/index.umd.js"
-      ></script>
       <script
         is:inline
         src="https://cdn.jsdelivr.net/npm/motion@11.11.13/dist/motion.js"
       ></script>
-      <script is:inline>
-        new TypeIt("#title", {
-          speed: 50,
-          loop: false,
-          afterComplete: (instance) => {
-            instance.destroy();
-          },
-        })
-          .type("Building quality by ")
-          .pause(400)
-          .type("testing")
-          .go();
-      </script>
       <script is:inline>
         const { animate, scroll } = Motion;
         document.querySelectorAll("#test").forEach((item) => {

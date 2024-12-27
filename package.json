@@ -22,7 +22,6 @@
     "@fontsource/geist-sans": "^5.0.1",
     "@fontsource/monoton": "^5.0.18",
     "@gsap/react": "^2.1.1",
-    "@iconify-json/logos": "^1.2.3",
     "@types/react": "^18.2.51",
     "@types/react-dom": "^18.2.18",
     "astro": "^4.5.2",

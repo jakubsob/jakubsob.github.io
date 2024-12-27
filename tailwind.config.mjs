@@ -1,5 +1,4 @@
-const plugin = require('tailwindcss/plugin')
-const { addIconSelectors } = require("@iconify/tailwind");
+const plugin = require("tailwindcss/plugin");
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -80,7 +79,6 @@ export default {
   },
   plugins: [
     require("@tailwindcss/typography"),
-    addIconSelectors(["logos"]),
     plugin(function ({ addBase, theme }) {
       addBase({
         h1: {
