@@ -5,13 +5,24 @@ import "../styles/global.css";
 
 interface Props {
   title: string;
+  titleSEO?: string;
   description?: string;
+  descriptionSEO?: string;
   image?: string;
 }
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
-const { title, description, image = "/blog-placeholder-1.jpg" } = Astro.props;
+const {
+  title: titlePrimary,
+  titleSEO,
+  description: descriptionPrimary,
+  descriptionSEO,
+  image = "/blog-placeholder-1.jpg",
+} = Astro.props;
+
+const title = titleSEO || titlePrimary;
+const description = descriptionSEO || descriptionPrimary;
 
 const googleAnalyticsID = "G-735BLDHJRX";
 const gtagUrl = `https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsID}`;
@@ -23,12 +34,6 @@ const gtagUrl = `https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsID
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <meta name="generator" content={Astro.generator} />
-
-  <title>Building quality R software by testing.</title>
-  <meta
-    name="description"
-    content="Learn efficient software development in R/Shiny by using effective testing strategies."
-  />
   <link rel="sitemap" href="/sitemap-index.xml" />
 
   <!-- Canonical URL -->
@@ -54,8 +59,8 @@ const gtagUrl = `https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsID
   <meta property="twitter:image" content={new URL(image, Astro.url)} />
   <slot />
 
-  <script async src={gtagUrl}></script>
-  <script define:vars={{ googleAnalyticsID }}>
+  <script is:inline async src={gtagUrl}></script>
+  <script is:inline define:vars={{ googleAnalyticsID }}>
     window.dataLayer = window.dataLayer || [];
     function gtag() {
       dataLayer.push(arguments);

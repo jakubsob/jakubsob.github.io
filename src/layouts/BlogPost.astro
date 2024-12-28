@@ -16,7 +16,7 @@ const { title, description, pubDate, updatedDate, tags } = post.data;
 ---
 
 <html lang="en">
-  <BaseLayout title={title} description={description}>
+  <BaseLayout {...post.data}>
     <BlogPostJSONLD slot="head" {...post.data} />
     <main
       class="bg-marine-50"
