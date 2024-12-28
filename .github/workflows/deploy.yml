@@ -39,6 +39,7 @@ jobs:
         uses: actions/deploy-pages@v1
 
   lighthouse:
+    needs: deploy
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
