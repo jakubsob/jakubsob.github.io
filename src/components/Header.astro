@@ -77,6 +77,7 @@ const { class: className } = Astro.props;
         threshold: 0.02,
       }
     );
-    observer.observe(document.querySelector("#hero"));
+    const observed = document.querySelector("#hero");
+    if (observed) observer.observe(observed);
   });
 </script>
