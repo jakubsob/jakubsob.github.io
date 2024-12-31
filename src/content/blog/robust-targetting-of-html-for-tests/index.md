@@ -1,6 +1,6 @@
 ---
-title: 'How To Write E2E Tests Selectors That Stand The Test Of Time'
-description: 'Use them with E2E library of your choice'
+title: 'Creating Robust E2E Test Selectors for Shiny Apps'
+description: 'Learn how to create resilient E2E test selectors in Shiny apps using data-* attributes and best practices.'
 pubDate: 'Mar 15 2024'
 tags: ["r", "tests", "shiny", "ui"]
 ---
