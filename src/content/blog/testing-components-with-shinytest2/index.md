@@ -1,6 +1,6 @@
 ---
-title: 'Testing components with shinytest2'
-description: 'Tips for Shiny component libraries developers'
+title: 'Effective Testing of Shiny Components with shinytest2'
+description: 'Learn how to test Shiny components for correct markup and server communication using shinytest2.'
 pubDate:  'May 23 2024'
 tags: ["r", "tests"]
 ---
