@@ -1,8 +1,8 @@
 ---
-title: 'We Built An App Prototype In 2 Weeks With 96% Code Coverage.'
-description: 'Here’s How We Did It.'
-pubDate:  'Oct 6 2023'
-tags: ["r", "tests", "tdd", "shiny"]
+title: 'How We Achieved 96% Code Coverage in a 2-Week App Prototype'
+description: 'Learn how we built an app prototype with 96% code coverage in just 2 weeks using TDD and effective testing strategies.'
+pubDate: 'Oct 6 2023'
+tags: ['r', 'tests', 'tdd', 'shiny']
 ---
 
 **The project had unknowns that would affect the development, but since we only had 2 weeks we didn’t have time to wait for all the business experts’ answers — we had to work around them.**
