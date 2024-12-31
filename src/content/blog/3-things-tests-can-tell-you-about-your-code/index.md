@@ -1,6 +1,6 @@
 ---
-title: 3 Things Tests Can Tell You About Your Code
-description: Testing is all about feedback
+title: "How Tests Improve Code Quality: 3 Key Insights"
+description: 'Discover how tests can reveal code modularity, coupling, and separation of concerns to improve your code quality.'
 pubDate:  'Oct 24 2024'
 tags: ["r", "tests"]
 ---
