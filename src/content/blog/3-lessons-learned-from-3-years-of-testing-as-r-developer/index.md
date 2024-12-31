@@ -1,6 +1,6 @@
 ---
-title: '3 Lessons learned from 3 years of testing as an R developer'
-description: ''
+title: 'Top 3 Testing Lessons from 3 Years as an R Developer'
+description: 'Discover the top three lessons learned from three years of testing as an R developer. Improve your testing practices with these insights.'
 pubDate: 'Oct 20 2024'
 tags: ["r", "tests"]
 ---
