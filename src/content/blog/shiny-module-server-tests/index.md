@@ -1,7 +1,7 @@
 ---
-title: BDD Style Shiny Module Server Tests
-description: ''
-pubDate: Jan 30 2024
+title: 'BDD Style Testing for Shiny Module Servers with R6 and testServer'
+description: 'Learn how to write BDD style tests for Shiny module servers using R6 and testServer to improve readability and maintainability.'
+pubDate: 'Jan 30 2024'
 tags: ["r", "tests", "shiny"]
 ---
 
