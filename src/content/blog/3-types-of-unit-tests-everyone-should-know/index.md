@@ -1,6 +1,6 @@
 ---
-title: '3 Types of Unit Tests Everyone Should Know'
-description: ''
+title: '3 Essential Types of Unit Tests Every R Developer Should Know'
+description: 'Learn about Direct Response, State Change, and Interaction Tests to improve your unit testing strategy.'
 pubDate: 'Sep 25 2023'
 tags: ["r", "tests"]
 ---
