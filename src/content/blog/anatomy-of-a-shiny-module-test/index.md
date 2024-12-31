@@ -1,6 +1,6 @@
 ---
-title: Anatomy Of A Shiny Module Test With shiny::testServer
-description: ''
+title: Comprehensive Guide to Testing Shiny Modules with shiny::testServer
+description: 'Learn how to effectively test Shiny modules using shiny::testServer with examples and best practices.'
 pubDate: 'Oct 31 2023'
 tags: ["r", "tests", "shiny"]
 ---
