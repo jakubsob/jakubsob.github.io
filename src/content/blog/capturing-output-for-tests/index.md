@@ -1,6 +1,6 @@
 ---
-title: 'The easiest way to capture code output for tests'
-description: 'Use it for adding tests to existing code'
+title: 'How to Easily Capture and Test Code Output in R'
+description: 'Learn methods to capture and test code output in R, including snapshot testing, dput, and constructive package.'
 pubDate:  'September 14 2024'
 tags: ["r", "tests"]
 ---
