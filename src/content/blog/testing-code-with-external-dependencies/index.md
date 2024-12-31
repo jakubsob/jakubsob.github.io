@@ -1,6 +1,6 @@
 ---
-title: 'Testing Code With External Dependencies.'
-description: ''
+title: 'How to Test Code with External Dependencies Using Stubs in R'
+description: 'Learn how to test R functions with external dependencies using stubs and the testthat package.'
 pubDate:  'Oct 17 2023'
 tags: ["r", "tests"]
 ---
