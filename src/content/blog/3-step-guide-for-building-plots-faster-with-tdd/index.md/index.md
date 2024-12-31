@@ -1,6 +1,6 @@
 ---
-title: '3-Step Guide For Building Plots Faster With Test Driven Development.'
-description: ''
+title: '3-Step Guide to Building Plots Faster with Test Driven Development'
+description: 'Discover how to use TDD and approval testing to rapidly develop and test plots in R.'
 pubDate: 'Oct 29 2023'
 tags: ["r", "tests", "tdd", "ui"]
 ---
