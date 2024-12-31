@@ -1,6 +1,6 @@
 ---
-title: Acceptance Test-Driven Development of Shiny Modules
-description: ''
+title: 'How to Use Acceptance Test-Driven Development for Shiny Modules'
+description: 'Learn how to apply acceptance test-driven development (ATDD) to build robust Shiny modules with R6 and shinytest2.'
 pubDate: Dec 12 2023
 tags: ["r", "tests", "shiny"]
 ---
