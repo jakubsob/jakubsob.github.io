@@ -1,6 +1,6 @@
 ---
-title: 'The most efficient way to manage snapshot tests in R.'
-description: 'Use CI and Github API'
+title: 'Efficient Snapshot Testing in R with CI and GitHub API'
+description: 'Learn how to manage snapshot tests in R using CI and GitHub API to ensure consistency across different environments.'
 pubDate:  'Dec 13 2024'
 tags: ["r", "tests"]
 ---
