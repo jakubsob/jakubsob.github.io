@@ -1,6 +1,6 @@
 ---
-title: How Test Driven Development Helps You Get Things Right
-description: 'On the first try. No rewrites.'
+title: 'Mastering Test Driven Development: Build the Right Thing First'
+description: 'Learn how Test Driven Development (TDD) ensures you build the right thing on the first try with no rewrites.'
 pubDate: 'Oct 12 2023'
 tags: ["r", "tests", "tdd"]
 ---
