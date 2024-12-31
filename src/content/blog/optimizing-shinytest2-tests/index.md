@@ -1,6 +1,6 @@
 ---
-title: 'A simple way to speed up shinytest2 tests'
-description: 'TDD, abstraction, and page reloads'
+title: 'Optimize Shinytest2: Speed Up Your Shiny App Tests'
+description: 'Learn how to speed up Shiny app tests using shinytest2 by reusing application instances and refreshing the browser.'
 pubDate:  'May 29 2024'
 tags: ["r", "shiny", "shinytest2", "tdd", "tests"]
 ---
