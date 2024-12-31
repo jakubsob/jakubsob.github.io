@@ -1,6 +1,6 @@
 ---
-title: Don't Expect That "Function Works Correctly", Do This Instead
-description: 'Save your future self unnecessary headaches'
+title: 'Improve Your Unit Test Titles for Better Code Understanding'
+description: 'Learn how to write descriptive unit test titles that enhance code readability and maintainability.'
 pubDate: 'Oct 13 2024'
 tags: ["r", "tests"]
 ---
