@@ -1,7 +1,7 @@
 ---
-title: Want to get code coverage report, but not share your private code with codecov.io? Use cobertura-action.
-description: ''
-pubDate:  'Dec 11 2024'
+title: 'How to Get Code Coverage Reports Without Sharing Code with Codecov.io'
+description: 'Learn how to generate code coverage reports in R using cobertura-action without sharing your private code with codecov.io.'
+pubDate: 'Dec 11 2024'
 tags: ["r", "tests"]
 ---
 
