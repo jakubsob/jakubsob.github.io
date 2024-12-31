@@ -1,6 +1,6 @@
 ---
-title: How TDD Helps You Prototype Faster.
-description: 'By Allowing You To Experiment With Your Code.'
+title: 'How Test-Driven Development (TDD) Speeds Up Prototyping'
+description: 'Learn how TDD helps you prototype faster by allowing you to experiment with your code and find better solutions quickly.'
 pubDate: 'Oct 29 2023'
 tags: ["r", "tests", "tdd"]
 ---
