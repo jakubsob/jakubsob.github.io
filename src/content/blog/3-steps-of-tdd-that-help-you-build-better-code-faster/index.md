@@ -1,6 +1,6 @@
 ---
-title: '3 Steps Of Test-Driven Development That Help You Build Better Code Faster.'
-description: ''
+title: 'Mastering Test-Driven Development: 3 Essential Steps for Better Code'
+description: 'Learn the 3 essential steps of Test-Driven Development (TDD) to improve code quality and development speed.'
 pubDate: 'Oct 12 2023'
 tags: ["r", "tests", "tdd"]
 ---
