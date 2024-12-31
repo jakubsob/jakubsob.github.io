@@ -1,6 +1,6 @@
 ---
-title: 'Want To Write Clear End-To-End Tests? Try Cucumber.'
-description: 'Setting Up Cucumber In A Rhino Project'
+title: 'How to Set Up Cucumber for End-to-End Testing in Rhino Projects'
+description: 'Learn how to set up Cucumber with Cypress in Rhino projects for clear and maintainable end-to-end tests.'
 pubDate: 'Feb 28 2024'
 tags: ["r", "tests", "shiny"]
 ---
