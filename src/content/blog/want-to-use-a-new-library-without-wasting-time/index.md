@@ -1,7 +1,7 @@
 ---
-title: 'Want To Use A New Library, But Don’t Want To Waste Time Browsing Documentation?'
-description: 'Here’s How To Do It.'
-pubDate:  'Oct 18 2023'
+title: 'How to Develop Quickly Using a New Library Without Reading Extensive Documentation'
+description: 'Learn how to use AI tools to use new libraries quickly without spending hours on documentation.'
+pubDate: 'Oct 18 2023'
 tags: ["r", "tests", "llm"]
 ---
 
