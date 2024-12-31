@@ -1,6 +1,6 @@
 ---
-title: How To Not Get Frustrated Working With Legacy Code.
-description: ''
+title: 'Effective Strategies to Avoid Frustration with Legacy Code'
+description: 'Learn how to manage legacy code efficiently using the Sprout Technique to reduce frustration and improve productivity.'
 pubDate: 'Oct 12 2023'
 tags: ["r", "tests"]
 ---
