@@ -1,6 +1,6 @@
 ---
-title: 'Exporting Excel Workbooks From Your Shiny App? Snapshot Test Them!'
-description: 'And make it easy to inspect if things go wrong'
+title: 'How to Snapshot Test Excel Workbooks in Shiny Apps'
+description: 'Learn how to export data to Excel in Shiny apps and use snapshot tests to validate and inspect the exported workbooks.'
 pubDate: 'Mar 6 2024'
 tags: ["r", "tests", "tdd", "shiny"]
 ---
