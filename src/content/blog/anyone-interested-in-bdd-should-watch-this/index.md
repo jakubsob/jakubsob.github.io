@@ -1,6 +1,6 @@
 ---
-title: 'Anyone Interested In Building Software From The Perspective Of A User Should Watch This Playlist'
-description: ' '
+title: 'Essential BDD Playlist: Master Behavior-Driven Development with Dave Farley'
+description: "Discover how to build user-focused software with BDD. Learn from Dave Farley's comprehensive YouTube series."
 pubDate:  'Dec 07 2024'
 tags: ["bdd", "resource", "tests"]
 ---
