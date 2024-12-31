@@ -1,6 +1,6 @@
 ---
-title: 'How To Use Tests To Develop Shiny Modules'
-description: 'How to get things done faster'
+title: 'Developing Shiny Modules with Test-Driven Development'
+description: 'Learn how to use tests to develop Shiny modules efficiently, ensuring faster development cycles and better modularization.'
 pubDate: 'Mar 3 2024'
 tags: ["r", "tests", "tdd", "shiny"]
 ---
