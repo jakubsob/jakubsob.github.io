@@ -1,7 +1,7 @@
 ---
-title: 'Which Library Should You Choose To Acceptance Test Shiny Apps?'
-description: '{shinytest2} vs Cypress'
-pubDate:  'Dec 02 2024'
+title: 'Choosing the Best Library for Acceptance Testing Shiny Apps: {shinytest2} vs Cypress'
+description: 'Compare {shinytest2} and Cypress for acceptance testing Shiny apps. Learn their pros, cons, and which might suit your project better.'
+pubDate: 'Dec 02 2024'
 tags: ["r", "tests"]
 ---
 
