@@ -1,7 +1,7 @@
 ---
-title: Want Cleaner Unit Tests? Try Arrange, Act, Assert comments.
-description: '3 essential parts of a unit test.'
-pubDate:  'Oct 12 2023'
+title: 'Improve Your Unit Tests with Arrange, Act, Assert Method'
+description: 'Learn how to write cleaner and more effective unit tests using the Arrange, Act, Assert method. Step-by-step guide with examples.'
+pubDate: 'Oct 12 2023'
 tags: ["r", "tests"]
 ---
 
