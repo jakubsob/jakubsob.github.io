@@ -1,7 +1,7 @@
 ---
-title: Want To Get Even Faster Feedback From Your Unit Tests? Optimize Your Test Files Structure.
-description: 'Leverage built-in testthat features.'
-pubDate:  'Nov 8 2024'
+title: 'Optimize Your Unit Test Structure for Faster Feedback'
+description: 'Learn how to speed up your unit tests by optimizing the structure of your test files using testthat in R.'
+pubDate: 'Nov 8 2024'
 tags: ["r", "tests", "tdd"]
 ---
 
