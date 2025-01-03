@@ -3,6 +3,11 @@ import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import tailwind from "@astrojs/tailwind";
 import react from "@astrojs/react";
+import {
+  transformerNotationDiff,
+  transformerNotationFocus,
+  transformerMetaHighlight,
+} from "@shikijs/transformers";
 
 // https://astro.build/config
 export default defineConfig({
@@ -14,7 +19,11 @@ export default defineConfig({
       theme: "github-dark",
       langs: [],
       wrap: true,
-      transformers: [],
+      transformers: [
+        transformerNotationDiff(),
+        transformerNotationFocus(),
+        transformerMetaHighlight(),
+      ],
     },
   },
 });

@@ -43,3 +43,36 @@
   background-size: contain;
   background-repeat: repeat-y repeat-x;
 }
+
+.line {
+  display: inline;
+  padding-bottom: 0;
+}
+
+.diff {
+  display: inline-block;
+  width: 100vw;
+  margin: 0 -12px;
+  padding: 0 12px;
+}
+
+.diff.add {
+  background-color: var(--color-ocean-green-800);
+}
+
+.diff.remove {
+  background-color: var(--color-pink-950);
+}
+
+.diff:before {
+  position: absolute;
+  left: 40px;
+}
+
+.focused .line {
+  filter: blur(0.095rem);
+}
+
+.focused {
+  filter: blur(0);
+}
