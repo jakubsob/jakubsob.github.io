@@ -12,7 +12,7 @@ For most cases we only need:
 - `MockShinySession$setInputs()` method which simulates users interactions with widgets.
 - `MockShinySession$returned` which contains the value returned by the module.
 
-## Example
+Let's take a look an example.
 
 We develop a module that takes a dataset as a parameter, and returns a subset of the data based on the selected variables in a dropdown.
 
@@ -20,21 +20,49 @@ We develop a module that takes a dataset as a parameter, and returns a subset of
 describe("server", {
   it("should subset the data with selected variables", {
     # Arrange
-    args <- list(data = iris)
 
-    shiny::testServer(server, args = args, {
-      # Act
-      session$setInputs(select = c("Sepal.Length", "Species"))
+    # Act
 
-      # Assert
-      expect_equal(
-        colnames(session$returned()),
-        c("Sepal.Length", "Species")
-      )
-    })
+    # Assert
   })
 })
 ```
+
+We arrange parameters to pass to the module.
+
+```r
+describe("server", {
+  it("should subset the data with selected variables", {
+    # Arrange
+    args <- list(data = iris) # [!code ++]
+
+    # Act
+
+    # Assert
+  })
+})
+```
+
+Arguments are passed to the module as a list.
+
+```r
+describe("server", {
+  it("should subset the data with selected variables", {
+    # Arrange
+    args <- list(data = iris)
+
+    shiny::testServer(server, args = args, { # [!code ++]
+    # Act # [!code --]
+      # Act # [!code ++]
+
+    # Assert # [!code --]
+      # Assert # [!code ++]
+    }) # [!code ++]
+  })
+})
+```
+
+Code within `testServer` has access to the session, inputs and outputs. We select 2 variables using an input that has `"select"` ID. We assume that we will implement an input with this ID.
 
 ```r
 describe("server", {
@@ -44,87 +72,15 @@ describe("server", {
 
     shiny::testServer(server, args = args, {
       # Act
-      session$setInputs(select = c("Sepal.Length", "Species"))
+      session$setInputs(select = c("Sepal.Length", "Species")) # [!code ++]
 
       # Assert
-      expect_equal(
-        colnames(session$returned()),
-        c("Sepal.Length", "Species")
-      )
     })
   })
 })
 ```
 
-We arrange parameters to pass to the module.
-
-```r {source-line-numbers="6" code-line-numbers="6"}
-describe("server", {
-  it("should subset the data with selected variables", {
-    # Arrange
-    args <- list(data = iris)
-
-    shiny::testServer(server, args = args, {
-      # Act
-      session$setInputs(select = c("Sepal.Length", "Species"))
-
-      # Assert
-      expect_equal(
-        colnames(session$returned()),
-        c("Sepal.Length", "Species")
-      )
-    })
-  })
-})
-```
-
-Arguments are passed to the module as a list.
-
-```r {source-line-numbers="6-15" code-line-numbers="6-15"}
-describe("server", {
-  it("should subset the data with selected variables", {
-    # Arrange
-    args <- list(data = iris)
-
-    shiny::testServer(server, args = args, {
-      # Act
-      session$setInputs(select = c("Sepal.Length", "Species"))
-
-      # Assert
-      expect_equal(
-        colnames(session$returned()),
-        c("Sepal.Length", "Species")
-      )
-    })
-  })
-})
-```
-
-Code within `testServer` has access to the session, inputs and outputs.
-
-```r {source-line-numbers="7-8" code-line-numbers="7-8"}
-describe("server", {
-  it("should subset the data with selected variables", {
-    # Arrange
-    args <- list(data = iris)
-
-    shiny::testServer(server, args = args, {
-      # Act
-      session$setInputs(select = c("Sepal.Length", "Species"))
-
-      # Assert
-      expect_equal(
-        colnames(session$returned()),
-        c("Sepal.Length", "Species")
-      )
-    })
-  })
-})
-```
-
-We select 2 variables using an input that has `"select"` ID.
-
-It will be accessed with `input$select`.
+The return value should be a column subset of the `data`. We use `session$returned()` to get the value of the returned `reactive`.
 
 ```r {source-line-numbers="10-14" code-line-numbers="10-14"}
 describe("server", {
@@ -137,38 +93,14 @@ describe("server", {
       session$setInputs(select = c("Sepal.Length", "Species"))
 
       # Assert
-      expect_equal(
-        colnames(session$returned()),
-        c("Sepal.Length", "Species")
-      )
+      expect_equal( # [!code ++]
+        colnames(session$returned()), # [!code ++]
+        c("Sepal.Length", "Species") # [!code ++]
+      ) # [!code ++]
     })
   })
 })
 ```
-
-The return value should be a column subset of the `data`.
-
-```r {source-line-numbers="10-14" code-line-numbers="10-14"}
-describe("server", {
-  it("should subset the data with selected variables", {
-    # Arrange
-    args <- list(data = iris)
-
-    shiny::testServer(server, args = args, {
-      # Act
-      session$setInputs(select = c("Sepal.Length", "Species"))
-
-      # Assert
-      expect_equal(
-        colnames(session$returned()),
-        c("Sepal.Length", "Species")
-      )
-    })
-  })
-})
-```
-
-We use `session$returned()` to get the value of the returned `reactive`.
 
 To use `shiny::testServer` the module must be implemented with `shiny::moduleServer`.
 
@@ -179,6 +111,8 @@ server <- function(id) {
   })
 }
 ```
+
+And this is a module that passes this test.
 
 ```r {code-line-numbers=""}
 ui <- function(id) {
@@ -196,9 +130,21 @@ server <- function(id, data) {
 }
 ```
 
-And this is the module that passes this test.
+Notice how we don't check the UI in this test. Using this test we don't know if the module updated the input correctly.
 
-##
+**Use `shiny::testServer` to test low level behaviors of the module.**
+
+Use it to test contracts:
+- if it returns the correct value,
+- or if it runs a side effect.
+
+This might be especially useful if this is a "low-level" module that is used in many places in the app.
+
+**Use `{shinytest2}` to test both parts of a Shiny module.**
+
+Using `{shinytest2}` can be better to test user behaviors by simulating real interactions with the app.
+
+---
 
 Writing tests first for Shiny modules helps to keep them:
 
@@ -206,14 +152,8 @@ Writing tests first for Shiny modules helps to keep them:
 - focused,
 - and doing exactly what they need to do.
 
-##
-
-Tests help define what should be the input to the module.
-
-What it should do.
-
-And what it should return.
-
-##
+Tests help define what should be the input to the module:
+- what it should do,
+- and what it should return.
 
 Such modules are easier to reuse and easier to compose them to build the whole app.
