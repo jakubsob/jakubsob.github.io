@@ -1,83 +1,81 @@
 import Fuse from 'fuse.js';
-import { useState } from 'react';
-import { MagnifyingGlass } from './Icons';
+import { useState, useEffect, useMemo } from "react";
 
-const options = {
-	keys: ['id', 'slug'],
-	includeMatches: true,
-	minMatchCharLength: 2,
-	threshold: 0.5,
+const DEFAULT_FUSE_OPTIONS = {
+  keys: ["title", "description", "content"],
+  shouldSort: true,
+  findAllMatches: true,
+  minMatchCharLength: 2,
+  threshold: 0.6,
 };
 
-function Search({ searchList, maxResults = 5 }) {
-	const [query, setQuery] = useState('');
+function Search({
+  searchList,
+  onSearch,
+  showFullListOnEmptySearch = true,
+  fuseOptions = DEFAULT_FUSE_OPTIONS,
+  maxResults = 10,
+  placeholder = "Search...",
+}) {
+  const [query, setQuery] = useState("");
 
-	const fuse = new Fuse(searchList, options);
+  const fuse = useMemo(
+    () => new Fuse(searchList, fuseOptions),
+    [searchList, fuseOptions]
+  );
 
-	const posts = fuse
-    .search(query)
-    .map((result) => result.item)
-    .slice(0, maxResults);
+  const results = useMemo(() => {
+    return query
+      ? fuse
+          .search(query)
+          .map((result) => result.item)
+          .slice(0, maxResults)
+      : showFullListOnEmptySearch
+      ? searchList
+      : [];
+  }, [query, fuse]);
 
-	function handleOnSearch({ target = {} }) {
-		const { value } = target;
-		setQuery(value);
-	}
+  useEffect(() => {
+    onSearch?.(results);
+  }, [results]);
 
   return (
-    <div className="overflow-visible">
-      <label
-        htmlFor="search"
-        className="mb-2 text-sm text-sky-900 sr-only dark:text-white"
-      >
-        Search
-      </label>
-      <div className="relative overflow-visible">
-        <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-          <MagnifyingGlass />
-        </div>
-        <input
-          type="text"
-          id="search"
-          value={query}
-          onChange={handleOnSearch}
-          autoComplete="off"
-          className="p-4 pl-10 text-sm
-            w-full
-            text-gray-900
-            rounded-lg
-            bg-transparent
-            outline outline-[1px] outline-sky-200
-            focus:outline focus:outline-sky-900
-            focus:border-gray-dark"
-          placeholder="Search"
-        />
-        <div className="absolute z-100 translate-y-1 bg-white w-full shadow-lg">
-          {query.length > 1 && (
-            <div className="my-4 ps-4 pe-4">
-              Found {posts.length} {posts.length === 1 ? "result" : "results"}{" "}
-              for '{query}'
-            </div>
-          )}
-
-          <ul className="list-none">
-            {posts &&
-              posts.map((post) => (
-                <li
-                  className="p-2
-                    transition duration-300 ease-in-out
-                    last:rounded-b-lg
-                    hover:bg-sky-900 hover:text-white group"
-                >
-                  <a
-                    className="text-wrap text-black group-hover:text-white"
-                    href={`/blog/${post.slug}`}
-                  >
-                    {post.data.title}
-                  </a>
-                </li>
-              ))}
-          </ul>
+    <div className="relative">
+      <div className="mx-auto">
+        <label
+          htmlFor="default-search"
+          className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
+        >
+          Search
+        </label>
+        <div className="relative">
+          <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+            <svg
+              className="w-4 h-4 text-gray-500 dark:text-gray-400"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 20 20"
+            >
+              <path
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+              />
+            </svg>
+          </div>
+          <input
+            type="search"
+            id="default-search"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            autoComplete="off"
+            className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:outline-sky-500 focus:border-sky-500"
+            placeholder={placeholder}
+            required
+          />
         </div>
       </div>
     </div>

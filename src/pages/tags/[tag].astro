@@ -1,11 +1,11 @@
 ---
-import PostList from "../../components/PostList.astro";
 import Header from "../../components/Header.astro";
 import HeaderLink from "../../components/HeaderLink.astro";
 import HeaderLogo from "../../components/HeaderLogo.astro";
 import HeaderButton from "../../components/HeaderButton.astro";
 import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import PostList from "../../components/PostList.jsx";
 
 export async function getStaticPaths() {
   const posts = (await getCollection("blog"))
@@ -33,6 +33,7 @@ const { posts } = Astro.props;
         <HeaderLogo href="/">jakub::sobolewski</HeaderLogo>
         <HeaderLink href="/">home</HeaderLink>
         <HeaderLink href="/blog/">blog</HeaderLink>
+        <HeaderLink href="/resources/">resources</HeaderLink>
         <HeaderButton
           href="https://jakubsobolewski.substack.com/subscribe"
           class="ms-auto"
@@ -78,9 +79,9 @@ const { posts } = Astro.props;
           </h1>
         </div>
       </section>
-      <section id="blog" class="bg-marine-50 bg-noise-sky pt-4">
+      <section id="blog" class="bg-marine-50 bg-noise-sky">
         <div class="max-w-[65ch] mx-auto">
-          <PostList posts={posts} />
+          <PostList client:load posts={posts} showControls={false} />
         </div>
       </section>
     </main>

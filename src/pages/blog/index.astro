@@ -1,16 +1,12 @@
 ---
-import PostList from "../../components/PostList.astro";
+import PostList from "../../components/PostList.jsx";
 import HeaderDefault from "../../components/HeaderDefault.astro";
 import { getCollection } from "astro:content";
-import { getTagsWithCounts } from "../../utils/getTagsWithCounts";
-import Tag from "../../components/Tag.astro";
-import Search from "../../components/Search";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 
 const posts = (await getCollection("blog"))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
   .filter((post) => post.data.draft !== true);
-const tags = getTagsWithCounts(posts).sort((a, b) => b.count - a.count);
 ---
 
 <!doctype html>
@@ -73,32 +69,15 @@ const tags = getTagsWithCounts(posts).sort((a, b) => b.count - a.count);
           grid-rows-[1fr_auto]
         bg-white bg-noise-sky
           lg:grid-cols-[1fr_minmax(65ch,_1fr)_1fr]
-          lg:grid-rows-1
-          pt-4"
+          lg:grid-rows-1"
       >
         <div
-          class="col-start-1 max-w-[65ch] mx-auto order-2
-      lg:col-start-2 lg:row-start-1 lg:order-1"
+          class="col-start-1 w-full max-w-[65ch] mx-auto order-2
+            lg:col-start-2 lg:row-start-1 lg:order-1"
         >
-          <h3 class="text-sky">There are {posts.length} articles about:</h3>
-          <div class="flex flex-row flex-wrap gap-1">
-            {
-              tags.map((tag) => {
-                return <Tag href={tag.tag} label={`${tag.tag} ${tag.count}`} />;
-              })
-            }
-          </div>
-          <div class="mt-4">
-            <Search client:load searchList={posts} />
-          </div>
-          <div class="mt-4">
-            <PostList posts={posts} />
-          </div>
+          <PostList client:load posts={posts} />
         </div>
-        <div
-          class="col-start-1 order-1 max-w-[65ch] w-full px-4 mx-auto mb-8 text-sky-500"
-        >
-        </div>
+
         <div
           class="col-start-1 order-2 mx-auto hidden lg:block
         lg:col-start-3 lg:row-start-1 lg:order-2 text-sky-600"
