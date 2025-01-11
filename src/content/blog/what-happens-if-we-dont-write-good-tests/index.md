@@ -2,7 +2,7 @@
 title: 'The Consequences of Poor Test Writing in Software Development'
 description: 'Learn how poor test writing can halt your development process and discover strategies to avoid this pitfall.'
 pubDate: 'Nov 22 2024'
-tags: ["r", "tests"]
+tags: ["tests"]
 ---
 
 Whether we succeeded in writing good tests might be discovered only on the later stages of the project, when the test suite becomes large enough.

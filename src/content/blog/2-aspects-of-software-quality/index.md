@@ -2,7 +2,7 @@
 title: 'Understanding Software Quality: Unit Tests vs Acceptance Tests'
 description: 'Learn the differences between unit tests and acceptance tests and how they contribute to software quality.'
 pubDate:  'Nov 29 2024'
-tags: ["r", "tests", "bdd"]
+tags: ["tests", "bdd"]
 ---
 
 There are 2 aspects of software quality.

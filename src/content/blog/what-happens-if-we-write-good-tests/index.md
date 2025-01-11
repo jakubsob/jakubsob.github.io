@@ -2,7 +2,7 @@
 title: 'The Benefits of Writing Good Automated Tests'
 description: 'Learn how good automated tests can save time, reduce costs, and improve software quality.'
 pubDate: 'Nov 24 2024'
-tags: ['r', 'tests']
+tags: ['tests']
 ---
 
 Introduction of automated testing has its costs. It takes time to learn testing, it takes time to write and maintain tests.
