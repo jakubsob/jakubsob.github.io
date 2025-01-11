@@ -3,7 +3,7 @@ title: Understanding Agile Testing Quadrants for Effective Software Testing
 author: Jakub Sobolewski
 description: 'Learn about Agile Testing Quadrants and how they help in planning and executing different types of tests in software development.'
 pubDate: 'Nov 13 2023'
-tags: ["r", "tests"]
+tags: ["tests"]
 ---
 
 To get confidence in the product, we need more than unit tests.
