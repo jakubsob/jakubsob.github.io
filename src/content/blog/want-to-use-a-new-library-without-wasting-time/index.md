@@ -47,6 +47,6 @@ It was definitely worth it, as we saved a lot of time on not browsing documentat
 
 This approach has its downsides, but this case is exactly how you should be using AI assistance — to iterate fast and save time.
 
-![](./2024-01-29-19-37-50.png)
+![](/blog/want-to-use-a-new-library-without-wasting-time/1.png)
 
-![](./2024-01-29-19-38-06.png)
+![](/blog/want-to-use-a-new-library-without-wasting-time/2.png)

@@ -19,6 +19,30 @@ export async function GET(context) {
       const { Content } = await post.render();
       let content = await container.renderToString(Content);
 
+      // Replace code blocks with corresponding images if they exist
+      let index = 0;
+      content = content.replace(
+        /<pre.*><code.*">([\s\S]*?)<\/code><\/pre>/g,
+        (match) => {
+          index += 1;
+          const imagePath = path.join(
+            process.cwd(),
+            "public",
+            "blog",
+            post.slug,
+            `code_block_${index}.png`
+          );
+          if (fs.existsSync(imagePath)) {
+            const imageUrl = new URL(
+              `/blog/${post.slug}/code_block_${index}.png`,
+              context.url.origin
+            ).toString();
+            return `<img src="${imageUrl}" alt="Code block ${index}">`;
+          }
+          return match;
+        }
+      );
+
       const link = new URL(`/blog/${post.slug}`, context.url.origin).toString();
       let heroImage = post.data.heroImage;
       if (!heroImage) {

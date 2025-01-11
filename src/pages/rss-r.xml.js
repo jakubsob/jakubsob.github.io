@@ -4,6 +4,8 @@ import { loadRenderers } from "astro:container";
 import { getCollection } from "astro:content";
 import rss from "@astrojs/rss";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
+import fs from "fs";
+import path from "path";
 
 export async function GET(context) {
   const renderers = await loadRenderers([getMDXRenderer()]);
@@ -17,8 +19,14 @@ export async function GET(context) {
   const items = await Promise.all(
     filteredPosts.map(async (post) => {
       const { Content } = await post.render();
-      const content = await container.renderToString(Content);
+      let content = await container.renderToString(Content);
+
       const link = new URL(`/blog/${post.slug}`, context.url.origin).toString();
+      let heroImage = post.data.heroImage;
+      if (!heroImage) {
+        heroImage = `/blog/${post.slug}/code_block_1.png`;
+      }
+
       return {
         ...post,
         title: post.data.title,
@@ -27,6 +35,10 @@ export async function GET(context) {
         link,
         content,
         pubDate: post.data.pubDate,
+        customData: `<media:content
+          type="image/png"
+          medium="image"
+          url="${context.site + heroImage}" />`,
       };
     })
   );
@@ -37,6 +49,9 @@ export async function GET(context) {
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
     site: context.site,
+    xmlns: {
+      media: "http://search.yahoo.com/mrss/",
+    },
     items,
   });
 }

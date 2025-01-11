@@ -34,7 +34,7 @@ But you can also get a coverage report with a [cobertura-action](https://github.
 
 The action will post a comment in a PR with coverage result after a successful run.
 
-![alt text](image.png)
+![Coverage](/blog/want-to-get-code-coverage-report/cov.png)
 
 The downside of using this action instead of `codecov.io` is that it shows only a summary of coverage, while with `codecov.io` you can see the coverage of each file. But if you don't want to share your private code with this external service, this is a good alternative.
 
