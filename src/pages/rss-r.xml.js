@@ -21,6 +21,12 @@ export async function GET(context) {
       const { Content } = await post.render();
       let content = await container.renderToString(Content);
 
+      // Prepend site URL to src attributes of img tags
+      content = content.replace(/<img\s+src="([^"]+)"/g, (match, src) => {
+        const absoluteUrl = new URL(src, context.url.origin).toString();
+        return match.replace(src, absoluteUrl);
+      });
+
       const link = new URL(`/blog/${post.slug}`, context.url.origin).toString();
       let heroImage = post.data.heroImage;
       if (!heroImage) {
