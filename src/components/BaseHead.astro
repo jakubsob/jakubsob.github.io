@@ -59,6 +59,13 @@ const gtagUrl = `https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsID
   <meta property="twitter:image" content={new URL(image, Astro.url)} />
   <slot />
 
+  <link
+    rel="alternate"
+    type="application/rss+xml"
+    title={title}
+    href={new URL("rss-r.xml", Astro.site)}
+  />
+
   <script is:inline async src={gtagUrl}></script>
   <script is:inline define:vars={{ googleAnalyticsID }}>
     window.dataLayer = window.dataLayer || [];
