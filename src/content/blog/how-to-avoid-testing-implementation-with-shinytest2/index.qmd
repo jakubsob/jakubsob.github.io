@@ -1,0 +1,146 @@
+---
+title: 'Avoid Brittle Tests: Best Practices with shinytest2 for Shiny Apps'
+description: 'Learn how to avoid brittle tests by not testing implementation details with shinytest2 in your Shiny applications.'
+pubDate:  'May 30 2024'
+tags: ["r", "shiny", "shinytest2", "tests"]
+---
+
+`shinytest2` is a powerful tool, but with great power comes great responsibility.
+
+`shinytest2` allows you to easily test a Shiny app, which is a web app, without having to switch to JavaScript – the language of the web.
+
+However, the methods that `shinytest2::AppDriver` implements, are closely coupled to the inner workings of Shiny. Methods like:
+- `set_inputs`
+- `get_values`
+- `click`
+they all allow you to tap directly into the values of the Shiny server.
+
+It can be great for apps that are already built and lack tests. With `shinytest2::record_test` you can rapidly add a lot of testing scenarios.
+
+But when you're developing an app, and you're expecting it to change, tying tests so closly to implementation details will produce tests that you'll need to refactor often.
+
+```{r}
+test_app <- function() {
+  get_data <- \(name) {
+    list(
+      iris = iris,
+      mtcars = mtcars
+    ) |>
+      purrr::pluck(name, .default = data.frame())
+  }
+  shiny::shinyApp(
+    ui = shiny::fluidPage(
+      shiny::selectInput("dataset", "Dataset", c("Iris" = "iris", "Mtcars" = "mtcars")),
+      shiny::tableOutput("preview")
+    ),
+    server = function(input, output, session) {
+      output$preview <- shiny::renderTable({
+        head(get_data(input$dataset))
+      })
+    }
+  )
+}
+```
+
+There is an app that displays a preview of a dataset based on the selection. The options in the dropdown have been renamed, so that users see capitalized names of datasets.
+
+Let's see how we can test it with the `shinytest2::AppDriver`.
+
+```{r}
+library(testthat)
+
+open_page <- function(app = test_app()) {
+  page <- shinytest2::AppDriver$new(app)
+  withr::defer(page$stop(), parent.frame(2))
+  page
+}
+
+describe("DatasetSelect", {
+  it("should show preview of the selected dataset", {
+    # Arrange
+    page <- open_page()
+
+    # Act
+    page$set_inputs(dataset = "mtcars")
+
+    # Assert
+    s <- selenider::selenider_session(driver = page, local = FALSE)
+    s |>
+      selenider::find_element("#preview > table > thead > tr") |>
+      selenider::elem_children() |>
+      testthat::expect_length(11)
+  })
+})
+```
+
+Let's disregard the difficult to understand assertion and focus on the problems with **Act**.
+
+This test doesn't interact with the system from the perspective of a user. A user sees "Mtcars" not "mtcars". We need to know the underlying value to be able to set the input. This is what testing using implementation details means.
+
+To make the test more robust, we should not rely on knowing the inner workings of the code we're testing.
+
+Let's see how we can make it better.
+
+The first thing would be to find how to select a value in the dropdown, but using values that a user sees.
+
+```{r}
+DatasetPreview <- R6::R6Class(
+  public = list(
+    driver = NULL,
+    selenider = NULL,
+    initialize = function(app) {
+      self$driver <- shinytest2::AppDriver$new(app)
+      self$selenider <- selenider::selenider_session(
+        driver = self$driver,
+        local = FALSE
+      )
+    },
+    select = function(name) {
+      self$selenider |>
+        selenider::find_element("#dataset + div") |>
+        selenider::elem_click()
+      self$selenider |>
+        selenider::find_elements("#dataset + div .option") |>
+        selenider::elem_find(\(x) selenider::has_text(x, name)) |>
+        selenider::elem_click()
+    },
+    expect_summary_n_cols = function(n) {
+      self$driver$wait_for_idle()
+      self$selenider |>
+        selenider::find_element("#preview > table > thead > tr") |>
+        selenider::elem_children() |>
+        testthat::expect_length(n)
+    },
+    close = function() {
+      self$driver$stop()
+    }
+  )
+)
+
+open_page <- function(app = test_app()) {
+  page <- DatasetPreview$new(app)
+  # withr::defer(page$close(), parent.frame(2))
+  page
+}
+
+describe("DatasetSelect", {
+  it("should show preview of the selected dataset", {
+    # Arrange
+    page <- open_page()
+
+    # Act
+    page$select("Mtcars")
+
+    # Assert
+    page$expect_summary_n_cols(11)
+  })
+})
+```
+
+Let's see what happened.
+
+
+
+Other topic to cover:
+
+What stubbing in tests might tell you - dependency injection.
