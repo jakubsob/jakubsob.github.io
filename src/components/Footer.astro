@@ -1,5 +1,6 @@
 ---
 import AnimatedLink from "./AnimatedLink.astro";
+import SubscribeButton from "./SubscribeButton.astro";
 const today = new Date();
 ---
 
@@ -19,16 +20,7 @@ const today = new Date();
           <h1 class="text-sky-200 text-2xl mb-1 font-syne">
             Learn efficient R development
           </h1>
-          <button
-            class="rounded-full py-2 w-fit text-white
-          font-code tracking-widest font-bold text-clamp-md uppercase
-          transition-all duration-300
-          hover:text-ocean-green"
-          >
-            <a href="https://jakubsobolewski.substack.com/subscribe">
-              Subscribe
-            </a>
-          </button>
+          <SubscribeButton class:list="text-sm" />
         </div>
       </div>
       <div class="order-3 justify-self-end">

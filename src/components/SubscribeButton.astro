@@ -1,12 +1,8 @@
 ---
-const { center } = Astro.props;
-const paddingX = 28;
-const posX = center
-  ? `left: 50%; transform: translateX(-50%);`
-  : `left: -${paddingX}px;`;
+const { class: className } = Astro.props;
 ---
 
-<div class="flex items-center justify-center">
+<div class={`flex items-center justify-center ${className || ""}`}>
   <form
     data-v-a750b30b=""
     action="https://api.follow.it/subscription-form/ZXExLzNLWHB1MC9VVkZKSjZXNlN4QzJ0V3RwRnk3bUUwWGtFSHFEUXVUbDBPQ3pnVi9lUmg1cFo1Y3M0cGd1dHRpbmppcXJ2eHFGaUZJb0ZmT2N5ZXV4dm9vb3hYWmE3RWNnZVAxeU9tNzJEQjYyd1NMeEUzRUU2b201Y2VDNUt8Z3pqdXUvUEEzRUduNGJBa0UrZHZCUVFySjdkdVZaVzZLRXRwZkl4WUFTTT0=/8"
