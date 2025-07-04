@@ -1,0 +1,58 @@
+---
+interface FileTreeItem {
+  name: string;
+  type: string;
+  path: string;
+  download_url?: string;
+  html_url: string;
+  size: number;
+  children?: FileTreeItem[];
+}
+
+interface Props {
+  items: FileTreeItem[];
+  level?: number;
+}
+
+const { items, level = 0 } = Astro.props;
+---
+
+<div class="space-y-1">
+  {items.map((item: FileTreeItem) => (
+    <div class="file-tree-item">
+      {item.type === "dir" ? (
+        <div class="directory">
+          <div class="flex items-center py-1 px-2 rounded hover:bg-slate-200 cursor-pointer text-sm">
+            <svg class="w-4 h-4 mr-1 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+            <svg class="w-4 h-4 mr-1 text-yellow-600" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M10 4H4c-1.11 0-2 .89-2 2v12c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2h-8l-2-2z"/>
+            </svg>
+            <span class="text-slate-700">{item.name}</span>
+          </div>
+          {item.children && (
+            <div class="ml-4 border-l border-slate-300 pl-2">
+              <Astro.self items={item.children} level={level + 1} />
+            </div>
+          )}
+        </div>
+      ) : (
+        <div class="file-item">
+          <button
+            class="flex items-center py-1 px-2 rounded hover:bg-slate-200 cursor-pointer text-sm w-full text-left file-button"
+            data-file-url={item.download_url || ''}
+            data-file-name={item.name}
+            data-file-path={item.path}
+            data-file-size={item.size}
+          >
+            <svg class="w-4 h-4 mr-1 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+            </svg>
+            <span class="text-slate-700">{item.name}</span>
+          </button>
+        </div>
+      )}
+    </div>
+  ))}
+</div>

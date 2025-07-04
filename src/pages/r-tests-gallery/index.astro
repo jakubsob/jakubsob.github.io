@@ -2,20 +2,74 @@
 import HeaderDefault from "../../components/HeaderDefault.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 
+// GitHub API authentication for higher rate limits
+const GITHUB_TOKEN = import.meta.env.GITHUB_TOKEN;
+console.log("GitHub token available:", GITHUB_TOKEN ? "YES" : "NO");
+console.log("Token length:", GITHUB_TOKEN?.length || 0);
+const headers = GITHUB_TOKEN ? { Authorization: `token ${GITHUB_TOKEN}` } : {};
+console.log("Headers:", headers);
+
 // Fetch the main README content
-const readmeResponse = await fetch("https://raw.githubusercontent.com/jakubsob/r-tests-gallery/main/README.md");
-const readmeContent = await readmeResponse.text();
+let readmeContent = "";
+try {
+  const readmeResponse = await fetch(
+    "https://raw.githubusercontent.com/jakubsob/r-tests-gallery/main/README.md"
+  );
+  if (readmeResponse.ok) {
+    readmeContent = await readmeResponse.text();
+  } else {
+    console.error(
+      "Failed to fetch README:",
+      readmeResponse.status,
+      readmeResponse.statusText
+    );
+  }
+} catch (error) {
+  console.error("Error fetching README:", error);
+}
 
-// Fetch the repository structure
-const repoResponse = await fetch("https://api.github.com/repos/jakubsob/r-tests-gallery/contents");
-const repoContents = await repoResponse.json();
+// Use GitHub Tree API - single API call for entire repo structure
+let relevantDirs: any[] = [];
+try {
+  const treeResponse = await fetch(
+    "https://api.github.com/repos/jakubsob/r-tests-gallery/git/trees/main?recursive=1",
+    { headers }
+  );
 
-// Filter out non-relevant directories
-const relevantDirs = repoContents.filter((item: any) =>
-  item.type === "dir" &&
-  !item.name.startsWith(".") &&
-  item.name !== "renv"
-);
+  if (treeResponse.ok) {
+    const treeData = await treeResponse.json();
+
+    // Extract top-level directories from the tree
+    const directories = new Set<string>();
+
+    treeData.tree.forEach((item: any) => {
+      if (item.type === "tree" && item.path) {
+        // Only get top-level directories (no nested paths)
+        const topLevelDir = item.path.split("/")[0];
+        if (!topLevelDir.startsWith(".") && topLevelDir !== "renv") {
+          directories.add(topLevelDir);
+        }
+      }
+    });
+
+    // Convert to array with structure similar to contents API
+    relevantDirs = Array.from(directories).map((dirName) => ({
+      name: dirName,
+      type: "dir",
+      path: dirName,
+    }));
+
+    console.log("Found directories:", relevantDirs);
+  } else {
+    console.error(
+      "GitHub Tree API request failed:",
+      treeResponse.status,
+      treeResponse.statusText
+    );
+  }
+} catch (error) {
+  console.error("Error fetching repository tree:", error);
+}
 ---
 
 <!doctype html>
@@ -61,71 +115,144 @@ const relevantDirs = repoContents.filter((item: any) =>
             <div class="bg-slate-50 rounded-lg p-6 border border-slate-200">
               <h3 class="text-sky-700 font-syne mb-4">About this Gallery</h3>
               <div class="text-slate-700">
-                <p>Examples of testing patterns in R — from simple unit tests to more complex structures like Plumber APIs.</p>
+                <p>
+                  Examples of testing patterns in R — from simple unit tests to
+                  more complex structures like Plumber APIs.
+                </p>
               </div>
             </div>
           </div>
 
           <!-- Directory Listing -->
           <div class="space-y-6">
-            <h3 class="text-2xl font-syne text-sky-700 mb-6">Testing Examples</h3>
+            <h3 class="text-2xl font-syne text-sky-700 mb-6">
+              Testing Examples
+            </h3>
 
-            {relevantDirs.map((dir: any) => (
-              <div class="bg-white rounded-lg border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
-                <div class="p-6">
-                  <div class="flex items-center justify-between">
-                    <div class="flex items-center space-x-3">
-                      <div class="w-10 h-10 bg-sky-100 rounded-lg flex items-center justify-center">
-                        <svg class="w-5 h-5 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z"></path>
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5a2 2 0 012-2h4a2 2 0 012 2v2H8V5z"></path>
-                        </svg>
-                      </div>
-                      <div>
-                        <h4 class="text-lg font-medium text-slate-900 capitalize">
-                          {dir.name.replace(/-/g, ' ')}
-                        </h4>
-                        <p class="text-slate-500 text-sm">
-                          Testing examples for {dir.name}
-                        </p>
+            {
+              relevantDirs.length > 0 ? (
+                relevantDirs.map((dir: any) => (
+                  <div class="bg-white rounded-lg border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="p-6">
+                      <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                          <div class="w-10 h-10 bg-sky-100 rounded-lg flex items-center justify-center">
+                            <svg
+                              class="w-5 h-5 text-sky-600"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z"
+                              />
+                              <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M8 5a2 2 0 012-2h4a2 2 0 012 2v2H8V5z"
+                              />
+                            </svg>
+                          </div>
+                          <div>
+                            <h4 class="text-lg font-medium text-slate-900 capitalize">
+                              {dir.name.replace(/-/g, " ")}
+                            </h4>
+                            <p class="text-slate-500 text-sm">
+                              Testing examples for {dir.name}
+                            </p>
+                          </div>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                          <a
+                            href={`/r-tests-gallery/${dir.name}`}
+                            class="inline-flex items-center px-3 py-1.5 border border-sky-300 text-sm font-medium rounded-md text-sky-700 bg-sky-50 hover:bg-sky-100 transition-colors"
+                          >
+                            <svg
+                              class="w-4 h-4 mr-1"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                              />
+                            </svg>
+                            View Example
+                          </a>
+                          <a
+                            href={`https://github.com/jakubsob/r-tests-gallery/tree/main/${dir.name}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="inline-flex items-center px-3 py-1.5 border border-slate-300 text-sm font-medium rounded-md text-slate-700 bg-white hover:bg-slate-50 transition-colors"
+                          >
+                            <svg
+                              class="w-4 h-4 mr-1"
+                              fill="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                            </svg>
+                            GitHub
+                          </a>
+                        </div>
                       </div>
                     </div>
-                    <div class="flex items-center space-x-2">
-                      <a
-                        href={`/r-tests-gallery/${dir.name}`}
-                        class="inline-flex items-center px-3 py-1.5 border border-sky-300 text-sm font-medium rounded-md text-sky-700 bg-sky-50 hover:bg-sky-100 transition-colors"
+                  </div>
+                ))
+              ) : (
+                <div class="bg-white rounded-lg border border-red-200 shadow-sm">
+                  <div class="p-6 text-center">
+                    <div class="text-red-500 mb-4">
+                      <svg
+                        class="w-16 h-16 mx-auto mb-4"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
                       >
-                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
-                        </svg>
-                        View Example
-                      </a>
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                        />
+                      </svg>
+                      <h3 class="text-xl font-medium text-red-700 mb-2">
+                        Unable to Load Repository Data
+                      </h3>
+                      <p class="text-red-600 max-w-md mx-auto">
+                        There was an error fetching the repository contents.
+                        This could be due to GitHub API rate limits or network
+                        issues.
+                      </p>
+                    </div>
+                    <div class="mt-6">
                       <a
-                        href={`https://github.com/jakubsob/r-tests-gallery/tree/main/${dir.name}`}
+                        href="https://github.com/jakubsob/r-tests-gallery"
                         target="_blank"
                         rel="noopener noreferrer"
-                        class="inline-flex items-center px-3 py-1.5 border border-slate-300 text-sm font-medium rounded-md text-slate-700 bg-white hover:bg-slate-50 transition-colors"
+                        class="inline-flex items-center px-4 py-2 bg-red-100 text-red-700 rounded-lg hover:bg-red-200 transition-colors"
                       >
-                        <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                        <svg
+                          class="w-4 h-4 mr-2"
+                          fill="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
                         </svg>
-                        GitHub
+                        Visit GitHub Repository
                       </a>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
-
-          <!-- Additional Info -->
-          <div class="mt-12 bg-slate-50 rounded-lg p-6 border border-slate-200">
-            <h3 class="text-sky-700 font-syne mb-4">Repository Information</h3>
-            <div class="text-slate-700 space-y-2">
-              <p><strong>Repository:</strong> <a href="https://github.com/jakubsob/r-tests-gallery" target="_blank" rel="noopener noreferrer" class="text-sky-600 hover:text-sky-800">jakubsob/r-tests-gallery</a></p>
-              <p><strong>Language:</strong> R</p>
-              <p><strong>Topics:</strong> testing, R, plumber, testthat, plumber-api</p>
-            </div>
+              )
+            }
           </div>
         </div>
       </section>
