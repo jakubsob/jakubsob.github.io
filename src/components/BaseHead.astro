@@ -66,6 +66,9 @@ const gtagUrl = `https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsID
     href={new URL("rss-r.xml", Astro.site)}
   />
 
+  <!-- Follow.it  -->
+  <meta name="follow.it-verification-code" content="UzA851QwnL0Gqry6AJNE" />
+
   <script is:inline async src={gtagUrl}></script>
   <script is:inline define:vars={{ googleAnalyticsID }}>
     window.dataLayer = window.dataLayer || [];
