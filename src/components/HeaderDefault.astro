@@ -5,12 +5,11 @@ import HeaderLogo from "./HeaderLogo.astro";
 import HeaderButton from "./HeaderButton.astro";
 ---
 
-<Header class="fixed top-0 z-10">
-  <HeaderLogo>jakub::sobolewski</HeaderLogo>
-  <HeaderLink href="/">home</HeaderLink>
+<Header class="fixed top-0 z-10 uppercase">
+  <HeaderLink href="/" class="lowercase">jakub::sobolewski</HeaderLink>
   <HeaderLink href="/blog/">blog</HeaderLink>
   <HeaderLink href="/resources/">resources</HeaderLink>
-  <HeaderLink href="/r-tests-gallery/">tests gallery</HeaderLink>
+  <HeaderLink href="/r-tests-gallery/">r tests gallery</HeaderLink>
   <HeaderButton
     href="https://follow.it/jakub-sobolewski?leanpub"
     class="ms-auto bg-ocean-green-500 rounded-full"
