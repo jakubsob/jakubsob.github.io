@@ -4,10 +4,7 @@ import BlogPostJSONLD from "../components/BlogPostJSONLD.astro";
 import FormattedDate from "../components/FormattedDate";
 import PillButton from "../components/PillButton";
 import SubscribeButton from "../components/SubscribeButton.astro";
-import Header from "../components/Header.astro";
-import HeaderLink from "../components/HeaderLink.astro";
-import HeaderLogo from "../components/HeaderLogo.astro";
-import HeaderButton from "../components/HeaderButton.astro";
+import HeaderStatic from "../components/HeaderStatic.astro";
 import { getReadingTime } from "../utils/getReadingTime";
 
 const { post } = Astro.props;
@@ -31,19 +28,7 @@ const { title, description, pubDate, updatedDate, tags } = post.data;
         background-attachment: scroll;
         inset: 0%;"
     >
-      <Header>
-        <HeaderLogo class="text-black">jakub::sobolewski</HeaderLogo>
-        <HeaderLink class="text-black" href="/">home</HeaderLink>
-        <HeaderLink class="text-black" href="/blog/">blog</HeaderLink>
-        <HeaderLink class="text-black" href="/resources/">resources</HeaderLink>
-        <HeaderButton
-          href="https://jakubsobolewski.substack.com/subscribe"
-          class="text-black ms-auto"
-          id="subscribe"
-        >
-          subscribe
-        </HeaderButton>
-      </Header>
+      <HeaderStatic />
       <article
         class="prose
           prose-h1:capitalize

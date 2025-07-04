@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-const FilePreview = ({ selectedFile, readmeContent, dirName }) => {
+const FilePreview = ({ selectedFile, dirName }) => {
   const [fileContent, setFileContent] = useState("");
   const [highlightedContent, setHighlightedContent] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -244,19 +244,7 @@ const FilePreview = ({ selectedFile, readmeContent, dirName }) => {
       {/* Content Area */}
       <div className="flex-1 overflow-auto">
         {!selectedFile ? (
-          /* Default Content: README */
-          readmeContent && (
-            <div className="p-6">
-              <div className="prose prose-slate max-w-none">
-                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
-                  <h3 className="text-blue-800 font-medium mb-2">README</h3>
-                  <div className="text-blue-700 text-sm whitespace-pre-wrap font-mono">
-                    {readmeContent}
-                  </div>
-                </div>
-              </div>
-            </div>
-          )
+          <div className="p-6"></div>
         ) : (
           /* File Content */
           <>

@@ -1,7 +1,30 @@
 ---
-import HeaderDefault from "../../components/HeaderDefault.astro";
+import HeaderStatic from "../../components/HeaderStatic.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import IDEInterface from "../../components/IDEInterface.jsx";
+import { createMarkdownProcessor } from "@astrojs/markdown-remark";
+
+// Create markdown processor with the same config as astro.config.mjs
+const markdownProcessor = await createMarkdownProcessor({
+  syntaxHighlight: "shiki",
+  shikiConfig: {
+    theme: "github-dark",
+    langs: [],
+    wrap: true,
+    transformers: [],
+  },
+});
+
+// Helper function to render full markdown content
+const renderMarkdown = async (content: string) => {
+  try {
+    const result = await markdownProcessor.render(content);
+    return result.code;
+  } catch (error) {
+    console.error("Error rendering markdown:", error);
+    return content;
+  }
+};
 
 export async function getStaticPaths() {
   // GitHub API authentication for higher rate limits
@@ -169,41 +192,63 @@ const { dirName, fileTree, readmeContent, hasError } = Astro.props as {
   readmeContent: string;
   hasError: boolean;
 };
+
+// Process README content for rendering
+let renderedReadmeContent = "";
+if (readmeContent) {
+  renderedReadmeContent = await renderMarkdown(readmeContent);
+}
 ---
 
 <!doctype html>
 <html lang="en">
   <BaseLayout title={`${dirName} - R Tests Gallery`}>
-    <main>
-      <HeaderDefault class="fixed top-0 z-10" />
-      <section
-        id="hero"
-        class="bg-sky-700 bg-noise h-[25vh]
-        relative
-        overflow-hidden
-        text-white
-        grid
-        items-center justify-items-center
-        grid-cols-1 grid-rows-1
-        p-4"
-      >
-        <div class="text-center text-white">
-          <h1
-            class="text-white text-3xl py-2 font-syne tracking-wider capitalize"
-          >
-            {dirName.replace(/-/g, " ")}
-          </h1>
-        </div>
+    <main
+      class="bg-marine-50"
+      style="
+    z-index: 0;
+    opacity: 1;
+    mix-blend-mode: overlay;
+    background-image: url(/noise-sky.svg);
+    background-position: 0 0;
+    background-repeat: repeat-y;
+    background-size: contain;
+    background-attachment: scroll;
+    inset: 0%;"
+    >
+      <HeaderStatic />
+      <!-- README Content Section -->
+      {
+        renderedReadmeContent && (
+          <section class="bg-marine-50 bg-noise-sky">
+            <article
+              class="prose
+              prose-h1:capitalize
+              prose-h1:mb-2
+              prose-h1:font-medium
+              prose-h2:font-normal
+              prose-h2:mb-4
+              prose-h2:mt-3
+              prose-p:my-2
+              prose-pre:font-code
+              prose-pre:rounded-none
+              prose-blockquote:font-light
+              prose-img:w-full
+              mx-auto px-2 py-8"
+            >
+              <Fragment set:html={renderedReadmeContent} />
+            </article>
+          </section>
+        )
+      }
+      <section id="code">
+        <IDEInterface
+          fileTree={fileTree}
+          dirName={dirName}
+          hasError={hasError}
+          client:load
+        />
       </section>
-
-      <!-- IDE-like Interface -->
-      <IDEInterface
-        fileTree={fileTree}
-        readmeContent={readmeContent}
-        dirName={dirName}
-        hasError={hasError}
-        client:load
-      />
     </main>
   </BaseLayout>
 </html>

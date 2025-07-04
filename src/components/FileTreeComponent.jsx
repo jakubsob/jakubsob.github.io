@@ -15,6 +15,7 @@ const DEFAULT_IGNORE_PATTERNS = [
   "packrat",
   ".RData",
   ".Rhistory",
+  "README.md",
 ];
 
 // Helper function to check if a file/directory should be ignored

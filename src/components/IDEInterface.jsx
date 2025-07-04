@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import FileTreeComponent from "./FileTreeComponent.jsx";
 import FilePreview from "./FilePreview.jsx";
 
-const IDEInterface = ({ fileTree, readmeContent, dirName, hasError }) => {
+const IDEInterface = ({ fileTree, dirName, hasError }) => {
   const [selectedFile, setSelectedFile] = useState(null);
 
   // Helper function to recursively find the first file in tests/testthat or tests/ directories
@@ -106,13 +106,13 @@ const IDEInterface = ({ fileTree, readmeContent, dirName, hasError }) => {
   }
 
   return (
-    <section
-      id="ide-interface"
-      className="bg-slate-50 min-h-[calc(100vh-25vh)]
-      grid
-      grid-cols-1
-      lg:grid-cols-[300px_1fr]
-      border-t border-slate-200"
+    <div
+      className="min-h-[calc(100vh-16rem)]
+        grid
+        grid-cols-1
+        lg:grid-cols-[300px_1fr]
+        container mx-auto
+        border border-slate-200"
     >
       {/* Left Sidebar - File Tree */}
       <div className="bg-slate-100 border-r border-slate-200 overflow-y-auto">
@@ -149,12 +149,8 @@ const IDEInterface = ({ fileTree, readmeContent, dirName, hasError }) => {
       </div>
 
       {/* Right Panel - File Content */}
-      <FilePreview
-        selectedFile={selectedFile}
-        readmeContent={readmeContent}
-        dirName={dirName}
-      />
-    </section>
+      <FilePreview selectedFile={selectedFile} dirName={dirName} />
+    </div>
   );
 };
 
