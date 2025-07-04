@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 const FilePreview = ({ selectedFile, readmeContent, dirName }) => {
-  const [fileContent, setFileContent] = useState('');
-  const [highlightedContent, setHighlightedContent] = useState('');
+  const [fileContent, setFileContent] = useState("");
+  const [highlightedContent, setHighlightedContent] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [fileSize, setFileSize] = useState(0);
+  const [copied, setCopied] = useState(false);
 
   // Cache for file contents
   const fileCache = useRef(new Map());
@@ -14,49 +15,49 @@ const FilePreview = ({ selectedFile, readmeContent, dirName }) => {
 
   // Helper function to determine language from file extension
   const getLanguageFromExtension = (filename) => {
-    const ext = filename.split('.').pop()?.toLowerCase() || '';
+    const ext = filename.split(".").pop()?.toLowerCase() || "";
     const langMap = {
-      'r': 'r',
-      'py': 'python',
-      'js': 'javascript',
-      'ts': 'typescript',
-      'jsx': 'jsx',
-      'tsx': 'tsx',
-      'html': 'html',
-      'css': 'css',
-      'scss': 'scss',
-      'sass': 'sass',
-      'json': 'json',
-      'yaml': 'yaml',
-      'yml': 'yaml',
-      'md': 'markdown',
-      'txt': 'text',
-      'sh': 'bash',
-      'bash': 'bash',
-      'zsh': 'zsh',
-      'fish': 'fish',
-      'ps1': 'powershell',
-      'xml': 'xml',
-      'sql': 'sql',
-      'dockerfile': 'dockerfile',
-      'toml': 'toml',
-      'ini': 'ini',
-      'conf': 'ini',
-      'log': 'log',
-      'csv': 'csv',
-      'rmd': 'rmd',
-      'rnw': 'rnw',
-      'qmd': 'qmd',
-      'description': 'text',
-      'namespace': 'text',
-      'rproj': 'text',
-      'gitignore': 'text',
-      'gitmodules': 'text',
-      'gitattributes': 'text',
-      'renvlock': 'json',
-      'lock': 'json'
+      r: "r",
+      py: "python",
+      js: "javascript",
+      ts: "typescript",
+      jsx: "jsx",
+      tsx: "tsx",
+      html: "html",
+      css: "css",
+      scss: "scss",
+      sass: "sass",
+      json: "json",
+      yaml: "yaml",
+      yml: "yaml",
+      md: "markdown",
+      txt: "text",
+      sh: "bash",
+      bash: "bash",
+      zsh: "zsh",
+      fish: "fish",
+      ps1: "powershell",
+      xml: "xml",
+      sql: "sql",
+      dockerfile: "dockerfile",
+      toml: "toml",
+      ini: "ini",
+      conf: "ini",
+      log: "log",
+      csv: "csv",
+      rmd: "rmd",
+      rnw: "rnw",
+      qmd: "qmd",
+      description: "text",
+      namespace: "text",
+      rproj: "text",
+      gitignore: "text",
+      gitmodules: "text",
+      gitattributes: "text",
+      renvlock: "json",
+      lock: "json",
     };
-    return langMap[ext] || 'text';
+    return langMap[ext] || "text";
   };
 
   // Helper function to escape HTML
@@ -69,20 +70,29 @@ const FilePreview = ({ selectedFile, readmeContent, dirName }) => {
       .replace(/'/g, "&#039;");
   };
 
-  // Helper function to highlight code with Shiki
   const highlightCode = async (code, language) => {
     try {
-      // Try to use Shiki via dynamic import
-      const { codeToHtml } = await import('shiki');
+      const { codeToHtml } = await import("shiki");
 
       const html = await codeToHtml(code, {
         lang: language,
-        theme: 'github-light'
+        theme: "github-light",
+        transformers: [
+          {
+            name: "line-numbers",
+            pre(node) {
+              this.addClassToHast(node, "shiki-line-numbers");
+            },
+            line(node, line) {
+              node.properties["data-line"] = line;
+              return node;
+            },
+          },
+        ],
       });
       return html;
     } catch (error) {
-      console.error('Shiki highlighting failed:', error);
-
+      console.error("Shiki highlighting failed:", error);
       // Final fallback to plain text
       return `<pre class="text-sm text-slate-700 whitespace-pre-wrap bg-slate-50 p-4 rounded border overflow-x-auto"><code>${escapeHtml(code)}</code></pre>`;
     }
@@ -107,18 +117,32 @@ const FilePreview = ({ selectedFile, readmeContent, dirName }) => {
       const entries = Array.from(fileCache.current.entries());
       entries.sort((a, b) => a[1].timestamp - b[1].timestamp);
 
-      const toRemove = entries.slice(0, fileCache.current.size - MAX_CACHE_SIZE + 1);
+      const toRemove = entries.slice(
+        0,
+        fileCache.current.size - MAX_CACHE_SIZE + 1
+      );
       toRemove.forEach(([key]) => {
         fileCache.current.delete(key);
       });
     }
   };
 
+  // Copy to clipboard function
+  const copyToClipboard = async () => {
+    try {
+      await navigator.clipboard.writeText(fileContent);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      console.error("Failed to copy text: ", err);
+    }
+  };
+
   // Function to load file content when selectedFile changes
   useEffect(() => {
     if (!selectedFile) {
-      setFileContent('');
-      setHighlightedContent('');
+      setFileContent("");
+      setHighlightedContent("");
       setError(null);
       setFileSize(0);
       return;
@@ -176,7 +200,6 @@ const FilePreview = ({ selectedFile, readmeContent, dirName }) => {
           fileName: fileName,
           timestamp: Date.now(),
         });
-
       } catch (err) {
         console.error("Error loading file:", err);
         setError(err.message);
@@ -188,62 +211,29 @@ const FilePreview = ({ selectedFile, readmeContent, dirName }) => {
     loadFileContent();
   }, [selectedFile]);
 
-  // Recursive function to render file tree
-  const renderFileTree = (items, depth = 0) => {
-    if (!items || !Array.isArray(items)) return null;
-
-    return items.map((item, index) => {
-      const paddingLeft = `${(depth + 1) * 12}px`;
-
-      if (item.type === 'dir') {
-        return (
-          <div key={`${item.path}-${index}`}>
-            <div
-              className="flex items-center py-1 px-2 text-xs text-slate-600 hover:bg-slate-200 cursor-pointer"
-              style={{ paddingLeft }}
-            >
-              <svg className="w-3 h-3 mr-1 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"></path>
-              </svg>
-              <span>{item.name}</span>
-            </div>
-            {item.children && renderFileTree(item.children, depth + 1)}
-          </div>
-        );
-      } else {
-        const isSelected = selectedFile && selectedFile.path === item.path;
-        return (
-          <div
-            key={`${item.path}-${index}`}
-            className={`flex items-center py-1 px-2 text-xs cursor-pointer transition-colors ${
-              isSelected
-                ? 'bg-sky-100 text-sky-700'
-                : 'text-slate-700 hover:bg-slate-200'
-            }`}
-            style={{ paddingLeft }}
-            onClick={() => handleFileSelect(item)}
-          >
-            <svg className="w-3 h-3 mr-1 text-slate-400" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clipRule="evenodd"></path>
-            </svg>
-            <span>{item.name}</span>
-          </div>
-        );
-      }
-    });
-  };
-
   return (
     <div className="bg-white flex flex-col">
       {/* Tab Bar */}
       <div className="border-b border-slate-200 bg-slate-50 p-2">
         <div className="flex items-center text-sm text-slate-500">
-        {selectedFile ? (
+          {selectedFile ? (
             <div className="flex items-center space-x-2">
-              <svg className="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+              <svg
+                className="w-4 h-4 text-slate-500"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                ></path>
               </svg>
-              <span className="text-slate-700 font-medium">{selectedFile.name}</span>
+              <span className="text-slate-700 font-medium">
+                {selectedFile.name}
+              </span>
             </div>
           ) : (
             <span>Select a file to view its content</span>
@@ -275,7 +265,9 @@ const FilePreview = ({ selectedFile, readmeContent, dirName }) => {
               <div className="p-6">
                 <div className="flex items-center justify-center">
                   <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-sky-600"></div>
-                  <span className="ml-2 text-slate-600">Loading file content...</span>
+                  <span className="ml-2 text-slate-600">
+                    Loading file content...
+                  </span>
                 </div>
               </div>
             ) : error ? (
@@ -288,7 +280,7 @@ const FilePreview = ({ selectedFile, readmeContent, dirName }) => {
             ) : (
               /* File Content Container */
               <div>
-                <div className="flex items-center justify-end border-b border-slate-200 px-4 py-2 bg-slate-50">
+                <div className="flex items-center justify-between border-b border-slate-200 px-4 py-2 bg-slate-50">
                   <div className="flex items-center space-x-2">
                     <span className="text-xs text-slate-500">
                       Size: {Math.round(fileSize / 1024)} KB
@@ -302,12 +294,85 @@ const FilePreview = ({ selectedFile, readmeContent, dirName }) => {
                       View Raw
                     </a>
                   </div>
+                  <button
+                    onClick={copyToClipboard}
+                    className="flex items-center space-x-1 px-2 py-1 text-xs text-slate-600 hover:text-slate-800 hover:bg-slate-100 rounded transition-colors"
+                    title="Copy to clipboard"
+                  >
+                    {copied ? (
+                      <>
+                        <svg
+                          className="w-3 h-3"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M5 13l4 4L19 7"
+                          ></path>
+                        </svg>
+                        <span>Copied!</span>
+                      </>
+                    ) : (
+                      <>
+                        <svg
+                          className="w-3 h-3"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
+                          ></path>
+                        </svg>
+                        <span>Copy</span>
+                      </>
+                    )}
+                  </button>
                 </div>
                 <div className="p-4">
                   <div
                     className="text-sm overflow-x-auto"
                     dangerouslySetInnerHTML={{ __html: highlightedContent }}
+                    style={{
+                      "--line-number-color": "#94a3b8",
+                      "--line-number-width": "2rem",
+                    }}
                   />
+                  <style>{`
+                    .shiki.has-line-numbers {
+                      counter-reset: line;
+                    }
+                    .shiki.has-line-numbers .line::before {
+                      counter-increment: line;
+                      content: counter(line);
+                      display: inline-block;
+                      width: var(--line-number-width, 2rem);
+                      margin-right: 1rem;
+                      text-align: right;
+                      color: var(--line-number-color, #94a3b8);
+                      font-size: 0.875rem;
+                      user-select: none;
+                    }
+                    .shiki-fallback .line {
+                      display: block;
+                    }
+                    .shiki-fallback .line-number {
+                      display: inline-block;
+                      width: 2rem;
+                      margin-right: 1rem;
+                      text-align: right;
+                      color: #94a3b8;
+                      font-size: 0.875rem;
+                      user-select: none;
+                    }
+                  `}</style>
                 </div>
               </div>
             )}
