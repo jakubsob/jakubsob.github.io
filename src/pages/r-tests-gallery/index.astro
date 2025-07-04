@@ -79,7 +79,7 @@ try {
       <HeaderDefault class="fixed top-0 z-10" />
       <section
         id="hero"
-        class="bg-sky-700 bg-noise h-[40vh]
+        class="bg-sky-700 bg-noise h-[60vh]
         relative
         overflow-hidden
         text-white
@@ -88,41 +88,87 @@ try {
         grid-cols-1 grid-rows-1
         p-4"
       >
-        <div class="text-center text-white">
+        <div
+          class="text-center text-white max-w-[65ch] flex flex-col items-center"
+        >
           <h1 class="text-white text-4xl py-4 font-syne tracking-wider">
-            R Tests Gallery
+            The R Tests Gallery
           </h1>
-          <h2 class="font-syne tracking-wider text-sky-200 text-lg">
-            Examples of testing patterns in R
+          <h2
+            class="font-syne tracking-wider text-sky-200 text-lg text-balance space-y-2"
+          >
+            <p>
+              It's a collection of testing patterns I've successfully used in
+              production.
+            </p>
+            <p>
+              The collection will grow over time, so subscribe to stay updated!
+            </p>
           </h2>
+          <form
+            data-v-a750b30b=""
+            action="https://api.follow.it/subscription-form/ZXExLzNLWHB1MC9VVkZKSjZXNlN4QzJ0V3RwRnk3bUUwWGtFSHFEUXVUbDBPQ3pnVi9lUmg1cFo1Y3M0cGd1dHRpbmppcXJ2eHFGaUZJb0ZmT2N5ZXV4dm9vb3hYWmE3RWNnZVAxeU9tNzJEQjYyd1NMeEUzRUU2b201Y2VDNUt8Z3pqdXUvUEEzRUduNGJBa0UrZHZCUVFySjdkdVZaVzZLRXRwZkl4WUFTTT0=/8"
+            method="post"
+            class="mt-12 max-w-lg"
+          >
+            <div data-v-a750b30b="" class="flex flex-row items-center">
+              <div class="relative">
+                <div
+                  class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none"
+                >
+                  <svg
+                    class="w-4 h-4 text-gray-500"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="currentColor"
+                    viewBox="0 0 20 16"
+                  >
+                    <path
+                      d="m10.036 8.278 9.258-7.79A1.979 1.979 0 0 0 18 0H2A1.987 1.987 0 0 0 .641.541l9.395 7.737Z"
+                    ></path>
+                    <path
+                      d="M11.241 9.817c-.36.275-.801.425-1.255.427-.428 0-.845-.138-1.187-.395L0 2.6V14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2.5l-8.759 7.317Z"
+                    ></path>
+                  </svg>
+                </div>
+                <input
+                  data-v-a750b30b=""
+                  type="email"
+                  name="email"
+                  required=""
+                  placeholder="Enter your email"
+                  spellcheck="false"
+                  id="input-group-1"
+                  class="min-w-[300px] border border-sky-50 bg-sky-50 text-gray-900 rounded-lg rounded-r-none focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5"
+                  placeholder="name@flowbite.com"
+                />
+              </div>
+              <button
+                data-v-a750b30b=""
+                type="submit"
+                class="p-2.5 bg-ocean-green-500 border border-ocean-green-500 h-full text-white font-code tracking-wider font-bold uppercase w-full h-full rounded-l-none rounded-r-lg transition-all duration-300 hover:bg-transparent hover:border-sky-50"
+                >subcribe
+              </button>
+            </div>
+            <p class="text-sky-200 text-sm mt-2">
+              Subscription also gives you updates from the blog
+            </p>
+          </form>
         </div>
       </section>
 
       <section
         id="content"
-        class="bg-white bg-noise-sky min-h-screen
+        class="bg-white bg-noise-sky min-h-[50vh]
         grid
         grid-cols-1
         lg:grid-cols-[1fr_minmax(65ch,_1fr)_1fr]
-        py-8"
+        py-24"
       >
         <div
           class="col-start-1 w-full max-w-[65ch] mx-auto px-4
           lg:col-start-2"
         >
-          <!-- README Content -->
-          <div class="prose prose-sky max-w-none mb-12">
-            <div class="bg-slate-50 rounded-lg p-6 border border-slate-200">
-              <h3 class="text-sky-700 font-syne mb-4">About this Gallery</h3>
-              <div class="text-slate-700">
-                <p>
-                  Examples of testing patterns in R — from simple unit tests to
-                  more complex structures like Plumber APIs.
-                </p>
-              </div>
-            </div>
-          </div>
-
           <!-- Directory Listing -->
           <div class="space-y-6">
             <h3 class="text-2xl font-syne text-sky-700 mb-6">
@@ -162,14 +208,14 @@ try {
                               {dir.name.replace(/-/g, " ")}
                             </h4>
                             <p class="text-slate-500 text-sm">
-                              Testing examples for {dir.name}
+                              Testing of a Plumber API with mirai and httr2
                             </p>
                           </div>
                         </div>
                         <div class="flex items-center space-x-2">
                           <a
                             href={`/r-tests-gallery/${dir.name}`}
-                            class="inline-flex items-center px-3 py-1.5 border border-sky-300 text-sm font-medium rounded-md text-sky-700 bg-sky-50 hover:bg-sky-100 transition-colors"
+                            class="inline-flex items-center px-3 py-1.5 border text-sm font-medium rounded-md text-white bg-sky-700 hover:bg-ocean-green-500 transition-colors"
                           >
                             <svg
                               class="w-4 h-4 mr-1"
@@ -184,7 +230,7 @@ try {
                                 d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
                               />
                             </svg>
-                            View Example
+                            Browse Code
                           </a>
                           <a
                             href={`https://github.com/jakubsob/r-tests-gallery/tree/main/${dir.name}`}
