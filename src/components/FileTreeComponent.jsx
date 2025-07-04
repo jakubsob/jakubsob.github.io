@@ -63,37 +63,42 @@ const filterItems = (items, ignorePatterns) => {
 const FileTreeItem = ({ item, depth = 0, onFileSelect, selectedFile }) => {
   const paddingLeft = `${(depth + 1) * 12}px`;
 
-  if (item.type === 'dir') {
+  if (item.type === "dir") {
     return (
       <div>
         <div
-          className="flex items-center py-1 px-2 text-xs text-slate-600 hover:bg-slate-200 cursor-pointer"
+          className="flex items-center py-1 px-2 text-sm text-sky-700 hover:bg-ocean-green-50 cursor-disable"
           style={{ paddingLeft }}
         >
-          <svg className="w-3 h-3 mr-1 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
+          <svg
+            className="w-3 h-3 mr-1 text-sky-700"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+          >
             <path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"></path>
           </svg>
           <span>{item.name}</span>
         </div>
-        {item.children && item.children.map((child, index) => (
-          <FileTreeItem
-            key={`${child.path}-${index}`}
-            item={child}
-            depth={depth + 1}
-            onFileSelect={onFileSelect}
-            selectedFile={selectedFile}
-          />
-        ))}
+        {item.children &&
+          item.children.map((child, index) => (
+            <FileTreeItem
+              key={`${child.path}-${index}`}
+              item={child}
+              depth={depth + 1}
+              onFileSelect={onFileSelect}
+              selectedFile={selectedFile}
+            />
+          ))}
       </div>
     );
   } else {
     const isSelected = selectedFile && selectedFile.path === item.path;
     return (
       <div
-        className={`flex items-center py-1 px-2 text-xs cursor-pointer transition-colors file-button ${
+        className={`flex items-center py-1 px-2 text-sm cursor-pointer transition-colors file-button ${
           isSelected
-            ? 'bg-sky-100 text-sky-700'
-            : 'text-slate-700 hover:bg-slate-200'
+            ? "bg-sky-50 text-sky-700"
+            : "text-sky-700 hover:bg-ocean-green-50"
         }`}
         style={{ paddingLeft }}
         onClick={() => onFileSelect(item)}
@@ -101,8 +106,16 @@ const FileTreeItem = ({ item, depth = 0, onFileSelect, selectedFile }) => {
         data-file-name={item.name}
         data-file-path={item.path}
       >
-        <svg className="w-3 h-3 mr-1 text-slate-400" fill="currentColor" viewBox="0 0 20 20">
-          <path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clipRule="evenodd"></path>
+        <svg
+          className="w-3 h-3 mr-1 text-slate-400"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+        >
+          <path
+            fillRule="evenodd"
+            d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z"
+            clipRule="evenodd"
+          ></path>
         </svg>
         <span>{item.name}</span>
       </div>
@@ -143,7 +156,7 @@ const FileTreeComponent = ({
   const filteredItems = filterItems(items, ignorePatterns);
 
   return (
-    <div className="p-2">
+    <div>
       {filteredItems.map((item, index) => (
         <FileTreeItem
           key={`${item.path}-${index}`}

@@ -116,7 +116,7 @@ const IDEInterface = ({ fileTree, readmeContent, dirName, hasError }) => {
     >
       {/* Left Sidebar - File Tree */}
       <div className="bg-slate-100 border-r border-slate-200 overflow-y-auto">
-        <div className="p-4 border-b border-slate-200 bg-slate-50">
+        <div className="p-2 border-b border-slate-200 bg-slate-50">
           <h3 className="text-sm font-medium text-slate-700 flex items-center">
             <svg
               className="w-4 h-4 mr-2"
