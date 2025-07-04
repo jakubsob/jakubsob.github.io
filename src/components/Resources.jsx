@@ -17,10 +17,12 @@ const ResourceCard = ({
   return (
     <div
       onClick={handleClick}
-      className="rounded-lg group bg-sky-100/20 w-full max-w-[65ch] transition duration-300 ease-in-out border border-[1px] border-transparent hover:border-[1px] hover:border-sky-800 p-4 cursor-pointer"
+      className="bg-white rounded-lg group w-full max-w-[65ch] border border-slate-200 shadow-sm hover:shadow-md transition-shadow p-6 cursor-pointer"
     >
       <div className="flex gap-2 text-2xl text-black items-center group">
-        <div>{title}</div>
+        <h4 className="text-lg font-medium text-slate-900 capitalize">
+          {title}
+        </h4>
         <div className="relative whitespace-nowrap overflow-hidden flex flex-row">
           <div className="transform transition-transform duration-500 ease-in-out group-hover:-translate-y-full">
             ↗
@@ -30,7 +32,7 @@ const ResourceCard = ({
           </div>
         </div>
       </div>
-      <div className="text-gray-500">{description}</div>
+      <div className="text-slate-500 text-sm">{description}</div>
       <div className="flex flex-row gap-2 mt-4 text-gray-500">
         <PillButton isActive={true} className="pointer-events-none">
           {actionability}

@@ -120,20 +120,20 @@ function PostList({ posts, showControls = true }) {
           </div>
         )}
         <div className="w-full">
-          <ul className="list-none">
+          <ul className="list-none space-y-4">
             {filteredPosts.length > 0 ? (
               filteredPosts.map((post) => (
                 <li
                   key={post.slug}
-                  className="mb-4 p-4 rounded-lg transition-all bg-sky-100/20
-                    transition duration-300 ease-in-out
-                    border border-[1px] border-transparent
-                    hover:border-[1px] hover:border-sky-800
-                    space-y-4"
+                  className="bg-white rounded-lg border border-slate-200 shadow-sm hover:shadow-md transition-shadow relative group p-6 space-y-4"
                 >
                   <a className="space-y-2" href={`/blog/${post.slug}/`}>
-                    <h3 className="capitalize">{post.data.title}</h3>
-                    <h4 className="text-gray-600">{post.data.description}</h4>
+                    <h3 className="font-medium text-slate-900 capitalize">
+                      {post.data.title}
+                    </h3>
+                    <h4 className="text-slate-500 text-sm">
+                      {post.data.description}
+                    </h4>
                   </a>
                   <div className="flex flex-row items-baseline gap-6 text-sm text-gray-500">
                     <FormattedDate date={post.data.pubDate} />
