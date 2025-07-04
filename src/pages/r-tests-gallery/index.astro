@@ -1,6 +1,30 @@
 ---
 import HeaderDefault from "../../components/HeaderDefault.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import { createMarkdownProcessor } from "@astrojs/markdown-remark";
+
+// Create markdown processor with the same config as astro.config.mjs
+const markdownProcessor = await createMarkdownProcessor({
+  syntaxHighlight: "shiki",
+  shikiConfig: {
+    theme: "github-dark",
+    langs: [],
+    wrap: true,
+    transformers: [],
+  },
+});
+
+// Helper function to render markdown inline (for titles/descriptions)
+const renderInlineMarkdown = async (content: string) => {
+  try {
+    const result = await markdownProcessor.render(content);
+    // Remove wrapping <p> tags for inline content
+    return result.code.replace(/^<p>|<\/p>$/g, "").trim();
+  } catch (error) {
+    console.error("Error rendering markdown:", error);
+    return content;
+  }
+};
 
 // GitHub API authentication for higher rate limits
 const GITHUB_TOKEN = import.meta.env.GITHUB_TOKEN;
@@ -58,6 +82,99 @@ try {
       type: "dir",
       path: dirName,
     }));
+
+    // Fetch README files for each directory
+    for (const dir of relevantDirs) {
+      try {
+        const readmeResponse = await fetch(
+          `https://raw.githubusercontent.com/jakubsob/r-tests-gallery/main/${dir.name}/README.md`,
+          { headers }
+        );
+        if (readmeResponse.ok) {
+          const readmeText = await readmeResponse.text();
+
+          // Parse the README content
+          const parseReadme = (content: string) => {
+            const lines = content.split("\n");
+            let title = dir.name.replace(/-/g, " "); // Default fallback
+            let description = "Testing example project."; // Default fallback
+            let fullContent = content;
+
+            // Find the first header (title)
+            const titleMatch = lines.find((line) => line.startsWith("#"));
+            if (titleMatch) {
+              title = titleMatch.replace(/^#+\s*/, "").trim();
+            }
+
+            // Find the first paragraph after the title
+            let foundTitle = false;
+            let descriptionLines: string[] = [];
+
+            for (const line of lines) {
+              if (line.startsWith("#")) {
+                if (foundTitle) {
+                  break; // Stop at next header
+                }
+                foundTitle = true;
+                continue;
+              }
+
+              if (foundTitle && line.trim()) {
+                descriptionLines.push(line.trim());
+              } else if (
+                foundTitle &&
+                !line.trim() &&
+                descriptionLines.length > 0
+              ) {
+                break; // Stop at first empty line after content
+              }
+            }
+
+            if (descriptionLines.length > 0) {
+              description = descriptionLines.join(" ").trim();
+            }
+
+            return { title, description, fullContent };
+          };
+
+          const parsed = parseReadme(readmeText);
+          // Render title and description as HTML
+          const titleHtml = await renderInlineMarkdown(parsed.title);
+          const descriptionHtml = await renderInlineMarkdown(
+            parsed.description
+          );
+
+          dir.readme = {
+            ...parsed,
+            titleHtml,
+            descriptionHtml,
+          };
+        } else {
+          // Fallback if no README found
+          const title = dir.name.replace(/-/g, " ");
+          const description = "Testing example project.";
+          dir.readme = {
+            title,
+            description,
+            fullContent: "No README available.",
+            titleHtml: await renderInlineMarkdown(title),
+            descriptionHtml: await renderInlineMarkdown(description),
+          };
+        }
+      } catch (error) {
+        console.error(`Error fetching README for ${dir.name}:`, error);
+        // Fallback if fetch fails
+        const title = dir.name.replace(/-/g, " ");
+        const description = "Testing example project.";
+        dir.readme = {
+          title,
+          description,
+          fullContent: "No README available.",
+          titleHtml: await renderInlineMarkdown(title),
+          descriptionHtml: await renderInlineMarkdown(description),
+        };
+      }
+    }
 
     console.log("Found directories:", relevantDirs);
   } else {
@@ -146,7 +263,7 @@ try {
               <button
                 data-v-a750b30b=""
                 type="submit"
-                class="p-2.5 bg-ocean-green-500 border border-ocean-green-500 h-full text-white font-code tracking-wider font-bold uppercase w-full h-full rounded-l-none rounded-r-lg transition-all duration-300 hover:bg-transparent hover:border-sky-50"
+                class="p-2.5 bg-ocean-green-500 border border-ocean-green-500 text-white font-code tracking-wider font-bold uppercase w-full h-full rounded-l-none rounded-r-lg transition-all duration-300 hover:bg-transparent hover:border-sky-50"
                 >subcribe
               </button>
             </div>
@@ -159,57 +276,44 @@ try {
 
       <section
         id="content"
-        class="bg-white bg-noise-sky min-h-[50vh]
+        class="bg-white bg-noise-sky
         grid
         grid-cols-1
         lg:grid-cols-[1fr_minmax(65ch,_1fr)_1fr]
         py-24"
       >
         <div
-          class="col-start-1 w-full max-w-[65ch] mx-auto px-4
+          class="col-start-1 w-full max-w-[65ch] mx-auto
           lg:col-start-2"
         >
           <!-- Directory Listing -->
           <div class="space-y-6">
-            <h3 class="text-2xl font-syne text-sky-700 mb-6">
+            <h3 class="text-3xl font-syne text-sky-700 mb-6">
               Testing Examples
             </h3>
 
             {
               relevantDirs.length > 0 ? (
                 relevantDirs.map((dir: any) => (
-                  <div class="bg-white rounded-lg border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+                  <div class="bg-white rounded-lg border border-slate-200 shadow-sm hover:shadow-md transition-shadow relative group">
                     <div class="p-6">
-                      <div class="flex items-center justify-between">
-                        <div class="flex items-center space-x-3">
-                          <div class="w-10 h-10 bg-sky-100 rounded-lg flex items-center justify-center">
-                            <svg
-                              class="w-5 h-5 text-sky-600"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                            >
-                              <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z"
-                              />
-                              <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M8 5a2 2 0 012-2h4a2 2 0 012 2v2H8V5z"
-                              />
-                            </svg>
-                          </div>
+                      <div class="grid md:grid-cols-3 grid-cols-1 gap-2">
+                        <div class="flex items-center space-x-3 md:col-span-2">
                           <div>
-                            <h4 class="text-lg font-medium text-slate-900 capitalize">
-                              {dir.name.replace(/-/g, " ")}
-                            </h4>
-                            <p class="text-slate-500 text-sm">
-                              Testing of a Plumber API with mirai and httr2
-                            </p>
+                            <h4
+                              class="text-lg font-medium text-slate-900 capitalize"
+                              set:html={
+                                dir.readme?.titleHtml ||
+                                dir.name.replace(/-/g, " ")
+                              }
+                            ></h4>
+                            <p
+                              class="text-slate-500 text-sm max-h-10 overflow-hidden group-hover:max-h-none transition-all duration-300"
+                              set:html={
+                                dir.readme?.descriptionHtml ||
+                                "Testing example project."
+                              }
+                            ></p>
                           </div>
                         </div>
                         <div class="flex items-center space-x-2">
@@ -230,7 +334,7 @@ try {
                                 d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
                               />
                             </svg>
-                            Browse Code
+                            Browse
                           </a>
                           <a
                             href={`https://github.com/jakubsob/r-tests-gallery/tree/main/${dir.name}`}
@@ -246,7 +350,7 @@ try {
                               <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
                             </svg>
                             GitHub
-                          </a>
+                          </a>{" "}
                         </div>
                       </div>
                     </div>
@@ -300,6 +404,50 @@ try {
               )
             }
           </div>
+        </div>
+      </section>
+      <section
+        class="bg-white bg-noise-sky min-h-[50vh]
+        grid
+        grid-cols-1
+        lg:grid-cols-[1fr_minmax(65ch,_1fr)_1fr]
+        py-24"
+      >
+        <div class="mx-auto col-start-2">
+          <h3
+            class="text-3xl font-syne text-sky-700 mb-6 flex gap-2 align-baseline"
+          >
+            <div class="size-8">
+              <svg
+                width="100%"
+                height="100%"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                ><path
+                  d="M12 2V22M19.0711 4.92893L4.92893 19.0711M22 12H2M19.0711 19.0711L4.92893 4.92893"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"></path></svg
+              >
+            </div>
+            Haven't found what you're looking for?
+          </h3>
+          <p class="text-slate-600">
+            Tell me what you struggle with in R testing, let's create a
+            comprehensive list of examples together!
+          </p>
+          <a
+            href="https://github.com/jakubsob/r-tests-gallery/issues/new/choose"
+            target="_blank"
+            class="inline-flex mt-4 rounded-full px-6 py-4 bg-sky-700 text-white text-xl w-fit
+              transition-all duration-300
+              border-2 border-transparent
+              hover:text-sky-900 hover:bg-white hover:border-sky-700"
+          >
+            Submit a request
+          </a>
         </div>
       </section>
     </main>
