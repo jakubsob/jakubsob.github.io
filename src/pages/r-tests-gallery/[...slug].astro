@@ -1,5 +1,5 @@
 ---
-import HeaderStatic from "../../components/HeaderStatic.astro";
+import HeaderDefault from "../../components/HeaderDefault.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import IDEInterface from "../../components/IDEInterface.jsx";
 import { createMarkdownProcessor } from "@astrojs/markdown-remark";
@@ -204,7 +204,7 @@ if (readmeContent) {
 <html lang="en">
   <BaseLayout title={`${dirName} - R Tests Gallery`}>
     <main
-      class="bg-marine-50"
+      class="bg-marine-50 pt-20"
       style="
     z-index: 0;
     opacity: 1;
@@ -216,7 +216,7 @@ if (readmeContent) {
     background-attachment: scroll;
     inset: 0%;"
     >
-      <HeaderStatic />
+      <HeaderDefault />
       <!-- README Content Section -->
       {
         renderedReadmeContent && (

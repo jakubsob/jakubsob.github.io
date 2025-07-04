@@ -3,11 +3,9 @@ import Header from "./Header.astro";
 import HeaderLink from "./HeaderLink.astro";
 import HeaderLogo from "./HeaderLogo.astro";
 import HeaderButton from "./HeaderButton.astro";
-
-const { class: className } = Astro.props;
 ---
 
-<Header class={className}>
+<Header class="fixed top-0 z-10">
   <HeaderLogo>jakub::sobolewski</HeaderLogo>
   <HeaderLink href="/">home</HeaderLink>
   <HeaderLink href="/blog/">blog</HeaderLink>
@@ -15,7 +13,7 @@ const { class: className } = Astro.props;
   <HeaderLink href="/r-tests-gallery/">tests gallery</HeaderLink>
   <HeaderButton
     href="https://follow.it/jakub-sobolewski?leanpub"
-    class="ms-auto"
+    class="ms-auto bg-ocean-green-500 rounded-full"
     id="subscribe"
   >
     subscribe

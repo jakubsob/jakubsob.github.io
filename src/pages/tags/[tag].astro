@@ -1,8 +1,5 @@
 ---
-import Header from "../../components/Header.astro";
-import HeaderLink from "../../components/HeaderLink.astro";
-import HeaderLogo from "../../components/HeaderLogo.astro";
-import HeaderButton from "../../components/HeaderButton.astro";
+import HeaderDefault from "../../components/HeaderDefault.astro";
 import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import PostList from "../../components/PostList.jsx";
@@ -29,19 +26,7 @@ const { posts } = Astro.props;
 <html lang="en">
   <BaseLayout>
     <main>
-      <Header class="fixed top-0 z-10 text-white">
-        <HeaderLogo href="/">jakub::sobolewski</HeaderLogo>
-        <HeaderLink href="/">home</HeaderLink>
-        <HeaderLink href="/blog/">blog</HeaderLink>
-        <HeaderLink href="/resources/">resources</HeaderLink>
-        <HeaderButton
-          href="https://jakubsobolewski.substack.com/subscribe"
-          class="ms-auto"
-          id="subscribe"
-        >
-          subscribe
-        </HeaderButton>
-      </Header>
+      <HeaderDefault />
       <section
         id="hero"
         class="bg-sky-700 bg-noise h-[50vh]
