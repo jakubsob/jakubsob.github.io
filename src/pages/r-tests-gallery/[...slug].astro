@@ -1,14 +1,16 @@
 ---
 import HeaderDefault from "../../components/HeaderDefault.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import FileTree from "../../components/FileTree.astro";
+import IDEInterface from "../../components/IDEInterface.jsx";
 
 export async function getStaticPaths() {
   // GitHub API authentication for higher rate limits
   const GITHUB_TOKEN = import.meta.env.GITHUB_TOKEN;
   console.log("GitHub token available:", GITHUB_TOKEN ? "YES" : "NO");
   console.log("Token length:", GITHUB_TOKEN?.length || 0);
-  const headers = GITHUB_TOKEN ? { Authorization: `token ${GITHUB_TOKEN}` } : {};
+  const headers = GITHUB_TOKEN
+    ? { Authorization: `token ${GITHUB_TOKEN}` }
+    : {};
   console.log("Headers:", headers);
 
   // Helper function to build file tree with rate limit handling
@@ -85,21 +87,25 @@ export async function getStaticPaths() {
       treeData.tree.forEach((item: any) => {
         if (item.type === "tree" && item.path) {
           // Only get top-level directories (no nested paths)
-          const topLevelDir = item.path.split('/')[0];
-          if (!topLevelDir.startsWith('.') && topLevelDir !== 'renv') {
+          const topLevelDir = item.path.split("/")[0];
+          if (!topLevelDir.startsWith(".") && topLevelDir !== "renv") {
             directories.add(topLevelDir);
           }
         }
       });
 
       // Convert to array with structure similar to contents API
-      relevantDirs = Array.from(directories).map(dirName => ({
+      relevantDirs = Array.from(directories).map((dirName) => ({
         name: dirName,
         type: "dir",
-        path: dirName
+        path: dirName,
       }));
     } else {
-      console.error("GitHub Tree API request failed:", treeResponse.status, treeResponse.statusText);
+      console.error(
+        "GitHub Tree API request failed:",
+        treeResponse.status,
+        treeResponse.statusText
+      );
     }
 
     // If API failed or returned no dirs, return empty paths
@@ -226,418 +232,13 @@ const { dirName, fileTree, readmeContent, hasError } = Astro.props as {
       </section>
 
       <!-- IDE-like Interface -->
-      <section
-        id="ide-interface"
-        class="bg-slate-50 min-h-[calc(100vh-25vh)]
-        grid
-        grid-cols-1
-        lg:grid-cols-[300px_1fr]
-        border-t border-slate-200"
-      >
-        <!-- Left Sidebar - File Tree -->
-        <div class="bg-slate-100 border-r border-slate-200 overflow-y-auto">
-          <div class="p-4 border-b border-slate-200 bg-slate-50">
-            <h3 class="text-sm font-medium text-slate-700 flex items-center">
-              <svg
-                class="w-4 h-4 mr-2"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z"
-                ></path>
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M8 5a2 2 0 012-2h4a2 2 0 012 2v2H8V5z"></path>
-              </svg>
-              {dirName}
-            </h3>
-          </div>
-
-          <div class="p-2" id="file-tree">
-            {hasError ? (
-              <div class="p-4 text-center">
-                <div class="text-slate-500 mb-2">
-                  <svg class="w-8 h-8 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                  </svg>
-                  <p class="text-sm">Unable to load file tree</p>
-                </div>
-              </div>
-            ) : (
-              <FileTree items={fileTree} />
-            )}
-          </div>
-        </div>
-
-        <!-- Right Panel - File Content -->
-        <div class="bg-white flex flex-col">
-          <!-- Tab Bar -->
-          <div class="border-b border-slate-200 bg-slate-50 p-2">
-            <div class="flex items-center text-sm text-slate-500" id="tab-bar">
-              <span>Select a file to view its content</span>
-            </div>
-          </div>
-
-          <!-- Content Area -->
-          <div class="flex-1 overflow-auto" id="content-area">
-            {hasError ? (
-              <!-- Error Message -->
-              <div class="p-6 h-full flex items-center justify-center">
-                <div class="text-center">
-                  <div class="text-red-500 mb-4">
-                    <svg class="w-16 h-16 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                    </svg>
-                    <h3 class="text-xl font-medium text-red-700 mb-2">Unable to Load Repository Data</h3>
-                    <p class="text-red-600 max-w-md mx-auto">
-                      There was an error fetching the repository contents. This could be due to GitHub API rate limits or network issues. Please try again later.
-                    </p>
-                  </div>
-                  <div class="mt-6">
-                    <a
-                      href={`https://github.com/jakubsob/r-tests-gallery/tree/main/${dirName}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="inline-flex items-center px-4 py-2 bg-red-100 text-red-700 rounded-lg hover:bg-red-200 transition-colors"
-                    >
-                      <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path>
-                      </svg>
-                      View on GitHub
-                    </a>
-                  </div>
-                </div>
-              </div>
-            ) : (
-              <>
-                <!-- Default Content: README -->
-                {
-                  readmeContent && (
-                    <div class="p-6" id="default-content">
-                      <div class="prose prose-slate max-w-none">
-                        <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
-                          <h3 class="text-blue-800 font-medium mb-2">README</h3>
-                          <div class="text-blue-700 text-sm whitespace-pre-wrap font-mono">
-                            {readmeContent}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  )
-                }
-
-                <!-- File Content Container -->
-                <div class="hidden" id="file-content">
-                  <div
-                    class="flex items-center justify-end border-b border-slate-200 px-4 py-2 bg-slate-50"
-                  >
-                    <div class="flex items-center space-x-2">
-                      <span class="text-xs text-slate-500" id="file-size"
-                        >Size: 0 bytes</span
-                      >
-                      <a
-                        href="#"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="text-xs text-blue-600 hover:text-blue-800"
-                        id="view-raw">View Raw</a
-                      >
-                    </div>
-                  </div>
-                  <div class="p-4">
-                    <div id="highlighted-code" class="text-sm overflow-x-auto">
-                      <!-- Highlighted code will be inserted here -->
-                    </div>
-                    <pre
-                      class="text-sm text-slate-700 whitespace-pre-wrap bg-slate-50 p-4 rounded border overflow-x-auto hidden"
-                      id="fallback-code"><code id="file-code">Loading...</code></pre>
-                  </div>
-                </div>
-
-                <!-- Loading indicator -->
-                <div class="hidden p-6" id="loading-indicator">
-                  <div class="flex items-center justify-center">
-                    <div
-                      class="animate-spin rounded-full h-8 w-8 border-b-2 border-sky-600"
-                    >
-                    </div>
-                    <span class="ml-2 text-slate-600">Loading file content...</span>
-                  </div>
-                </div>
-              </>
-            )}
-          </div>
-        </div>
-      </section>
+      <IDEInterface
+        fileTree={fileTree}
+        readmeContent={readmeContent}
+        dirName={dirName}
+        hasError={hasError}
+        client:load
+      />
     </main>
-
-    <script>
-      // File tree interaction
-      document.addEventListener("DOMContentLoaded", function () {
-        // Type definitions for better type safety
-        interface CacheEntry {
-          content: string;
-          highlightedContent: string;
-          fileName: string;
-          timestamp: number;
-        }
-
-        const fileButtons = document.querySelectorAll(".file-button");
-        const contentArea = document.getElementById("content-area");
-        const fileContent = document.getElementById("file-content");
-        const defaultContent = document.getElementById("default-content");
-        const loadingIndicator = document.getElementById("loading-indicator");
-        const tabBar = document.getElementById("tab-bar");
-        const fileSize = document.getElementById("file-size");
-        const viewRaw = document.getElementById("view-raw");
-        const fileCode = document.getElementById("file-code");
-        const highlightedCode = document.getElementById("highlighted-code");
-        const fallbackCode = document.getElementById("fallback-code");
-
-        // Enhanced file content cache with size limits and expiration
-        const fileCache = new Map<string, CacheEntry>();
-        const MAX_CACHE_SIZE = 50; // Maximum number of files to cache
-        const CACHE_EXPIRY = 30 * 60 * 1000; // 30 minutes in milliseconds
-
-        // Helper function to determine language from file extension
-        function getLanguageFromExtension(filename: string): string {
-          const ext = filename.split('.').pop()?.toLowerCase() || '';
-          const langMap: Record<string, string> = {
-            'r': 'r',
-            'py': 'python',
-            'js': 'javascript',
-            'ts': 'typescript',
-            'jsx': 'jsx',
-            'tsx': 'tsx',
-            'html': 'html',
-            'css': 'css',
-            'scss': 'scss',
-            'sass': 'sass',
-            'json': 'json',
-            'yaml': 'yaml',
-            'yml': 'yaml',
-            'md': 'markdown',
-            'txt': 'text',
-            'sh': 'bash',
-            'bash': 'bash',
-            'zsh': 'zsh',
-            'fish': 'fish',
-            'ps1': 'powershell',
-            'xml': 'xml',
-            'sql': 'sql',
-            'dockerfile': 'dockerfile',
-            'toml': 'toml',
-            'ini': 'ini',
-            'conf': 'ini',
-            'log': 'log',
-            'csv': 'csv',
-            'rmd': 'rmd',
-            'rnw': 'rnw',
-            'qmd': 'qmd',
-            'description': 'text',
-            'namespace': 'text',
-            'rproj': 'text',
-            'gitignore': 'text',
-            'gitmodules': 'text',
-            'gitattributes': 'text',
-            'renvlock': 'json',
-            'lock': 'json'
-          };
-          return langMap[ext] || 'text';
-        }
-
-        // Helper function to highlight code using client-side Shiki
-        async function highlightCode(code: string, language: string): Promise<string> {
-          try {
-            // Import Shiki dynamically
-            const { codeToHtml } = await import('shiki');
-
-            const html = await codeToHtml(code, {
-              lang: language,
-              theme: 'github-light'
-            });
-
-            return html;
-          } catch (error) {
-            console.error('Error highlighting code:', error);
-            // Fallback to plain text if highlighting fails
-            return `<pre class="text-sm text-slate-700 whitespace-pre-wrap bg-slate-50 p-4 rounded border overflow-x-auto"><code>${escapeHtml(code)}</code></pre>`;
-          }
-        }
-
-        // Helper function to escape HTML
-        function escapeHtml(unsafe: string): string {
-          return unsafe
-            .replace(/&/g, "&amp;")
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;")
-            .replace(/"/g, "&quot;")
-            .replace(/'/g, "&#039;");
-        }
-
-        // Cache management functions
-        function isExpired(timestamp: number): boolean {
-          return Date.now() - timestamp > CACHE_EXPIRY;
-        }
-
-        function cleanupExpiredCache() {
-          const now = Date.now();
-          for (const [key, value] of fileCache.entries()) {
-            if (isExpired(value.timestamp)) {
-              fileCache.delete(key);
-            }
-          }
-        }
-
-        function enforceMaxCacheSize() {
-          if (fileCache.size >= MAX_CACHE_SIZE) {
-            // Remove oldest entries (simple LRU implementation)
-            const entries = Array.from(fileCache.entries());
-            entries.sort((a, b) => a[1].timestamp - b[1].timestamp);
-
-            const toRemove = entries.slice(
-              0,
-              fileCache.size - MAX_CACHE_SIZE + 1
-            );
-            toRemove.forEach(([key, value]) => {
-              fileCache.delete(key);
-            });
-          }
-        }
-
-        fileButtons.forEach((button) => {
-          button.addEventListener("click", async function (event) {
-            const target = event.currentTarget as HTMLElement;
-            const fileUrl = target.dataset.fileUrl;
-            const fileName = target.dataset.fileName;
-            const filePath = target.dataset.filePath;
-
-            if (!fileUrl) return;
-
-            // Update active state
-            fileButtons.forEach((btn) =>
-              btn.classList.remove("bg-sky-100", "text-sky-700")
-            );
-            target.classList.add("bg-sky-100", "text-sky-700");
-
-            // Hide default content
-            if (defaultContent) defaultContent.classList.add("hidden");
-
-            // Update tab bar immediately
-            if (tabBar) {
-              tabBar.innerHTML = `
-                <div class="flex items-center space-x-2">
-                  <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                  </svg>
-                  <span class="text-slate-700 font-medium">${fileName}</span>
-                </div>
-              `;
-            }
-
-            // Check if content is already cached and not expired
-            if (fileCache.has(fileUrl)) {
-              const cachedData = fileCache.get(fileUrl);
-
-              if (!isExpired(cachedData.timestamp)) {
-                // Update file info from cache
-                if (fileSize)
-                  fileSize.textContent = `Size: ${Math.round(cachedData.content.length / 1024)} KB`;
-                if (viewRaw) {
-                  const link = viewRaw as HTMLAnchorElement;
-                  link.href = fileUrl;
-                }
-
-                // Update content from cache with syntax highlighting
-                if (highlightedCode) {
-                  highlightedCode.innerHTML = cachedData.highlightedContent;
-                  highlightedCode.style.display = 'block';
-                }
-                if (fallbackCode) fallbackCode.classList.add("hidden");
-
-                // Show content immediately (no loading state needed)
-                if (fileContent) fileContent.classList.remove("hidden");
-
-                return; // Exit early since we're using cached content
-              } else {
-                // Cache expired, remove it
-                fileCache.delete(fileUrl);
-              }
-            }
-
-            // Content not cached or expired - show loading and fetch
-            if (fileContent) fileContent.classList.add("hidden");
-            if (loadingIndicator) loadingIndicator.classList.remove("hidden");
-
-            try {
-              const response = await fetch(fileUrl);
-
-              if (!response.ok) {
-                throw new Error(
-                  `HTTP ${response.status}: ${response.statusText}`
-                );
-              }
-
-              const content = await response.text();
-
-              // Determine language and highlight code
-              const language = getLanguageFromExtension(fileName);
-              const highlightedContent = await highlightCode(content, language);
-
-              // Cleanup and enforce cache size limits before adding new entry
-              cleanupExpiredCache();
-              enforceMaxCacheSize();
-
-              // Cache the content with highlighting
-              fileCache.set(fileUrl, {
-                content: content,
-                highlightedContent: highlightedContent,
-                fileName: fileName,
-                timestamp: Date.now(),
-              });
-
-              // Update file info
-              if (fileSize)
-                fileSize.textContent = `Size: ${Math.round(content.length / 1024)} KB`;
-              if (viewRaw) {
-                const link = viewRaw as HTMLAnchorElement;
-                link.href = fileUrl;
-              }
-
-              // Update content with syntax highlighting
-              if (highlightedCode) {
-                highlightedCode.innerHTML = highlightedContent;
-                highlightedCode.style.display = 'block';
-              }
-              if (fallbackCode) fallbackCode.classList.add("hidden");
-
-              // Show content
-              if (loadingIndicator) loadingIndicator.classList.add("hidden");
-              if (fileContent) fileContent.classList.remove("hidden");
-            } catch (error) {
-              console.error("Error loading file:", error);
-
-              // Show error in fallback code element
-              if (fileCode) {
-                const errorMessage =
-                  error instanceof Error ? error.message : String(error);
-                fileCode.textContent = `Error loading file content: ${errorMessage}`;
-              }
-              if (highlightedCode) highlightedCode.style.display = 'none';
-              if (fallbackCode) fallbackCode.classList.remove("hidden");
-              if (loadingIndicator) loadingIndicator.classList.add("hidden");
-              if (fileContent) fileContent.classList.remove("hidden");
-            }
-          });
-        });
-      });
-    </script>
   </BaseLayout>
 </html>
