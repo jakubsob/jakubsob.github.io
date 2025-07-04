@@ -1,0 +1,134 @@
+---
+import HeaderDefault from "../../components/HeaderDefault.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+// Fetch the main README content
+const readmeResponse = await fetch("https://raw.githubusercontent.com/jakubsob/r-tests-gallery/main/README.md");
+const readmeContent = await readmeResponse.text();
+
+// Fetch the repository structure
+const repoResponse = await fetch("https://api.github.com/repos/jakubsob/r-tests-gallery/contents");
+const repoContents = await repoResponse.json();
+
+// Filter out non-relevant directories
+const relevantDirs = repoContents.filter((item: any) =>
+  item.type === "dir" &&
+  !item.name.startsWith(".") &&
+  item.name !== "renv"
+);
+---
+
+<!doctype html>
+<html lang="en">
+  <BaseLayout title="R Tests Gallery">
+    <main>
+      <HeaderDefault class="fixed top-0 z-10" />
+      <section
+        id="hero"
+        class="bg-sky-700 bg-noise h-[40vh]
+        relative
+        overflow-hidden
+        text-white
+        grid
+        items-center justify-items-center
+        grid-cols-1 grid-rows-1
+        p-4"
+      >
+        <div class="text-center text-white">
+          <h1 class="text-white text-4xl py-4 font-syne tracking-wider">
+            R Tests Gallery
+          </h1>
+          <h2 class="font-syne tracking-wider text-sky-200 text-lg">
+            Examples of testing patterns in R
+          </h2>
+        </div>
+      </section>
+
+      <section
+        id="content"
+        class="bg-white bg-noise-sky min-h-screen
+        grid
+        grid-cols-1
+        lg:grid-cols-[1fr_minmax(65ch,_1fr)_1fr]
+        py-8"
+      >
+        <div
+          class="col-start-1 w-full max-w-[65ch] mx-auto px-4
+          lg:col-start-2"
+        >
+          <!-- README Content -->
+          <div class="prose prose-sky max-w-none mb-12">
+            <div class="bg-slate-50 rounded-lg p-6 border border-slate-200">
+              <h3 class="text-sky-700 font-syne mb-4">About this Gallery</h3>
+              <div class="text-slate-700">
+                <p>Examples of testing patterns in R — from simple unit tests to more complex structures like Plumber APIs.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Directory Listing -->
+          <div class="space-y-6">
+            <h3 class="text-2xl font-syne text-sky-700 mb-6">Testing Examples</h3>
+
+            {relevantDirs.map((dir: any) => (
+              <div class="bg-white rounded-lg border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+                <div class="p-6">
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                      <div class="w-10 h-10 bg-sky-100 rounded-lg flex items-center justify-center">
+                        <svg class="w-5 h-5 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z"></path>
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5a2 2 0 012-2h4a2 2 0 012 2v2H8V5z"></path>
+                        </svg>
+                      </div>
+                      <div>
+                        <h4 class="text-lg font-medium text-slate-900 capitalize">
+                          {dir.name.replace(/-/g, ' ')}
+                        </h4>
+                        <p class="text-slate-500 text-sm">
+                          Testing examples for {dir.name}
+                        </p>
+                      </div>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                      <a
+                        href={`/r-tests-gallery/${dir.name}`}
+                        class="inline-flex items-center px-3 py-1.5 border border-sky-300 text-sm font-medium rounded-md text-sky-700 bg-sky-50 hover:bg-sky-100 transition-colors"
+                      >
+                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                        </svg>
+                        View Example
+                      </a>
+                      <a
+                        href={`https://github.com/jakubsob/r-tests-gallery/tree/main/${dir.name}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="inline-flex items-center px-3 py-1.5 border border-slate-300 text-sm font-medium rounded-md text-slate-700 bg-white hover:bg-slate-50 transition-colors"
+                      >
+                        <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                        </svg>
+                        GitHub
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <!-- Additional Info -->
+          <div class="mt-12 bg-slate-50 rounded-lg p-6 border border-slate-200">
+            <h3 class="text-sky-700 font-syne mb-4">Repository Information</h3>
+            <div class="text-slate-700 space-y-2">
+              <p><strong>Repository:</strong> <a href="https://github.com/jakubsob/r-tests-gallery" target="_blank" rel="noopener noreferrer" class="text-sky-600 hover:text-sky-800">jakubsob/r-tests-gallery</a></p>
+              <p><strong>Language:</strong> R</p>
+              <p><strong>Topics:</strong> testing, R, plumber, testthat, plumber-api</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </BaseLayout>
+</html>
