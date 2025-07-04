@@ -24,17 +24,56 @@ const { class: className } = Astro.props;
   .backdrop-show {
     backdrop-filter: blur(4px) opacity(1);
   }
+
+  /* Mobile menu styles */
+  .mobile-menu {
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .mobile-menu.open {
+    transform: translateX(0);
+  }
+
+  @media (max-width: 767px) {
+    .mobile-menu {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background-color: rgba(3, 7, 18, 0.7);
+      background-image: url("/noise-sky.svg");
+      backdrop-filter: blur(10px);
+      z-index: 50;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+    }
+
+    .mobile-menu ul {
+      flex-direction: column;
+      gap: 2rem;
+      text-align: center;
+    }
+
+    .mobile-menu li {
+      font-size: 1.5rem;
+    }
+  }
 </style>
 <header
   id="header"
   class:list={[
-    "text-white transition-colors transition-transform duration-500 w-full gap-4 px-4",
+    "text-white transition-all duration-500 w-full gap-4 px-4",
     className,
   ]}
 >
   <nav
     class="max-w-[65ch]
-      transition-colors transition-transform tranistion-[backdrop-filter]
+      transition-all
       duration-500
       backdrop
       duration-600
@@ -42,22 +81,120 @@ const { class: className } = Astro.props;
       tracking-wider
       rounded-b-lg"
   >
-    <ul class="list-none flex flex-row gap-4 items-center justify-start">
+    <!-- Desktop Navigation -->
+    <ul
+      class="list-none hidden md:flex flex-row gap-4 items-center justify-start"
+    >
       <Fragment set:html={document} />
     </ul>
+
+    <!-- Mobile Navigation -->
+    <div class="flex justify-between items-center md:hidden py-4">
+      <div class="flex items-center">
+        <Fragment
+          set:html={document.querySelector("li:first-child")?.outerHTML || ""}
+        />
+      </div>
+      <button
+        id="mobile-menu-toggle"
+        class="text-white hover:text-sky-200 transition-colors"
+        aria-label="Toggle mobile menu"
+      >
+        <svg
+          class="w-6 h-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+    </div>
   </nav>
+
+  <!-- Mobile Menu Overlay -->
+  <div id="mobile-menu" class="mobile-menu md:hidden">
+    <div class="absolute top-4 right-4">
+      <button
+        id="mobile-menu-close"
+        class="text-white hover:text-sky-200 transition-colors"
+        aria-label="Close mobile menu"
+      >
+        <svg
+          class="w-8 h-8"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+    <ul class="list-none flex flex-col gap-6 items-center justify-center">
+      <Fragment set:html={document} />
+    </ul>
+  </div>
 </header>
 <script is:inline>
   var prevScrollpos = window.scrollY;
   window.onscroll = function () {
     var currentScrollPos = window.scrollY;
+    var header = document.getElementById("header");
     if (prevScrollpos > currentScrollPos) {
-      document.getElementById("header").style.transform = "translateY(0)";
+      header.style.transform = "translateY(0)";
     } else {
-      document.getElementById("header").style.transform = "translateY(-100%)";
+      header.style.transform = "translateY(-100%)";
     }
     prevScrollpos = currentScrollPos;
   };
+
+  // Mobile menu functionality
+  document.addEventListener("DOMContentLoaded", function () {
+    const mobileMenuToggle = document.getElementById("mobile-menu-toggle");
+    const mobileMenuClose = document.getElementById("mobile-menu-close");
+    const mobileMenu = document.getElementById("mobile-menu");
+
+    if (mobileMenuToggle && mobileMenu) {
+      mobileMenuToggle.addEventListener("click", function () {
+        mobileMenu.classList.add("open");
+        document.body.style.overflow = "hidden";
+      });
+    }
+
+    if (mobileMenuClose && mobileMenu) {
+      mobileMenuClose.addEventListener("click", function () {
+        mobileMenu.classList.remove("open");
+        document.body.style.overflow = "auto";
+      });
+    }
+
+    // Close mobile menu when clicking on a link
+    const mobileMenuLinks = mobileMenu?.querySelectorAll("a");
+    mobileMenuLinks?.forEach((link) => {
+      link.addEventListener("click", function () {
+        mobileMenu.classList.remove("open");
+        document.body.style.overflow = "auto";
+      });
+    });
+
+    // Close mobile menu when clicking outside
+    mobileMenu?.addEventListener("click", function (e) {
+      if (e.target === mobileMenu) {
+        mobileMenu.classList.remove("open");
+        document.body.style.overflow = "auto";
+      }
+    });
+  });
 
   window.addEventListener("load", () => {
     const observer = new IntersectionObserver(
