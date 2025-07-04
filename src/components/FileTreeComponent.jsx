@@ -1,5 +1,65 @@
 import React from 'react';
 
+// Default patterns to ignore
+const DEFAULT_IGNORE_PATTERNS = [
+  "renv",
+  "renv.lock",
+  ".git",
+  ".gitignore",
+  ".Rbuildignore",
+  ".Rprofile",
+  ".Rproj.user",
+  "*.Rproj",
+  ".DS_Store",
+  "rsconnect",
+  "packrat",
+  ".RData",
+  ".Rhistory",
+];
+
+// Helper function to check if a file/directory should be ignored
+const shouldIgnoreItem = (item, ignorePatterns = DEFAULT_IGNORE_PATTERNS) => {
+  const itemName = item.name;
+  const itemPath = item.path;
+
+  return ignorePatterns.some(pattern => {
+    // Handle exact matches
+    if (pattern === itemName || pattern === itemPath) {
+      return true;
+    }
+
+    // Handle glob patterns (simple implementation)
+    if (pattern.includes('*')) {
+      const regex = new RegExp(pattern.replace(/\*/g, '.*'), 'i');
+      return regex.test(itemName) || regex.test(itemPath);
+    }
+
+    // Handle directory patterns (check if path starts with pattern)
+    if (item.type === 'dir' && (itemPath.startsWith(pattern + '/') || itemPath === pattern)) {
+      return true;
+    }
+
+    return false;
+  });
+};
+
+// Helper function to filter items recursively
+const filterItems = (items, ignorePatterns) => {
+  if (!items || !Array.isArray(items)) return items;
+
+  return items
+    .filter(item => !shouldIgnoreItem(item, ignorePatterns))
+    .map(item => {
+      if (item.type === 'dir' && item.children) {
+        return {
+          ...item,
+          children: filterItems(item.children, ignorePatterns)
+        };
+      }
+      return item;
+    });
+};
+
 const FileTreeItem = ({ item, depth = 0, onFileSelect, selectedFile }) => {
   const paddingLeft = `${(depth + 1) * 12}px`;
 
@@ -50,13 +110,28 @@ const FileTreeItem = ({ item, depth = 0, onFileSelect, selectedFile }) => {
   }
 };
 
-const FileTreeComponent = ({ items, onFileSelect, selectedFile }) => {
+const FileTreeComponent = ({
+  items,
+  onFileSelect,
+  selectedFile,
+  ignorePatterns = DEFAULT_IGNORE_PATTERNS,
+}) => {
   if (!items || !Array.isArray(items)) {
     return (
       <div className="p-4 text-center">
         <div className="text-slate-500 mb-2">
-          <svg className="w-8 h-8 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          <svg
+            className="w-8 h-8 mx-auto mb-2"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+            ></path>
           </svg>
           <p className="text-sm">Unable to load file tree</p>
         </div>
@@ -64,9 +139,12 @@ const FileTreeComponent = ({ items, onFileSelect, selectedFile }) => {
     );
   }
 
+  // Filter items based on ignore patterns
+  const filteredItems = filterItems(items, ignorePatterns);
+
   return (
     <div className="p-2">
-      {items.map((item, index) => (
+      {filteredItems.map((item, index) => (
         <FileTreeItem
           key={`${item.path}-${index}`}
           item={item}
