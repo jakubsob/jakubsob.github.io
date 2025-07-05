@@ -197,29 +197,15 @@ if (readmeContent) {
 }
 ---
 
-<!doctype html>
-<html lang="en">
-  <BaseLayout title={`${dirName} - R Tests Gallery`}>
-    <main
-      class="bg-marine-50 pt-20"
-      style="
-    z-index: 0;
-    opacity: 1;
-    mix-blend-mode: overlay;
-    background-image: url(/noise-sky.svg);
-    background-position: 0 0;
-    background-repeat: repeat-y;
-    background-size: contain;
-    background-attachment: scroll;
-    inset: 0%;"
-    >
-      <HeaderDefault />
-      <!-- README Content Section -->
-      {
-        renderedReadmeContent && (
-          <section class="bg-marine-50 bg-noise-sky">
-            <article
-              class="prose
+<BaseLayout title={`${dirName} - R Tests Gallery`}>
+  <main class="bg-marine-50 pt-20">
+    <HeaderDefault />
+    <!-- README Content Section -->
+    {
+      renderedReadmeContent && (
+        <section class="bg-marine-50">
+          <article
+            class="prose
               prose-h1:capitalize
               prose-h1:mb-2
               prose-h1:font-medium
@@ -232,20 +218,19 @@ if (readmeContent) {
               prose-blockquote:font-light
               prose-img:w-full
               mx-auto px-2 py-8"
-            >
-              <Fragment set:html={renderedReadmeContent} />
-            </article>
-          </section>
-        )
-      }
-      <section id="code" class="py-8">
-        <IDEInterface
-          fileTree={fileTree}
-          dirName={dirName}
-          hasError={hasError}
-          client:load
-        />
-      </section>
-    </main>
-  </BaseLayout>
-</html>
+          >
+            <Fragment set:html={renderedReadmeContent} />
+          </article>
+        </section>
+      )
+    }
+    <section id="code" class="py-8">
+      <IDEInterface
+        fileTree={fileTree}
+        dirName={dirName}
+        hasError={hasError}
+        client:load
+      />
+    </section>
+  </main>
+</BaseLayout>

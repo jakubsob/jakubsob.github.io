@@ -1,29 +1,29 @@
 ---
 import BaseHead from "../components/BaseHead.astro";
 import Footer from "../components/Footer.astro";
+import HeaderDefault from "../components/HeaderDefault.astro";
 ---
 
 <html lang="en">
-  <style is:global>
-    main > section {
-      padding-left: 1rem;
-      padding-right: 1rem;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-  </style>
-  <BaseHead
-    {...{
-      title: "Testing in R",
-      description:
-        "Learn how to effectively test in R and use tests to drive your development process.",
-      ...Astro.props,
-    }}
-  />
-  <slot name="head" />
-  <body>
+  <head>
+    <style is:global>
+      html {
+        scroll-behavior: smooth;
+      }
+    </style>
+    <BaseHead
+      {...{
+        title: "Testing in R",
+        description:
+          "Learn how to effectively test in R and use tests to drive your development process.",
+        ...Astro.props,
+      }}
+    />
+    <HeaderDefault />
+    <slot name="head" />
+  </head>
+  <body class="bg-sky-700 pt-[56px]">
     <slot />
-  </body><Footer />
+    <Footer />
+  </body>
 </html>

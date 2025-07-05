@@ -29,7 +29,7 @@ const { posts } = Astro.props;
       <HeaderDefault />
       <section
         id="hero"
-        class="bg-sky-700 bg-noise h-[50vh]
+        class="bg-sky-700 h-[50vh]
         relative
         overflow-hidden
         text-white
@@ -64,7 +64,7 @@ const { posts } = Astro.props;
           </h1>
         </div>
       </section>
-      <section id="blog" class="bg-marine-50 bg-noise-sky">
+      <section id="blog" class="bg-marine-50">
         <div class="max-w-[65ch] mx-auto">
           <PostList client:load posts={posts} showControls={false} />
         </div>

@@ -1,171 +1,163 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import HeaderDefault from "../../components/HeaderDefault.astro";
-import Resources from "../../components/Resources.jsx";
+import { Section } from "@/components/ui/section";
+import Resources from "../../components/Resources.tsx";
 ---
 
-<!doctype html>
-<html>
-  <BaseLayout
-    title="Resources for learning Shiny"
-    meta="A collection of resources to help you learn Shiny, a web application framework for R. Learn software and UI design."
-  >
-    <main>
-      <HeaderDefault />
-      <section
-        id="hero"
-        class="h-[50vh] bg-sky-700 bg-noise
-        grid items-center justify-items-start"
-      >
-        <div class="mx-auto text-white">
-          <h1
-            class="text-white text-3xl py-4 font-syne tracking-wider flex flex-row gap-2 items-end flex-wrap"
-          >
-            {
-              [
-                ..."What made me a better engineer".split(" ").map((word) => {
-                  return <span>{word}</span>;
-                }),
-                <span class="size-8 text-sky-400">
-                  <svg
-                    width="100%"
-                    height="100%"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M4.5 22V17M4.5 7V2M2 4.5H7M2 19.5H7M13 3L11.2658 7.50886C10.9838 8.24209 10.8428 8.60871 10.6235 8.91709C10.4292 9.1904 10.1904 9.42919 9.91709 9.62353C9.60871 9.84281 9.24209 9.98381 8.50886 10.2658L4 12L8.50886 13.7342C9.24209 14.0162 9.60871 14.1572 9.91709 14.3765C10.1904 14.5708 10.4292 14.8096 10.6235 15.0829C10.8428 15.3913 10.9838 15.7579 11.2658 16.4911L13 21L14.7342 16.4911C15.0162 15.7579 15.1572 15.3913 15.3765 15.0829C15.5708 14.8096 15.8096 14.5708 16.0829 14.3765C16.3913 14.1572 16.7579 14.0162 17.4911 13.7342L22 12L17.4911 10.2658C16.7579 9.98381 16.3913 9.8428 16.0829 9.62353C15.8096 9.42919 15.5708 9.1904 15.3765 8.91709C15.1572 8.60871 15.0162 8.24209 14.7342 7.50886L13 3Z"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    />
-                  </svg>
-                </span>,
-              ]
-            }
-          </h1>
-          <h2 class="font-syne tracking-wider text-sky-200">
-            Learning TDD, BDD, software and UI design.
-          </h2>
-        </div>
-      </section>
-      <section>
-        <Resources
-          client:load
-          items={[
-            {
-              title: "Continuous Delivery",
-              group: "Software Design",
-              actionability: "Back to back",
-              format: "Youtube",
-              href: "https://www.Youtube.com/@ContinuousDelivery",
-              description:
-                "Dave Farley teaches Agile sofware development, how to build always releasable software in small increments. Videos on the channel help understand the principles of TDD and BDD and how to practice them effectively.",
-            },
-            {
-              title: "Modern Software Engineering",
-              group: "Software Design",
-              actionability: "Back to back",
-              format: "Book",
-              href: "https://www.goodreads.com/book/show/57345270-modern-software-engineerin",
-              description:
-                "Learn how to manage software complexity with concepts of modularity, cohesion, separation of concerns, information hiding and coupling. After reading this book, you'll understand how to write software that is easier to change.",
-            },
-            {
-              title: "XUnit Test Patterns",
-              group: "Software Design",
-              actionability: "Lookup",
-              format: "Website",
-              href: "http://xunitpatterns.com/",
-              description:
-                "A website for a book under the same title. I find it useful to browse it occasionally and consume its content bit by bit to find out how to write better tests.",
-            },
-            {
-              title: "Refactoring Guru: Design Patterns",
-              group: "Software Design",
-              actionability: "Lookup",
-              format: "Website",
-              href: "https://refactoring.guru/design-patterns",
-              description:
-                "Easy Lookup of design patterns with examples on when to use which. I find it especially useful for designing {R6} classes.",
-            },
-            {
-              title: "Refactoring UI",
-              group: "UI/UX Design",
-              actionability: "Back to back",
-              format: "Book",
-              href: "https://www.refactoringui.com/",
-              description:
-                "If you want to improve your designs, but don't have time to study, make time only for this book. It has all you need to know to start creating better designs immediately. Each heuristic is explained with examples.",
-            },
-            {
-              title: "Dribbble",
-              group: "UI/UX Design",
-              actionability: "Lookup",
-              format: "Website",
-              href: "https://dribbble.com",
-              description:
-                "A resource of design inspiration. Look it up before implementing a new page in the app for layouts and color schemes.",
-            },
-            {
-              title: "Nielsen Norman",
-              group: "UI/UX Design",
-              actionability: "Lookup",
-              format: "Website",
-              href: "https://www.nngroup.com/",
-              description:
-                "A site with research-based articles on design and usability. Use it to understand what patterns to use to improve usability of your interfaces.",
-            },
-            {
-              title: "Flux Academy",
-              group: "UI/UX Design",
-              actionability: "Back to back",
-              format: "Youtube",
-              href: "https://www.Youtube.com/@FluxAcademy",
-              description:
-                "Videos on design principles with examples how to apply them. See how design process looks like in real life.",
-            },
-            {
-              title: "Design Course",
-              group: "UI/UX Design",
-              actionability: "Back to back",
-              format: "Youtube",
-              href: "https://www.Youtube.com/@DesignCourse",
-              description:
-                "Videos with redesigns are especially useful to understand how sometimes small a change can impact the design in a big way.",
-            },
-            {
-              title: "UnDraw",
-              group: "UI/UX Design",
-              actionability: "Lookup",
-              format: "Website",
-              href: "https://undraw.co/",
-              description:
-                "A resource for open-source vector illustrations. They're easy to customise in Figma to fit in your design.",
-            },
-            {
-              title: "Show Your Work",
-              group: "Career",
-              actionability: "Back to back",
-              format: "Book",
-              href: "https://www.goodreads.com/book/show/18290401-show-your-work",
-              description:
-                "Don't let imposter syndrome get to you, show your work! Contributing something is better than contributing nothing. Show your process, not only final products. If your work isn't online, it doesn't exist.",
-            },
-            {
-              title: "Ship 30 for 30",
-              group: "Career",
-              actionability: "Lookup",
-              format: "Website",
-              href: "https://www.ship30for30.com/blog",
-              description:
-                "Improve your technical writing by using techniques for online writing. Learn how to struture paragraphs for better scannability, and how to present your ideas in a way that is easy to understand.",
-            },
-          ]}
-        />
-      </section>
-    </main>
-  </BaseLayout>
-</html>
+<BaseLayout
+  title="Resources for learning Shiny"
+  meta="A collection of resources to help you learn Shiny, a web application framework for R. Learn software and UI design."
+>
+  <Section id="hero" variant="dark" size="md">
+    <div class="grid place-items-center h-full">
+      <div class="mx-auto text-white">
+        <h1
+          class="text-white text-3xl py-4 font-syne tracking-wider flex flex-row gap-2 items-end flex-wrap"
+        >
+          {
+            [
+              ..."What made me a better engineer".split(" ").map((word) => {
+                return <span>{word}</span>;
+              }),
+              <span class="size-8 text-sky-400">
+                <svg
+                  width="100%"
+                  height="100%"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M4.5 22V17M4.5 7V2M2 4.5H7M2 19.5H7M13 3L11.2658 7.50886C10.9838 8.24209 10.8428 8.60871 10.6235 8.91709C10.4292 9.1904 10.1904 9.42919 9.91709 9.62353C9.60871 9.84281 9.24209 9.98381 8.50886 10.2658L4 12L8.50886 13.7342C9.24209 14.0162 9.60871 14.1572 9.91709 14.3765C10.1904 14.5708 10.4292 14.8096 10.6235 15.0829C10.8428 15.3913 10.9838 15.7579 11.2658 16.4911L13 21L14.7342 16.4911C15.0162 15.7579 15.1572 15.3913 15.3765 15.0829C15.5708 14.8096 15.8096 14.5708 16.0829 14.3765C16.3913 14.1572 16.7579 14.0162 17.4911 13.7342L22 12L17.4911 10.2658C16.7579 9.98381 16.3913 9.8428 16.0829 9.62353C15.8096 9.42919 15.5708 9.1904 15.3765 8.91709C15.1572 8.60871 15.0162 8.24209 14.7342 7.50886L13 3Z"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </span>,
+            ]
+          }
+        </h1>
+        <h2 class="font-syne tracking-wider text-sky-200">
+          Learning TDD, BDD, software and UI design.
+        </h2>
+      </div>
+    </div>
+  </Section>
+  <Section variant="light">
+    <Resources
+      client:load
+      items={[
+        {
+          title: "Continuous Delivery",
+          group: "Software Design",
+          actionability: "Back to back",
+          format: "Youtube",
+          href: "https://www.Youtube.com/@ContinuousDelivery",
+          description:
+            "Dave Farley teaches Agile sofware development, how to build always releasable software in small increments. Videos on the channel help understand the principles of TDD and BDD and how to practice them effectively.",
+        },
+        {
+          title: "Modern Software Engineering",
+          group: "Software Design",
+          actionability: "Back to back",
+          format: "Book",
+          href: "https://www.goodreads.com/book/show/57345270-modern-software-engineerin",
+          description:
+            "Learn how to manage software complexity with concepts of modularity, cohesion, separation of concerns, information hiding and coupling. After reading this book, you'll understand how to write software that is easier to change.",
+        },
+        {
+          title: "XUnit Test Patterns",
+          group: "Software Design",
+          actionability: "Lookup",
+          format: "Website",
+          href: "http://xunitpatterns.com/",
+          description:
+            "A website for a book under the same title. I find it useful to browse it occasionally and consume its content bit by bit to find out how to write better tests.",
+        },
+        {
+          title: "Refactoring Guru: Design Patterns",
+          group: "Software Design",
+          actionability: "Lookup",
+          format: "Website",
+          href: "https://refactoring.guru/design-patterns",
+          description:
+            "Easy Lookup of design patterns with examples on when to use which. I find it especially useful for designing {R6} classes.",
+        },
+        {
+          title: "Refactoring UI",
+          group: "UI/UX Design",
+          actionability: "Back to back",
+          format: "Book",
+          href: "https://www.refactoringui.com/",
+          description:
+            "If you want to improve your designs, but don't have time to study, make time only for this book. It has all you need to know to start creating better designs immediately. Each heuristic is explained with examples.",
+        },
+        {
+          title: "Dribbble",
+          group: "UI/UX Design",
+          actionability: "Lookup",
+          format: "Website",
+          href: "https://dribbble.com",
+          description:
+            "A resource of design inspiration. Look it up before implementing a new page in the app for layouts and color schemes.",
+        },
+        {
+          title: "Nielsen Norman",
+          group: "UI/UX Design",
+          actionability: "Lookup",
+          format: "Website",
+          href: "https://www.nngroup.com/",
+          description:
+            "A site with research-based articles on design and usability. Use it to understand what patterns to use to improve usability of your interfaces.",
+        },
+        {
+          title: "Flux Academy",
+          group: "UI/UX Design",
+          actionability: "Back to back",
+          format: "Youtube",
+          href: "https://www.Youtube.com/@FluxAcademy",
+          description:
+            "Videos on design principles with examples how to apply them. See how design process looks like in real life.",
+        },
+        {
+          title: "Design Course",
+          group: "UI/UX Design",
+          actionability: "Back to back",
+          format: "Youtube",
+          href: "https://www.Youtube.com/@DesignCourse",
+          description:
+            "Videos with redesigns are especially useful to understand how sometimes small a change can impact the design in a big way.",
+        },
+        {
+          title: "UnDraw",
+          group: "UI/UX Design",
+          actionability: "Lookup",
+          format: "Website",
+          href: "https://undraw.co/",
+          description:
+            "A resource for open-source vector illustrations. They're easy to customise in Figma to fit in your design.",
+        },
+        {
+          title: "Show Your Work",
+          group: "Career",
+          actionability: "Back to back",
+          format: "Book",
+          href: "https://www.goodreads.com/book/show/18290401-show-your-work",
+          description:
+            "Don't let imposter syndrome get to you, show your work! Contributing something is better than contributing nothing. Show your process, not only final products. If your work isn't online, it doesn't exist.",
+        },
+        {
+          title: "Ship 30 for 30",
+          group: "Career",
+          actionability: "Lookup",
+          format: "Website",
+          href: "https://www.ship30for30.com/blog",
+          description:
+            "Improve your technical writing by using techniques for online writing. Learn how to struture paragraphs for better scannability, and how to present your ideas in a way that is easy to understand.",
+        },
+      ]}
+    />
+  </Section>
+</BaseLayout>

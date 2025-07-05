@@ -1,8 +1,10 @@
 ---
-import HeaderDefault from "../components/HeaderDefault.astro";
 import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import PostList from "../components/PostList.jsx";
+import { Button } from "@/components/ui/button";
+import { Section } from "@/components/ui/section";
+import { SubscribeButton } from "@/components/ui/subscribe-button";
 
 const posts = (await getCollection("blog"))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
@@ -10,198 +12,103 @@ const posts = (await getCollection("blog"))
   .filter((_, index) => index < 3);
 ---
 
-<!doctype html>
-<html lang="en">
-  <BaseLayout>
-    <style>
-      #test {
-        filter: brightness(0.6);
-      }
-    </style>
-    <main class="relative bg-sky-50 bg-noise-sky">
-      <HeaderDefault />
-      <section
-        id="hero"
-        class="bg-sky-700 h-[100vh]
-          relative
-          overflow-hidden
-          text-white
-          grid
-          bg-noise
-          items-center justify-items-start
-          grid-cols-1 grid-rows-1
-          lg:grid-cols-1 lg:grid-rows-1
-          p-4"
-      >
-        <div
-          class="self-center justify-self-center
-lg:self-center lg:justify-self-center lg:col-span-2"
-        >
-          <h2 class="text-sky-200 mb-5 font-light relative font-syne">
-            <img
-              id="test"
-              src="test.svg"
-              alt="Code editor with lines of code as colorful blocks"
-              class="absolute z-[-1] left-[40ch] top-0 h-[clamp(200px,50vw,400px)]"
-            />
-            Hi, my name is <span class="text-white font-semibold"
-              >Jakub Sobolewski</span
-            > and this is
-          </h2>
-          <h1 class="text-clamp font-code font-bold text-white mb-5 relative">
-            <span>Building quality by testing </span>
-          </h1>
-          <h2 class="text-sky-200 font-light font-syne mb-12">
-            <p>
-              I’m a software engineer specialising in R with 5+ years of
-              experience.
-            </p>
-            <p>
-              I practice automated testing to develop software more efficiently.
-            </p>
-            <p>I share what I've learned</p>
-          </h2>
-          <div class="flex gap-4">
-            <div>
-              <form
-                data-v-a750b30b=""
-                action="https://api.follow.it/subscription-form/ZXExLzNLWHB1MC9VVkZKSjZXNlN4QzJ0V3RwRnk3bUUwWGtFSHFEUXVUbDBPQ3pnVi9lUmg1cFo1Y3M0cGd1dHRpbmppcXJ2eHFGaUZJb0ZmT2N5ZXV4dm9vb3hYWmE3RWNnZVAxeU9tNzJEQjYyd1NMeEUzRUU2b201Y2VDNUt8Z3pqdXUvUEEzRUduNGJBa0UrZHZCUVFySjdkdVZaVzZLRXRwZkl4WUFTTT0=/8"
-                method="post"
-              >
-                <div data-v-a750b30b="" class="flex flex-row items-center">
-                  <div class="relative">
-                    <div
-                      class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none"
-                    >
-                      <svg
-                        class="w-4 h-4 text-gray-500"
-                        aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="currentColor"
-                        viewBox="0 0 20 16"
-                      >
-                        <path
-                          d="m10.036 8.278 9.258-7.79A1.979 1.979 0 0 0 18 0H2A1.987 1.987 0 0 0 .641.541l9.395 7.737Z"
-                        ></path>
-                        <path
-                          d="M11.241 9.817c-.36.275-.801.425-1.255.427-.428 0-.845-.138-1.187-.395L0 2.6V14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2.5l-8.759 7.317Z"
-                        ></path>
-                      </svg>
-                    </div>
-                    <input
-                      data-v-a750b30b=""
-                      type="email"
-                      name="email"
-                      required=""
-                      placeholder="Enter your email"
-                      spellcheck="false"
-                      id="input-group-1"
-                      class="min-w-[300px] border border-sky-50 bg-sky-50 text-gray-900 rounded-lg rounded-r-none focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5"
-                      placeholder="name@flowbite.com"
-                    />
-                  </div>
-                  <button
-                    data-v-a750b30b=""
-                    type="submit"
-                    class="p-2.5 bg-ocean-green-500 border border-ocean-green-500 h-full text-white font-code tracking-wider font-bold uppercase w-full h-full rounded-l-none rounded-r-lg transition-all duration-300 hover:bg-transparent hover:border-sky-50"
-                    >Subscribe
-                  </button>
-                </div>
-              </form>
-            </div>
-            <button
-              class="p-2.5 px-6
-              rounded-lg
-              bg-marine-100
-              text-sky
-              transition-all duration-300
-              font-code tracking-wider font-bold uppercase
-              border border-white/0
-              hover:border-white hover:bg-transparent hover:text-white"
-            >
-              <a href="/blog"> Read </a>
-            </button>
-          </div>
-        </div>
-      </section>
-      <section
-        id="testimonials"
-        class="h-[60vh]
-        bg-sky-50 bg-noise-sky
-        flex items-center justify-center"
-      >
-        <div class="rounded-lg p-10 bg-sky-700 text-white w-full max-w-[65ch]">
-          <div class="text-xl mb-5">
-            <img
-              src="fa_quote-left.svg"
-              class="pb-4 opacity-50 size-10"
-              alt="Double quotes"
-              width="50"
-              height="50"
-            />
-            <span>
-              "[...] many thought provoking posts that he has on his blog [...]"
-            </span>
-          </div>
-          <p class="text-md text-sky-100">
-            Eric Nantz,
-            <a
-              class="text-sky-100 underline"
-              href="https://serve.podhome.fm/episodepage/r-weekly-highlights/issue-2024-w43-highlights"
-            >
-              R Weekly Podcast, Issue 2024-W43
-            </a>
+<BaseLayout>
+  <style>
+    #test {
+      filter: brightness(0.6);
+    }
+  </style>
+  <Section variant="dark" size="lg" id="hero">
+    <div class="grid place-items-center h-full">
+      <div>
+        <h2 class="text-sky-200 mb-5 font-light relative font-syne">
+          Hi, my name is <span class="text-white font-semibold"
+            >Jakub Sobolewski</span
+          > and this is
+        </h2>
+        <h1 class="text-clamp font-code font-bold text-white mb-5 relative">
+          <span>Building quality by testing </span>
+        </h1>
+        <h2 class="text-sky-200 font-light font-syne mb-12">
+          <p>
+            I’m a software engineer specialising in R with 5+ years of
+            experience.
           </p>
+          <p>
+            I practice automated testing to develop software more efficiently.
+          </p>
+          <p>Here I share what I've learned</p>
+        </h2>
+        <div class="flex gap-4">
+          <SubscribeButton variant="lg" />
+          <Button variant="outline">
+            <a href="/blog"> Read </a>
+          </Button>
         </div>
-      </section>
-      <section id="blog" class="bg-white bg-noise-sky">
-        <article
-          class="col-start-1 max-w-[65ch] mx-auto order-2
-          h-[100vh]
-          flex flex-col justify-center gap-8"
+      </div>
+    </div>
+  </Section>
+  <!-- <Section id="testimonials">
+    <div class="rounded-lg p-10 bg-sky-700 text-white w-full max-w-[65ch]">
+      <div class="text-xl mb-5">
+        <img
+          src="fa_quote-left.svg"
+          class="pb-4 opacity-50 size-10"
+          alt="Double quotes"
+          width="50"
+          height="50"
+        />
+        <span>
+          "[...] many thought provoking posts that he has on his blog [...]"
+        </span>
+      </div>
+      <p class="text-md text-sky-100">
+        Eric Nantz,
+        <a
+          class="text-sky-100 underline"
+          href="https://serve.podhome.fm/episodepage/r-weekly-highlights/issue-2024-w43-highlights"
         >
-          <h2 class="flex gap-2 align-baseline text-3xl font-syne">
-            <div class="size-8">
-              <svg
-                width="100%"
-                height="100%"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M12 2V22M19.0711 4.92893L4.92893 19.0711M22 12H2M19.0711 19.0711L4.92893 4.92893"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"></path>
-              </svg>
-            </div>
-            Explore what's new on the blog
-          </h2>
-          <PostList client:load posts={posts} showControls={false} />
-          <button
-            class="rounded-full px-6 py-4 bg-sky-700 text-white text-xl w-fit
-              transition-all duration-300
-              border border-2 border-transparent
-              hover:text-sky-900 hover:bg-white hover:border-sky-700"
+          R Weekly Podcast, Issue 2024-W43
+        </a>
+      </p>
+    </div>
+  </Section> -->
+  <Section id="blog" size="full" className="">
+    <div class="h-full max-w-[65ch] mx-auto flex flex-col justify-center">
+      <h2 class="flex gap-2 align-baseline text-3xl font-syne">
+        <div class="size-8">
+          <svg
+            width="100%"
+            height="100%"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
           >
-            <a href="/blog">Read more →</a>
-          </button>
-        </article>
-      </section>
-      <script
-        is:inline
-        src="https://cdn.jsdelivr.net/npm/motion@11.11.13/dist/motion.js"
-      ></script>
-      <script is:inline>
-        const { animate, scroll } = Motion;
-        document.querySelectorAll("#test").forEach((item) => {
-          scroll(animate(item, { y: 70 }, { ease: "linear" }), {
-            target: item,
-          });
-        });
-      </script>
-    </main>
-  </BaseLayout>
-</html>
+            <path
+              d="M12 2V22M19.0711 4.92893L4.92893 19.0711M22 12H2M19.0711 19.0711L4.92893 4.92893"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"></path>
+          </svg>
+        </div>
+        Explore what's new on the blog
+      </h2>
+      <PostList client:load posts={posts} showControls={false} />
+      <Button variant="pill" size="xl">
+        <a href="/blog">Read more →</a>
+      </Button>
+    </div>
+  </Section>
+  <script
+    is:inline
+    src="https://cdn.jsdelivr.net/npm/motion@11.11.13/dist/motion.js"></script>
+  <script is:inline>
+    const { animate, scroll } = Motion;
+    document.querySelectorAll("#test").forEach((item) => {
+      scroll(animate(item, { y: 70 }, { ease: "linear" }), {
+        target: item,
+      });
+    });
+  </script>
+</BaseLayout>
