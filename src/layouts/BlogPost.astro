@@ -30,7 +30,7 @@ const { title, description, pubDate, updatedDate, tags } = post.data;
           prose-img:w-full
           mx-auto px-2"
     >
-      <header class="border-b-[1px] border-solid border-gray-400 pb-2">
+      <header class="border-b-[1px] border-solid border-slate-300 pb-2">
         <h1 class="lead text-balance">{title}</h1>
         {description && <h2 class="m-0">{description}</h2>}
         <div class="flex flex-row items-baseline gap-6 text-sm uppercase">
@@ -63,8 +63,11 @@ const { title, description, pubDate, updatedDate, tags } = post.data;
         </div>
       </header>
       <slot />
-      <center class="py-16">
-        <SubscribeButton center={true} />
+      <center class="py-28 space-y-2 border-t border-slate-300">
+        <p class="text-slate-500">
+          Get updates on new posts, articles, and more:
+        </p>
+        <SubscribeButton />
       </center>
     </article>
   </Section>
