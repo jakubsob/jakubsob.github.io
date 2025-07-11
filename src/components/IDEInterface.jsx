@@ -111,7 +111,6 @@ const IDEInterface = ({ fileTree, dirName, hasError }) => {
         grid
         grid-cols-1
         lg:grid-cols-[300px_1fr]
-        container mx-auto
         border border-slate-200"
     >
       {/* Left Sidebar - File Tree */}
