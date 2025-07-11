@@ -4,7 +4,6 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import PostList from "../components/PostList.jsx";
 import { Button } from "@/components/ui/button";
 import { Section } from "@/components/ui/section";
-import { SubscribeButton } from "@/components/ui/subscribe-button";
 
 const posts = (await getCollection("blog"))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
@@ -18,32 +17,136 @@ const posts = (await getCollection("blog"))
       filter: brightness(0.6);
     }
   </style>
-  <Section variant="dark" size="lg" id="hero">
-    <div class="grid place-items-center h-full">
-      <div>
-        <h2 class="text-sky-200 mb-5 font-light relative font-syne">
-          Hi, my name is <span class="text-white font-semibold"
-            >Jakub Sobolewski</span
-          > and this is
-        </h2>
-        <h1 class="text-clamp font-code font-bold text-white mb-5 relative">
-          <span>Building quality by testing </span>
-        </h1>
-        <h2 class="text-sky-200 font-light font-syne mb-12">
-          <p>
-            I’m a software engineer specialising in R with 5+ years of
-            experience.
-          </p>
-          <p>
-            I practice automated testing to develop software more efficiently.
-          </p>
-          <p>Here I share what I've learned</p>
-        </h2>
-        <div class="flex gap-4">
-          <SubscribeButton variant="lg" />
-          <Button variant="outline">
+  <Section variant="dark" size="full" id="hero">
+    <div class="container mx-auto h-screen">
+      <div
+        class="h-screen grid grid-cols-1 md:grid-cols-2 md:grid-rows-[auto_1fr]"
+      >
+        <div
+          class="place-self-end mb-6 md:mb-0 md:place-self-start md:col-span-2 pt-[60px]"
+        >
+          <h1
+            class="font-geist text-start text-[15vw] uppercase text-white text-center leading-[0.8em]"
+          >
+            <span class="text-ocean-green-100 italic">quality</span>
+            <span class="whitespace-nowrap">by testing</span>
+          </h1>
+        </div>
+        <div class="self-start md:self-center md:text-start">
+          <h2 class="text-sky-200 font-light">
+            My name is <span class="text-ocean-green-100 font-semibold"
+              >Jakub Sobolewski.</span
+            >
+            <p>
+              I’m a software engineer specializing in R with 5+ years of
+              experience.
+            </p>
+            <p>
+              I believe automated testing is the key to building quality
+              software.
+            </p>
+          </h2>
+        </div>
+        <div class="flex gap-4 self-start md:self-center md:justify-self-end">
+          <Button
+            variant="destructive"
+            size="xl"
+            className="text-xl uppercase w-full md:w-fit"
+          >
+            <a href="https://follow.it/jakub-sobolewski?leanpub"> Subscribe </a>
+          </Button>
+          <Button
+            variant="outline"
+            size="xl"
+            className="text-xl uppercase w-full md:w-fit"
+          >
             <a href="/blog"> Read </a>
           </Button>
+        </div>
+      </div>
+    </div>
+  </Section>
+  <Section id="about" size="fit" variant="light">
+    <div class="pb-40 pt-40 space-y-40">
+      <div class="container grid grid-cols-1 md:grid-cols-2">
+        <h2 class="text-6xl uppercase mb-12">About me</h2>
+        <div class="max-w-[65ch] space-y-8 font-light">
+          <p>
+            My journey into R testing began with a project where to develop
+            code, you had to be connected to the production environment. Turns
+            out, it was a terrible developer experience.
+          </p>
+          <p>
+            I'm particularly passionate about knowledge sharing, which is why I
+            maintain an active blog and R Tests Gallery. I believe that when we
+            share our testing experiences—both successes and failures—we all
+            become better developers.
+          </p>
+          <p>
+            I approach testing with a practical mindset: tests should make
+            development faster and more confident, not slower and more
+            burdensome. My goal is to help teams find testing strategies that
+            actually enhance their workflow.
+          </p>
+        </div>
+      </div>
+      <div class="container grid grid-cols-1 md:grid-cols-2">
+        <h2 class="text-6xl uppercase mb-12">My open source projects</h2>
+        <div class="max-w-[65ch] space-y-8 font-light">
+          <a
+            href="https://github.com/jakubsob/muttest"
+            target="_blank"
+            class="block transition-all group"
+          >
+            <div class="flex">
+              <div class="size-[100px] flex-shrink-0">
+                <img
+                  class="w-full h-full object-contain"
+                  src="https://raw.githubusercontent.com/jakubsob/muttest/main/man/figures/logo.png"
+                  alt="muttest logo"
+                  width="100"
+                  height="100"
+                />
+              </div>
+              <div class="ml-6 flex flex-col">
+                <h3 class="uppercase text-2xl group-hover:underline">
+                  Muttest
+                </h3>
+                <p class="mt-auto">
+                  A mutation testing framework for R. It helps you identify gaps
+                  in your test coverage by introducing small changes to your
+                  code and checking if your tests catch them.
+                </p>
+              </div>
+            </div>
+          </a>
+          <a
+            href="https://github.com/jakubsob/cucumber"
+            target="_blank"
+            class="block transition-all group"
+          >
+            <div class="flex">
+              <div class="size-[100px] flex-shrink-0">
+                <img
+                  class="w-full h-full object-contain"
+                  src="https://raw.githubusercontent.com/jakubsob/cucumber/main/man/figures/logo.png"
+                  alt="cucumber logo"
+                  width="100"
+                  height="100"
+                />
+              </div>
+              <div class="ml-6 flex flex-col">
+                <h3 class="uppercase text-2xl group-hover:underline">
+                  Cucumber
+                </h3>
+                <p class="mt-auto">
+                  A behavior-driven development (BDD) framework for R. It allows
+                  you to write human-readable tests that describe the behavior
+                  of your software.
+                </p>
+              </div>
+            </div>
+          </a>
         </div>
       </div>
     </div>
@@ -73,31 +176,21 @@ const posts = (await getCollection("blog"))
       </p>
     </div>
   </Section> -->
-  <Section id="blog" size="full" className="">
-    <div class="h-full max-w-[65ch] mx-auto flex flex-col justify-center">
-      <h2 class="flex gap-2 align-baseline text-3xl font-syne">
-        <div class="size-8">
-          <svg
-            width="100%"
-            height="100%"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M12 2V22M19.0711 4.92893L4.92893 19.0711M22 12H2M19.0711 19.0711L4.92893 4.92893"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"></path>
-          </svg>
+  <Section id="blog" size="fit" variant="light">
+    <div class="pb-40 space-y-52">
+      <div class="container grid grid-cols-1 md:grid-cols-2">
+        <div class="mb-12">
+          <h2 class="flex text-6xl uppercase">New on the blog</h2>
         </div>
-        Explore what's new on the blog
-      </h2>
-      <PostList client:load posts={posts} showControls={false} />
-      <Button variant="pill" size="xl">
-        <a href="/blog">Read more →</a>
-      </Button>
+        <div class="order-3 mt-12 md:order-2 md:self-end">
+          <Button variant="pill" size="xl">
+            <a href="/blog">Read more →</a>
+          </Button>
+        </div>
+        <div class="h-full max-w-[65ch] row-span-2">
+          <PostList client:load posts={posts} showControls={false} />
+        </div>
+      </div>
     </div>
   </Section>
   <script

@@ -21,10 +21,7 @@ export default {
         syne: ["Syne Variable", "sans-serif"],
         monoton: ["Monoton", "serif"],
       },
-      fontSize: {
-        clamp: "clamp(2rem, 5vw, 3rem)",
-        "clamp-md": "clamp(1.25rem, 2vw, 1.5rem)",
-      },
+      fontSize: {},
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

@@ -14,7 +14,7 @@ const { title, description, pubDate, updatedDate, tags } = post.data;
 
 <BaseLayout {...post.data}>
   <BlogPostJSONLD slot="head" {...post.data} />
-  <Section variant="light">
+  <Section variant="light" className="pt-[60px]">
     <article
       class="prose
           prose-h1:capitalize
