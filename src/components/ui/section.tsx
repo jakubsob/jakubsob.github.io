@@ -8,8 +8,8 @@ const sectionVariants = cva(
   {
     variants: {
       variant: {
-        light: "bg-white bg-gray-50 px-4 bg-[url('/noise-sky.svg')] bg-repeat",
-        dark: "bg-sky-700 px-4",
+        light: "bg-white bg-gray-50 bg-[url('/noise-sky.svg')] bg-repeat",
+        dark: "bg-sky-700",
       },
       size: {
         fit: "h-fit",
