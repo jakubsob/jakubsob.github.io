@@ -14,8 +14,23 @@ const posts = (await getCollection("blog"))
 
 <BaseLayout>
   <style>
-    #test {
-      filter: brightness(0.6);
+    .letter-hover {
+      transition: color 0.3s ease;
+    }
+    .letter-hover-green {
+      transition: color 0.3s ease;
+    }
+
+    .letter-hover:hover {
+      color: var(--color-red-500) !important;
+      filter: blur(0.01em);
+    }
+    .letter-hover-green:hover {
+      color: var(--color-ocean-green-700) !important;
+    }
+    .letter-hover:hover {
+      color: var(--color-red-500) !important;
+      filter: blur(0.01em);
     }
   </style>
   <Section variant="dark" size="full" id="hero">
@@ -27,19 +42,47 @@ const posts = (await getCollection("blog"))
           class="mb-6 md:mb-0 place-self-center sm:place-self-start md:col-span-2 pt-[60px]"
         >
           <h1
-            class="font-geist text-start text-[clamp(12vw,15vw,15em)] uppercase text-white leading-[0.8em]"
+            class="font-geist text-start text-[clamp(12vw,15vw,15em)] uppercase text-white leading-[0.8em] space-y-1"
           >
             <span class="tracking-[0.02em] leading-[0.8em] flex items-center">
-              <Asterisk className="inline-block size-[1em]" />
-              Building
+              <Asterisk
+                className="letter-hover inline-block size-[1em] text-red-500"
+              />
+              <span class="letter-hover">B</span>
+              <span class="letter-hover">u</span>
+              <span class="letter-hover">i</span>
+              <span class="letter-hover">l</span>
+              <span class="letter-hover">d</span>
+              <span class="letter-hover">i</span>
+              <span class="letter-hover">n</span>
+              <span class="letter-hover">g</span>
             </span>
             <span
-              class="text-ocean-green-100 italic font-serif leading-[1.1em] tracking-[0.1em] flex"
+              class="text-ocean-green-100 italic font-serif leading-[1em] tracking-[0.1em] flex items-center"
             >
-              quality
-              <CornerDownLeft className="inline-block size-[1em]" /></span
-            >
-            <span class="whitespace-nowrap">by testing </span>
+              <span class="letter-hover-green">q</span>
+              <span class="letter-hover-green">u</span>
+              <span class="letter-hover-green">a</span>
+              <span class="letter-hover-green">l</span>
+              <span class="letter-hover-green">i</span>
+              <span class="letter-hover-green">t</span>
+              <span class="letter-hover-green">y</span>
+              <CornerDownLeft
+                className="letter-hover-green inline-block size-[0.8em]"
+              />
+            </span>
+            <span class="text-nowrap flex items-center">
+              <span class="letter-hover">b</span>
+              <span class="letter-hover">y</span>
+              <span class="letter-hover">&nbsp;</span>
+              <span class="letter-hover">t</span>
+              <span class="letter-hover">e</span>
+              <span class="letter-hover">s</span>
+              <span class="letter-hover">t</span>
+              <span class="letter-hover">i</span>
+              <span class="letter-hover">n</span>
+              <span class="letter-hover">g</span>
+            </span>
           </h1>
         </div>
         <div class="self-start md:place-self-center md:mt-12 md:text-start">
