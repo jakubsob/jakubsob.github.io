@@ -155,6 +155,30 @@ const { class: className } = Astro.props;
     prevScrollpos = currentScrollPos;
   };
 
+  document.addEventListener("DOMContentLoaded", function () {
+    // Make background transparent when intersecting with #hero
+    const header = document.querySelector("header>nav");
+    const heroSection = document.getElementById("hero");
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          console.log(entry.isIntersecting);
+          if (entry.isIntersecting) {
+            header.classList.add("bg-transparent"); // Add backdrop class
+          } else {
+            header.classList.remove("bg-transparent"); // Remove backdrop class
+          }
+        });
+      },
+      {
+        root: null,
+        rootMargin: "0px",
+        threshold: 0,
+      }
+    );
+    observer.observe(heroSection);
+  });
+
   // Mobile menu functionality
   document.addEventListener("DOMContentLoaded", function () {
     const mobileMenuToggle = document.getElementById("mobile-menu-toggle");

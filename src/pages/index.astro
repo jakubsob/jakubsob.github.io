@@ -36,102 +36,98 @@ const posts = (await getCollection("blog"))
     }
   </style>
   <Section variant="dark" size="full" id="hero">
-    <div class="container mx-auto h-screen relative">
+    <div class="h-screen w-screen relative overflow-hidden">
       <div
-        class="h-screen grid grid-cols-1 md:grid-cols-2 md:grid-rows-[auto_1fr]"
+        id="circle"
+        class="absolute z-0 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-gradient-to-b from-sky-700 to-sky-400 opacity-50 size-[70vw] md:size-[70vh] rounded-full mix-blend-multiply"
       >
-        <div
-          class="mb-6 md:mb-0 place-self-center sm:place-self-start md:col-span-2 pt-[60px]"
-        >
-          <h1
-            class="text-start text-[clamp(12vw,15vw,15em)] uppercase text-white leading-[0.8em] space-y-1"
-          >
-            <span class="tracking-[0.02em] leading-[0.8em] flex items-center">
-              <Asterisk
-                className="letter-hover inline-block size-[1em] text-red-500"
-              />
-              <span class="letter-hover">B</span>
-              <span class="letter-hover">u</span>
-              <span class="letter-hover">i</span>
-              <span class="letter-hover">l</span>
-              <span class="letter-hover">d</span>
-              <span class="letter-hover">i</span>
-              <span class="letter-hover">n</span>
-              <span class="letter-hover">g</span>
-            </span>
-            <span
-              class="text-ocean-green-100 font-bolder italic font-serif leading-[1em] tracking-[0.1em] flex items-center"
-            >
-              <span class="letter-hover-green">q</span>
-              <span class="letter-hover-green">u</span>
-              <span class="letter-hover-green">a</span>
-              <span class="letter-hover-green">l</span>
-              <span class="letter-hover-green">i</span>
-              <span class="letter-hover-green">t</span>
-              <span class="letter-hover-green">y</span>
-              <ArrowDownLeft
-                className="letter-hover-green inline-block size-[1em]"
-              />
-            </span>
-            <span class="text-nowrap flex items-center">
-              <span class="letter-hover">b</span>
-              <span class="letter-hover">y</span>
-              <span class="letter-hover">&nbsp;</span>
-              <span class="letter-hover">t</span>
-              <span class="letter-hover">e</span>
-              <span class="letter-hover">s</span>
-              <span class="letter-hover">t</span>
-              <span class="letter-hover">i</span>
-              <span class="letter-hover">n</span>
-              <span class="letter-hover">g</span>
-            </span>
-          </h1>
-        </div>
-        <div class="self-start md:self-end md:mb-2 md:justify-self-start">
-          <h2 class="text-sky-200 font-light space-y-2 text-sm sm:text-lg">
-            I'm <span class="text-sky-50 font-bold">Jakub Sobolewski.</span>
-            <p>
-              I’m a software engineer specializing in R with 5+ years of
-              experience.
-            </p>
-            <p>
-              I believe automated testing is the key to building quality
-              software.
-            </p>
-          </h2>
-        </div>
-        <div
-          class="flex flex-col md:flex-row gap-4 self-start md:self-end md:mb-2 md:justify-self-end md:max-w-[400px]"
-        >
-          <Button
-            variant="default"
-            size="xl"
-            className="bg-primary text-xl uppercase w-full"
-          >
-            <a href="/blog"> Read blog </a>
-          </Button>
-          <Button
-            variant="link"
-            size="xl"
-            className="text-xl uppercase w-full text-white"
-          >
-            <a href="/r-tests-gallery"> Tests Gallery </a>
-          </Button>
-        </div>
       </div>
-      <a
-        href="#about"
-        class="cursor-pointer text-sky-200 border-sky-200 absolute bottom-0 left-1/2 -translate-x-1/2 size-8 mb-2 rounded-full border border-2"
+      <div
+        id="circle"
+        class="absolute z-0 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-gradient-to-b from-sky-400 to-sky-700 opacity-50 size-[100vw] md:size-[100vh] rounded-full mix-blend-multiply"
       >
-        <ArrowDown className="block size-full" />
-      </a>
+      </div>
+      <div
+        class="absolute z-0 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+      >
+        <h1
+          class="text-[clamp(12vw,15vw,15em)] uppercase text-white leading-[0.8em] space-y-1 bg-blend-multiply relative"
+        >
+          <span class="tracking-[0.02em] leading-[0.8em] flex items-center">
+            <Asterisk
+              className="letter-hover inline-block size-[1em] text-red-500"
+            />
+            <span class="letter-hover">B</span>
+            <span class="letter-hover">u</span>
+            <span class="letter-hover">i</span>
+            <span class="letter-hover">l</span>
+            <span class="letter-hover">d</span>
+            <span class="letter-hover">i</span>
+            <span class="letter-hover">n</span>
+            <span class="letter-hover">g</span>
+          </span>
+          <span
+            class="text-ocean-green-100 font-bolder italic font-serif leading-[1em] tracking-[0.1em] flex items-center"
+          >
+            <span class="letter-hover-green">q</span>
+            <span class="letter-hover-green">u</span>
+            <span class="letter-hover-green">a</span>
+            <span class="letter-hover-green">l</span>
+            <span class="letter-hover-green">i</span>
+            <span class="letter-hover-green">t</span>
+            <span class="letter-hover-green">y</span>
+            <ArrowDownLeft
+              className="letter-hover-green inline-block size-[1em]"
+            />
+          </span>
+          <span class="text-nowrap flex items-center">
+            <span class="letter-hover">b</span>
+            <span class="letter-hover">y</span>
+            <span class="letter-hover">&nbsp;</span>
+            <span class="letter-hover">t</span>
+            <span class="letter-hover">e</span>
+            <span class="letter-hover">s</span>
+            <span class="letter-hover">t</span>
+            <span class="letter-hover">i</span>
+            <span class="letter-hover">n</span>
+            <span class="letter-hover">g</span>
+          </span>
+          <div
+            class="md:hidden absolute -bottom-10 left-1/2 -translate-x-1/2 translate-y-full md:max-w-[400px]"
+          >
+            <Button
+              variant="default"
+              size="xl"
+              className="bg-primary text-xl uppercase w-full"
+            >
+              <a href="/blog"> Read blog </a>
+            </Button>
+          </div>
+        </h1>
+      </div>
     </div>
+    <a
+      href="#about"
+      class="cursor-pointer text-sky-200 border-sky-200 absolute bottom-0 left-1/2 -translate-x-1/2 size-8 mb-2 rounded-full border border-2"
+    >
+      <ArrowDown className="block size-full" />
+    </a>
   </Section>
   <Section id="about" size="fit" variant="light">
     <div class="pb-40 pt-40 space-y-40">
       <div class="container grid grid-cols-1 md:grid-cols-2">
         <h2 class="text-6xl uppercase mb-12">About me</h2>
         <div class="max-w-[65ch] space-y-8 font-light">
+          <p>
+            I'm <span class="font-bold">Jakub Sobolewski.</span>
+          </p>
+          <p>
+            I’m a software engineer specializing in R with 5+ years of
+            experience.
+          </p>
+          <p>
+            I believe automated testing is the key to building quality software.
+          </p>
           <p>
             My journey into R testing began with a project where to develop
             code, you had to be connected to the production environment. Turns
