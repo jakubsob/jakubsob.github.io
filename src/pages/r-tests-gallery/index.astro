@@ -98,7 +98,7 @@ try {
           const parseReadme = (content: string) => {
             const lines = content.split("\n");
             let title = dir.name.replace(/-/g, " "); // Default fallback
-            let description = "Testing example project."; // Default fallback
+            let description = ""; // Default fallback
             let fullContent = content;
 
             // Find the first header (title)
@@ -107,27 +107,26 @@ try {
               title = titleMatch.replace(/^#+\s*/, "").trim();
             }
 
-            // Find the first paragraph after the title
-            let foundTitle = false;
+            // Find the paragraph after "## When to use this pattern?"
+            let foundWhenToUse = false;
             let descriptionLines: string[] = [];
 
             for (const line of lines) {
-              if (line.startsWith("#")) {
-                if (foundTitle) {
-                  break; // Stop at next header
-                }
-                foundTitle = true;
+              if (line.startsWith("## When to use this pattern?")) {
+                foundWhenToUse = true;
                 continue;
               }
 
-              if (foundTitle && line.trim()) {
-                descriptionLines.push(line.trim());
-              } else if (
-                foundTitle &&
-                !line.trim() &&
-                descriptionLines.length > 0
-              ) {
-                break; // Stop at first empty line after content
+              if (foundWhenToUse) {
+                if (line.startsWith("#")) {
+                  break; // Stop at next header
+                }
+
+                if (line.trim()) {
+                  descriptionLines.push(line.trim());
+                } else if (descriptionLines.length > 0) {
+                  break; // Stop at first empty line after content
+                }
               }
             }
 
@@ -153,7 +152,7 @@ try {
         } else {
           // Fallback if no README found
           const title = dir.name.replace(/-/g, " ");
-          const description = "Testing example project.";
+          const description = "";
           dir.readme = {
             title,
             description,
@@ -166,7 +165,7 @@ try {
         console.error(`Error fetching README for ${dir.name}:`, error);
         // Fallback if fetch fails
         const title = dir.name.replace(/-/g, " ");
-        const description = "Testing example project.";
+        const description = "";
         dir.readme = {
           title,
           description,

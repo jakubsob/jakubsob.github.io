@@ -68,7 +68,7 @@ export function DirectoryListing({ directories }: DirectoryListingProps) {
             <CardDescription
               className="text-slate-500 group-hover:line-clamp-none transition-all duration-300 line-clamp-5"
               dangerouslySetInnerHTML={{
-                __html: dir.readme?.descriptionHtml || "Testing example project.",
+                __html: dir.readme?.descriptionHtml || "",
               }}
             />
           </CardHeader>
