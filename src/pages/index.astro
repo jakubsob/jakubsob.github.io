@@ -34,9 +34,30 @@ const posts = (await getCollection("blog"))
       transform: scale(1.1);
       filter: blur(0.01em);
     }
+
+    .cursor-button {
+      position: fixed;
+      pointer-events: none;
+      opacity: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      transition: opacity 0.5s ease;
+    }
+
+    .cursor-button.visible {
+      opacity: 0.9;
+    }
   </style>
   <Section variant="dark" size="full" id="hero">
     <div class="h-screen w-screen relative overflow-hidden">
+      <button
+        class="cursor-button fixed z-10 size-36 rounded-full bg-ocean-green-300 uppercase text-xl backdrop-blur-lg hidden md:visible"
+        id="cursor-button"
+      >
+        Read blog
+      </button>
       <div
         id="circle"
         class="absolute z-0 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-gradient-to-b from-sky-700 to-sky-400 opacity-50 size-[70vw] md:size-[70vh] rounded-full mix-blend-multiply"
@@ -52,48 +73,51 @@ const posts = (await getCollection("blog"))
       >
         <h1
           class="text-[clamp(12vw,15vw,15em)] uppercase text-white leading-[0.8em] space-y-1 bg-blend-multiply relative"
+          id="hero-h1"
         >
-          <span class="tracking-[0.02em] leading-[0.8em] flex items-center">
-            <Asterisk
-              className="letter-hover inline-block size-[1em] text-red-500"
-            />
-            <span class="letter-hover">B</span>
-            <span class="letter-hover">u</span>
-            <span class="letter-hover">i</span>
-            <span class="letter-hover">l</span>
-            <span class="letter-hover">d</span>
-            <span class="letter-hover">i</span>
-            <span class="letter-hover">n</span>
-            <span class="letter-hover">g</span>
-          </span>
-          <span
-            class="text-ocean-green-100 font-bolder italic font-serif leading-[1em] tracking-[0.1em] flex items-center"
-          >
-            <span class="letter-hover-green">q</span>
-            <span class="letter-hover-green">u</span>
-            <span class="letter-hover-green">a</span>
-            <span class="letter-hover-green">l</span>
-            <span class="letter-hover-green">i</span>
-            <span class="letter-hover-green">t</span>
-            <span class="letter-hover-green">y</span>
-            <ArrowDownLeft
-              className="letter-hover-green inline-block size-[1em]"
-            />
-          </span>
-          <span class="text-nowrap flex items-center">
-            <span class="letter-hover">b</span>
-            <span class="letter-hover">y</span>
-            <span class="letter-hover">&nbsp;</span>
-            <span class="letter-hover">t</span>
-            <span class="letter-hover">e</span>
-            <span class="letter-hover">s</span>
-            <span class="letter-hover">t</span>
-            <span class="letter-hover">i</span>
-            <span class="letter-hover">n</span>
-            <span class="letter-hover">g</span>
-          </span>
+          <a href="/blog">
+            <span class="tracking-[0.02em] leading-[0.8em] flex items-center">
+              <Asterisk
+                className="letter-hover inline-block size-[1em] text-red-500"
+              />
+              <span class="letter-hover">B</span>
+              <span class="letter-hover">u</span>
+              <span class="letter-hover">i</span>
+              <span class="letter-hover">l</span>
+              <span class="letter-hover">d</span>
+              <span class="letter-hover">i</span>
+              <span class="letter-hover">n</span>
+              <span class="letter-hover">g</span>
+            </span>
+            <span
+              class="text-ocean-green-100 font-bolder italic font-serif leading-[1em] tracking-[0.1em] flex items-center"
+            >
+              <span class="letter-hover-green">q</span>
+              <span class="letter-hover-green">u</span>
+              <span class="letter-hover-green">a</span>
+              <span class="letter-hover-green">l</span>
+              <span class="letter-hover-green">i</span>
+              <span class="letter-hover-green">t</span>
+              <span class="letter-hover-green">y</span>
+              <ArrowDownLeft
+                className="letter-hover-green inline-block size-[1em]"
+              />
+            </span>
+            <span class="text-nowrap flex items-center">
+              <span class="letter-hover">b</span>
+              <span class="letter-hover">y</span>
+              <span class="letter-hover">&nbsp;</span>
+              <span class="letter-hover">t</span>
+              <span class="letter-hover">e</span>
+              <span class="letter-hover">s</span>
+              <span class="letter-hover">t</span>
+              <span class="letter-hover">i</span>
+              <span class="letter-hover">n</span>
+              <span class="letter-hover">g</span>
+            </span>
+          </a>
           <div
-            class="md:hidden absolute -bottom-10 left-1/2 -translate-x-1/2 translate-y-full md:max-w-[400px]"
+            class="visible md:hidden absolute -bottom-10 left-1/2 -translate-x-1/2 translate-y-full md:max-w-[400px]"
           >
             <Button
               variant="default"
@@ -108,7 +132,7 @@ const posts = (await getCollection("blog"))
     </div>
     <a
       href="#about"
-      class="cursor-pointer text-sky-200 border-sky-200 absolute bottom-0 left-1/2 -translate-x-1/2 size-8 mb-2 rounded-full border border-2"
+      class="cursor-pointer text-sky-200 border-sky-200 absolute bottom-0 left-1/2 -translate-x-1/2 size-8 mb-2 rounded-full border-2"
     >
       <ArrowDown className="block size-full" />
     </a>
@@ -260,5 +284,50 @@ const posts = (await getCollection("blog"))
         target: item,
       });
     });
+
+    const hero = document.getElementById("hero");
+    const heroH1 = document.getElementById("hero-h1");
+    const cursorButton = document.getElementById("cursor-button");
+
+    if (hero && cursorButton) {
+      let isHovering = false;
+
+      hero.addEventListener("mouseenter", () => {
+        isHovering = true;
+      });
+
+      hero.addEventListener("mouseleave", () => {
+        isHovering = false;
+      });
+
+      heroH1.addEventListener("mouseenter", () => {
+        cursorButton.classList.add("visible");
+      });
+
+      heroH1.addEventListener("mouseleave", () => {
+        cursorButton.classList.remove("visible");
+      });
+
+      hero.addEventListener("mousemove", (e) => {
+        if (isHovering) {
+          // Use clientX and clientY for absolute positioning relative to viewport
+          cursorButton.style.left =
+            e.clientX - cursorButton.getBoundingClientRect().width / 2 + "px";
+          cursorButton.style.top =
+            e.clientY - cursorButton.getBoundingClientRect().height / 2 + "px";
+
+          // Mutate button color based on mouse movement
+          const h1Rect = heroH1.getBoundingClientRect();
+          const normalizedX = (e.clientX - h1Rect.left) / h1Rect.width;
+          const normalizedY = (e.clientY - h1Rect.top) / h1Rect.height;
+
+          const hue = Math.floor(normalizedX * 10);
+          const saturation = Math.floor(50 + normalizedY * 100);
+          const lightness = Math.floor(40 + normalizedX * 20);
+
+          cursorButton.style.backgroundColor = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+        }
+      });
+    }
   </script>
 </BaseLayout>
