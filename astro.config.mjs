@@ -17,7 +17,7 @@ export default defineConfig({
     syntaxHighlight: "shiki",
     shikiConfig: {
       theme: "github-dark",
-      langs: [],
+      langs: ["gherkin"],
       wrap: true,
       transformers: [
         transformerNotationDiff(),

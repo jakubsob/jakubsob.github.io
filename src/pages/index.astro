@@ -2,6 +2,7 @@
 import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import PostList from "../components/PostList.jsx";
+import CodeBlock from "../components/CodeBlock.astro";
 import { Button } from "@/components/ui/button";
 import { Section } from "@/components/ui/section";
 import { ArrowDownLeft, Asterisk, ArrowDown } from "lucide-react";
@@ -131,82 +132,49 @@ const posts = (await getCollection("blog"))
       </div>
     </div>
     <a
-      href="#about"
+      href="#blog"
       class="cursor-pointer text-sky-200 border-sky-200 absolute bottom-0 left-1/2 -translate-x-1/2 size-8 mb-2 rounded-full border-2"
     >
       <ArrowDown className="block size-full" />
     </a>
   </Section>
-  <Section id="about" size="fit" variant="light">
-    <div class="pb-40 pt-40 space-y-40">
+  <Section id="blog" size="fit" variant="light">
+    <div class="py-40 space-y-52">
       <div class="container grid grid-cols-1 md:grid-cols-2">
-        <h2 class="text-6xl uppercase mb-12">About me</h2>
-        <div class="max-w-[65ch] space-y-8 font-light">
-          <p>
-            I'm <span class="font-bold">Jakub Sobolewski.</span>
-          </p>
-          <p>
-            I’m a software engineer specializing in R with 5+ years of
-            experience.
-          </p>
-          <p>
-            I believe automated testing is the key to building quality software.
-          </p>
-          <p>
-            My journey into R testing began with a project where to develop
-            code, you had to be connected to the production environment. Turns
-            out, it was a terrible developer experience.
-          </p>
-          <p>
-            I'm particularly passionate about knowledge sharing, which is why I
-            maintain an active blog and R Tests Gallery. I believe that when we
-            share our testing experiences—both successes and failures—we all
-            become better developers.
-          </p>
-          <p>
-            I approach testing with a practical mindset: tests should make
-            development faster and more confident, not slower and more
-            burdensome. My goal is to help teams find testing strategies that
-            actually enhance their workflow.
-          </p>
+        <div class="mb-12">
+          <h2 class="flex text-6xl uppercase">New on the blog</h2>
+        </div>
+        <div class="order-3 mt-12 md:order-2 md:self-end">
+          <a href="/blog">
+            <Button variant="pill" size="xl"> Read more →</Button>
+          </a>
+        </div>
+        <div class="h-full max-w-[65ch] row-span-2">
+          <PostList client:load posts={posts} showControls={false} />
         </div>
       </div>
-      <div class="container grid grid-cols-1 md:grid-cols-2">
-        <h2 class="text-6xl uppercase mb-12">My open source projects</h2>
-        <div class="max-w-[65ch] space-y-8 font-light">
-          <a
-            href="https://github.com/jakubsob/muttest"
-            target="_blank"
-            class="block transition-all group"
-          >
-            <div class="flex">
-              <div class="size-[100px] flex-shrink-0">
-                <img
-                  class="w-full h-full object-contain"
-                  src="https://raw.githubusercontent.com/jakubsob/muttest/main/man/figures/logo.png"
-                  alt="muttest logo"
-                  width="100"
-                  height="100"
-                />
-              </div>
-              <div class="ml-6 flex flex-col">
-                <h3 class="uppercase text-2xl group-hover:underline">
-                  Muttest
-                </h3>
-                <p class="mt-auto">
-                  A mutation testing framework for R. It helps you identify gaps
-                  in your test coverage by introducing small changes to your
-                  code and checking if your tests catch them.
-                </p>
-              </div>
-            </div>
-          </a>
+    </div>
+  </Section>
+  <Section id="opensource" size="fit" variant="dark">
+    <div class="container mx-auto flex justify-center">
+      <h2
+        class="text-[clamp(2em,5vw,6em)] uppercase pt-40 pb-20 flex items-center"
+      >
+        <Asterisk className="inline-block size-[1em] text-red-500 mr-4" />
+        <span>My Open Source</span>
+        <Asterisk className="inline-block size-[1em] text-red-500 mr-4" />
+      </h2>
+    </div>
+  </Section>
+  <Section id="cucumber" size="fit" variant="dark">
+    <div class="pb-40 pt-40">
+      <div class="container grid grid-cols-1 md:grid-cols-[1fr_1fr] gap-12">
+        <div>
           <a
             href="https://github.com/jakubsob/cucumber"
-            target="_blank"
-            class="block transition-all group"
+            class="hover:underline"
           >
-            <div class="flex">
+            <h3 class="text-5xl uppercase mb-12 flex items-center gap-4">
               <div class="size-[100px] flex-shrink-0">
                 <img
                   class="w-full h-full object-contain"
@@ -216,18 +184,190 @@ const posts = (await getCollection("blog"))
                   height="100"
                 />
               </div>
-              <div class="ml-6 flex flex-col">
-                <h3 class="uppercase text-2xl group-hover:underline">
-                  Cucumber
-                </h3>
-                <p class="mt-auto">
-                  A behavior-driven development (BDD) framework for R. It allows
-                  you to write human-readable tests that describe the behavior
-                  of your software.
-                </p>
-              </div>
-            </div>
+              {"Cucumber"}
+            </h3>
           </a>
+          <CodeBlock
+            code={`# tests/testthat/sales_trends.feature
+Feature: View Sales Trends
+  Scenario: User views the sales trend for a product category
+    Given the user can view product sales information
+    When they view the sales trend for "Electronics"
+    Then they should see the sales trend plot for "Electronics"
+
+  Scenario: User views the sales trend for a specific product
+    Given the user can view product sales information
+    When they view the sales trend for "Smartphone"
+    Then they should see the sales trend plot for "Smartphone"`}
+            lang="gherkin"
+          />
+        </div>
+        <div class="max-w-[65ch] space-y-8 font-light">
+          <div class="space-y-6">
+            <div>
+              <h4
+                class="text-xl font-semibold mb-2 border-b-2 border-b-white flex items-center justify-between"
+              >
+                <div>Human-readable tests</div>
+                <div>01</div>
+              </h4>
+              <p class="text-sky-200">
+                Write tests in plain language that stakeholders and users can
+                understand, review, and validate.
+              </p>
+            </div>
+            <div>
+              <h4
+                class="text-xl font-semibold mb-2 border-b-2 border-b-white flex items-center justify-between"
+              >
+                <div>Bridge communication gaps</div>
+                <div>02</div>
+              </h4>
+              <p class="text-sky-200">
+                Enable collaboration between developers, testers, and business
+                analysts by using a common language.
+              </p>
+            </div>
+            <div>
+              <h4
+                class="text-xl font-semibold mb-2 border-b-2 border-b-white flex items-center justify-between"
+              >
+                <div>Living documentation</div>
+                <div>03</div>
+              </h4>
+              <p class="text-sky-200">
+                Your tests become executable documentation that always stays
+                up-to-date with your code.
+              </p>
+            </div>
+            <div>
+              <h4
+                class="text-xl font-semibold mb-2 border-b-2 border-b-white flex items-center justify-between"
+              >
+                <div>Behavior-driven development</div>
+                <div>04</div>
+              </h4>
+              <p class="text-sky-200">
+                Focus on the behavior of your software rather than its
+                implementation details.
+              </p>
+            </div>
+            <div>
+              <h4
+                class="text-xl font-semibold mb-2 border-b-2 border-b-white flex items-center justify-between"
+              >
+                <div>Reusable step definitions</div>
+                <div>05</div>
+              </h4>
+              <p class="text-sky-200">
+                Create a library of reusable test steps that can be combined to
+                create complex scenarios.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </Section>
+  <Section id="muttest" size="fit" variant="dark">
+    <div class="pb-40 pt-40">
+      <div class="container grid grid-cols-1 md:grid-cols-[1fr_1fr] gap-12">
+        <div class="order-1 md:order-2 max-w-[65ch] space-y-8 font-light">
+          <div>
+            <a
+              href="https://github.com/jakubsob/muttest"
+              class="hover:underline"
+            >
+              <h3 class="text-5xl uppercase mb-12 flex items-center gap-4">
+                <div class="size-[100px] flex-shrink-0">
+                  <img
+                    class="w-full h-full object-contain"
+                    src="https://raw.githubusercontent.com/jakubsob/muttest/main/man/figures/logo.png"
+                    alt="muttest logo"
+                    width="100"
+                    height="100"
+                  />
+                </div>
+                {"Muttest"}
+              </h3>
+            </a>
+            <CodeBlock
+              code={`plan <- muttest::plan(
+  mutators = list(
+    muttest::operator("+", "-"),
+    muttest::operator("-", "+"),
+    muttest::operator("*", "/"),
+    muttest::operator("/", "*"),
+    muttest::operator("==", "!="),
+    muttest::operator("!=", "==")
+  )
+)
+muttest::muttest(plan)`}
+              lang="r"
+            />
+          </div>
+        </div>
+        <div class="order-1 space-y-6">
+          <div>
+            <h4
+              class="text-xl font-semibold mb-2 border-b-2 border-b-white flex items-center justify-between"
+            >
+              <div>Identify test gaps</div>
+              <div>01</div>
+            </h4>
+            <p class="text-sky-200">
+              Discover weak spots in your test suite by introducing small
+              changes to your code and checking if tests catch them.
+            </p>
+          </div>
+          <div>
+            <h4
+              class="text-xl font-semibold mb-2 border-b-2 border-b-white flex items-center justify-between"
+            >
+              <div>Quality over quantity</div>
+              <div>02</div>
+            </h4>
+            <p class="text-sky-200">
+              Focus on test effectiveness rather than just coverage percentages.
+              Muttest reveals if your tests actually validate behavior.
+            </p>
+          </div>
+          <div>
+            <h4
+              class="text-xl font-semibold mb-2 border-b-2 border-b-white flex items-center justify-between"
+            >
+              <div>Automated mutation testing</div>
+              <div>03</div>
+            </h4>
+            <p class="text-sky-200">
+              Systematically introduce mutations to your code and run tests to
+              measure how well they detect changes.
+            </p>
+          </div>
+          <div>
+            <h4
+              class="text-xl font-semibold mb-2 border-b-2 border-b-white flex items-center justify-between"
+            >
+              <div>Improve test reliability</div>
+              <div>04</div>
+            </h4>
+            <p class="text-sky-200">
+              Build more robust test suites that actually catch bugs and
+              regressions in your R code.
+            </p>
+          </div>
+          <div>
+            <h4
+              class="text-xl font-semibold mb-2 border-b-2 border-b-white flex items-center justify-between"
+            >
+              <div>Confidence in refactoring</div>
+              <div>05</div>
+            </h4>
+            <p class="text-sky-200">
+              Refactor code with confidence knowing your tests will catch any
+              breaking changes.
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -257,19 +397,35 @@ const posts = (await getCollection("blog"))
       </p>
     </div>
   </Section> -->
-  <Section id="blog" size="fit" variant="light">
-    <div class="pb-40 space-y-52">
+  <Section id="about" size="fit" variant="light">
+    <div class="pb-40 pt-40 space-y-40">
       <div class="container grid grid-cols-1 md:grid-cols-2">
-        <div class="mb-12">
-          <h2 class="flex text-6xl uppercase">New on the blog</h2>
-        </div>
-        <div class="order-3 mt-12 md:order-2 md:self-end">
-          <Button variant="pill" size="xl">
-            <a href="/blog">Read more →</a>
-          </Button>
-        </div>
-        <div class="h-full max-w-[65ch] row-span-2">
-          <PostList client:load posts={posts} showControls={false} />
+        <h2 class="text-6xl uppercase mb-12">I'm Jakub Sobolewski</h2>
+        <div class="max-w-[65ch] space-y-8 font-light">
+          <p>
+            I’m a software engineer specializing in R with 5+ years of
+            experience.
+          </p>
+          <p>
+            I believe automated testing is the key to building quality software.
+          </p>
+          <p>
+            My journey into R testing began with a project where to develop
+            code, you had to be connected to the production environment. Turns
+            out, it was a terrible developer experience.
+          </p>
+          <p>
+            I'm particularly passionate about knowledge sharing, which is why I
+            maintain an active blog and R Tests Gallery. I believe that when we
+            share our testing experiences—both successes and failures—we all
+            become better developers.
+          </p>
+          <p>
+            I approach testing with a practical mindset: tests should make
+            development faster and more confident, not slower and more
+            burdensome. My goal is to help teams find testing strategies that
+            actually enhance their workflow.
+          </p>
         </div>
       </div>
     </div>

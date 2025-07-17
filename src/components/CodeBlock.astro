@@ -1,0 +1,98 @@
+---
+import { Code } from 'astro:components';
+import type { BundledLanguage } from 'shiki';
+
+interface Props {
+  code?: string;
+  lang?: BundledLanguage;
+  title?: string;
+}
+
+const { code, lang = 'text', title } = Astro.props;
+---
+
+<div class="code-block-container px-2">
+  {code ? (
+    <Code code={code} lang={lang} theme="github-dark" />
+  ) : (
+    <slot />
+  )}
+</div>
+
+<script is:inline>
+  function initCodeBlocks() {
+    let copyButtonLabel = "Copy";
+    let codeBlocks = Array.from(document.querySelectorAll(".code-block-container pre"));
+
+    for (let codeBlock of codeBlocks) {
+      // Skip if already processed
+      if (codeBlock.parentElement && codeBlock.parentElement.classList.contains("code-wrapper")) {
+        continue;
+      }
+
+      let header = document.createElement("div");
+      header.className = "flex flex-row items-center gap-1 w-full h-12";
+
+      // Add the three dots
+      // let dot = document.createElement("div");
+      // dot.className = "rounded-full w-3 h-3 bg-red-400";
+      // header.appendChild(dot);
+      // dot = document.createElement("div");
+      // dot.className = "rounded-full w-3 h-3 bg-yellow-400";
+      // header.appendChild(dot);
+      // dot = document.createElement("div");
+      // dot.className = "rounded-full w-3 h-3 bg-green-400";
+      // header.appendChild(dot);
+
+      let copyButton = document.createElement("button");
+      copyButton.className =
+        "ml-auto border-[1px] border-solid border-gray-400 text-sm text-gray-400 p-1 hover:bg-gray-200 hover:text-black";
+      copyButton.innerHTML = copyButtonLabel;
+
+      header.appendChild(copyButton);
+      codeBlock.setAttribute("tabindex", "0");
+
+      let wrapper = document.createElement("div");
+      wrapper.className =
+        "code-wrapper flex flex-col px-2 mt-6 pb-12 bg-sky rounded-sm";
+
+      if (codeBlock.parentNode) {
+        codeBlock.parentNode.insertBefore(wrapper, codeBlock);
+      }
+
+      codeBlock.className = "mt-0 px-4 pb-4";
+      if (codeBlock.style) {
+        codeBlock.style.backgroundColor = "transparent";
+      }
+      wrapper.prepend(header);
+      wrapper.appendChild(codeBlock);
+
+      copyButton.addEventListener("click", async () => {
+        await copyCode(codeBlock, copyButton);
+      });
+    }
+
+    async function copyCode(block, button) {
+      let code = block.querySelector("code");
+      let text = code ? code.innerText : "";
+
+      await navigator.clipboard.writeText(text);
+
+      button.innerText = "Copied";
+
+      setTimeout(() => {
+        button.innerText = copyButtonLabel;
+      }, 700);
+    }
+  }
+
+  // Initialize on page load
+  document.addEventListener("DOMContentLoaded", initCodeBlocks);
+
+  // Also initialize immediately in case DOM is already ready
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initCodeBlocks);
+  } else {
+    initCodeBlocks();
+  }
+</script>
