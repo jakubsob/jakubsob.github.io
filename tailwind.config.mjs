@@ -136,6 +136,8 @@ export default {
     },
   },
   plugins: [
+    require("tailwindcss-motion"),
+    require("tailwindcss-intersect"),
     require("@tailwindcss/typography"),
     plugin(function ({ addBase, theme }) {
       addBase({

@@ -77,7 +77,9 @@ const posts = (await getCollection("blog"))
           id="hero-h1"
         >
           <a href="/blog">
-            <span class="tracking-[0.02em] leading-[0.8em] flex items-center">
+            <span
+              class="motion-preset-slide-up-lg md:motion-duration-1000 tracking-[0.02em] leading-[0.8em] flex items-center"
+            >
               <Asterisk
                 className="letter-hover inline-block size-[1em] text-red-500"
               />
@@ -91,7 +93,7 @@ const posts = (await getCollection("blog"))
               <span class="letter-hover">g</span>
             </span>
             <span
-              class="text-ocean-green-100 font-bolder italic font-serif leading-[1em] tracking-[0.1em] flex items-center"
+              class="motion-preset-slide-up-lg motion-delay-100 md:motion-duration-1000 text-ocean-green-100 font-bolder italic font-serif leading-[1em] tracking-[0.1em] flex items-center"
             >
               <span class="letter-hover-green">q</span>
               <span class="letter-hover-green">u</span>
@@ -104,7 +106,9 @@ const posts = (await getCollection("blog"))
                 className="letter-hover-green inline-block size-[1em]"
               />
             </span>
-            <span class="text-nowrap flex items-center">
+            <span
+              class="motion-preset-slide-up-lg motion-delay-200 md:motion-duration-1000 text-nowrap flex items-center"
+            >
               <span class="letter-hover">b</span>
               <span class="letter-hover">y</span>
               <span class="letter-hover">&nbsp;</span>
@@ -123,7 +127,7 @@ const posts = (await getCollection("blog"))
             <Button
               variant="default"
               size="xl"
-              className="bg-primary text-xl uppercase w-full"
+              className="motion-preset-expand motion-delay-500 bg-primary text-xl uppercase w-full"
             >
               <a href="/blog"> Read blog </a>
             </Button>
@@ -133,7 +137,7 @@ const posts = (await getCollection("blog"))
     </div>
     <a
       href="#blog"
-      class="cursor-pointer text-sky-200 border-sky-200 absolute bottom-0 left-1/2 -translate-x-1/2 size-8 mb-2 rounded-full border-2"
+      class="motion-preset-slide-up-lg motion-delay-700 cursor-pointer text-sky-200 border-sky-200 absolute bottom-0 left-1/2 -translate-x-1/2 size-8 mb-2 rounded-full border-2"
     >
       <ArrowDown className="block size-full" />
     </a>
@@ -434,13 +438,6 @@ muttest::muttest(plan)`}
     is:inline
     src="https://cdn.jsdelivr.net/npm/motion@11.11.13/dist/motion.js"></script>
   <script is:inline>
-    const { animate, scroll } = Motion;
-    document.querySelectorAll("#test").forEach((item) => {
-      scroll(animate(item, { y: 70 }, { ease: "linear" }), {
-        target: item,
-      });
-    });
-
     const hero = document.getElementById("hero");
     const heroH1 = document.getElementById("hero-h1");
     const cursorButton = document.getElementById("cursor-button");

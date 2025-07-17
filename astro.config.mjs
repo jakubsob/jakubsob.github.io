@@ -14,10 +14,8 @@ export default defineConfig({
   site: "https://jakubsobolewski.com",
   integrations: [mdx(), sitemap(), tailwind(), react()],
   markdown: {
-    syntaxHighlight: "shiki",
     shikiConfig: {
       theme: "github-dark",
-      langs: ["gherkin"],
       wrap: true,
       transformers: [
         transformerNotationDiff(),

@@ -2,7 +2,7 @@ import React from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import { Button } from "./ui/button";
 import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
-import { ExternalLink, Github, AlertCircle } from "lucide-react";
+import { ExternalLink, GithubIcon, AlertCircle } from "lucide-react";
 
 interface DirectoryItem {
   name: string;
@@ -41,7 +41,7 @@ export function DirectoryListing({ directories }: DirectoryListingProps) {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <Github className="w-4 h-4 mr-2" />
+                <GithubIcon className="w-4 h-4 mr-2" />
                 Visit GitHub Repository
               </a>
             </Button>
@@ -93,7 +93,7 @@ export function DirectoryListing({ directories }: DirectoryListingProps) {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <Github className="w-4 h-4 mr-1" />
+                  <GithubIcon className="w-4 h-4 mr-1" />
                   Open on GitHub
                 </a>
               </Button>
