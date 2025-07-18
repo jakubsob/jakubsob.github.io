@@ -5,6 +5,7 @@ import PostList from "../components/PostList.jsx";
 import CodeBlock from "../components/CodeBlock.astro";
 import { Button } from "@/components/ui/button";
 import { Section } from "@/components/ui/section";
+import { Animate } from "@/components/ui/animate";
 import { ArrowDownLeft, Asterisk, ArrowDown } from "lucide-react";
 
 const posts = (await getCollection("blog"))
@@ -146,12 +147,16 @@ const posts = (await getCollection("blog"))
     <div class="py-40 space-y-52">
       <div class="container grid grid-cols-1 md:grid-cols-2">
         <div class="mb-12">
-          <h2 class="flex text-6xl uppercase">New on the blog</h2>
+          <Animate>
+            <h2 class="flex text-6xl uppercase">New on the blog</h2>
+          </Animate>
         </div>
         <div class="order-3 mt-12 md:order-2 md:self-end">
-          <a href="/blog">
-            <Button variant="pill" size="xl"> Read more →</Button>
-          </a>
+          <Animate>
+            <a href="/blog">
+              <Button variant="pill" size="xl"> Read more →</Button>
+            </a>
+          </Animate>
         </div>
         <div class="h-full max-w-[65ch] row-span-2">
           <PostList client:load posts={posts} showControls={false} />
@@ -161,54 +166,60 @@ const posts = (await getCollection("blog"))
   </Section>
   <Section id="opensource" size="fit" variant="dark">
     <div class="container mx-auto flex justify-center">
-      <h2
-        class="text-[clamp(2em,5vw,6em)] uppercase pt-40 pb-20 flex items-center"
-      >
-        <Asterisk className="inline-block size-[1em] text-red-500 mr-4" />
-        <span>My Open Source</span>
-        <Asterisk className="inline-block size-[1em] text-red-500 mr-4" />
-      </h2>
+      <Animate>
+        <h2
+          class="text-[clamp(2em,5vw,6em)] uppercase pt-40 pb-20 flex items-center"
+        >
+          <Asterisk className="inline-block size-[1em] text-red-500 mr-4" />
+          <span>My Open Source</span>
+          <Asterisk className="inline-block size-[1em] text-red-500 mr-4" />
+        </h2>
+      </Animate>
     </div>
   </Section>
   <Section id="cucumber" size="fit" variant="dark">
     <div class="pb-40 pt-40">
       <div class="container grid grid-cols-1 md:grid-cols-[1fr_1fr] gap-12">
         <div>
-          <a
-            href="https://github.com/jakubsob/cucumber"
-            class="hover:underline"
-          >
-            <h3 class="text-5xl uppercase mb-12 flex items-center gap-4">
-              <div class="size-[100px] flex-shrink-0">
-                <img
-                  class="w-full h-full object-contain"
-                  src="https://raw.githubusercontent.com/jakubsob/cucumber/main/man/figures/logo.png"
-                  alt="cucumber logo"
-                  width="100"
-                  height="100"
-                />
-              </div>
-              {"Cucumber"}
-            </h3>
-          </a>
-          <CodeBlock
-            code={`# tests/testthat/sales_trends.feature
-Feature: View Sales Trends
-  Scenario: User views the sales trend for a product category
-    Given the user can view product sales information
-    When they view the sales trend for "Electronics"
-    Then they should see the sales trend plot for "Electronics"
+          <Animate>
+            <a
+              href="https://github.com/jakubsob/cucumber"
+              class="hover:underline"
+            >
+              <h3 class="text-5xl uppercase mb-12 flex items-center gap-4">
+                <div class="size-[100px] flex-shrink-0">
+                  <img
+                    class="w-full h-full object-contain"
+                    src="https://raw.githubusercontent.com/jakubsob/cucumber/main/man/figures/logo.png"
+                    alt="cucumber logo"
+                    width="100"
+                    height="100"
+                  />
+                </div>
+                {"Cucumber"}
+              </h3>
+            </a>
+          </Animate>
+          <Animate>
+            <CodeBlock
+              code={`# tests/testthat/sales_trends.feature
+  Feature: View Sales Trends
+    Scenario: User views the sales trend for a product category
+      Given the user can view product sales information
+      When they view the sales trend for "Electronics"
+      Then they should see the sales trend plot for "Electronics"
 
-  Scenario: User views the sales trend for a specific product
-    Given the user can view product sales information
-    When they view the sales trend for "Smartphone"
-    Then they should see the sales trend plot for "Smartphone"`}
-            lang="gherkin"
-          />
+    Scenario: User views the sales trend for a specific product
+      Given the user can view product sales information
+      When they view the sales trend for "Smartphone"
+      Then they should see the sales trend plot for "Smartphone"`}
+              lang="gherkin"
+            />
+          </Animate>
         </div>
         <div class="max-w-[65ch] space-y-8 font-light">
           <div class="space-y-6">
-            <div>
+            <Animate>
               <h4
                 class="text-xl font-semibold mb-2 border-b-2 border-b-white flex items-center justify-between"
               >
@@ -219,8 +230,8 @@ Feature: View Sales Trends
                 Write tests in plain language that stakeholders and users can
                 understand, review, and validate.
               </p>
-            </div>
-            <div>
+            </Animate>
+            <Animate>
               <h4
                 class="text-xl font-semibold mb-2 border-b-2 border-b-white flex items-center justify-between"
               >
@@ -231,8 +242,8 @@ Feature: View Sales Trends
                 Enable collaboration between developers, testers, and business
                 analysts by using a common language.
               </p>
-            </div>
-            <div>
+            </Animate>
+            <Animate>
               <h4
                 class="text-xl font-semibold mb-2 border-b-2 border-b-white flex items-center justify-between"
               >
@@ -243,8 +254,8 @@ Feature: View Sales Trends
                 Your tests become executable documentation that always stays
                 up-to-date with your code.
               </p>
-            </div>
-            <div>
+            </Animate>
+            <Animate>
               <h4
                 class="text-xl font-semibold mb-2 border-b-2 border-b-white flex items-center justify-between"
               >
@@ -255,8 +266,8 @@ Feature: View Sales Trends
                 Focus on the behavior of your software rather than its
                 implementation details.
               </p>
-            </div>
-            <div>
+            </Animate>
+            <Animate>
               <h4
                 class="text-xl font-semibold mb-2 border-b-2 border-b-white flex items-center justify-between"
               >
@@ -267,7 +278,7 @@ Feature: View Sales Trends
                 Create a library of reusable test steps that can be combined to
                 create complex scenarios.
               </p>
-            </div>
+            </Animate>
           </div>
         </div>
       </div>
@@ -278,41 +289,45 @@ Feature: View Sales Trends
       <div class="container grid grid-cols-1 md:grid-cols-[1fr_1fr] gap-12">
         <div class="order-1 md:order-2 max-w-[65ch] space-y-8 font-light">
           <div>
-            <a
-              href="https://github.com/jakubsob/muttest"
-              class="hover:underline"
-            >
-              <h3 class="text-5xl uppercase mb-12 flex items-center gap-4">
-                <div class="size-[100px] flex-shrink-0">
-                  <img
-                    class="w-full h-full object-contain"
-                    src="https://raw.githubusercontent.com/jakubsob/muttest/main/man/figures/logo.png"
-                    alt="muttest logo"
-                    width="100"
-                    height="100"
-                  />
-                </div>
-                {"Muttest"}
-              </h3>
-            </a>
-            <CodeBlock
-              code={`plan <- muttest::plan(
-  mutators = list(
-    muttest::operator("+", "-"),
-    muttest::operator("-", "+"),
-    muttest::operator("*", "/"),
-    muttest::operator("/", "*"),
-    muttest::operator("==", "!="),
-    muttest::operator("!=", "==")
+            <Animate>
+              <a
+                href="https://github.com/jakubsob/muttest"
+                class="hover:underline"
+              >
+                <h3 class="text-5xl uppercase mb-12 flex items-center gap-4">
+                  <div class="size-[100px] flex-shrink-0">
+                    <img
+                      class="w-full h-full object-contain"
+                      src="https://raw.githubusercontent.com/jakubsob/muttest/main/man/figures/logo.png"
+                      alt="muttest logo"
+                      width="100"
+                      height="100"
+                    />
+                  </div>
+                  {"Muttest"}
+                </h3>
+              </a>
+            </Animate>
+            <Animate>
+              <CodeBlock
+                code={`plan <- muttest::plan(
+    mutators = list(
+      muttest::operator("+", "-"),
+      muttest::operator("-", "+"),
+      muttest::operator("*", "/"),
+      muttest::operator("/", "*"),
+      muttest::operator("==", "!="),
+      muttest::operator("!=", "==")
+    )
   )
-)
-muttest::muttest(plan)`}
-              lang="r"
-            />
+  muttest::muttest(plan)`}
+                lang="r"
+              />
+            </Animate>
           </div>
         </div>
         <div class="order-1 space-y-6">
-          <div>
+          <Animate>
             <h4
               class="text-xl font-semibold mb-2 border-b-2 border-b-white flex items-center justify-between"
             >
@@ -323,8 +338,8 @@ muttest::muttest(plan)`}
               Discover weak spots in your test suite by introducing small
               changes to your code and checking if tests catch them.
             </p>
-          </div>
-          <div>
+          </Animate>
+          <Animate>
             <h4
               class="text-xl font-semibold mb-2 border-b-2 border-b-white flex items-center justify-between"
             >
@@ -335,8 +350,8 @@ muttest::muttest(plan)`}
               Focus on test effectiveness rather than just coverage percentages.
               Muttest reveals if your tests actually validate behavior.
             </p>
-          </div>
-          <div>
+          </Animate>
+          <Animate>
             <h4
               class="text-xl font-semibold mb-2 border-b-2 border-b-white flex items-center justify-between"
             >
@@ -347,8 +362,8 @@ muttest::muttest(plan)`}
               Systematically introduce mutations to your code and run tests to
               measure how well they detect changes.
             </p>
-          </div>
-          <div>
+          </Animate>
+          <Animate>
             <h4
               class="text-xl font-semibold mb-2 border-b-2 border-b-white flex items-center justify-between"
             >
@@ -359,8 +374,8 @@ muttest::muttest(plan)`}
               Build more robust test suites that actually catch bugs and
               regressions in your R code.
             </p>
-          </div>
-          <div>
+          </Animate>
+          <Animate>
             <h4
               class="text-xl font-semibold mb-2 border-b-2 border-b-white flex items-center justify-between"
             >
@@ -371,7 +386,7 @@ muttest::muttest(plan)`}
               Refactor code with confidence knowing your tests will catch any
               breaking changes.
             </p>
-          </div>
+          </Animate>
         </div>
       </div>
     </div>
@@ -404,33 +419,38 @@ muttest::muttest(plan)`}
   <Section id="about" size="fit" variant="light">
     <div class="pb-40 pt-40 space-y-40">
       <div class="container grid grid-cols-1 md:grid-cols-2">
-        <h2 class="text-6xl uppercase mb-12">I'm Jakub Sobolewski</h2>
-        <div class="max-w-[65ch] space-y-8 font-light">
-          <p>
-            I’m a software engineer specializing in R with 5+ years of
-            experience.
-          </p>
-          <p>
-            I believe automated testing is the key to building quality software.
-          </p>
-          <p>
-            My journey into R testing began with a project where to develop
-            code, you had to be connected to the production environment. Turns
-            out, it was a terrible developer experience.
-          </p>
-          <p>
-            I'm particularly passionate about knowledge sharing, which is why I
-            maintain an active blog and R Tests Gallery. I believe that when we
-            share our testing experiences—both successes and failures—we all
-            become better developers.
-          </p>
-          <p>
-            I approach testing with a practical mindset: tests should make
-            development faster and more confident, not slower and more
-            burdensome. My goal is to help teams find testing strategies that
-            actually enhance their workflow.
-          </p>
-        </div>
+        <Animate>
+          <h2 class="text-6xl uppercase mb-12">I'm Jakub Sobolewski</h2>
+        </Animate>
+        <Animate>
+          <div class="max-w-[65ch] space-y-8 font-light">
+            <p>
+              I’m a software engineer specializing in R with 5+ years of
+              experience.
+            </p>
+            <p>
+              I believe automated testing is the key to building quality
+              software.
+            </p>
+            <p>
+              My journey into R testing began with a project where to develop
+              code, you had to be connected to the production environment. Turns
+              out, it was a terrible developer experience.
+            </p>
+            <p>
+              I'm particularly passionate about knowledge sharing, which is why
+              I maintain an active blog and R Tests Gallery. I believe that when
+              we share our testing experiences—both successes and failures—we
+              all become better developers.
+            </p>
+            <p>
+              I approach testing with a practical mindset: tests should make
+              development faster and more confident, not slower and more
+              burdensome. My goal is to help teams find testing strategies that
+              actually enhance their workflow.
+            </p>
+          </div>
+        </Animate>
       </div>
     </div>
   </Section>

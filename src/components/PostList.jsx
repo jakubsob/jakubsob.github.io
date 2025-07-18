@@ -3,6 +3,7 @@ import { PostCard } from "@/components/PostCard";
 import { Search } from "@/components/SearchComponent";
 import { TagFilter } from "@/components/TagFilter";
 import { Card, CardContent } from "@/components/ui/card";
+import { Animate } from "@/components/ui/animate";
 import { SearchX } from "lucide-react";
 
 function PostList({ posts, showControls = true }) {
@@ -79,12 +80,14 @@ function PostList({ posts, showControls = true }) {
       <div className="space-y-4">
         {filteredPosts.length > 0 ? (
           filteredPosts.map((post) => (
-            <PostCard
-              key={post.slug}
-              post={post}
-              selectedTags={selectedTags}
-              className="max-w-none"
-            />
+            <Animate>
+              <PostCard
+                key={post.slug}
+                post={post}
+                selectedTags={selectedTags}
+                className="max-w-none"
+              />
+            </Animate>
           ))
         ) : (
           <Card className="text-center py-12">
