@@ -311,16 +311,16 @@ const posts = (await getCollection("blog"))
             <Animate>
               <CodeBlock
                 code={`plan <- muttest::plan(
-    mutators = list(
-      muttest::operator("+", "-"),
-      muttest::operator("-", "+"),
-      muttest::operator("*", "/"),
-      muttest::operator("/", "*"),
-      muttest::operator("==", "!="),
-      muttest::operator("!=", "==")
-    )
+  mutators = list(
+    muttest::operator("+", "-"),
+    muttest::operator("-", "+"),
+    muttest::operator("*", "/"),
+    muttest::operator("/", "*"),
+    muttest::operator("==", "!="),
+    muttest::operator("!=", "==")
   )
-  muttest::muttest(plan)`}
+)
+muttest::muttest(plan)`}
                 lang="r"
               />
             </Animate>
