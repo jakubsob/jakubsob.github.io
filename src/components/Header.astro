@@ -162,7 +162,6 @@ const { class: className } = Astro.props;
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          console.log(entry.isIntersecting);
           if (entry.isIntersecting) {
             header.classList.add("bg-transparent"); // Add backdrop class
           } else {
