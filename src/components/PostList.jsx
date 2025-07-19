@@ -64,7 +64,6 @@ function PostList({ posts, showControls = true }) {
             fuseOptions={searchOptions}
             onSearch={setSearchResults}
             placeholder={`Search through ${posts.length} posts...`}
-            className="max-w-md"
           />
 
           <TagFilter

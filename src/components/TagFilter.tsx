@@ -61,7 +61,7 @@ export function TagFilter({
       </div>
 
       {isVisible && (
-        <div className="rounded-lg border bg-card p-4">
+        <div className="rounded-lg bg-card p-4">
           <div className="space-y-3">
             <h3 className="text-sm font-medium text-foreground">Filter by tags</h3>
             <div className="flex flex-wrap gap-2">
