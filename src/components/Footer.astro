@@ -1,6 +1,6 @@
 ---
 import AnimatedLink from "./AnimatedLink.astro";
-import { SubscribeButton } from "@/components/ui/subscribe-button";
+import { Button } from "@/components/ui/button";
 import { Section } from "@/components/ui/section";
 import { getFooterRoutes, getSocialLinks } from "../lib/routes";
 
@@ -11,49 +11,62 @@ const footerRoutes = getFooterRoutes();
 const socialLinks = getSocialLinks();
 ---
 
-<footer class="bg-background text-white h-[40vh] w-full">
-  <Section variant="dark" size="md">
+<footer>
+  <Section variant="dark">
     <div class="container mx-auto h-full flex flex-col justify-between">
       <div
-        class="grid grid-cols-1 lg:grid-cols-2 place-items-center
+        class="grid grid-cols-1 gap-20 lg:grid-cols-2 place-items-start
         h-full
         text-4xl
-        lg:gap-8
-        px-4 py-12"
+        py-40"
       >
-        <div class="lg:justify-self-end">
+        <div class="lg:justify-self-center flex flex-col gap-20">
           <div class="h-20 color-sky-400">
-            <h1 class="text-white text-2xl mb-1 font-syne">
+            <h1 class="text-white text-6xl uppercase">
               Learn efficient R development
             </h1>
-            <SubscribeButton />
           </div>
+          <a
+            href="https://follow.it/jakub-sobolewski?leanpub"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Button
+              variant="pill"
+              size="lg"
+              className="bg-destructive text-5xl py-10"
+              >Subscribe
+            </Button>
+          </a>
         </div>
-        <div class="lg:justify-self-start">
+        <div class="lg:justify-self-center">
           <div class="flex flex-row gap-10">
-            <!-- Main Routes -->
-            <ul class="list-none text-sky-200 space-y-4">
-              {
-                footerRoutes.map((route) => (
-                  <li class="transition-colors hover:text-white">
-                    <a href={route.path}>{route.label}</a>
-                  </li>
-                ))
-              }
-            </ul>
-
-            <!-- Social Links -->
-            <ul class="list-none text-sky-200 space-y-4">
-              {
-                socialLinks.map((link) => (
-                  <li class="transition-colors hover:text-white">
-                    <AnimatedLink href={link.path} target="_blank">
-                      {link.label}
-                    </AnimatedLink>
-                  </li>
-                ))
-              }
-            </ul>
+            <div class="flex flex-col gap-4">
+              <h2>Quick links</h2>
+              <ul class="list-none text-sky-200 space-y-4">
+                {
+                  footerRoutes.map((route) => (
+                    <li class="transition-colors hover:text-white">
+                      <a href={route.path}>{route.label}</a>
+                    </li>
+                  ))
+                }
+              </ul>
+            </div>
+            <div class="flex flex-col gap-4">
+              <h2>Let's connect</h2>
+              <ul class="list-none text-sky-200 space-y-4">
+                {
+                  socialLinks.map((link) => (
+                    <li class="transition-colors hover:text-white">
+                      <AnimatedLink href={link.path} target="_blank">
+                        {link.label}
+                      </AnimatedLink>
+                    </li>
+                  ))
+                }
+              </ul>
+            </div>
           </div>
         </div>
       </div>
