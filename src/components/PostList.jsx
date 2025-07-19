@@ -79,7 +79,7 @@ function PostList({ posts, showControls = true }) {
       <div className="space-y-4">
         {filteredPosts.length > 0 ? (
           filteredPosts.map((post) => (
-            <Animate>
+            <Animate key={post.slug}>
               <PostCard
                 key={post.slug}
                 post={post}
