@@ -64,7 +64,7 @@ const SubscribeButton = React.forwardRef<HTMLDivElement, SubscribeButtonProps>(
             </div>
             <Button
               type="submit"
-              className="max-w-[200px] bg-ocean-green-500 border border-ocean-green-500 text-white font-bold uppercase rounded-l-none rounded-r-lg transition-all duration-300 hover:bg-sky-700 hover:border-sky-50 font-mono tracking-wider"
+              className="max-w-[200px] bg-ocean-green-500 border border-ocean-green-500 text-white font-bold uppercase rounded-l-none rounded-r-lg transition-all duration-300 hover:bg-background hover:border-sky-50 font-mono tracking-wider"
             >
               {buttonText}
             </Button>

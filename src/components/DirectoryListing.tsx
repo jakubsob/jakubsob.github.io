@@ -75,7 +75,7 @@ export function DirectoryListing({ directories }: DirectoryListingProps) {
           <CardContent className="pt-0">
             <div className="flex items-center space-x-2">
               <Button
-                className="bg-sky-700 hover:bg-default text-white"
+                className="bg-background hover:bg-default text-white"
                 size="sm"
                 asChild
               >
