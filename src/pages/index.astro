@@ -78,49 +78,51 @@ const posts = (await getCollection("blog"))
           id="hero-h1"
         >
           <a href="/blog">
-            <span
-              class="motion-preset-slide-up-lg md:motion-duration-1000 tracking-[0.02em] leading-[0.8em] flex items-center"
-            >
-              <Asterisk
-                className="letter-hover inline-block size-[1em] text-red-500"
-              />
-              <span class="letter-hover">B</span>
-              <span class="letter-hover">u</span>
-              <span class="letter-hover">i</span>
-              <span class="letter-hover">l</span>
-              <span class="letter-hover">d</span>
-              <span class="letter-hover">i</span>
-              <span class="letter-hover">n</span>
-              <span class="letter-hover">g</span>
-            </span>
-            <span
-              class="motion-preset-slide-up-lg motion-delay-100 md:motion-duration-1000 text-ocean-green-100 font-bolder italic font-serif leading-[1em] tracking-[0.1em] flex items-center"
-            >
-              <span class="letter-hover-green">q</span>
-              <span class="letter-hover-green">u</span>
-              <span class="letter-hover-green">a</span>
-              <span class="letter-hover-green">l</span>
-              <span class="letter-hover-green">i</span>
-              <span class="letter-hover-green">t</span>
-              <span class="letter-hover-green">y</span>
-              <ArrowDownLeft
-                className="letter-hover-green inline-block size-[1em]"
-              />
-            </span>
-            <span
-              class="motion-preset-slide-up-lg motion-delay-200 md:motion-duration-1000 text-nowrap flex items-center"
-            >
-              <span class="letter-hover">b</span>
-              <span class="letter-hover">y</span>
-              <span class="letter-hover">&nbsp;</span>
-              <span class="letter-hover">t</span>
-              <span class="letter-hover">e</span>
-              <span class="letter-hover">s</span>
-              <span class="letter-hover">t</span>
-              <span class="letter-hover">i</span>
-              <span class="letter-hover">n</span>
-              <span class="letter-hover">g</span>
-            </span>
+            <Animate variant="header">
+              <span class="tracking-[0.02em] leading-[0.8em] flex items-center">
+                <Asterisk
+                  className="letter-hover inline-block size-[1em] text-red-500"
+                />
+                <span class="letter-hover">B</span>
+                <span class="letter-hover">u</span>
+                <span class="letter-hover">i</span>
+                <span class="letter-hover">l</span>
+                <span class="letter-hover">d</span>
+                <span class="letter-hover">i</span>
+                <span class="letter-hover">n</span>
+                <span class="letter-hover">g</span>
+              </span>
+            </Animate>
+            <Animate variant="header" delay="100">
+              <span
+                class="text-ocean-green-100 font-bolder italic font-serif leading-[1em] tracking-[0.1em] flex items-center"
+              >
+                <span class="letter-hover-green">q</span>
+                <span class="letter-hover-green">u</span>
+                <span class="letter-hover-green">a</span>
+                <span class="letter-hover-green">l</span>
+                <span class="letter-hover-green">i</span>
+                <span class="letter-hover-green">t</span>
+                <span class="letter-hover-green">y</span>
+                <ArrowDownLeft
+                  className="letter-hover-green inline-block size-[1em]"
+                />
+              </span>
+            </Animate>
+            <Animate variant="header" delay="200">
+              <span class="text-nowrap flex items-center">
+                <span class="letter-hover">b</span>
+                <span class="letter-hover">y</span>
+                <span class="letter-hover">&nbsp;</span>
+                <span class="letter-hover">t</span>
+                <span class="letter-hover">e</span>
+                <span class="letter-hover">s</span>
+                <span class="letter-hover">t</span>
+                <span class="letter-hover">i</span>
+                <span class="letter-hover">n</span>
+                <span class="letter-hover">g</span>
+              </span>
+            </Animate>
           </a>
           <div
             class="visible md:hidden absolute -bottom-10 left-1/2 -translate-x-1/2 translate-y-full md:max-w-[400px]"

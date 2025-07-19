@@ -2,6 +2,7 @@
 import { createMarkdownProcessor } from "@astrojs/markdown-remark";
 import { Section } from "@/components/ui/section";
 import { SubscribeButton } from "@/components/ui/subscribe-button.tsx";
+import { Animate } from "../../components/ui/animate";
 import { DirectoryListing } from "../../components/DirectoryListing.tsx";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { Button } from "@/components/ui/button";
@@ -191,30 +192,17 @@ try {
 
 <BaseLayout title="R Tests Gallery">
   <Section id="hero" variant="dark" size="md">
-    <div class="container mx-auto h-full grid place-items-center">
-      <div
-        class="text-center text-white max-w-[65ch] flex flex-col items-center"
-      >
-        <h1 class="text-white text-4xl py-4 font-syne tracking-wider">
-          The R Tests Gallery
-        </h1>
-        <h2
-          class="font-syne tracking-wider text-sky-200 text-lg text-balance space-y-2"
-        >
-          <p>
-            It's a collection of testing patterns I've successfully used in
-            production.
-          </p>
-          <p>
-            The collection will grow over time, so subscribe to stay updated!
-          </p>
+    <div
+      class="container mx-auto h-full flex flex-col justify-center items-center text-center"
+    >
+      <Animate variant="fadeIn">
+        <h1 class="text-white text-6xl uppercase py-4">The R Tests Gallery</h1>
+      </Animate>
+      <Animate variant="fadeIn" delay="200">
+        <h2 class="text-sky-200 text-2xl">
+          A collection of testing patterns I've used in R projects.
         </h2>
-        <SubscribeButton className="mt-6" />
-        <span class="text-sky-200 text-sm mt-2">
-          <Info className="size-4 inline-block" />
-          Subscription also gives you updates from the blog
-        </span>
-      </div>
+      </Animate>
     </div>
   </Section>
   <Section id="content" variant="light" size="md">
