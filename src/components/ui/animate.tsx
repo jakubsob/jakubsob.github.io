@@ -12,6 +12,7 @@ const animateVariants = cva(
         default: "intersect-once intersect:motion-opacity-in-0 intersect:motion-translate-y-in-25",
         header: "motion-preset-slide-up-lg md:motion-duration-1000",
         fadeIn: "motion-preset-fade-lg",
+        expand: "motion-preset-expand",
       },
     },
     defaultVariants: {
@@ -28,13 +29,14 @@ export interface AnimateProps
 }
 
 const Animate = React.forwardRef<HTMLDivElement, AnimateProps>(
-  ({ variant, delay, asChild = false, ...props }, ref) => {
+  ({ variant, delay, className, asChild = false, ...props }, ref) => {
     const Comp = asChild ? Slot : "div"
     return (
       <Comp
         className={cn(
           animateVariants({ variant }),
-          delay !== undefined && `motion-delay-${delay}`
+          delay ? `motion-delay-${delay}` : "",
+          className
         )}
         ref={ref}
         {...props}

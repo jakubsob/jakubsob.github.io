@@ -93,7 +93,7 @@ const posts = (await getCollection("blog"))
                 <span class="letter-hover">g</span>
               </span>
             </Animate>
-            <Animate variant="header" delay="100">
+            <Animate variant="header" className="motion-delay-[200ms]">
               <span
                 class="text-ocean-green-100 font-bolder italic font-serif leading-[1em] tracking-[0.1em] flex items-center"
               >
@@ -109,7 +109,7 @@ const posts = (await getCollection("blog"))
                 />
               </span>
             </Animate>
-            <Animate variant="header" delay="200">
+            <Animate variant="header" className="motion-delay-[400ms]">
               <span class="text-nowrap flex items-center">
                 <span class="letter-hover">b</span>
                 <span class="letter-hover">y</span>
@@ -127,23 +127,27 @@ const posts = (await getCollection("blog"))
           <div
             class="visible md:hidden absolute -bottom-10 left-1/2 -translate-x-1/2 translate-y-full md:max-w-[400px]"
           >
-            <Button
-              variant="default"
-              size="xl"
-              className="motion-preset-expand motion-delay-500 bg-primary text-xl uppercase w-full"
-            >
-              <a href="/blog"> Read blog </a>
-            </Button>
+            <Animate variant="expand" className="motion-delay-[600ms]">
+              <Button
+                variant="default"
+                size="xl"
+                className="bg-primary text-xl uppercase w-full"
+              >
+                <a href="/blog"> Read blog </a>
+              </Button>
+            </Animate>
           </div>
         </h1>
       </div>
     </div>
-    <a
-      href="#blog"
-      class="motion-preset-slide-up-lg motion-delay-700 cursor-pointer text-sky-200 border-sky-200 absolute bottom-0 left-1/2 -translate-x-1/2 size-8 mb-2 rounded-full border-2"
-    >
-      <ArrowDown className="block size-full" />
-    </a>
+    <Animate variant="header" className="motion-delay-[1000ms]">
+      <a
+        href="#blog"
+        class="cursor-pointer text-sky-200 border-sky-200 absolute bottom-0 left-1/2 -translate-x-1/2 size-8 mb-2 rounded-full border-2"
+      >
+        <ArrowDown className="block size-full" />
+      </a>
+    </Animate>
   </Section>
   <Section id="blog" size="fit" variant="light">
     <div class="py-40 space-y-52">
