@@ -6,6 +6,7 @@ import { Section } from "@/components/ui/section";
 import { Badge } from "@/components/ui/badge";
 import { SubscribeButton } from "@/components/ui/subscribe-button";
 import { getReadingTime } from "../utils/getReadingTime";
+import TableOfContents from "../components/TableOfContents";
 
 const { post } = Astro.props;
 const readingTime = getReadingTime(post.body);
@@ -15,65 +16,84 @@ const { title, description, pubDate, updatedDate, tags } = post.data;
 <BaseLayout {...post.data}>
   <BlogPostJSONLD slot="head" {...post.data} />
   <Section variant="light" className="pt-[60px]">
-    <article
-      class="prose
-          prose-h1:capitalize
-          prose-h1:mb-2
-          prose-h1:font-medium
-          prose-h2:font-normal
-          prose-h2:my-6
-          prose-h3:my-4
-          prose-h4:my-2
-          prose-p:my-2
-          prose-pre:font-code
-          prose-pre:rounded-none
-          prose-blockquote:font-light
-          prose-img:w-full
-          mx-auto px-2"
+    <div
+      class="container mx-auto grid grid-cols-1 lg:grid-cols-[1fr_65ch_1fr] gap-2"
     >
-      <header class="border-b-[1px] border-solid border-slate-300 pb-2">
-        <h1 class="lead text-balance">{title}</h1>
-        {description && <h2 class="m-0">{description}</h2>}
-        <div class="flex flex-row items-baseline gap-6 text-sm uppercase">
-          <div>
-            {pubDate && <FormattedDate date={pubDate} />}
-            {
-              updatedDate && (
-                <div>
-                  Last updated on <FormattedDate date={updatedDate} />
-                </div>
-              )
-            }
+      <article
+        class="lg:col-start-2
+            mx-auto
+            prose
+            prose-h1:capitalize
+            prose-h1:mb-2
+            prose-h1:font-medium
+            prose-h2:font-normal
+            prose-h2:my-6
+            prose-h3:my-4
+            prose-h4:my-2
+            prose-p:my-2
+            prose-pre:font-code
+            prose-pre:rounded-none
+            prose-blockquote:font-light
+            prose-img:w-full
+            px-2"
+      >
+        <header class="border-b-[1px] border-solid border-slate-300 pb-2">
+          <h1 class="lead text-balance">{title}</h1>
+          {description && <h2 class="m-0">{description}</h2>}
+          <div class="flex flex-row items-baseline gap-6 text-sm uppercase">
+            <div>
+              {pubDate && <FormattedDate date={pubDate} />}
+              {
+                updatedDate && (
+                  <div>
+                    Last updated on <FormattedDate date={updatedDate} />
+                  </div>
+                )
+              }
+            </div>
+            <span class="flex gap-2">
+              {
+                tags
+                  .sort((a: string, b: string): any => a.localeCompare(b))
+                  .map((tag: any): any => (
+                    <Badge variant="secondary">
+                      <a href={`/tags/${tag}`} class="no-underline">
+                        {tag}
+                      </a>
+                    </Badge>
+                  ))
+              }
+            </span>
+            <div class="ms-auto text-gray-500">
+              {readingTime}
+            </div>
           </div>
-          <span class="flex gap-2">
-            {
-              tags
-                .sort((a: string, b: string): any => a.localeCompare(b))
-                .map((tag: any): any => (
-                  <Badge variant="secondary">
-                    <a href={`/tags/${tag}`} class="no-underline">
-                      {tag}
-                    </a>
-                  </Badge>
-                ))
-            }
-          </span>
-          <div class="ms-auto text-gray-500">
-            {readingTime}
-          </div>
-        </div>
-      </header>
-      <slot />
-      <hr />
-      <center class="pt-10 pb-24 space-y-2 border-slate-300">
-        <p class="text-slate-500">
-          Get updates on new posts, articles, and more:
-        </p>
-        <SubscribeButton />
-      </center>
-    </article>
+        </header>
+        <slot />
+        <hr />
+        <center class="pt-10 pb-24 space-y-2 border-slate-300">
+          <p class="text-slate-500">
+            Get updates on new posts, articles, and more:
+          </p>
+          <SubscribeButton />
+        </center>
+      </article>
+      <div class="relative">
+        <TableOfContents client:load />
+      </div>
+    </div>
   </Section>
   <script is:inline>
+    const headings = Array.from(document.querySelectorAll("h2, h3, h4"));
+    headings.forEach((heading) => {
+      if (!heading.id) {
+        heading.id = heading.textContent
+          .toLowerCase()
+          .replace(/[^\w\s]/g, "")
+          .replace(/\s+/g, "-");
+      }
+    });
+
     let copyButtonLabel = "Copy";
     let codeBlocks = Array.from(document.querySelectorAll("pre"));
 
