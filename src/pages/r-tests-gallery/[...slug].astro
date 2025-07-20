@@ -1,6 +1,7 @@
 ---
 import HeaderDefault from "../../components/HeaderDefault.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import { Section } from "@/components/ui/section";
 import IDEInterface from "../../components/IDEInterface.jsx";
 import { createMarkdownProcessor } from "@astrojs/markdown-remark";
 
@@ -198,12 +199,11 @@ if (readmeContent) {
 ---
 
 <BaseLayout title={`${dirName} - R Tests Gallery`}>
-  <main class="bg-marine-50 pt-20">
+  <main>
     <HeaderDefault />
-    <!-- README Content Section -->
     {
       renderedReadmeContent && (
-        <section class="bg-marine-50">
+        <Section variant="light" className="pt-[60px]">
           <article
             class="prose
               prose-h1:capitalize
@@ -221,16 +221,18 @@ if (readmeContent) {
           >
             <Fragment set:html={renderedReadmeContent} />
           </article>
-        </section>
+        </Section>
       )
     }
-    <section id="code" class="py-8 container mx-auto">
-      <IDEInterface
-        fileTree={fileTree}
-        dirName={dirName}
-        hasError={hasError}
-        client:load
-      />
-    </section>
+    <Section id="code" variant="light">
+      <div class="py-8 container mx-auto">
+        <IDEInterface
+          fileTree={fileTree}
+          dirName={dirName}
+          hasError={hasError}
+          client:load
+        />
+      </div>
+    </Section>
   </main>
 </BaseLayout>
