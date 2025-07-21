@@ -1,8 +1,7 @@
 ---
 import Header from "./Header.astro";
 import HeaderLink from "./HeaderLink.astro";
-import HeaderLogo from "./HeaderLogo.astro";
-import HeaderButton from "./HeaderButton.astro";
+import SubscribeButton from "@/components/SubscribeButton.astro";
 ---
 
 <Header class="fixed top-0 z-10 uppercase">
@@ -10,11 +9,9 @@ import HeaderButton from "./HeaderButton.astro";
   <HeaderLink href="/blog/">blog</HeaderLink>
   <HeaderLink href="/resources/">resources</HeaderLink>
   <HeaderLink href="/r-tests-gallery/">r tests gallery</HeaderLink>
-  <HeaderButton
-    href="https://follow.it/jakub-sobolewski?leanpub"
-    class="ms-auto text-ocean-green-500"
-    id="subscribe"
-  >
-    subscribe
-  </HeaderButton>
+  <div class="ml-auto">
+    <SubscribeButton
+      class="bg-primary uppercase text-sm px-2 py-2 rounded-sm"
+    />
+  </div>
 </Header>

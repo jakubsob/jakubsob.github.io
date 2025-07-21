@@ -1,7 +1,7 @@
 ---
 import AnimatedLink from "./AnimatedLink.astro";
-import { Button } from "@/components/ui/button";
 import { Section } from "@/components/ui/section";
+import SubscribeButton from "@/components/SubscribeButton.astro";
 import { getFooterRoutes, getSocialLinks } from "../lib/routes";
 
 const today = new Date();
@@ -21,23 +21,12 @@ const socialLinks = getSocialLinks();
         py-40"
       >
         <div class="lg:justify-self-center flex flex-col gap-20">
-          <div class="h-20 color-sky-400">
+          <div class="color-sky-400">
             <h1 class="text-white text-6xl uppercase">
               Learn efficient R development
             </h1>
           </div>
-          <a
-            href="https://follow.it/jakub-sobolewski?leanpub"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Button
-              variant="pill"
-              size="lg"
-              className="bg-destructive text-5xl py-10"
-              >Subscribe
-            </Button>
-          </a>
+          <SubscribeButton class="bg-primary py-2 px-4 rounded-sm uppercase" />
         </div>
         <div class="lg:justify-self-center">
           <div class="flex flex-row gap-10">

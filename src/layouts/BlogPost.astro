@@ -4,7 +4,7 @@ import BlogPostJSONLD from "../components/BlogPostJSONLD.astro";
 import FormattedDate from "../components/FormattedDate";
 import { Section } from "@/components/ui/section";
 import { Badge } from "@/components/ui/badge";
-import { SubscribeButton } from "@/components/ui/subscribe-button";
+import SubscribeButton from "@/components/SubscribeButton.astro";
 import { getReadingTime } from "../utils/getReadingTime";
 import TableOfContents from "../components/TableOfContents";
 
@@ -89,7 +89,9 @@ const { title, description, pubDate, updatedDate, tags } = post.data;
           <p class="text-slate-500">
             Get updates on new posts, articles, and more:
           </p>
-          <SubscribeButton />
+          <SubscribeButton
+            class="bg-primary py-4 px-6 rounded-sm uppercase text-white text-2xl"
+          />
         </center>
       </article>
       <div class="relative">
