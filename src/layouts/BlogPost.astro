@@ -13,6 +13,14 @@ const readingTime = getReadingTime(post.body);
 const { title, description, pubDate, updatedDate, tags } = post.data;
 ---
 
+<style is:global>
+  /* Remove default quote marks from blockquotes */
+  .prose blockquote p::before,
+  .prose blockquote p::after {
+    content: none !important;
+  }
+</style>
+
 <BaseLayout {...post.data}>
   <BlogPostJSONLD slot="head" {...post.data} />
   <Section variant="light" className="pt-[60px]">
@@ -33,7 +41,13 @@ const { title, description, pubDate, updatedDate, tags } = post.data;
             prose-p:my-2
             prose-pre:font-code
             prose-pre:rounded-none
-            prose-blockquote:font-light
+            prose-blockquote:bg-ocean-green-100/50
+            prose-blockquote:border-none
+            prose-blockquote:rounded-lg
+            prose-blockquote:py-4
+            prose-blockquote:not-italic
+            prose-blockquote:transition-all
+            hover:prose-blockquote:bg-ocean-green-200/50
             prose-img:w-full
             px-2"
       >
