@@ -33,6 +33,7 @@ const renderInlineMarkdown = async (content: string) => {
 // GitHub API authentication for higher rate limits
 const GITHUB_TOKEN = import.meta.env.PRIVATE_GITHUB_TOKEN;
 const headers = GITHUB_TOKEN ? { Authorization: `token ${GITHUB_TOKEN}` } : {};
+console.log("GitHub token available:", !!GITHUB_TOKEN); // Log presence of token, not the actual value
 
 // Fetch the main README content
 let readmeContent = "";
