@@ -4,13 +4,23 @@ import BlogPostJSONLD from "../components/BlogPostJSONLD.astro";
 import FormattedDate from "../components/FormattedDate";
 import { Section } from "@/components/ui/section";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Asterisk, ExternalLink } from "lucide-react";
 import SubscribeButton from "@/components/SubscribeButton.astro";
 import { getReadingTime } from "../utils/getReadingTime";
 import TableOfContents from "../components/TableOfContents";
+import PostList from "@/components/PostList";
+import { getCollection } from "astro:content";
 
 const { post } = Astro.props;
 const readingTime = getReadingTime(post.body);
 const { title, description, pubDate, updatedDate, tags } = post.data;
+const posts = (await getCollection("blog"))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .filter((post) => post.data.tags.some((tag) => tags.includes(tag)))
+  .filter((post) => post.data.title !== title)
+  .filter((post) => post.data.draft !== true)
+  .filter((_, index) => index < 3);
 ---
 
 <style is:global>
@@ -27,75 +37,96 @@ const { title, description, pubDate, updatedDate, tags } = post.data;
     <div
       class="container mx-auto grid grid-cols-1 lg:grid-cols-[1fr_65ch_1fr] gap-2"
     >
-      <article
-        class="lg:col-start-2
-            mx-auto
-            prose
-            prose-h1:capitalize
-            prose-h1:mb-2
-            prose-h1:font-medium
-            prose-h2:font-normal
-            prose-h3:font-normal
-            prose-h4:font-normal
-            prose-h2:my-6
-            prose-h3:my-4
-            prose-h4:my-2
-            prose-p:my-2
-            prose-pre:font-code
-            prose-pre:rounded-none
-            prose-blockquote:bg-ocean-green-100/50
-            prose-blockquote:border-none
-            prose-blockquote:rounded-lg
-            prose-blockquote:py-4
-            prose-blockquote:not-italic
-            prose-blockquote:transition-all
-            hover:prose-blockquote:bg-ocean-green-200/50
-            prose-img:w-full
-            px-2"
-      >
-        <header class="border-b-[1px] border-solid border-slate-300 pb-2">
-          <h1 class="lead text-balance">{title}</h1>
-          {description && <h2 class="m-0">{description}</h2>}
-          <div class="flex flex-row items-baseline gap-6 text-sm uppercase">
-            <div>
-              {pubDate && <FormattedDate date={pubDate} />}
-              {
-                updatedDate && (
-                  <div>
-                    Last updated on <FormattedDate date={updatedDate} />
-                  </div>
-                )
-              }
+      <div class="lg:col-start-2">
+        <article
+          class="mx-auto
+              prose
+              prose-h1:capitalize
+              prose-h1:mb-2
+              prose-h1:font-medium
+              prose-h2:font-normal
+              prose-h3:font-normal
+              prose-h4:font-normal
+              prose-h2:my-6
+              prose-h3:my-4
+              prose-h4:my-2
+              prose-p:my-2
+              prose-pre:font-code
+              prose-pre:rounded-none
+              prose-blockquote:bg-ocean-green-100/50
+              prose-blockquote:border-none
+              prose-blockquote:rounded-lg
+              prose-blockquote:py-4
+              prose-blockquote:not-italic
+              prose-blockquote:transition-all
+              hover:prose-blockquote:bg-ocean-green-200/50
+              prose-img:w-full
+              px-2"
+        >
+          <header class="border-b-[1px] border-solid border-slate-300 pb-2">
+            <h1 class="lead text-balance">{title}</h1>
+            {description && <h2 class="m-0">{description}</h2>}
+            <div class="flex flex-row items-baseline gap-6 text-sm uppercase">
+              <div>
+                {pubDate && <FormattedDate date={pubDate} />}
+                {
+                  updatedDate && (
+                    <div>
+                      Last updated on <FormattedDate date={updatedDate} />
+                    </div>
+                  )
+                }
+              </div>
+              <span class="flex gap-2">
+                {
+                  tags
+                    .sort((a: string, b: string): any => a.localeCompare(b))
+                    .map((tag: any): any => (
+                      <Badge variant="secondary">
+                        <a href={`/tags/${tag}`} class="no-underline">
+                          {tag}
+                        </a>
+                      </Badge>
+                    ))
+                }
+              </span>
+              <div class="ms-auto text-gray-500">
+                {readingTime}
+              </div>
             </div>
-            <span class="flex gap-2">
-              {
-                tags
-                  .sort((a: string, b: string): any => a.localeCompare(b))
-                  .map((tag: any): any => (
-                    <Badge variant="secondary">
-                      <a href={`/tags/${tag}`} class="no-underline">
-                        {tag}
-                      </a>
-                    </Badge>
-                  ))
-              }
-            </span>
-            <div class="ms-auto text-gray-500">
-              {readingTime}
-            </div>
+          </header>
+          <slot />
+          <hr />
+          <div class="flex flex-col md:flex-row gap-6 md:gap-2 justify-between">
+            <SubscribeButton
+              class="bg-primary py-4 px-6 rounded-sm text-white font-light text-xl hover:bg-ocean-green-700"
+              text="Subscribe to stay updated"
+            />
+            <div class="flex items-center justify-center text-sky-400">or</div>
+            <a
+              href="https://github.com/jakubsob/r-tests-gallery/issues/new/choose"
+              target="_blank"
+              class="flex items-center gap-2 no-underline"
+              rel="noopener noreferrer"
+            >
+              <Button
+                className="w-full bg-background py-4 px-6 rounded-sm font-light text-xl hover:bg-sky-400 h-auto"
+              >
+                <ExternalLink className="size-[1em]" />
+                <div>Submit a content request</div>
+              </Button>
+            </a>
           </div>
-        </header>
-        <slot />
-        <hr />
-        <center class="pt-10 pb-24 space-y-2 border-slate-300">
-          <p class="text-slate-500">
-            Get updates on new posts, articles, and more:
-          </p>
-          <SubscribeButton
-            class="bg-primary py-4 px-6 rounded-sm uppercase text-white text-2xl"
-          />
-        </center>
-      </article>
+          <hr />
+        </article>
+        <div class="px-2 py-24">
+          <h2 class="text-3xl text-sky-700 mb-6 flex items-center uppercase">
+            <Asterisk className="size-[1em] block" />
+            <span>You might also like</span>
+          </h2>
+          <PostList posts={posts} showControls={false} />
+        </div>
+      </div>
       <div class="relative">
         <TableOfContents client:load />
       </div>

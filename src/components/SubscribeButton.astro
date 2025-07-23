@@ -1,5 +1,5 @@
 ---
-const { class: buttonClass } = Astro.props;
+const { class: buttonClass, text = "Subscribe" } = Astro.props;
 ---
 
 <button
@@ -9,5 +9,5 @@ const { class: buttonClass } = Astro.props;
   ]}
   onclick="ml('show', 'Iw0inv', true)"
 >
-  Subscribe
+  {text}
 </button>
