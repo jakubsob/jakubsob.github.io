@@ -1,0 +1,34 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { Section } from "../components/ui/section";
+import LinkedInTextFormatter from "../components/LinkedInTextFormatter";
+import { Animate } from "../components/ui/animate";
+
+const title = "LinkedIn Text Formatter";
+const description =
+  "Format your LinkedIn posts with Markdown syntax - convert to bold, italic, use custom bullet points and more.";
+---
+
+<BaseLayout title={title} description={description}>
+  <Section id="hero" variant="dark" size="md">
+    <div
+      class="container mx-auto h-full flex flex-col justify-center items-center text-center"
+    >
+      <Animate variant="header">
+        <h1 class="text-white text-6xl uppercase py-4 flex items-center gap-4">
+          Markdown to LinkedIn Formatter
+        </h1>
+      </Animate>
+      <Animate variant="header" className="motion-delay-[400ms]">
+        <h2 class="text-sky-200 text-2xl">
+          Paste Markdown text to format it for LinkedIn posts
+        </h2>
+      </Animate>
+    </div>
+  </Section>
+  <Section variant="light" size="fit">
+    <div class="container mx-auto py-12">
+      <LinkedInTextFormatter client:load />
+    </div>
+  </Section>
+</BaseLayout>
