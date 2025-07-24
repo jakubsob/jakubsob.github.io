@@ -12,15 +12,27 @@ const description =
 <BaseLayout title={title} description={description}>
   <Section id="hero" variant="dark" size="md">
     <div
-      class="container mx-auto h-full flex flex-col justify-center items-center text-center"
+      class="container mx-auto h-full flex flex-col justify-center items-center text-center relative"
     >
+      <div
+        id="circle"
+        class="absolute z-0 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-gradient-to-b from-background to-ocean-green-700 opacity-10 h-[80%] aspect-square rounded-full"
+      >
+      </div>
+      <div
+        id="circle"
+        class="absolute z-0 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-gradient-to-b from-background to-ocean-green-800 opacity-20 h-full aspect-square rounded-full"
+      >
+      </div>
       <Animate variant="header">
-        <h1 class="text-white text-6xl uppercase py-4 flex items-center gap-4">
+        <h1
+          class="text-white text-6xl uppercase py-4 flex items-center gap-4 font-light bg-gradient-to-b from-white to-sky-100 text-transparent bg-clip-text"
+        >
           Markdown to LinkedIn Formatter
         </h1>
       </Animate>
       <Animate variant="header" className="motion-delay-[400ms]">
-        <h2 class="text-sky-200 text-2xl">
+        <h2 class="text-sky-200 text-xl font-light">
           Paste Markdown text to format it for LinkedIn posts
         </h2>
       </Animate>

@@ -191,10 +191,25 @@ try {
 <BaseLayout title="R Tests Gallery" image="/ogimg-r_tests_gallery.png">
   <Section id="hero" variant="dark" size="md">
     <div
-      class="container mx-auto h-full flex flex-col justify-center items-center text-center"
+      class="container mx-auto h-full flex flex-col justify-center items-center text-center relative"
     >
+      <div
+        id="circle"
+        class="absolute z-0 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-gradient-to-b from-background to-ocean-green-700 opacity-10 h-[80%] aspect-square rounded-full"
+      >
+      </div>
+      <div
+        id="circle"
+        class="absolute z-0 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-gradient-to-b from-background to-ocean-green-800 opacity-20 h-full aspect-square rounded-full"
+      >
+      </div>
       <h1 class="text-white text-6xl uppercase py-4">
-        <Animate variant="header" className=""> The R Tests </Animate>
+        <Animate
+          variant="header"
+          className=" font-light bg-gradient-to-b from-white to-sky-200 text-transparent bg-clip-text"
+        >
+          The R Tests
+        </Animate>
         <Animate variant="header" className="motion-delay-[200ms]">
           <div
             class="font-serif text-ocean-green-50 italic flex items-center justify-center"
@@ -206,10 +221,10 @@ try {
         </Animate>
       </h1>
       <Animate variant="header" className="motion-delay-[400ms]">
-        <h2 class="text-sky-200 text-2xl">
+        <h2 class="text-sky-200 font-light text-xl">
           A collection of testing patterns I've used in R projects.
         </h2>
-        <p class="text-sky-200 mt-2">
+        <p class="text-sky-200 font-light mt-2">
           More will be added over time, so check back soon!
         </p>
       </Animate>
