@@ -2,11 +2,20 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { Section } from "@/components/ui/section";
 import { Animate } from "@/components/ui/animate";
-import { Book, Braces, Bug, Rocket } from "lucide-react";
+import {
+  Braces,
+  Bug,
+  Rocket,
+  CheckCircle2,
+  Users,
+  Code2,
+  FileSearch,
+} from "lucide-react";
+import Card from "./Card.astro";
 
-const title = "Learn automated Testing in R";
+const title = "Add Automated User Tests to Your Shiny Apps";
 const description =
-  "From a novice to a testing pro. Unlock the power of test automation to build your R projects faster, and with more confidence.";
+  "Tired of fixing breakages only after users complain? Bring bulletproof user testing to your Shiny workflow—even for legacy apps.";
 ---
 
 <BaseLayout title={title} description={description}>
@@ -26,49 +35,29 @@ const description =
       </div>
       <Animate variant="header">
         <h1
-          class="text-6xl font-light uppercase py-4 flex flex-wrap justify-center items-center gap-4"
+          class="text-5xl md:text-6xl font-light uppercase py-4 flex flex-wrap justify-center items-center gap-4"
         >
-          <span
-            class="bg-gradient-to-b from-white to-sky-200 text-transparent bg-clip-text"
-            >From</span
-          >
-          <span
-            class="bg-gradient-to-b from-white to-sky-200 text-transparent bg-clip-text"
-            >Novice</span
-          >
-          <span
-            class="bg-gradient-to-b from-white to-sky-200 text-transparent bg-clip-text"
-            >To</span
-          >
-          <span
-            class="bg-gradient-to-b from-white to-sky-200 text-transparent bg-clip-text"
-            >Testing</span
-          >
-          <span
-            class="bg-gradient-to-b from-white to-sky-200 text-transparent bg-clip-text"
-            >Pro</span
-          >
+          {
+            title
+              .split(" ")
+              .map((word, index) => (
+                <span class="bg-gradient-to-b from-white to-sky-200 text-transparent bg-clip-text">
+                  {word}
+                </span>
+              ))
+          }
         </h1>
       </Animate>
-      <h2 class="text-sky-100 font-light text-xl mb-8 max-w-[47ch] space-y-4">
+      <h2 class="text-sky-100 font-light text-xl mb-8 max-w-[65ch] space-y-4">
         <Animate variant="header" className="motion-delay-[400ms]">
-          <p>Learn automated testing in R.</p>
-        </Animate>
-        <Animate variant="header" className="motion-delay-[600ms]">
           <p>
-            Unlock the power of test automation to build your R projects faster,
-            and with more confidence.
-          </p>
-        </Animate>
-        <Animate variant="header" className="motion-delay-[800ms]">
-          <p class="text-sm">
-            Is it a book or a course? We'll see. Stay tuned for updates!
+            See how you can turn your app descriptions into robust acceptance
+            tests, fast.
           </p>
         </Animate>
         <Animate variant="header" className="motion-delay-[800ms]">
           <p class="text-ocean-green-50">
-            <Book className="inline size-[1em]" />
-            <Braces className="inline size-[1em" />
+            <Braces className="inline size-[1em]" />
             <Bug className="inline size-[1em]" />
             <Rocket className="inline size-[1em]" />
           </p>
@@ -199,4 +188,195 @@ const description =
       </Animate>
     </div>
   </Section>
+
+  <!-- <Section id="curriculum" variant="dark">
+    <div class="container mx-auto py-24">
+      <h2 class="text-5xl font-light mb-12 text-center uppercase">
+        <span
+          class="bg-gradient-to-r from-ocean-green-700 to-ocean-green-50 text-transparent bg-clip-text"
+        >
+          Course Curriculum
+        </span>
+      </h2>
+
+      <div class="mb-12">
+        <h3 class="text-2xl font-medium mb-4 text-ocean-green-800">
+          Who This Course Is For
+        </h3>
+        <div class="flex items-start gap-3 mb-3">
+          <Users className="shrink-0 mt-1 size-5 text-ocean-green-600" />
+          <p class="text-gray-700">
+            R/Shiny developers, data scientists, statisticians—anyone who uses
+            Shiny, regardless of level of expertise in Shiny itself.
+          </p>
+        </div>
+        <div class="flex items-start gap-3">
+          <CheckCircle2 className="shrink-0 mt-1 size-5 text-ocean-green-600" />
+          <p class="text-gray-700">
+            Prerequisites: Experience with testthat unit testing in R. No prior
+            Playwright or Cucumber experience required. Ability to read
+            JavaScript code is assumed.
+          </p>
+        </div>
+      </div>
+
+      <div class="mb-12">
+        <h3 class="text-2xl font-medium mb-4 text-ocean-green-800">
+          Pain Points Addressed
+        </h3>
+        <ul class="space-y-3 text-gray-700">
+          <li class="flex items-start gap-3">
+            <Bug className="shrink-0 mt-1 size-5 text-ocean-green-600" />
+            <p>
+              Apps often lack user-perspective tests; breakages go undetected
+              until users complain.
+            </p>
+          </li>
+          <li class="flex items-start gap-3">
+            <FileSearch className="shrink-0 mt-1 size-5 text-ocean-green-600" />
+            <p>
+              Little/no visibility into testing coverage for documentation or
+              reporting.
+            </p>
+          </li>
+        </ul>
+      </div>
+
+      <div class="mb-12">
+        <h3 class="text-2xl font-medium mb-4 text-ocean-green-800">
+          Course Structure & Core Modules
+        </h3>
+        <p class="text-gray-700 mb-6">
+          Estimated Duration: Up to 2 hours (hybrid/async delivery, suitable for
+          busy professionals).
+        </p>
+
+        <div class="space-y-8">
+          <Card
+            title="1. Introduction: The Need for User-Focused Testing"
+            description="Understanding the importance of testing from the user's perspective"
+            items={[
+              "Overview of user-focused testing",
+              "Benefits of adopting a user-centric approach",
+            ]}
+          />
+          <Card
+            title="2. Setup Workshop: Testing Toolchain"
+            description="Guided setup of Playwright and Cucumber in a Shiny app environment"
+            items={[
+              "Explanation of folder structure, configuration, running tests",
+            ]}
+          />
+          <Card
+            title="3. Specification Writing & AI-Assisted Authoring"
+            description="Hands-on: Write acceptance criteria from plain-language descriptions of existing app features"
+            items={[
+              "Using LLMs to convert specs to Gherkin (Cucumber) scenarios",
+              "AI-generated test code demonstrations and modification",
+            ]}
+          />
+          <Card
+            title="4. Black-Box Testing: Building Tests from the User's Perspective"
+            description="Creating Playwright end-to-end tests for happy paths and typical behaviors"
+            items={[
+              "Designing edge/conflicting user flows, e.g. breaking combinations and misuse behaviors",
+              "Running tests and interpreting failures",
+            ]}
+          />
+          <Card
+            title="5. Making Your App Testable (Micro-Refactoring)"
+            description="Minimal, safe code changes like adding test selectors, refactoring UI identifiers"
+            items={[
+              "Maintaining black-box integrity while improving testability",
+            ]}
+          />
+          <Card
+            title="6. From Zero to Test Coverage: Working Example"
+            description="Use a real-world Shiny app: add comprehensive test coverage for a key feature"
+            items={[
+              "Invite: 'bring your own app' session for advanced attendees",
+            ]}
+          />
+          <Card
+            title="7. Culture Change: Reporting, Coverage, and the Test-Centric Workflow"
+            description="Strategies for generating visibility and demonstrating robustness"
+            items={[
+              "Generating test dashboards and reporting strategies",
+              "Demonstrating robustness: show tests catching real/introduced bugs",
+              "Embedding test thinking into daily work",
+            ]}
+          />
+          <Card
+            title="8. Certification & Wrap-up"
+            description="Final assessment and course completion"
+            items={[
+              "Participants demonstrate ability: test coverage for a key user behavior, clear reporting output",
+              "(Optional) Course completion badge/certificate",
+            ]}
+          />
+        </div>
+
+        <div class="my-12">
+          <h3
+            class="text-2xl font-medium mb-6 text-ocean-green-800 text-center"
+          >
+            Why Take This Course?
+          </h3>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div
+              class="bg-white p-6 rounded-lg shadow-md border-t-4 border-ocean-green-500"
+            >
+              <h4
+                class="text-xl font-medium mb-3 text-ocean-green-700 flex items-center gap-2"
+              >
+                <Rocket className="size-5" /> Ship with Confidence
+              </h4>
+              <p class="text-gray-700">
+                From 0 tests to full coverage in minutes. No more waiting for
+                users to report problems.
+              </p>
+            </div>
+
+            <div
+              class="bg-white p-6 rounded-lg shadow-md border-t-4 border-ocean-green-500"
+            >
+              <h4
+                class="text-xl font-medium mb-3 text-ocean-green-700 flex items-center gap-2"
+              >
+                <Code2 className="size-5" /> Modern Automation
+              </h4>
+              <p class="text-gray-700">
+                Up to date with the latest tools. Use AI to generate tests from
+                plain English descriptions.
+              </p>
+            </div>
+
+            <div
+              class="bg-white p-6 rounded-lg shadow-md border-t-4 border-ocean-green-500"
+            >
+              <h4
+                class="text-xl font-medium mb-3 text-ocean-green-700 flex items-center gap-2"
+              >
+                <CheckCircle2 className="size-5" /> Transform Your Workflow
+              </h4>
+              <p class="text-gray-700">
+                Less firefighting, more reliable releases. Show immediate
+                improvement in team culture.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center mt-12">
+          <a
+            href="#hero"
+            class="inline-block py-3 px-6 border border-ocean-green-600 bg-ocean-green-600 hover:bg-ocean-green-700 text-white font-semibold rounded-md transition duration-200"
+          >
+            Join the Waitlist
+          </a>
+        </div>
+      </div>
+    </div>
+  </Section> -->
 </BaseLayout>
