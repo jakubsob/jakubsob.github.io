@@ -397,6 +397,145 @@ muttest::muttest(plan)`}
       </div>
     </div>
   </Section>
+  <Section id="opensource" size="fit" variant="dark">
+    <div class="container mx-auto flex justify-center">
+      <Animate>
+        <h2
+          class="text-[clamp(2em,5vw,6em)] uppercase pt-40 pb-20 flex items-center"
+        >
+          <Asterisk className="inline-block size-[1em] text-red-500 mr-4" />
+          <span>Tutorials</span>
+          <Asterisk className="inline-block size-[1em] text-red-500 mr-4" />
+        </h2>
+      </Animate>
+    </div>
+  </Section>
+  <Section id="shiny-behavior-driven-development" size="fit" variant="dark">
+    <div class="pb-40 pt-40">
+      <div class="container grid grid-cols-1 md:grid-cols-[1fr_1fr] gap-12">
+        <div>
+          <Animate>
+            <a
+              href="https://github.com/jakubsob/shiny-acceptance-tdd"
+              class="hover:underline"
+            >
+              <h3 class="text-5xl uppercase mb-12 flex items-center gap-4">
+                <div
+                  class="size-[100px] flex-shrink-0 flex items-center justify-center"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="w-full h-full text-red-500"
+                  >
+                    <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
+                    <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
+                    <path d="M4 22h16"></path>
+                    <path
+                      d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"
+                    ></path>
+                    <path
+                      d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"
+                    ></path>
+                    <path d="M12 2v7"></path>
+                    <path d="M9 13h6"></path>
+                  </svg>
+                </div>
+                {"Shiny Behavior-Driven Development"}
+              </h3>
+            </a>
+          </Animate>
+          <Animate>
+            <CodeBlock
+              code={`# tests/acceptance/test-budget.R
+test_that("Scenario: I can inspect my net balance", {
+  # Given
+  dsl$record_income(2000)
+  dsl$record_expense(500)
+  # When
+  dsl$inspect_finances()
+  # Then
+  dsl$verify_total_income(2000)
+  dsl$verify_total_expenses(500)
+  dsl$verify_net_balance(1500)
+  dsl$teardown()
+})`}
+              lang="r"
+            />
+          </Animate>
+        </div>
+        <div class="max-w-[65ch] space-y-8 font-light">
+          <div class="space-y-6">
+            <Animate>
+              <h4
+                class="text-xl font-semibold mb-2 border-b-2 border-b-white flex items-center justify-between"
+              >
+                <div>Start with user stories</div>
+                <div>01</div>
+              </h4>
+              <p class="text-sky-200">
+                Transform vague requirements into clear, testable user stories
+                that define what users want to accomplish.
+              </p>
+            </Animate>
+            <Animate>
+              <h4
+                class="text-xl font-semibold mb-2 border-b-2 border-b-white flex items-center justify-between"
+              >
+                <div>Executable specifications</div>
+                <div>02</div>
+              </h4>
+              <p class="text-sky-200">
+                Turn user scenarios into working code that validates your
+                application behaves as expected.
+              </p>
+            </Animate>
+            <Animate>
+              <h4
+                class="text-xl font-semibold mb-2 border-b-2 border-b-white flex items-center justify-between"
+              >
+                <div>Domain-specific language</div>
+                <div>03</div>
+              </h4>
+              <p class="text-sky-200">
+                Create a testing vocabulary that bridges technical
+                implementation with business language.
+              </p>
+            </Animate>
+            <Animate>
+              <h4
+                class="text-xl font-semibold mb-2 border-b-2 border-b-white flex items-center justify-between"
+              >
+                <div>UI independence</div>
+                <div>04</div>
+              </h4>
+              <p class="text-sky-200">
+                Focus on behavior, not implementation details, allowing your UI
+                to evolve without breaking tests.
+              </p>
+            </Animate>
+            <Animate>
+              <h4
+                class="text-xl font-semibold mb-2 border-b-2 border-b-white flex items-center justify-between"
+              >
+                <div>Shiny best practices</div>
+                <div>05</div>
+              </h4>
+              <p class="text-sky-200">
+                Learn practical techniques for building more maintainable,
+                testable Shiny applications.
+              </p>
+            </Animate>
+          </div>
+        </div>
+      </div>
+    </div>
+  </Section>
   <!-- <Section id="testimonials">
     <div class="rounded-lg p-10 bg-background text-white w-full max-w-[65ch]">
       <div class="text-xl mb-5">
