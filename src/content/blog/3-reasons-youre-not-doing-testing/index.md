@@ -47,7 +47,7 @@ If a fixture is only used in one test file, define it in that file. If it’s us
 
 > 🧪 **[See this guide how you can capture data from a session to save and reuse for testing.](https://jakubsobolewski.com/blog/capturing-output-for-tests/)**
 
-**Is your test data too big to define programatically?**
+**Is your test data too big to define programmatically?**
 
 Put those structures in files, it can be a JSON, CSV, YAML, or any other format that suits your needs. I recommend using any human-readable format, so you can easily read and edit it. Load this data in your fixture function.
 
