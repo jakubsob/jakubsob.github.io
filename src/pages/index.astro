@@ -6,7 +6,13 @@ import CodeBlock from "../components/CodeBlock.astro";
 import { Button } from "@/components/ui/button";
 import { Section } from "@/components/ui/section";
 import { Animate } from "@/components/ui/animate";
-import { ArrowDownLeft, Asterisk, ArrowDown } from "lucide-react";
+import {
+  ArrowDownLeft,
+  Asterisk,
+  ArrowDown,
+  User,
+  Verified,
+} from "lucide-react";
 
 const posts = (await getCollection("blog"))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
@@ -413,40 +419,21 @@ muttest::muttest(plan)`}
   <Section id="shiny-behavior-driven-development" size="fit" variant="dark">
     <div class="pb-40 pt-40">
       <div class="container grid grid-cols-1 md:grid-cols-[1fr_1fr] gap-12">
-        <div>
+        <div class="md:order-1">
           <Animate>
             <a
               href="https://github.com/jakubsob/shiny-acceptance-tdd"
               class="hover:underline"
             >
-              <h3 class="text-5xl uppercase mb-12 flex items-center gap-4">
-                <div
-                  class="size-[100px] flex-shrink-0 flex items-center justify-center"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="w-full h-full text-red-500"
-                  >
-                    <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
-                    <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
-                    <path d="M4 22h16"></path>
-                    <path
-                      d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"
-                    ></path>
-                    <path
-                      d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"
-                    ></path>
-                    <path d="M12 2v7"></path>
-                    <path d="M9 13h6"></path>
-                  </svg>
-                </div>
-                {"Shiny Behavior-Driven Development"}
+              <h3
+                class="text-5xl uppercase mb-8 flex flex-wrap items-center gap-4"
+              >
+                <User className="inline-block size-[1em] text-red-500" />
+                {
+                  "Shiny Acceptance Test-Driven Development"
+                    .split(" ")
+                    .map((word) => <span>{word}</span>)
+                }
               </h3>
             </a>
           </Animate>
@@ -529,6 +516,109 @@ test_that("Scenario: I can inspect my net balance", {
               <p class="text-sky-200">
                 Learn practical techniques for building more maintainable,
                 testable Shiny applications.
+              </p>
+            </Animate>
+          </div>
+        </div>
+      </div>
+    </div>
+  </Section>
+  <Section id="shinyconf-2024" size="fit" variant="dark">
+    <div class="pb-40 pt-40">
+      <div class="container grid grid-cols-1 md:grid-cols-[1fr_1fr] gap-12">
+        <div class="md:order-2">
+          <Animate>
+            <a
+              href="https://jakubsobolewski.com/shinyconf2024/"
+              target="_blank"
+              class="hover:underline"
+            >
+              <h3
+                class="text-5xl uppercase mb-8 flex flex-wrap items-center gap-4"
+              >
+                <Verified className="inline-block size-[1em] text-red-500" />
+                {
+                  "Shiny Test-Driven Development"
+                    .split(" ")
+                    .map((word) => <span>{word}</span>)
+                }
+              </h3>
+            </a>
+          </Animate>
+          <Animate>
+            <div class="aspect-video w-full overflow-hidden rounded-lg">
+              <iframe
+                class="w-full h-full"
+                src="https://www.youtube.com/embed/HKMhDzLRqM0?si=8UTJjBwTpGTcmyt6"
+                title="Structured Approach to Testing Shiny Apps - ShinyConf 2024"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen
+              >
+              </iframe>
+            </div>
+          </Animate>
+        </div>
+        <div class="max-w-[65ch] space-y-8 font-light">
+          <div class="space-y-6">
+            <Animate>
+              <h4
+                class="text-xl font-semibold mb-2 border-b-2 border-b-white flex items-center justify-between"
+              >
+                <div>Test inside-out or outside-in</div>
+                <div>01</div>
+              </h4>
+              <p class="text-sky-200">
+                Learn different testing strategies and when to apply them for
+                maximum effectiveness in Shiny apps.
+              </p>
+            </Animate>
+            <Animate>
+              <h4
+                class="text-xl font-semibold mb-2 border-b-2 border-b-white flex items-center justify-between"
+              >
+                <div>Automate acceptance criteria</div>
+                <div>02</div>
+              </h4>
+              <p class="text-sky-200">
+                Convert business requirements into automated tests that validate
+                your application meets user needs.
+              </p>
+            </Animate>
+            <Animate>
+              <h4
+                class="text-xl font-semibold mb-2 border-b-2 border-b-white flex items-center justify-between"
+              >
+                <div>Isolate Shiny modules</div>
+                <div>03</div>
+              </h4>
+              <p class="text-sky-200">
+                Test each Shiny module independently to ensure they function
+                correctly before integration.
+              </p>
+            </Animate>
+            <Animate>
+              <h4
+                class="text-xl font-semibold mb-2 border-b-2 border-b-white flex items-center justify-between"
+              >
+                <div>Inject fake dependencies</div>
+                <div>04</div>
+              </h4>
+              <p class="text-sky-200">
+                Use dependency injection to replace external services with test
+                doubles for faster, more reliable tests.
+              </p>
+            </Animate>
+            <Animate>
+              <h4
+                class="text-xl font-semibold mb-2 border-b-2 border-b-white flex items-center justify-between"
+              >
+                <div>Structured testing approach</div>
+                <div>05</div>
+              </h4>
+              <p class="text-sky-200">
+                Apply a systematic testing methodology that improves code
+                quality and development speed.
               </p>
             </Animate>
           </div>
