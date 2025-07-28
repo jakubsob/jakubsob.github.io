@@ -26,6 +26,7 @@ const description = descriptionSEO || descriptionPrimary;
 
 const googleAnalyticsID = "G-735BLDHJRX";
 const gtagUrl = `https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsID}`;
+const shouldLoadAnalytics = import.meta.env.PROD;
 ---
 
 <head>
@@ -95,15 +96,19 @@ const gtagUrl = `https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsID
   <!-- Follow.it  -->
   <meta name="follow.it-verification-code" content="UzA851QwnL0Gqry6AJNE" />
 
-  <script is:inline async src={gtagUrl}></script>
-  <script is:inline define:vars={{ googleAnalyticsID }}>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() {
-      dataLayer.push(arguments);
-    }
-    gtag("js", new Date());
-    gtag("config", googleAnalyticsID);
-  </script>
-
-  <link rel="preconnect" href="https://www.googletagmanager.com/" />
+  <!-- Google Analytics -->
+  {shouldLoadAnalytics && (
+    <>
+      <script is:inline async src={gtagUrl}></script>
+      <script is:inline define:vars={{ googleAnalyticsID }}>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() {
+          dataLayer.push(arguments);
+        }
+        gtag("js", new Date());
+        gtag("config", googleAnalyticsID);
+      </script>
+      <link rel="preconnect" href="https://www.googletagmanager.com/" />
+    </>
+  )}
 </head>
