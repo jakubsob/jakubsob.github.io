@@ -1,14 +1,33 @@
 ---
 import AnimatedHeaderLink from "./AnimatedHeaderLink.astro";
 
-const { href, class: className } = Astro.props;
+const { href, class: className, isNew } = Astro.props;
 ---
 
-<li class:list={["flex items-baseline py-4", className]}>
-  <AnimatedHeaderLink
-    href={href}
-    class="transition-colors hover:text-sky-200 hover:border-sky-200"
-  >
-    <slot />
-  </AnimatedHeaderLink>
+<li class:list={["flex items-baseline", className]}>
+  {
+    isNew ? (
+      <div class="relative inline-flex">
+        <AnimatedHeaderLink
+          href={href}
+          class="transition-colors hover:text-sky-200 hover:border-sky-200"
+        >
+          <slot />
+        </AnimatedHeaderLink>
+        <span class="absolute top-0 right-0 -mt-1 -mr-2 flex size-2">
+          <>
+            <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-400 opacity-75" />
+            <span class="relative inline-flex size-2 rounded-full bg-red-500" />
+          </>
+        </span>
+      </div>
+    ) : (
+      <AnimatedHeaderLink
+        href={href}
+        class="transition-colors hover:text-sky-200 hover:border-sky-200"
+      >
+        <slot />
+      </AnimatedHeaderLink>
+    )
+  }
 </li>

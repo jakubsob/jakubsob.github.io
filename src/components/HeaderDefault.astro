@@ -11,16 +11,9 @@ import { DarkModeToggle } from "./DarkModeToggle";
   <HeaderLink href="/blog/">blog</HeaderLink>
   <HeaderLink href="/resources/">resources</HeaderLink>
   <HeaderLink href="/r-tests-gallery/">r tests gallery</HeaderLink>
-  <span class="relative inline-flex">
-    <HeaderLink href="/course/" class:list={"text-red-300"}>course</HeaderLink>
-    <span class="absolute top-0 right-0 mt-3 -mr-2 flex size-2">
-      <span
-        class="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-300 opacity-75"
-      >
-      </span><span class="relative inline-flex size-2 rounded-full bg-red-400">
-      </span></span
-    ></span
-  >
+  <HeaderLink href="/course/" class:list={"text-red-300"} isNew={true}
+    >course
+  </HeaderLink>
   <div class="ml-auto flex items-center gap-2">
     <DarkModeToggle client:load />
     <SearchButtonWrapper />
