@@ -55,7 +55,7 @@ const { code, lang = "text", title } = Astro.props;
 
       let wrapper = document.createElement("div");
       wrapper.className =
-        "code-wrapper flex flex-col px-2 mt-6 pb-12 border bg-light rounded-sm";
+        "code-wrapper flex flex-col px-2 mt-6 pb-12 bg-light dark:border dark:bg-card rounded-sm";
 
       if (codeBlock.parentNode) {
         codeBlock.parentNode.insertBefore(wrapper, codeBlock);

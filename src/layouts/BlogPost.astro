@@ -83,7 +83,7 @@ const posts = (await getCollection("blog"))
                   tags
                     .sort((a: string, b: string): any => a.localeCompare(b))
                     .map((tag: any): any => (
-                      <Badge variant="outline">
+                      <Badge variant="secondary">
                         <a href={`/tags/${tag}`} class="no-underline">
                           {tag}
                         </a>
