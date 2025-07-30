@@ -1,0 +1,145 @@
+---
+interface Props {
+  variant: 'waitlist' | 'blog';
+}
+
+const { variant: variantName = 'blog' } = Astro.props as Props;
+
+const variants = {
+  "waitlist": {
+    title: "Join waitlist",
+    subscribedText: "Thank you! You have successfully joined the waitlist.",
+    id: "28774084",
+    action: "https://assets.mailerlite.com/jsonp/1677606/forms/160795229348169271/subscribe",
+    fetchUrl: "https://assets.mailerlite.com/jsonp/1677606/forms/160795229348169271/takel",
+  },
+  "blog": {
+    title: "Subscribe",
+    subscribedText: "Thank you! You have successfully subscribed to the blog.",
+    id: "28597388",
+    action: "https://assets.mailerlite.com/jsonp/1677606/forms/160385023715837460/subscribe",
+    fetchUrl: "https://assets.mailerlite.com/jsonp/1677606/forms/160385023715837460/takel",
+  },
+};
+const variant = variants[variantName];
+---
+
+<style is:global>
+  @import url("https://assets.mlcdn.com/fonts.css?version=1753253");
+
+  /* Essential styles for MailerLite form functionality */
+  .ml-form-embedSubmitLoad {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+  }
+
+  .ml-form-embedSubmitLoad:after {
+    content: " ";
+    display: block;
+    width: 11px;
+    height: 11px;
+    margin: 1px;
+    border-radius: 50%;
+    border: 4px solid #fff;
+    border-color: #ffffff #ffffff #ffffff transparent;
+    animation: ml-form-embedSubmitLoad 1.2s linear infinite;
+  }
+
+  @keyframes ml-form-embedSubmitLoad {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  /* Error states styling - required for JS validation */
+  .ml-error input {
+    border-color: red !important;
+  }
+
+  .ml-error .label-description,
+  .ml-error label:first-child {
+    color: #ff0000 !important;
+  }
+
+  /* These classes are required for JS functionality */
+  .ml-form-embedSubmit button.loading {
+    display: none;
+  }
+
+  /* Form state visibility control */
+  .ml-form-successBody {
+    display: none;
+  }
+</style>
+
+<div
+  id={`mlb2-${variant.id}`}
+  class={`ml-form-embedContainer ml-subscribe-form ml-subscribe-form-${variant.id} w-full mx-auto`}
+>
+  <div class="text-center">
+    <div class="ml-form-embedWrapper embedForm">
+      <div class="ml-form-embedBody ml-form-embedBodyDefault row-form">
+        <form
+          class="ml-block-form w-full grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-4"
+          action={variant.action}
+          data-code=""
+          method="post"
+          target="_blank"
+        >
+          <div class="w-full">
+            <div
+              class="ml-field-group ml-field-email ml-validate-email ml-validate-required"
+            >
+              <input
+                aria-label="email"
+                aria-required="true"
+                type="email"
+                class="w-full px-4 py-3 border border-gray-300 rounded-md text-gray-800 bg-white focus:outline-none focus:ring-2 focus:ring-ocean-green-500 focus:border-ocean-green-500"
+                name="fields[email]"
+                placeholder="Email"
+                autocomplete="email"
+              />
+            </div>
+          </div>
+          <input type="hidden" name="ml-submit" value="1" />
+          <div class="ml-form-embedSubmit">
+            <button
+              type="submit"
+              class="w-full py-3 px-4 border border-ocean-green-500 bg-ocean-green-500 hover:bg-ocean-green-600 text-white font-light rounded-md transition duration-200"
+            >
+              {variant.title || "Subscribe"}
+            </button>
+          </div>
+          <input type="hidden" name="anticsrf" value="true" />
+        </form>
+      </div>
+      <div class="ml-form-successBody row-success text-white">
+        <div class="text-center">
+          <h4 class="text-xl font-light text-ocean-green-500">
+            {variant.subscribedText}
+          </h4>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script is:inline define:vars={{ variantId: variant.id }}>
+  window[`ml_webform_success_${variantId}`] = function() {
+    var $ = ml_jQuery || jQuery;
+    $(`.ml-subscribe-form-${variantId} .row-success`).show();
+    $(`.ml-subscribe-form-${variantId} .row-form`).hide();
+  }
+</script>
+<script
+  is:inline
+  src="https://groot.mailerlite.com/js/w/webforms.min.js?v176e10baa5e7ed80d35ae235be3d5024"
+  type="text/javascript">
+</script>
+<script define:vars={{ fetchUrl: variant.fetchUrl }}>
+  fetch(fetchUrl);
+</script>

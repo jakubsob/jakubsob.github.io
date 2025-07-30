@@ -1,7 +1,7 @@
 ---
 import AnimatedLink from "./AnimatedLink.astro";
 import { Section } from "@/components/ui/section";
-import SubscribeButton from "@/components/SubscribeButton.astro";
+import Subscribe from "@/components/Subscribe.astro";
 import { getFooterRoutes, getSocialLinks } from "../lib/routes";
 
 const today = new Date();
@@ -26,7 +26,9 @@ const socialLinks = getSocialLinks();
               Learn efficient R development
             </h1>
           </div>
-          <SubscribeButton class="bg-primary py-2 px-4 rounded-sm uppercase" />
+          <div class="text-lg">
+            <Subscribe variant="blog" />
+          </div>
         </div>
         <div class="lg:justify-self-center">
           <div class="flex flex-row gap-10">
