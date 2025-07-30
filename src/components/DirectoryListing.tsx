@@ -56,17 +56,17 @@ export function DirectoryListing({ directories }: DirectoryListingProps) {
       {directories.map((dir) => (
         <Card
           key={dir.name}
-          className="hover:shadow-md transition-shadow group border-slate-200"
+          className="hover:shadow-md transition-shadow group"
         >
           <CardHeader>
             <CardTitle
-              className="text-lg font-medium text-slate-900 capitalize"
+              className="capitalize"
               dangerouslySetInnerHTML={{
                 __html: dir.readme?.titleHtml || dir.name.replace(/-/g, " "),
               }}
             />
             <CardDescription
-              className="text-slate-500 group-hover:line-clamp-none transition-all duration-300 line-clamp-5"
+              className="group-hover:line-clamp-none transition-all duration-300 line-clamp-5"
               dangerouslySetInnerHTML={{
                 __html: dir.readme?.descriptionHtml || "",
               }}
@@ -75,16 +75,14 @@ export function DirectoryListing({ directories }: DirectoryListingProps) {
           <CardContent className="pt-0">
             <div className="flex items-center space-x-2">
               <Button
-                className="bg-background hover:bg-default text-white"
                 size="sm"
-                asChild
               >
                 <a href={`/r-tests-gallery/${dir.name}`}>
                   Browse
                 </a>
               </Button>
               <Button
-                variant="outline"
+                variant="secondary"
                 size="sm"
                 asChild
               >

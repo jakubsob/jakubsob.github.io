@@ -127,7 +127,7 @@ export function GlobalSearch({ isOpen, onClose }: GlobalSearchProps) {
           isOpen ? "opacity-100 scale-100" : "opacity-0 scale-95"
         )}
       >
-        <Card className="shadow-2xl border-slate-200">
+        <Card className="shadow-2xl border">
           <CardHeader className="pb-4">
             <div className="flex items-center gap-3">
               <Search className="h-5 w-5 text-muted-foreground" />
@@ -139,7 +139,7 @@ export function GlobalSearch({ isOpen, onClose }: GlobalSearchProps) {
                 className="border-0 bg-transparent text-lg focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:text-muted-foreground"
               />
               <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                <kbd className="pointer-events-none h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100">
+                <kbd className="pointer-events-none h-5 select-none items-center gap-1 rounded border px-1.5 font-mono text-[10px] font-medium opacity-100">
                   <span className="text-xs">⌘</span>K
                 </kbd>
                 <button
@@ -202,7 +202,7 @@ export function GlobalSearch({ isOpen, onClose }: GlobalSearchProps) {
                             <button
                           key={`${result.id}-${index}`}
                           onClick={() => handleResultClick(result)}
-                          className="w-full text-left p-3 rounded-lg hover:bg-slate-50 transition-colors border border-transparent hover:border-slate-200 group"
+                              className="w-full text-left p-3 rounded-lg transition-colors border border-transparent hover:border-muted group"
                         >
                           <div className="flex items-start gap-3">
                             {getTypeIcon(result.type)}

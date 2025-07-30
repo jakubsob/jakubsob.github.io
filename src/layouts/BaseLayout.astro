@@ -11,6 +11,19 @@ import HeaderDefault from "../components/HeaderDefault.astro";
         scroll-behavior: smooth;
       }
     </style>
+    <script is:inline>
+      // Dark mode initialization to prevent flash
+      (function () {
+        const theme =
+          localStorage.getItem("theme") ||
+          (window.matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light");
+        if (theme === "dark") {
+          document.documentElement.classList.add("dark");
+        }
+      })();
+    </script>
     <BaseHead
       {...{
         title: "Testing in R",
@@ -22,7 +35,7 @@ import HeaderDefault from "../components/HeaderDefault.astro";
     <HeaderDefault />
     <slot name="head" />
   </head>
-  <body class="bg-background">
+  <body class="">
     <slot />
     <script src="../utils/observer.js"></script>
     <script src="../scripts/global-search.js"></script>

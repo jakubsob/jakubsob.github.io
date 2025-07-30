@@ -116,7 +116,7 @@ const Resources: React.FC<ResourcesProps> = ({ items }) => {
       <div className="w-full max-w-[65ch] mx-auto py-4">
         <div className="flex flex-row gap-2 w-full items-center my-4">
           <Button
-            variant={isFiltersVisible ? "secondary" : "outline"}
+            variant="secondary"
             size="sm"
             onClick={() => setIsFiltersVisible(!isFiltersVisible)}
             className="shrink-0"
@@ -127,17 +127,17 @@ const Resources: React.FC<ResourcesProps> = ({ items }) => {
         </div>
 
         {isFiltersVisible && (
-          <div className="rounded-lg border bg-card p-4">
+          <div className="rounded-sm border bg-card p-4">
             <div className="space-y-3">
               <div className="flex flex-wrap items-center gap-2">
-                <span className="text-sm font-medium text-foreground">Sort by:</span>
+                <span className="text-sm">Sort by:</span>
                 {(["group", "actionability", "format"] as const).map((key) => (
                   <Button
                     key={key}
                     variant={sortKey === key ? "secondary" : "outline"}
                     size="sm"
                     onClick={() => handleSortChange(key)}
-                    className="h-8 px-3 text-xs capitalize tracking-wide"
+                    className="h-8 px-3 text-xs capitalize"
                   >
                     {key}
                   </Button>
@@ -146,7 +146,7 @@ const Resources: React.FC<ResourcesProps> = ({ items }) => {
 
               {(["group", "actionability", "format"] as const).map((key) => (
                 <div key={key} className="space-y-2">
-                  <h3 className="text-sm font-medium text-foreground capitalize">
+                  <h3 className="text-sm capitalize">
                     Filter by {key}
                   </h3>
                   <div className="flex flex-wrap gap-2">
@@ -156,7 +156,7 @@ const Resources: React.FC<ResourcesProps> = ({ items }) => {
                         variant={filters[key].has(value) ? "secondary" : "outline"}
                         size="sm"
                         onClick={() => handleFilterChange(key, value)}
-                        className="h-8 px-3 text-xs uppercase tracking-wide"
+                        className="h-8 px-3 text-xs uppercase"
                       >
                         <span className="capitalize">{value}</span>
                         <Badge variant="secondary" className="ml-2 px-1.5 py-0.5 text-xs bg-muted">
@@ -175,7 +175,7 @@ const Resources: React.FC<ResourcesProps> = ({ items }) => {
           {sortedItems.length > 0 ? (
             renderItemsWithHeaders(sortedItems, sortKey)
           ) : (
-            <div className="w-full mb-4 p-8 rounded-lg bg-muted/50 border border-dashed text-center">
+              <div className="w-full mb-4 p-8 rounded-lg bg-card border border-dashed text-center">
               <div className="flex flex-col items-center gap-4">
                 <SearchIcon className="h-12 w-12 text-muted-foreground" />
                 <div className="text-muted-foreground">

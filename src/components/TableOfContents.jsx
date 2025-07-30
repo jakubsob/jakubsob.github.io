@@ -44,21 +44,27 @@ export default function TableOfContents() {
 
   return (
     <nav className="hidden lg:block sticky top-20 self-start ml-10 w-[250px] max-h-[calc(100vh-120px)] overflow-y-auto pr-4 scrollbar-thin scrollbar-track-gray-100 scrollbar-thumb-gray-300 hover:scrollbar-thumb-gray-400">
-      <p className="font-medium mb-4 text-sm uppercase tracking-wider text-slate-500">Table of Contents</p>
+      <p className="font-medium mb-4 text-sm uppercase tracking-wider text-muted">
+        Table of Contents
+      </p>
       <ul className="space-y-2 text-sm">
         {headings.map((heading) => (
           <li
             key={heading.id}
             className={`${
-              heading.level === 2 ? 'ml-0' : heading.level === 3 ? 'ml-4' : 'ml-8'
+              heading.level === 2
+                ? "ml-0"
+                : heading.level === 3
+                ? "ml-4"
+                : "ml-8"
             }`}
           >
             <a
               href={`#${heading.id}`}
-              className={`block py-1 transition-colors duration-200 line-clamp-2 hover:text-sky-600 ${
+              className={`block py-1 transition-colors duration-200 line-clamp-2 hover:text-primary ${
                 activeId === heading.id
-                  ? 'text-sky-700 font-medium'
-                  : 'text-slate-600'
+                  ? "text-primary font-medium"
+                  : "text-muted"
               }`}
             >
               {heading.text}

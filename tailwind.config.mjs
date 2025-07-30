@@ -28,6 +28,7 @@ export default {
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        gradient: "var(--gradient)",
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
@@ -146,7 +147,6 @@ export default {
           fontWeight: theme("fontWeight.regular"),
           fontTracking: theme("fontTracking.widest"),
           fontSize: theme("fontSize.2xl"),
-          color: theme("colors.black"),
         },
         h2: {
           fontFamily: theme("fontFamily.sans"),
