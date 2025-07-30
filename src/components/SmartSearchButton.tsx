@@ -113,7 +113,6 @@ export function SmartSearchButton({ posts, className = "", isMobile = false }: S
         <GlobalSearch
           isOpen={isSearchOpen}
           onClose={handleSearchClose}
-          posts={posts}
         />
       )}
     </>
