@@ -1,6 +1,5 @@
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import { PostCard } from "@/components/PostCard";
-import { Search } from "@/components/SearchComponent";
 import { TagFilter } from "@/components/TagFilter";
 import { Card, CardContent } from "@/components/ui/card";
 import { Animate } from "@/components/ui/animate";
@@ -12,17 +11,6 @@ function PostList({ posts, showControls = true }) {
     new Set(posts.flatMap((post) => post.data.tags))
   );
   const [isFiltersVisible, setIsFiltersVisible] = useState(false);
-
-  const searchOptions = useMemo(
-    () => ({
-      keys: ["data.title", "data.description"],
-      shouldSort: true,
-      findAllMatches: true,
-      minMatchCharLength: 2,
-      threshold: 0.6,
-    }),
-    []
-  );
 
   const getTagsWithCounts = () => {
     const counts = searchResults.reduce((acc, post) => {
@@ -59,13 +47,6 @@ function PostList({ posts, showControls = true }) {
     <div className="space-y-6">
       {showControls && (
         <div className="space-y-4">
-          <Search
-            searchList={posts}
-            fuseOptions={searchOptions}
-            onSearch={setSearchResults}
-            placeholder={`Search through ${posts.length} posts...`}
-          />
-
           <TagFilter
             tags={getTagsWithCounts()}
             selectedTags={selectedTags}

@@ -1,10 +1,8 @@
 import React, { useState, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Search as SearchComponent } from "@/components/SearchComponent";
 import { ResourceCard } from "@/components/ResourceCard";
 import { Filter, Search as SearchIcon } from "lucide-react";
-import { cn } from "@/lib/utils";
 
 interface ResourceItem {
   title: string;
@@ -28,17 +26,6 @@ const Resources: React.FC<ResourcesProps> = ({ items }) => {
   });
   const [isFiltersVisible, setIsFiltersVisible] = useState(false);
   const [searchResults, setSearchResults] = useState(items);
-
-  const searchOptions = useMemo(
-    () => ({
-      keys: ["group", "actionability", "format", "title", "description"],
-      shouldSort: true,
-      findAllMatches: true,
-      minMatchCharLength: 2,
-      threshold: 0.6,
-    }),
-    []
-  );
 
   const handleSortChange = (key: keyof ResourceItem) => {
     setSortKey(key);
@@ -128,14 +115,6 @@ const Resources: React.FC<ResourcesProps> = ({ items }) => {
     <div className="grid grid-cols-1 gap-4 mb-4 w-full">
       <div className="w-full max-w-[65ch] mx-auto py-4">
         <div className="flex flex-row gap-2 w-full items-center my-4">
-          <div className="flex-grow">
-            <SearchComponent
-              searchList={items}
-              onSearch={setSearchResults}
-              fuseOptions={searchOptions}
-              placeholder="Search resources..."
-            />
-          </div>
           <Button
             variant={isFiltersVisible ? "secondary" : "outline"}
             size="sm"
