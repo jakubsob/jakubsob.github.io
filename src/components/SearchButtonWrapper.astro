@@ -1,6 +1,6 @@
 ---
 import { getCollection } from "astro:content";
-import { SearchButton } from "./SearchButton";
+import { SmartSearchButton } from "./SmartSearchButton";
 
 // Get all published blog posts
 const posts = (await getCollection("blog"))
@@ -8,4 +8,4 @@ const posts = (await getCollection("blog"))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 ---
 
-<SearchButton client:load posts={posts} />
+<SmartSearchButton client:load posts={posts} />
