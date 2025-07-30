@@ -46,13 +46,13 @@ export function ResourceCard({
           {description}
       </CardContent>
       <CardFooter className="gap-4">
-        <Badge variant="outline" className="uppercase">
+        <Badge className="uppercase">
           {actionability}
         </Badge>
-        <Badge variant="outline" className="uppercase">
+        <Badge className="uppercase">
           {group}
         </Badge>
-        <Badge variant="outline" className="uppercase">
+        <Badge className="uppercase">
           {format}
         </Badge>
       </CardFooter>
