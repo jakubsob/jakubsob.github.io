@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -9,10 +9,9 @@ import { smartSearchService, type GroupedSearchResults, type SearchResult } from
 interface GlobalSearchProps {
   isOpen: boolean;
   onClose: () => void;
-  posts: any[];
 }
 
-export function GlobalSearch({ isOpen, onClose, posts }: GlobalSearchProps) {
+export function GlobalSearch({ isOpen, onClose }: GlobalSearchProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [isVisible, setIsVisible] = useState(false);
   const [searchResults, setSearchResults] = useState<GroupedSearchResults>({});

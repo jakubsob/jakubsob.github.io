@@ -1,4 +1,4 @@
-import { smartSearchService, type SearchItem } from '@/lib/smartSearch';
+import { type SearchItem } from '@/lib/smartSearch';
 
 /**
  * Fetches R Tests Gallery directories and populates search index

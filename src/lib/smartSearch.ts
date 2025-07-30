@@ -1,4 +1,4 @@
-import Fuse, { type FuseResult, type IFuseOptions, type FuseResultMatch } from 'fuse.js';
+import Fuse, { type IFuseOptions, type FuseResultMatch } from 'fuse.js';
 
 export interface SearchItem {
   id: string;
@@ -66,7 +66,7 @@ class SmartSearchService {
   /**
    * Add blog posts to search index
    */
-  public addBlogPosts(posts: any[]): void {
+  public addBlogPosts(posts: any[] = []): void {
     const blogItems: SearchItem[] = posts.map(post => ({
       id: `blog-${post.slug}`,
       type: 'blog',
