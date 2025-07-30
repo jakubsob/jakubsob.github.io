@@ -1,0 +1,11 @@
+---
+import { getCollection } from "astro:content";
+import { SearchButton } from "./SearchButton";
+
+// Get all published blog posts
+const posts = (await getCollection("blog"))
+  .filter((post) => post.data.draft !== true)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<SearchButton client:load posts={posts} />
