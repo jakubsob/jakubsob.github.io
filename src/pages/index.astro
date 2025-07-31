@@ -2,7 +2,7 @@
 import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import PostList from "../components/PostList.jsx";
-import CodeBlock from "../components/CodeBlock.astro";
+import { Code } from "astro:components";
 import { Button } from "@/components/ui/button";
 import { Section } from "@/components/ui/section";
 import { Animate } from "@/components/ui/animate";
@@ -206,18 +206,22 @@ const posts = (await getCollection("blog"))
             </a>
           </Animate>
           <Animate>
-            <CodeBlock
-              code={`# tests/testthat/sales_trends.feature
-  Feature: View Sales Trends
-    Scenario: User views the sales trend for a product category
-      Given the user can view product sales information
-      When they view the sales trend for "Electronics"
-      Then they should see the sales trend plot for "Electronics"
+            <Code
+              themes={{
+                light: "github-light",
+                dark: "github-dark",
+              }}
+              wrap={false}
+              code={`Feature: View Sales Trends
+  Scenario: User views the sales trend for a product category
+    Given the user can view product sales information
+    When they view the sales trend for "Electronics"
+    Then they should see the sales trend plot for "Electronics"
 
-    Scenario: User views the sales trend for a specific product
-      Given the user can view product sales information
-      When they view the sales trend for "Smartphone"
-      Then they should see the sales trend plot for "Smartphone"`}
+  Scenario: User views the sales trend for a specific product
+    Given the user can view product sales information
+    When they view the sales trend for "Smartphone"
+    Then they should see the sales trend plot for "Smartphone"`}
               lang="gherkin"
             />
           </Animate>
@@ -283,7 +287,7 @@ const posts = (await getCollection("blog"))
               </a>
             </Animate>
             <Animate>
-              <CodeBlock
+              <Code
                 code={`plan <- muttest::plan(
   mutators = list(
     muttest::operator("+", "-"),
@@ -362,7 +366,7 @@ muttest::muttest(plan)`}
             </a>
           </Animate>
           <Animate>
-            <CodeBlock
+            <Code
               code={`# tests/acceptance/test-budget.R
 test_that("Scenario: I can inspect my net balance", {
   # Given

@@ -111,12 +111,12 @@ const IDEInterface = ({ fileTree, dirName, hasError }) => {
         grid
         grid-cols-1
         lg:grid-cols-[300px_1fr]
-        border border-slate-200"
+        border"
     >
       {/* Left Sidebar - File Tree */}
-      <div className="bg-slate-100 border-r border-slate-200 overflow-y-auto">
-        <div className="p-2 border-b border-slate-200 bg-slate-50">
-          <h3 className="text-sm font-medium text-slate-700 flex items-center">
+      <div className="border-r overflow-y-auto">
+        <div className="p-2 border-b bg-muted/20">
+          <h3 className="text-sm font-medium text-foreground flex items-center">
             <svg
               className="w-4 h-4 mr-2"
               fill="none"
