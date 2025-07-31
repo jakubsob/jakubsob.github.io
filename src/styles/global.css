@@ -26,11 +26,12 @@
 
 @layer base {
   :root {
-    --background: 0 0 0;
-    --light: 0 0 100%;
-    --foreground: 0 0 95%;
+    --background: 0 0% 98%;
+    --foreground: 0 0 5%;
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --light: 0 0 95%;
+    --dark: 0 0 5%;
+    --card-foreground: 0 0 5%;
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
     --primary: 155 50% 43%;
@@ -47,14 +48,19 @@
     --input: var(--foreground);
     --ring: 155 50% 43%;
     --radius: 0.5rem;
-    --gradient: linear-gradient(0deg, hsl(var(--foreground)), hsl(var(--light)));
+    --gradient: linear-gradient(
+      0deg,
+      hsl(var(--foreground)),
+      hsl(var(--light))
+    );
   }
 
   .dark {
-    --background: 0 0 0;
-    --light: 0 0 5%;
+    --background: 0 0 0%;
     --foreground: 0 0 95%;
     --card: 0 0 5%;
+    --light: 0 0 5%;
+    --dark: 0 0 5%;
     --card-foreground: 0 0 100%;
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
@@ -72,8 +78,39 @@
     --input: var(--foreground);
     --ring: 155 50% 43%;
     --radius: 0.5rem;
-    --gradient: linear-gradient(0deg, hsl(var(--background)), hsl(var(--light)));
+    --gradient: linear-gradient(
+      0deg,
+      hsl(var(--background)),
+      hsl(var(--light))
+    );
   }
+}
+
+.astro-code,
+.astro-code span {
+  background-color: var(--card) !important;
+}
+
+html.dark .astro-code,
+html.dark .astro-code span {
+  color: var(--shiki-dark) !important;
+  background-color: var(--card) !important;
+}
+
+pre {
+  @apply bg-card border border-border rounded-lg shadow-sm overflow-hidden;
+  @apply p-0;
+}
+
+pre code {
+  @apply block p-4;
+  background: transparent !important;
+}
+
+/* Style inline code */
+:not(pre) > code {
+  @apply bg-muted/20 rounded text-sm;
+  @apply before:content-none after:content-none;
 }
 
 @layer base {

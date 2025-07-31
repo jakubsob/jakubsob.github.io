@@ -68,11 +68,11 @@ const FileTreeItem = ({ item, depth = 0, onFileSelect, selectedFile }) => {
     return (
       <div>
         <div
-          className="flex items-center py-1 px-2 text-sm text-sky-700 hover:bg-ocean-green-50 cursor-disable"
+          className="flex items-center py-1 px-2 text-sm text-foreground hover:bg-ocean-green-50 cursor-disable"
           style={{ paddingLeft }}
         >
           <svg
-            className="w-3 h-3 mr-1 text-sky-700"
+            className="w-3 h-3 mr-1 text-foreground"
             fill="currentColor"
             viewBox="0 0 20 20"
           >
@@ -98,8 +98,8 @@ const FileTreeItem = ({ item, depth = 0, onFileSelect, selectedFile }) => {
       <div
         className={`flex items-center py-1 px-2 text-sm cursor-pointer transition-colors file-button ${
           isSelected
-            ? "bg-sky-50 text-sky-700"
-            : "text-sky-700 hover:bg-ocean-green-50"
+            ? "text-primary"
+            : "text-foreground hover:bg-ocean-green-50"
         }`}
         style={{ paddingLeft }}
         onClick={() => onFileSelect(item)}
@@ -108,7 +108,7 @@ const FileTreeItem = ({ item, depth = 0, onFileSelect, selectedFile }) => {
         data-file-path={item.path}
       >
         <svg
-          className="w-3 h-3 mr-1 text-slate-400"
+          className="w-3 h-3 mr-1 text-foreground-muted"
           fill="currentColor"
           viewBox="0 0 20 20"
         >
@@ -133,7 +133,7 @@ const FileTreeComponent = ({
   if (!items || !Array.isArray(items)) {
     return (
       <div className="p-4 text-center">
-        <div className="text-slate-500 mb-2">
+        <div className="text-foreground-muted mb-2">
           <svg
             className="w-8 h-8 mx-auto mb-2"
             fill="none"

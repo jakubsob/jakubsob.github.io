@@ -7,6 +7,37 @@ const FilePreview = ({ selectedFile, dirName }) => {
   const [error, setError] = useState(null);
   const [fileSize, setFileSize] = useState(0);
   const [copied, setCopied] = useState(false);
+  const [currentTheme, setCurrentTheme] = useState("light");
+
+  // Listen for theme changes
+  useEffect(() => {
+    const updateTheme = () => {
+      const isDark = document.documentElement.classList.contains("dark");
+      setCurrentTheme(isDark ? "dark" : "light");
+    };
+
+    // Initial theme detection
+    updateTheme();
+
+    // Listen for theme changes
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (
+          mutation.type === "attributes" &&
+          mutation.attributeName === "class"
+        ) {
+          updateTheme();
+        }
+      });
+    });
+
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+
+    return () => observer.disconnect();
+  }, []);
 
   // Cache for file contents
   const fileCache = useRef(new Map());
@@ -76,7 +107,11 @@ const FilePreview = ({ selectedFile, dirName }) => {
 
       const html = await codeToHtml(code, {
         lang: language,
-        theme: "github-light",
+        themes: {
+          light: "github-light",
+          dark: "github-dark",
+        },
+        defaultColor: false, // Important: this tells Shiki to use CSS variables
         transformers: [
           {
             name: "line-numbers",
@@ -94,7 +129,9 @@ const FilePreview = ({ selectedFile, dirName }) => {
     } catch (error) {
       console.error("Shiki highlighting failed:", error);
       // Final fallback to plain text
-      return `<pre class="text-sm text-slate-700 whitespace-pre-wrap bg-slate-50 p-4 rounded border overflow-x-auto"><code>${escapeHtml(code)}</code></pre>`;
+      return `<pre class="text-sm text-foreground-muted whitespace-pre-wrap p-4 rounded border overflow-x-auto"><code>${escapeHtml(
+        code
+      )}</code></pre>`;
     }
   };
 
@@ -156,9 +193,12 @@ const FilePreview = ({ selectedFile, dirName }) => {
 
       setError(null);
 
+      // Create cache key that includes theme
+      const cacheKey = `${fileUrl}:${currentTheme}`;
+
       // Check if content is already cached and not expired
-      if (fileCache.current.has(fileUrl)) {
-        const cachedData = fileCache.current.get(fileUrl);
+      if (fileCache.current.has(cacheKey)) {
+        const cachedData = fileCache.current.get(cacheKey);
 
         if (!isExpired(cachedData.timestamp)) {
           setFileContent(cachedData.content);
@@ -166,7 +206,7 @@ const FilePreview = ({ selectedFile, dirName }) => {
           setFileSize(cachedData.content.length);
           return;
         } else {
-          fileCache.current.delete(fileUrl);
+          fileCache.current.delete(cacheKey);
         }
       }
 
@@ -194,7 +234,7 @@ const FilePreview = ({ selectedFile, dirName }) => {
         enforceMaxCacheSize();
 
         // Cache the content with highlighting
-        fileCache.current.set(fileUrl, {
+        fileCache.current.set(cacheKey, {
           content: content,
           highlightedContent: highlighted,
           fileName: fileName,
@@ -209,17 +249,17 @@ const FilePreview = ({ selectedFile, dirName }) => {
     };
 
     loadFileContent();
-  }, [selectedFile]);
+  }, [selectedFile, currentTheme]);
 
   return (
-    <div className="bg-white flex flex-col">
+    <div className="flex flex-col">
       {/* Tab Bar */}
-      <div className="border-b border-slate-200 bg-slate-50 p-2">
-        <div className="flex items-center text-sm text-slate-500">
+      <div className="border-b bg-muted/20 p-2">
+        <div className="flex items-center text-sm text-foreground-muted">
           {selectedFile ? (
             <div className="flex items-center space-x-2">
               <svg
-                className="w-4 h-4 text-slate-500"
+                className="w-4 h-4 text-foreground-muted"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -231,7 +271,7 @@ const FilePreview = ({ selectedFile, dirName }) => {
                   d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
                 ></path>
               </svg>
-              <span className="text-slate-700 font-medium">
+              <span className="text-foreground font-medium">
                 {selectedFile.name}
               </span>
             </div>
@@ -252,8 +292,8 @@ const FilePreview = ({ selectedFile, dirName }) => {
               /* Loading indicator */
               <div className="p-6">
                 <div className="flex items-center justify-center">
-                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-sky-600"></div>
-                  <span className="ml-2 text-slate-600">
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2"></div>
+                  <span className="ml-2 text-foreground">
                     Loading file content...
                   </span>
                 </div>
@@ -268,9 +308,9 @@ const FilePreview = ({ selectedFile, dirName }) => {
             ) : (
               /* File Content Container */
               <div>
-                <div className="flex items-center justify-between border-b border-slate-200 px-4 py-2 bg-slate-50">
+                <div className="flex items-center justify-between border-b px-4 py-2 bg-muted/20">
                   <div className="flex items-center space-x-2">
-                    <span className="text-xs text-slate-500">
+                    <span className="text-xs text-foreground-muted">
                       Size: {Math.round(fileSize / 1024)} KB
                     </span>
                     <a
@@ -284,7 +324,7 @@ const FilePreview = ({ selectedFile, dirName }) => {
                   </div>
                   <button
                     onClick={copyToClipboard}
-                    className="flex items-center space-x-1 px-2 py-1 text-xs text-slate-600 hover:text-slate-800 hover:bg-slate-100 rounded transition-colors"
+                    className="flex items-center space-x-1 px-2 py-1 text-xs text-foreground-muted/20 hover:text-foreground-muted hover:bg-slate-100 rounded transition-colors"
                     title="Copy to clipboard"
                   >
                     {copied ? (
@@ -324,7 +364,7 @@ const FilePreview = ({ selectedFile, dirName }) => {
                     )}
                   </button>
                 </div>
-                <div className="p-4">
+                <div className="">
                   <div
                     className="text-sm overflow-x-auto"
                     dangerouslySetInnerHTML={{ __html: highlightedContent }}
@@ -334,6 +374,19 @@ const FilePreview = ({ selectedFile, dirName }) => {
                     }}
                   />
                   <style>{`
+                    .shiki,
+                    .shiki span {
+                      color: var(--shiki-light);
+                      background-color: var(--card) !important;
+                    }
+
+                    html.dark .shiki,
+                    html.dark .shiki span {
+                      color: var(--shiki-dark);
+                      background-color: var(--card) !important;
+                    }
+
+                    /* Line numbers */
                     .shiki.has-line-numbers {
                       counter-reset: line;
                     }
@@ -347,7 +400,13 @@ const FilePreview = ({ selectedFile, dirName }) => {
                       color: var(--line-number-color, #94a3b8);
                       font-size: 0.875rem;
                       user-select: none;
+                      opacity: 0.6;
                     }
+
+                    html.dark .shiki.has-line-numbers .line::before {
+                      color: #64748b;
+                    }
+
                     .shiki-fallback .line {
                       display: block;
                     }

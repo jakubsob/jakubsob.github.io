@@ -38,18 +38,12 @@ const description =
         <h1
           class="text-5xl md:text-6xl font-light uppercase py-4 flex flex-wrap justify-center items-center gap-4"
         >
-          {
-            title
-              .split(" ")
-              .map((word, index) => (
-                <span class="bg-gradient-to-b from-white to-sky-200 text-transparent bg-clip-text">
-                  {word}
-                </span>
-              ))
-          }
+          {title.split(" ").map((word, index) => <span class="">{word}</span>)}
         </h1>
       </Animate>
-      <h2 class="text-sky-100 font-light text-xl mb-8 max-w-[65ch] space-y-4">
+      <h2
+        class="text-muted-foreground font-light text-xl mb-8 max-w-[65ch] space-y-4"
+      >
         <Animate variant="header" className="motion-delay-[400ms]">
           <p>
             See how you can turn your app descriptions into robust acceptance
@@ -57,7 +51,7 @@ const description =
           </p>
         </Animate>
         <Animate variant="header" className="motion-delay-[800ms]">
-          <p class="text-ocean-green-50">
+          <p class="text-primary/50">
             <Braces className="inline size-[1em]" />
             <Bug className="inline size-[1em]" />
             <Rocket className="inline size-[1em]" />
