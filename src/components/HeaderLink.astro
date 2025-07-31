@@ -10,7 +10,7 @@ const { href, class: className, isNew } = Astro.props;
       <div class="relative inline-flex">
         <AnimatedHeaderLink
           href={href}
-          class="transition-colors hover:text-sky-200 hover:border-sky-200"
+          class="transition-colors hover:text-primary hover:border-primary"
         >
           <slot />
         </AnimatedHeaderLink>
@@ -24,7 +24,7 @@ const { href, class: className, isNew } = Astro.props;
     ) : (
       <AnimatedHeaderLink
         href={href}
-        class="transition-colors hover:text-sky-200 hover:border-sky-200"
+        class="transition-colors hover:text-primary hover:border-primary"
       >
         <slot />
       </AnimatedHeaderLink>

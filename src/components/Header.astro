@@ -8,7 +8,7 @@ const currentPath = Astro.url.pathname;
   ...document.querySelectorAll<HTMLAnchorElement>("a:not([data-nav-ignore])"),
 ].forEach((a: HTMLAnchorElement) => {
   if (a.href === currentPath) {
-    a.classList.add("border-b-2", "border-white");
+    a.classList.add("border-b-2", "border-foreground");
   }
 });
 const { class: className } = Astro.props;
@@ -66,15 +66,12 @@ const { class: className } = Astro.props;
 </style>
 <header
   id="header"
-  class:list={[
-    "text-white transition-all duration-500 w-full gap-4",
-    className,
-  ]}
+  class:list={["transition-all duration-500 w-full gap-4", className]}
 >
   <nav
     class="max-w-container
       transition-all
-      bg-background
+      bg-dark text-light
       duration-600
       mx-auto px-4 py-2 h-18"
   >
@@ -94,7 +91,7 @@ const { class: className } = Astro.props;
       </div>
       <button
         id="mobile-menu-toggle"
-        class="hover:text-sky-200 transition-colors"
+        class="hover:text-primary transition-colors"
         aria-label="Toggle mobile menu"
       >
         <svg
@@ -119,7 +116,7 @@ const { class: className } = Astro.props;
     <div class="absolute top-4 right-4">
       <button
         id="mobile-menu-close"
-        class="hover:text-sky-200 transition-colors"
+        class="hover:text-primary transition-colors"
         aria-label="Close mobile menu"
       >
         <svg

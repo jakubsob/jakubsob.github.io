@@ -15,16 +15,25 @@ export function GlobalSearch({ isOpen, onClose }: GlobalSearchProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [isVisible, setIsVisible] = useState(false);
   const [searchResults, setSearchResults] = useState<GroupedSearchResults>({});
+  const [isSearching, setIsSearching] = useState(false);
 
   // Perform search when query changes
   useEffect(() => {
     if (!searchQuery.trim()) {
       setSearchResults({});
+      setIsSearching(false);
       return;
     }
 
-    const results = smartSearchService.search(searchQuery, 15);
-    setSearchResults(results);
+    setIsSearching(true);
+    // Use setTimeout to debounce search and prevent flashing
+    const timeoutId = setTimeout(() => {
+      const results = smartSearchService.search(searchQuery, 15);
+      setSearchResults(results);
+      setIsSearching(false);
+    }, 100);
+
+    return () => clearTimeout(timeoutId);
   }, [searchQuery]);
 
   // Handle escape key to close
@@ -105,6 +114,7 @@ export function GlobalSearch({ isOpen, onClose }: GlobalSearchProps) {
   const totalResults = Object.values(searchResults).reduce((sum, group) => sum + group.totalCount, 0);
   const hasResults = totalResults > 0;
   const isEmpty = searchQuery.trim() === "";
+  const showNoResults = !isEmpty && !isSearching && !hasResults;
 
   if (!isOpen && !isVisible) return null;
 
@@ -160,7 +170,12 @@ export function GlobalSearch({ isOpen, onClose }: GlobalSearchProps) {
                 <p className="text-sm">Start typing to search across all content...</p>
                 <p className="text-xs mt-2">Search blog posts, pages, and R Tests Gallery</p>
               </div>
-            ) : !hasResults ? (
+            ) : isSearching ? (
+              <div className="text-center py-8 text-muted-foreground">
+                <Search className="h-12 w-12 mx-auto mb-4 opacity-50 animate-pulse" />
+                <p className="text-sm">Searching...</p>
+              </div>
+            ) : showNoResults ? (
               <div className="text-center py-8 text-muted-foreground">
                 <FileText className="h-12 w-12 mx-auto mb-4 opacity-50" />
                 <p className="text-sm">No results found for "{searchQuery}"</p>
@@ -183,7 +198,7 @@ export function GlobalSearch({ isOpen, onClose }: GlobalSearchProps) {
                     </a>
                   </div>
               </div>
-            ) : (
+                ) : hasResults ? (
                   <div className="space-y-6">
                     {Object.entries(searchResults).map(([type, group]) => (
                       <div key={type} className="space-y-2">
@@ -258,7 +273,7 @@ export function GlobalSearch({ isOpen, onClose }: GlobalSearchProps) {
                   </div>
                 ))}
               </div>
-            )}
+            ) : null}
           </CardContent>
         </Card>
       </div>
