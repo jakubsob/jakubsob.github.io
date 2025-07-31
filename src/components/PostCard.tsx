@@ -33,15 +33,17 @@ export function PostCard({ post, selectedTags, className }: PostCardProps) {
         </CardContent>
         <CardFooter className="gap-4">
           <FormattedDate date={post.data.pubDate} />
-          {post.data.tags.map((tag) => (
-            <Badge
-              key={tag}
-              variant={selectedTags.has(tag) ? "secondary" : "outline"}
-              className="uppercase"
-            >
-              {tag}
-            </Badge>
-          ))}
+          <div className="flex items-center gap-1 flex-nowrap">
+            {post.data.tags.map((tag) => (
+              <Badge
+                key={tag}
+                variant={selectedTags.has(tag) ? "secondary" : "outline"}
+                className="uppercase"
+              >
+                {tag}
+              </Badge>
+            ))}
+          </div>
           <div className="ml-auto uppercase">
             {getReadingTime(post.body)}
           </div>

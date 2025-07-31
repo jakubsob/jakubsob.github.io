@@ -1,24 +1,30 @@
 ---
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 interface Props {
-  variant: 'waitlist' | 'blog';
+  variant: "waitlist" | "blog";
 }
 
-const { variant: variantName = 'blog' } = Astro.props as Props;
+const { variant: variantName = "blog" } = Astro.props as Props;
 
 const variants = {
-  "waitlist": {
+  waitlist: {
     title: "Join waitlist",
     subscribedText: "Thank you! You have successfully joined the waitlist.",
     id: "28774084",
-    action: "https://assets.mailerlite.com/jsonp/1677606/forms/160795229348169271/subscribe",
-    fetchUrl: "https://assets.mailerlite.com/jsonp/1677606/forms/160795229348169271/takel",
+    action:
+      "https://assets.mailerlite.com/jsonp/1677606/forms/160795229348169271/subscribe",
+    fetchUrl:
+      "https://assets.mailerlite.com/jsonp/1677606/forms/160795229348169271/takel",
   },
-  "blog": {
+  blog: {
     title: "Subscribe",
     subscribedText: "Thank you! You have successfully subscribed to the blog.",
     id: "28597388",
-    action: "https://assets.mailerlite.com/jsonp/1677606/forms/160385023715837460/subscribe",
-    fetchUrl: "https://assets.mailerlite.com/jsonp/1677606/forms/160385023715837460/takel",
+    action:
+      "https://assets.mailerlite.com/jsonp/1677606/forms/160385023715837460/subscribe",
+    fetchUrl:
+      "https://assets.mailerlite.com/jsonp/1677606/forms/160385023715837460/takel",
   },
 };
 const variant = variants[variantName];
@@ -94,25 +100,21 @@ const variant = variants[variantName];
             <div
               class="ml-field-group ml-field-email ml-validate-email ml-validate-required"
             >
-              <input
+              <Input
                 aria-label="email"
                 aria-required="true"
                 type="email"
-                class="w-full px-4 py-3 border border-gray-300 rounded-md text-gray-800 bg-white focus:outline-none focus:ring-2 focus:ring-ocean-green-500 focus:border-ocean-green-500"
+                className="w-full"
                 name="fields[email]"
                 placeholder="Email"
-                autocomplete="email"
               />
             </div>
           </div>
           <input type="hidden" name="ml-submit" value="1" />
           <div class="ml-form-embedSubmit">
-            <button
-              type="submit"
-              class="w-full py-3 px-4 border border-ocean-green-500 bg-ocean-green-500 hover:bg-ocean-green-600 text-white font-light rounded-md transition duration-200"
-            >
+            <Button type="submit" className="w-full">
               {variant.title || "Subscribe"}
-            </button>
+            </Button>
           </div>
           <input type="hidden" name="anticsrf" value="true" />
         </form>
@@ -129,17 +131,16 @@ const variant = variants[variantName];
 </div>
 
 <script is:inline define:vars={{ variantId: variant.id }}>
-  window[`ml_webform_success_${variantId}`] = function() {
+  window[`ml_webform_success_${variantId}`] = function () {
     var $ = ml_jQuery || jQuery;
     $(`.ml-subscribe-form-${variantId} .row-success`).show();
     $(`.ml-subscribe-form-${variantId} .row-form`).hide();
-  }
+  };
 </script>
 <script
   is:inline
   src="https://groot.mailerlite.com/js/w/webforms.min.js?v176e10baa5e7ed80d35ae235be3d5024"
-  type="text/javascript">
-</script>
+  type="text/javascript"></script>
 <script define:vars={{ fetchUrl: variant.fetchUrl }}>
   fetch(fetchUrl);
 </script>

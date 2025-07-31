@@ -14,11 +14,8 @@ import { DarkModeToggle } from "./DarkModeToggle";
   <HeaderLink href="/course/" class:list={"text-red-300"} isNew={true}
     >course
   </HeaderLink>
-  <div class="ml-auto flex items-center gap-2">
-    <DarkModeToggle client:load />
-    <SearchButtonWrapper />
-    <SubscribeButton
-      class="bg-primary uppercase text-sm px-2 py-2 rounded-sm"
-    />
-  </div>
+  <div class="ml-auto"></div>
+  <DarkModeToggle client:load />
+  <SearchButtonWrapper />
+  <SubscribeButton class="bg-primary uppercase text-sm px-2 py-2 rounded-sm" />
 </Header>

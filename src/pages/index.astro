@@ -6,13 +6,8 @@ import CodeBlock from "../components/CodeBlock.astro";
 import { Button } from "@/components/ui/button";
 import { Section } from "@/components/ui/section";
 import { Animate } from "@/components/ui/animate";
-import {
-  ArrowDownLeft,
-  Asterisk,
-  ArrowDown,
-  User,
-  Verified,
-} from "lucide-react";
+import FeatureList from "@/components/FeatureList.astro";
+import { ArrowDownLeft, Asterisk, ArrowDown } from "lucide-react";
 
 const posts = (await getCollection("blog"))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
@@ -149,7 +144,7 @@ const posts = (await getCollection("blog"))
     <Animate variant="header" className="motion-delay-[1000ms]">
       <a
         href="#blog"
-        class="cursor-pointer text-muted border-muted absolute bottom-0 left-1/2 -translate-x-1/2 size-8 mb-2 rounded-full border-2"
+        class="cursor-pointer text-red-400 border-red-400 absolute bottom-0 left-1/2 -translate-x-1/2 size-8 mb-2 rounded-full border-2"
       >
         <ArrowDown className="block size-full" />
       </a>
@@ -179,9 +174,7 @@ const posts = (await getCollection("blog"))
   <Section id="opensource" size="fit" variant="dark">
     <div class="container mx-auto flex justify-center">
       <Animate>
-        <h2
-          class="text-[clamp(2em,5vw,6em)] uppercase pt-40 pb-20 flex items-center"
-        >
+        <h2 class="text-clamp-md uppercase pt-40 pb-20 flex items-center">
           <Asterisk className="inline-block size-[1em] text-red-500 mr-4" />
           <span>My Open Source</span>
           <Asterisk className="inline-block size-[1em] text-red-500 mr-4" />
@@ -198,7 +191,7 @@ const posts = (await getCollection("blog"))
               href="https://github.com/jakubsob/cucumber"
               class="hover:underline"
             >
-              <h3 class="text-5xl uppercase mb-12 flex items-center gap-4">
+              <h3 class="text-clamp-sm uppercase mb-12 flex items-center gap-4">
                 <div class="size-[100px] flex-shrink-0">
                   <img
                     class="w-full h-full object-contain"
@@ -230,68 +223,35 @@ const posts = (await getCollection("blog"))
           </Animate>
         </div>
         <div class="space-y-8 font-light">
-          <div class="space-y-6">
-            <Animate>
-              <h4
-                class="text-xl font-semibold mb-2 border-b-2 border-b-white flex items-center justify-between"
-              >
-                <div>Human-readable tests</div>
-                <div>01</div>
-              </h4>
-              <p class="text-sky-200">
-                Write tests in plain language that stakeholders and users can
-                understand, review, and validate.
-              </p>
-            </Animate>
-            <Animate>
-              <h4
-                class="text-xl font-semibold mb-2 border-b-2 border-b-white flex items-center justify-between"
-              >
-                <div>Bridge communication gaps</div>
-                <div>02</div>
-              </h4>
-              <p class="text-sky-200">
-                Enable collaboration between developers, testers, and business
-                analysts by using a common language.
-              </p>
-            </Animate>
-            <Animate>
-              <h4
-                class="text-xl font-semibold mb-2 border-b-2 border-b-white flex items-center justify-between"
-              >
-                <div>Living documentation</div>
-                <div>03</div>
-              </h4>
-              <p class="text-sky-200">
-                Your tests become executable documentation that always stays
-                up-to-date with your code.
-              </p>
-            </Animate>
-            <Animate>
-              <h4
-                class="text-xl font-semibold mb-2 border-b-2 border-b-white flex items-center justify-between"
-              >
-                <div>Behavior-driven development</div>
-                <div>04</div>
-              </h4>
-              <p class="text-sky-200">
-                Focus on the behavior of your software rather than its
-                implementation details.
-              </p>
-            </Animate>
-            <Animate>
-              <h4
-                class="text-xl font-semibold mb-2 border-b-2 border-b-white flex items-center justify-between"
-              >
-                <div>Reusable step definitions</div>
-                <div>05</div>
-              </h4>
-              <p class="text-sky-200">
-                Create a library of reusable test steps that can be combined to
-                create complex scenarios.
-              </p>
-            </Animate>
-          </div>
+          <FeatureList
+            items={[
+              {
+                title: "Human-readable tests",
+                description:
+                  "Write tests in plain language that stakeholders and users can understand, review, and validate.",
+              },
+              {
+                title: "Bridge communication gaps",
+                description:
+                  "Enable collaboration between developers, testers, and business analysts by using a common language.",
+              },
+              {
+                title: "Living documentation",
+                description:
+                  "Your tests become executable documentation that always stays up-to-date with your code.",
+              },
+              {
+                title: "Behavior-driven development",
+                description:
+                  "Focus on the behavior of your software rather than its implementation details.",
+              },
+              {
+                title: "Reusable step definitions",
+                description:
+                  "Create a library of reusable test steps that can be combined to create complex scenarios.",
+              },
+            ]}
+          />
         </div>
       </div>
     </div>
@@ -306,7 +266,9 @@ const posts = (await getCollection("blog"))
                 href="https://github.com/jakubsob/muttest"
                 class="hover:underline"
               >
-                <h3 class="text-5xl uppercase mb-12 flex items-center gap-4">
+                <h3
+                  class="text-clamp-sm uppercase mb-12 flex items-center gap-4"
+                >
                   <div class="size-[100px] flex-shrink-0">
                     <img
                       class="w-full h-full object-contain"
@@ -339,66 +301,35 @@ muttest::muttest(plan)`}
           </div>
         </div>
         <div class="order-1 space-y-6">
-          <Animate>
-            <h4
-              class="text-xl font-semibold mb-2 border-b-2 border-b-white flex items-center justify-between"
-            >
-              <div>Identify test gaps</div>
-              <div>01</div>
-            </h4>
-            <p class="text-sky-200">
-              Discover weak spots in your test suite by introducing small
-              changes to your code and checking if tests catch them.
-            </p>
-          </Animate>
-          <Animate>
-            <h4
-              class="text-xl font-semibold mb-2 border-b-2 border-b-white flex items-center justify-between"
-            >
-              <div>Quality over quantity</div>
-              <div>02</div>
-            </h4>
-            <p class="text-sky-200">
-              Focus on test effectiveness rather than just coverage percentages.
-              Muttest reveals if your tests actually validate behavior.
-            </p>
-          </Animate>
-          <Animate>
-            <h4
-              class="text-xl font-semibold mb-2 border-b-2 border-b-white flex items-center justify-between"
-            >
-              <div>Automated mutation testing</div>
-              <div>03</div>
-            </h4>
-            <p class="text-sky-200">
-              Systematically introduce mutations to your code and run tests to
-              measure how well they detect changes.
-            </p>
-          </Animate>
-          <Animate>
-            <h4
-              class="text-xl font-semibold mb-2 border-b-2 border-b-white flex items-center justify-between"
-            >
-              <div>Improve test reliability</div>
-              <div>04</div>
-            </h4>
-            <p class="text-sky-200">
-              Build more robust test suites that actually catch bugs and
-              regressions in your R code.
-            </p>
-          </Animate>
-          <Animate>
-            <h4
-              class="text-xl font-semibold mb-2 border-b-2 border-b-white flex items-center justify-between"
-            >
-              <div>Confidence in refactoring</div>
-              <div>05</div>
-            </h4>
-            <p class="text-sky-200">
-              Refactor code with confidence knowing your tests will catch any
-              breaking changes.
-            </p>
-          </Animate>
+          <FeatureList
+            items={[
+              {
+                title: "Identify test gaps",
+                description:
+                  "Discover weak spots in your test suite by introducing small changes to your code and checking if tests catch them.",
+              },
+              {
+                title: "Quality over quantity",
+                description:
+                  "Focus on test effectiveness rather than just coverage percentages. Muttest reveals if your tests actually validate behavior.",
+              },
+              {
+                title: "Automated mutation testing",
+                description:
+                  "Systematically introduce mutations to your code and run tests to measure how well they detect changes.",
+              },
+              {
+                title: "Improve test reliability",
+                description:
+                  "Build more robust test suites that actually catch bugs and regressions in your R code.",
+              },
+              {
+                title: "Confidence in refactoring",
+                description:
+                  "Refactor code with confidence knowing your tests will catch any breaking changes.",
+              },
+            ]}
+          />
         </div>
       </div>
     </div>
@@ -425,15 +356,8 @@ muttest::muttest(plan)`}
               href="https://github.com/jakubsob/shiny-acceptance-tdd"
               class="hover:underline"
             >
-              <h3
-                class="text-5xl uppercase mb-8 flex flex-wrap items-center gap-4"
-              >
-                <User className="inline-block size-[1em] text-red-500" />
-                {
-                  "Shiny Acceptance Test-Driven Development"
-                    .split(" ")
-                    .map((word) => <span>{word}</span>)
-                }
+              <h3 class="text-clamp-sm text-wrap uppercase mb-8 leading-[1em]">
+                Shiny Acceptance Test-Driven Development
               </h3>
             </a>
           </Animate>
@@ -457,68 +381,35 @@ test_that("Scenario: I can inspect my net balance", {
           </Animate>
         </div>
         <div class="space-y-8 font-light">
-          <div class="space-y-6">
-            <Animate>
-              <h4
-                class="text-xl font-semibold mb-2 border-b-2 border-b-white flex items-center justify-between"
-              >
-                <div>Start with user stories</div>
-                <div>01</div>
-              </h4>
-              <p class="text-sky-200">
-                Transform vague requirements into clear, testable user stories
-                that define what users want to accomplish.
-              </p>
-            </Animate>
-            <Animate>
-              <h4
-                class="text-xl font-semibold mb-2 border-b-2 border-b-white flex items-center justify-between"
-              >
-                <div>Executable specifications</div>
-                <div>02</div>
-              </h4>
-              <p class="text-sky-200">
-                Turn user scenarios into working code that validates your
-                application behaves as expected.
-              </p>
-            </Animate>
-            <Animate>
-              <h4
-                class="text-xl font-semibold mb-2 border-b-2 border-b-white flex items-center justify-between"
-              >
-                <div>Domain-specific language</div>
-                <div>03</div>
-              </h4>
-              <p class="text-sky-200">
-                Create a testing vocabulary that bridges technical
-                implementation with business language.
-              </p>
-            </Animate>
-            <Animate>
-              <h4
-                class="text-xl font-semibold mb-2 border-b-2 border-b-white flex items-center justify-between"
-              >
-                <div>UI independence</div>
-                <div>04</div>
-              </h4>
-              <p class="text-sky-200">
-                Focus on behavior, not implementation details, allowing your UI
-                to evolve without breaking tests.
-              </p>
-            </Animate>
-            <Animate>
-              <h4
-                class="text-xl font-semibold mb-2 border-b-2 border-b-white flex items-center justify-between"
-              >
-                <div>Shiny best practices</div>
-                <div>05</div>
-              </h4>
-              <p class="text-sky-200">
-                Learn practical techniques for building more maintainable,
-                testable Shiny applications.
-              </p>
-            </Animate>
-          </div>
+          <FeatureList
+            items={[
+              {
+                title: "Start with user stories",
+                description:
+                  "Transform vague requirements into clear, testable user stories that define what users want to accomplish.",
+              },
+              {
+                title: "Executable specifications",
+                description:
+                  "Turn user scenarios into working code that validates your application behaves as expected.",
+              },
+              {
+                title: "Domain-specific language",
+                description:
+                  "Create a testing vocabulary that bridges technical implementation with business language.",
+              },
+              {
+                title: "UI independence",
+                description:
+                  "Focus on behavior, not implementation details, allowing your UI to evolve without breaking tests.",
+              },
+              {
+                title: "Shiny best practices",
+                description:
+                  "Learn practical techniques for building more maintainable, testable Shiny applications.",
+              },
+            ]}
+          />
         </div>
       </div>
     </div>
@@ -533,15 +424,8 @@ test_that("Scenario: I can inspect my net balance", {
               target="_blank"
               class="hover:underline"
             >
-              <h3
-                class="text-5xl uppercase mb-8 flex flex-wrap items-center gap-4"
-              >
-                <Verified className="inline-block size-[1em] text-red-500" />
-                {
-                  "Shiny Test-Driven Development"
-                    .split(" ")
-                    .map((word) => <span>{word}</span>)
-                }
+              <h3 class="text-clamp-sm uppercase mb-8 leading-[1em]">
+                Shiny Test-Driven Development
               </h3>
             </a>
           </Animate>
@@ -551,7 +435,6 @@ test_that("Scenario: I can inspect my net balance", {
                 class="w-full h-full"
                 src="https://www.youtube.com/embed/HKMhDzLRqM0?si=8UTJjBwTpGTcmyt6"
                 title="Structured Approach to Testing Shiny Apps - ShinyConf 2024"
-                frameborder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowfullscreen
               >
@@ -560,68 +443,35 @@ test_that("Scenario: I can inspect my net balance", {
           </Animate>
         </div>
         <div class="space-y-8 font-light">
-          <div class="space-y-6">
-            <Animate>
-              <h4
-                class="text-xl font-semibold mb-2 border-b-2 border-b-white flex items-center justify-between"
-              >
-                <div>Test inside-out or outside-in</div>
-                <div>01</div>
-              </h4>
-              <p class="text-sky-200">
-                Learn different testing strategies and when to apply them for
-                maximum effectiveness in Shiny apps.
-              </p>
-            </Animate>
-            <Animate>
-              <h4
-                class="text-xl font-semibold mb-2 border-b-2 border-b-white flex items-center justify-between"
-              >
-                <div>Automate acceptance criteria</div>
-                <div>02</div>
-              </h4>
-              <p class="text-sky-200">
-                Convert business requirements into automated tests that validate
-                your application meets user needs.
-              </p>
-            </Animate>
-            <Animate>
-              <h4
-                class="text-xl font-semibold mb-2 border-b-2 border-b-white flex items-center justify-between"
-              >
-                <div>Isolate Shiny modules</div>
-                <div>03</div>
-              </h4>
-              <p class="text-sky-200">
-                Test each Shiny module independently to ensure they function
-                correctly before integration.
-              </p>
-            </Animate>
-            <Animate>
-              <h4
-                class="text-xl font-semibold mb-2 border-b-2 border-b-white flex items-center justify-between"
-              >
-                <div>Inject fake dependencies</div>
-                <div>04</div>
-              </h4>
-              <p class="text-sky-200">
-                Use dependency injection to replace external services with test
-                doubles for faster, more reliable tests.
-              </p>
-            </Animate>
-            <Animate>
-              <h4
-                class="text-xl font-semibold mb-2 border-b-2 border-b-white flex items-center justify-between"
-              >
-                <div>Structured testing approach</div>
-                <div>05</div>
-              </h4>
-              <p class="text-sky-200">
-                Apply a systematic testing methodology that improves code
-                quality and development speed.
-              </p>
-            </Animate>
-          </div>
+          <FeatureList
+            items={[
+              {
+                title: "Test inside-out or outside-in",
+                description:
+                  "Learn different testing strategies and when to apply them for maximum effectiveness in Shiny apps.",
+              },
+              {
+                title: "Automate acceptance criteria",
+                description:
+                  "Convert business requirements into automated tests that validate your application meets user needs.",
+              },
+              {
+                title: "Isolate Shiny modules",
+                description:
+                  "Test each Shiny module independently to ensure they function correctly before integration.",
+              },
+              {
+                title: "Inject fake dependencies",
+                description:
+                  "Use dependency injection to replace external services with test doubles for faster, more reliable tests.",
+              },
+              {
+                title: "Structured testing approach",
+                description:
+                  "Apply a systematic testing methodology that improves code quality and development speed.",
+              },
+            ]}
+          />
         </div>
       </div>
     </div>
