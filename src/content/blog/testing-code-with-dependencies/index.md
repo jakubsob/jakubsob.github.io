@@ -1,8 +1,7 @@
 ---
-title: 'How to Test R Code That Uses LLMs, APIs, and Databases'
+title: 'How to Test R Code That Uses LLMs, APIs, or Databases'
 description: 'A Practical Guide to Faking External Dependencies in R for Fast, Reliable Tests.'
 pubDate: 2025-08-01
-draft: true
 tags: [tests, r, llm]
 ---
 
