@@ -19,6 +19,7 @@ export default defineConfig({
         light: "github-light",
         dark: "github-dark",
       },
+      langs: ["r", "gherkin", "javascript", "typescript", "bash", "json", "md"],
       wrap: true,
       transformers: [
         transformerNotationDiff(),

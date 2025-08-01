@@ -212,6 +212,7 @@ const posts = (await getCollection("blog"))
                 dark: "github-dark",
               }}
               wrap={false}
+              lang="gherkin"
               code={`Feature: View Sales Trends
   Scenario: User views the sales trend for a product category
     Given the user can view product sales information
@@ -222,7 +223,6 @@ const posts = (await getCollection("blog"))
     Given the user can view product sales information
     When they view the sales trend for "Smartphone"
     Then they should see the sales trend plot for "Smartphone"`}
-              lang="gherkin"
             />
           </Animate>
         </div>
@@ -288,6 +288,11 @@ const posts = (await getCollection("blog"))
             </Animate>
             <Animate>
               <Code
+                themes={{
+                  light: "github-light-default",
+                  dark: "github-dark",
+                }}
+                lang="r"
                 code={`plan <- muttest::plan(
   mutators = list(
     muttest::operator("+", "-"),
@@ -299,7 +304,6 @@ const posts = (await getCollection("blog"))
   )
 )
 muttest::muttest(plan)`}
-                lang="r"
               />
             </Animate>
           </div>
@@ -367,6 +371,11 @@ muttest::muttest(plan)`}
           </Animate>
           <Animate>
             <Code
+              themes={{
+                light: "github-light",
+                dark: "github-dark",
+              }}
+              lang="r"
               code={`# tests/acceptance/test-budget.R
 test_that("Scenario: I can inspect my net balance", {
   # Given
@@ -380,7 +389,6 @@ test_that("Scenario: I can inspect my net balance", {
   dsl$verify_net_balance(1500)
   dsl$teardown()
 })`}
-              lang="r"
             />
           </Animate>
         </div>

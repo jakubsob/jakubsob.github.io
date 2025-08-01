@@ -101,6 +101,17 @@ html.dark .astro-code span {
   background-color: var(--card) !important;
 }
 
+.shiki,
+.shiki span {
+  background-color: var(--card) !important;
+}
+
+html.dark .shiki,
+html.dark .shiki span {
+  color: var(--shiki-dark) !important;
+  background-color: var(--card) !important;
+}
+
 pre {
   @apply bg-card border border-border rounded-lg shadow-sm overflow-hidden;
   @apply p-0;
