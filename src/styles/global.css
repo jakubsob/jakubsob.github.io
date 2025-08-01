@@ -1,5 +1,4 @@
 @import "@fontsource-variable/fira-code";
-@import "@fontsource-variable/syne";
 @import "@fontsource/geist-mono/100.css";
 @import "@fontsource/geist-mono/200.css";
 @import "@fontsource/geist-mono/300.css";
@@ -18,7 +17,7 @@
 @import "@fontsource/geist-sans/700.css";
 @import "@fontsource/geist-sans/800.css";
 @import "@fontsource/geist-sans/900.css";
-@import "@fontsource/monoton";
+@import "@fontsource/libre-caslon-text/400-italic.css";
 
 @tailwind base;
 @tailwind components;
@@ -58,7 +57,7 @@
   .dark {
     --background: 0 0 0%;
     --foreground: 0 0 95%;
-    --card: 0 0 8%;
+    --card: 0 0 %;
     --light: 0 0 5%;
     --dark: 0 0 5%;
     --card-foreground: 0 0 100%;

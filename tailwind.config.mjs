@@ -15,11 +15,9 @@ export default {
     extend: {
       fontFamily: {
         sans: ["Geist Sans", "sans-serif"],
-        serif: ["Merriweather", "serif"],
+        serif: ["Libre Caslon Text", "sans-serif"],
         mono: ["Geist Mono", "monospace"],
         code: ["Fira Code", "monospace"],
-        syne: ["Syne Variable", "sans-serif"],
-        monoton: ["Monoton", "serif"],
       },
       fontSize: {
         "clamp-sm": "clamp(2em, 3vw, 3em)",

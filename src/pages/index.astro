@@ -75,14 +75,14 @@ const posts = (await getCollection("blog"))
         class="absolute z-0 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
       >
         <h1
-          class="text-[clamp(12vw,15vw,15em)] uppercase leading-[0.8em] space-y-1 bg-blend-multiply relative"
+          class="text-[clamp(6em,7vw,12em)] uppercase font-light leading-[0.8em] space-y-3 bg-blend-multiply relative"
           id="hero-h1"
         >
           <a href="/blog">
             <Animate variant="header">
-              <span class="tracking-[0.02em] leading-[0.8em] flex items-center">
+              <span class="tracking-[0.05em] flex items-center">
                 <Asterisk
-                  className="letter-hover inline-block size-[1em] text-red-500"
+                  className="letter-hover inline-block size-[1em] text-red-500 stroke-1"
                 />
                 <span class="letter-hover">B</span>
                 <span class="letter-hover">u</span>
@@ -96,7 +96,7 @@ const posts = (await getCollection("blog"))
             </Animate>
             <Animate variant="header" className="motion-delay-[200ms]">
               <span
-                class="text-ocean-green-500 dark:text-ocean-green-100 font-bolder italic font-serif leading-[1em] tracking-[0.1em] flex items-center"
+                class="text-ocean-green-500 dark:text-ocean-green-200 tracking-[0.1em] flex items-center"
               >
                 <span class="letter-hover-green">q</span>
                 <span class="letter-hover-green">u</span>
@@ -106,12 +106,12 @@ const posts = (await getCollection("blog"))
                 <span class="letter-hover-green">t</span>
                 <span class="letter-hover-green">y</span>
                 <ArrowDownLeft
-                  className="letter-hover-green inline-block size-[1em]"
+                  className="letter-hover-green inline-block size-[1.5em] stroke-1"
                 />
               </span>
             </Animate>
             <Animate variant="header" className="motion-delay-[400ms]">
-              <span class="text-nowrap flex items-center">
+              <span class="text-nowrap flex items-center tracking-[0.03em]">
                 <span class="letter-hover">b</span>
                 <span class="letter-hover">y</span>
                 <span class="letter-hover">&nbsp;</span>
