@@ -86,6 +86,10 @@
   }
 }
 
+@view-transition {
+  navigation: auto;
+}
+
 .astro-code,
 .astro-code span {
   background-color: var(--card) !important;
