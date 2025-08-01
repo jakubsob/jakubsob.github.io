@@ -114,7 +114,7 @@ const Resources: React.FC<ResourcesProps> = ({ items }) => {
   return (
     <div className="grid grid-cols-1 gap-4 mb-4 w-full">
       <div className="w-full max-w-[65ch] mx-auto py-4">
-        <div className="flex flex-row gap-2 w-full items-center my-4">
+        <div className="flex flex-row gap-2 w-full items-center">
           <Button
             variant="secondary"
             size="sm"

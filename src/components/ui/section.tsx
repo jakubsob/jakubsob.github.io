@@ -8,7 +8,7 @@ const sectionVariants = cva(
   {
     variants: {
       variant: {
-        light: "bg-background text-foreground text-sm lg:text-base",
+        light: "bg-light text-foreground text-sm lg:text-base",
         dark: "bg-background text-foreground text-sm lg:text-base",
       },
       size: {
