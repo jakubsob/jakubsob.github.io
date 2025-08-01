@@ -480,6 +480,63 @@ test_that("Scenario: I can inspect my net balance", {
       </div>
     </div>
   </Section>
+  <Section id="bdd-tutorial" size="fit" variant="dark">
+    <div class="pb-40 pt-40">
+      <div class="container grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-12">
+        <div class="md:order-1">
+          <Animate>
+            <a
+              href="/assets/user2025.pdf"
+              target="_blank"
+              class="hover:underline"
+            >
+              <h3 class="text-clamp-sm uppercase mb-8 leading-[1em]">
+                Behavior-Driven Development
+              </h3>
+            </a>
+          </Animate>
+          <Animate>
+            <div class="aspect-video w-full overflow-hidden rounded-lg">
+              <iframe
+                class="w-full h-full"
+                src="https://www.youtube.com/embed/e4H28G2J05U?si=ru0yRV6LRHh7TmwI"
+                title="Behavior-Driven Development Tutorial"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen
+              >
+              </iframe>
+            </div>
+          </Animate>
+        </div>
+        <div class="space-y-8 font-light">
+          <FeatureList
+            items={[
+              {
+                title: "Learn BDD fundamentals",
+                description:
+                  "Understand the core principles of Behavior-Driven Development and why it improves software quality.",
+              },
+              {
+                title: "From Vague Wish to Working Code",
+                description:
+                  "Cooperate with stakeholders to transform vague requirements into clear, testable scenarios.",
+              },
+              {
+                title: "Use Given-When-Then",
+                description:
+                  "Master the Given-When-Then syntax to write scenarios that describe system behavior in a structured way.",
+              },
+              {
+                title: "Use Cucumber",
+                description:
+                  "Execute specifications using an R implementation of Cucumber.",
+              },
+            ]}
+          />
+        </div>
+      </div>
+    </div>
+  </Section>
   <!-- <Section id="testimonials">
     <div class="rounded-lg p-10 bg-background text-white w-full max-w-[65ch]">
       <div class="text-xl mb-5">
