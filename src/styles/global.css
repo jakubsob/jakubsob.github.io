@@ -44,7 +44,7 @@
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
     --border: 0 0 90%;
-    --input: var(--foreground);
+    --input: 0 0 50%;
     --ring: 155 50% 43%;
     --radius: 0.5rem;
     --gradient: linear-gradient(
@@ -74,7 +74,7 @@
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
     --border: 0 0 10%;
-    --input: var(--foreground);
+    --input: 0 0 50%;
     --ring: 155 50% 43%;
     --radius: 0.5rem;
     --gradient: linear-gradient(
