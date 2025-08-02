@@ -37,21 +37,6 @@ const posts = (await getCollection("blog"))
       transform: scale(1.1);
       filter: blur(0.01em);
     }
-
-    .cursor-button {
-      position: fixed;
-      pointer-events: none;
-      opacity: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      transition: opacity 0.5s ease;
-    }
-
-    .cursor-button.visible {
-      opacity: 0.9;
-    }
   </style>
   <Section variant="dark" size="full" id="hero">
     <div class="h-screen w-screen relative overflow-hidden">
@@ -125,20 +110,21 @@ const posts = (await getCollection("blog"))
               </span>
             </Animate>
           </a>
-          <div
-            class="visible md:hidden absolute -bottom-10 left-1/2 -translate-x-1/2 translate-y-full md:max-w-[400px]"
-          >
-            <Animate variant="expand" className="motion-delay-[600ms]">
-              <Button
-                variant="default"
-                size="xl"
-                className="bg-primary text-xl uppercase w-full"
-              >
-                <a href="/blog"> Read blog </a>
-              </Button>
-            </Animate>
-          </div>
         </h1>
+        <div
+          class="visible absolute -bottom-10 left-1/2 -translate-x-1/2 translate-y-full md:max-w-[400px] flex gap-2"
+        >
+          <Animate variant="expand" className="motion-delay-[600ms]">
+            <Button variant="destructive" className="w-full">
+              <a href="/blog"> Read blog </a>
+            </Button>
+          </Animate>
+          <Animate variant="expand" className="motion-delay-[600ms]">
+            <Button variant="secondary" className="bg-card border w-full">
+              <a href="/course"> Sign up for the course </a>
+            </Button>
+          </Animate>
+        </div>
       </div>
     </div>
     <Animate variant="header" className="motion-delay-[1000ms]">
@@ -573,53 +559,4 @@ test_that("Scenario: I can inspect my net balance", {
       </div>
     </div>
   </Section>
-  <script
-    is:inline
-    src="https://cdn.jsdelivr.net/npm/motion@11.11.13/dist/motion.js"></script>
-  <script is:inline>
-    const hero = document.getElementById("hero");
-    const heroH1 = document.getElementById("hero-h1");
-    const cursorButton = document.getElementById("cursor-button");
-
-    if (hero && cursorButton) {
-      let isHovering = false;
-
-      hero.addEventListener("mouseenter", () => {
-        isHovering = true;
-      });
-
-      hero.addEventListener("mouseleave", () => {
-        isHovering = false;
-      });
-
-      heroH1.addEventListener("mouseenter", () => {
-        cursorButton.classList.add("visible");
-      });
-
-      heroH1.addEventListener("mouseleave", () => {
-        cursorButton.classList.remove("visible");
-      });
-
-      hero.addEventListener("mousemove", (e) => {
-        if (isHovering) {
-          // Use clientX and clientY for absolute positioning relative to viewport
-          cursorButton.style.left =
-            e.clientX - cursorButton.getBoundingClientRect().width / 2 + "px";
-          cursorButton.style.top =
-            e.clientY - cursorButton.getBoundingClientRect().height / 2 + "px";
-
-          // Mutate button color based on mouse movement
-          const h1Rect = heroH1.getBoundingClientRect();
-          const normalizedX = (e.clientX - h1Rect.left) / h1Rect.width;
-          const normalizedY = (e.clientY - h1Rect.top) / h1Rect.height;
-
-          const hue = Math.floor(normalizedX * 10);
-          const saturation = Math.floor(50 + normalizedY * 100);
-          const lightness = Math.floor(40 + normalizedX * 20);
-
-          cursorButton.style.backgroundColor = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
-        }
-      });
-    }
-  </script>
 </BaseLayout>
