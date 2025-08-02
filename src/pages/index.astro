@@ -3,11 +3,13 @@ import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import PostList from "../components/PostList.jsx";
 import { Code } from "astro:components";
+import { Picture } from "astro:assets";
 import { Button } from "@/components/ui/button";
 import { Section } from "@/components/ui/section";
 import { Animate } from "@/components/ui/animate";
 import FeatureList from "@/components/FeatureList.astro";
 import { ArrowDownLeft, Asterisk, ArrowDown } from "lucide-react";
+import authorImage from "/public/author.png";
 
 const posts = (await getCollection("blog"))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
@@ -167,9 +169,7 @@ const posts = (await getCollection("blog"))
         </h2>
       </Animate>
     </div>
-    <div
-      class="bg-primary/0 border rounded-lg py-20 mx-2 md:mx-10 my-10 space-y-52"
-    >
+    <div class="rounded-lg py-20 mx-2 md:mx-10 my-10 space-y-52">
       <div class="container grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-12">
         <div>
           <Animate>
@@ -192,14 +192,19 @@ const posts = (await getCollection("blog"))
             </a>
           </Animate>
           <Animate>
-            <Code
-              themes={{
-                light: "github-light",
-                dark: "github-dark",
-              }}
-              wrap={false}
-              lang="gherkin"
-              code={`Feature: View Sales Trends
+            <div class="relative">
+              <div
+                class="absolute -inset-4 bg-gradient-to-br from-ocean-green-500/20 to-red-500/20 rounded-lg blur-xl opacity-30 -z-10"
+              >
+              </div>
+              <Code
+                themes={{
+                  light: "github-light",
+                  dark: "github-dark",
+                }}
+                wrap={false}
+                lang="gherkin"
+                code={`Feature: View Sales Trends
   Scenario: User views the sales trend for a product category
     Given the user can view product sales information
     When they view the sales trend for "Electronics"
@@ -209,7 +214,8 @@ const posts = (await getCollection("blog"))
     Given the user can view product sales information
     When they view the sales trend for "Smartphone"
     Then they should see the sales trend plot for "Smartphone"`}
-            />
+              />
+            </div>
           </Animate>
         </div>
         <div class="space-y-8 font-light">
@@ -269,13 +275,18 @@ const posts = (await getCollection("blog"))
               </a>
             </Animate>
             <Animate>
-              <Code
-                themes={{
-                  light: "github-light-default",
-                  dark: "github-dark",
-                }}
-                lang="r"
-                code={`plan <- muttest::plan(
+              <div class="relative">
+                <div
+                  class="absolute -inset-4 bg-gradient-to-br from-red-500/20 to-ocean-green-500/20 rounded-lg blur-xl opacity-30 -z-10"
+                >
+                </div>
+                <Code
+                  themes={{
+                    light: "github-light-default",
+                    dark: "github-dark",
+                  }}
+                  lang="r"
+                  code={`plan <- muttest::plan(
   mutators = list(
     muttest::operator("+", "-"),
     muttest::operator("-", "+"),
@@ -286,7 +297,8 @@ const posts = (await getCollection("blog"))
   )
 )
 muttest::muttest(plan)`}
-              />
+                />
+              </div>
             </Animate>
           </div>
         </div>
@@ -336,7 +348,9 @@ muttest::muttest(plan)`}
         </h2>
       </Animate>
     </div>
-    <div class="bg-primary/10 border rounded-lg py-20 mx-2 md:mx-10 my-10">
+    <div
+      class="bg-gradient-to-br from-primary/5 to-primary/10 border rounded-lg py-20 mx-2 md:mx-10 my-10"
+    >
       <div class="container mx-auto space-y-52">
         <div class="grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-12">
           <div class="md:order-1">
@@ -521,12 +535,29 @@ test_that("Scenario: I can inspect my net balance", {
       </div>
     </div>
   </Section>
-  <Section id="about" size="fit" variant="light">
-    <div class="pb-40 pt-40 space-y-40">
-      <div class="container grid grid-cols-1 lg:grid-cols-2">
-        <Animate>
-          <h2 class="text-6xl uppercase mb-12">I'm Jakub Sobolewski</h2>
-        </Animate>
+  <Section id="about" size="full" variant="light">
+    <div class="py-52">
+      <div class="container grid grid-cols-1 place-items lg:grid-cols-2 gap-12">
+        <div class="flex flex-col gap-4">
+          <Animate>
+            <div class="w-48 h-48 mx-auto lg:mx-0 mb-8 lg:mb-0">
+              <Picture
+                src={authorImage}
+                alt="Jakub Sobolewski"
+                class="w-full h-full object-cover rounded-md border"
+                widths={[192, 384]}
+                sizes="192px"
+              />
+            </div>
+          </Animate>
+          <Animate>
+            <h2
+              class="text-6xl font-light uppercase mb-12 text-center lg:text-start"
+            >
+              I'm Jakub Sobolewski
+            </h2>
+          </Animate>
+        </div>
         <Animate>
           <div class="max-w-[65ch] space-y-8 font-light">
             <p>

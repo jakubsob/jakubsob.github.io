@@ -37,7 +37,7 @@ const socialLinks = getSocialLinks();
               <ul class="list-none text-muted-foreground space-y-4">
                 {
                   footerRoutes.map((route) => (
-                    <li class="transition-colors hover:text-white">
+                    <li class="transition-colors hover:text-muted">
                       <a href={route.path}>{route.label}</a>
                     </li>
                   ))
@@ -49,7 +49,7 @@ const socialLinks = getSocialLinks();
               <ul class="list-none text-muted-foreground space-y-4">
                 {
                   socialLinks.map((link) => (
-                    <li class="transition-colors hover:text-white">
+                    <li class="transition-colors hover:text-muted">
                       <AnimatedLink href={link.path} target="_blank">
                         {link.label}
                       </AnimatedLink>
