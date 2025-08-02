@@ -9,11 +9,11 @@ import { DarkModeToggle } from "./DarkModeToggle";
 <Header class="fixed top-0 z-10 uppercase">
   <HeaderLink href="/" class="lowercase">jakub::sobolewski</HeaderLink>
   <HeaderLink href="/blog/">blog</HeaderLink>
-  <HeaderLink href="/resources/">resources</HeaderLink>
   <HeaderLink href="/r-tests-gallery/">r tests gallery</HeaderLink>
-  <HeaderLink href="/course/" class:list={"text-red-300"} isNew={true}
+  <HeaderLink href="/course/" class:list={"text-destructive"} isNew={true}
     >course
   </HeaderLink>
+  <HeaderLink href="/resources/">resources</HeaderLink>
   <div class="ml-auto"></div>
   <DarkModeToggle client:load />
   <SearchButtonWrapper />
