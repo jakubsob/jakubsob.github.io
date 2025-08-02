@@ -172,18 +172,18 @@ const posts = (await getCollection("blog"))
     </div>
   </Section>
   <Section id="opensource" size="fit" variant="dark">
-    <div class="container mx-auto flex justify-center">
+    <div class="container mx-auto flex justify-center pt-52 pb-12">
       <Animate>
-        <h2 class="text-clamp-md uppercase pt-40 pb-20 flex items-center">
+        <h2 class="text-clamp-md font-light uppercase flex items-center">
           <Asterisk className="inline-block size-[1em] text-red-500 mr-4" />
           <span>My Open Source</span>
           <Asterisk className="inline-block size-[1em] text-red-500 mr-4" />
         </h2>
       </Animate>
     </div>
-  </Section>
-  <Section id="cucumber" size="fit" variant="dark">
-    <div class="pb-40 pt-40">
+    <div
+      class="bg-primary/0 border rounded-lg py-20 mx-2 md:mx-10 my-10 space-y-52"
+    >
       <div class="container grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-12">
         <div>
           <Animate>
@@ -258,10 +258,6 @@ const posts = (await getCollection("blog"))
           />
         </div>
       </div>
-    </div>
-  </Section>
-  <Section id="muttest" size="fit" variant="dark">
-    <div class="pb-40 pt-40">
       <div class="container grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-12">
         <div class="order-1 md:order-2 space-y-8 font-light">
           <div>
@@ -342,11 +338,11 @@ muttest::muttest(plan)`}
       </div>
     </div>
   </Section>
-  <Section id="opensource" size="fit" variant="dark">
-    <div class="container mx-auto flex justify-center">
+  <Section id="shiny-behavior-driven-development" size="fit" variant="dark">
+    <div class="flex justify-center pt-52 pb-12">
       <Animate>
         <h2
-          class="text-[clamp(2em,5vw,6em)] uppercase pt-40 pb-20 flex items-center"
+          class="text-[clamp(2em,5vw,6em)] font-light uppercase flex items-center"
         >
           <Asterisk className="inline-block size-[1em] text-red-500 mr-4" />
           <span>Tutorials</span>
@@ -354,29 +350,30 @@ muttest::muttest(plan)`}
         </h2>
       </Animate>
     </div>
-  </Section>
-  <Section id="shiny-behavior-driven-development" size="fit" variant="dark">
-    <div class="pb-40 pt-40">
-      <div class="container grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-12">
-        <div class="md:order-1">
-          <Animate>
-            <a
-              href="https://github.com/jakubsob/shiny-acceptance-tdd"
-              class="hover:underline"
-            >
-              <h3 class="text-clamp-sm text-wrap uppercase mb-8 leading-[1em]">
-                Shiny Acceptance Test-Driven Development
-              </h3>
-            </a>
-          </Animate>
-          <Animate>
-            <Code
-              themes={{
-                light: "github-light",
-                dark: "github-dark",
-              }}
-              lang="r"
-              code={`# tests/acceptance/test-budget.R
+    <div class="bg-primary/10 border rounded-lg py-20 mx-2 md:mx-10 my-10">
+      <div class="container mx-auto space-y-52">
+        <div class="grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-12">
+          <div class="md:order-1">
+            <Animate>
+              <a
+                href="https://github.com/jakubsob/shiny-acceptance-tdd"
+                class="hover:underline"
+              >
+                <h3
+                  class="text-clamp-sm text-wrap uppercase mb-8 leading-[1em]"
+                >
+                  Shiny Acceptance Test-Driven Development
+                </h3>
+              </a>
+            </Animate>
+            <Animate>
+              <Code
+                themes={{
+                  light: "github-light",
+                  dark: "github-dark",
+                }}
+                lang="r"
+                code={`# tests/acceptance/test-budget.R
 test_that("Scenario: I can inspect my net balance", {
   # Given
   dsl$record_income(2000)
@@ -389,187 +386,155 @@ test_that("Scenario: I can inspect my net balance", {
   dsl$verify_net_balance(1500)
   dsl$teardown()
 })`}
+              />
+            </Animate>
+          </div>
+          <div class="space-y-8 font-light">
+            <FeatureList
+              items={[
+                {
+                  title: "Start with user stories",
+                  description:
+                    "Transform vague requirements into clear, testable user stories that define what users want to accomplish.",
+                },
+                {
+                  title: "Executable specifications",
+                  description:
+                    "Turn user scenarios into working code that validates your application behaves as expected.",
+                },
+                {
+                  title: "Domain-specific language",
+                  description:
+                    "Create a testing vocabulary that bridges technical implementation with business language.",
+                },
+                {
+                  title: "UI independence",
+                  description:
+                    "Focus on behavior, not implementation details, allowing your UI to evolve without breaking tests.",
+                },
+                {
+                  title: "Shiny best practices",
+                  description:
+                    "Learn practical techniques for building more maintainable, testable Shiny applications.",
+                },
+              ]}
             />
-          </Animate>
+          </div>
         </div>
-        <div class="space-y-8 font-light">
-          <FeatureList
-            items={[
-              {
-                title: "Start with user stories",
-                description:
-                  "Transform vague requirements into clear, testable user stories that define what users want to accomplish.",
-              },
-              {
-                title: "Executable specifications",
-                description:
-                  "Turn user scenarios into working code that validates your application behaves as expected.",
-              },
-              {
-                title: "Domain-specific language",
-                description:
-                  "Create a testing vocabulary that bridges technical implementation with business language.",
-              },
-              {
-                title: "UI independence",
-                description:
-                  "Focus on behavior, not implementation details, allowing your UI to evolve without breaking tests.",
-              },
-              {
-                title: "Shiny best practices",
-                description:
-                  "Learn practical techniques for building more maintainable, testable Shiny applications.",
-              },
-            ]}
-          />
-        </div>
-      </div>
-    </div>
-  </Section>
-  <Section id="shinyconf-2024" size="fit" variant="dark">
-    <div class="pb-40 pt-40">
-      <div class="container grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-12">
-        <div class="md:order-2">
-          <Animate>
-            <a
-              href="https://jakubsobolewski.com/shinyconf2024/"
-              target="_blank"
-              class="hover:underline"
-            >
-              <h3 class="text-clamp-sm uppercase mb-8 leading-[1em]">
-                Shiny Test-Driven Development
-              </h3>
-            </a>
-          </Animate>
-          <Animate>
-            <div class="aspect-video w-full overflow-hidden rounded-lg">
-              <iframe
-                class="w-full h-full"
-                src="https://www.youtube.com/embed/HKMhDzLRqM0?si=8UTJjBwTpGTcmyt6"
-                title="Structured Approach to Testing Shiny Apps - ShinyConf 2024"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowfullscreen
+        <div class="grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-12">
+          <div class="md:order-2">
+            <Animate>
+              <a
+                href="https://jakubsobolewski.com/shinyconf2024/"
+                target="_blank"
+                class="hover:underline"
               >
-              </iframe>
-            </div>
-          </Animate>
+                <h3 class="text-clamp-sm uppercase mb-8 leading-[1em]">
+                  Shiny Test-Driven Development
+                </h3>
+              </a>
+            </Animate>
+            <Animate>
+              <div class="aspect-video w-full overflow-hidden rounded-lg">
+                <iframe
+                  class="w-full h-full"
+                  src="https://www.youtube.com/embed/HKMhDzLRqM0?si=8UTJjBwTpGTcmyt6"
+                  title="Structured Approach to Testing Shiny Apps - ShinyConf 2024"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowfullscreen
+                >
+                </iframe>
+              </div>
+            </Animate>
+          </div>
+          <div class="space-y-8 font-light">
+            <FeatureList
+              items={[
+                {
+                  title: "Test inside-out or outside-in",
+                  description:
+                    "Learn different testing strategies and when to apply them for maximum effectiveness in Shiny apps.",
+                },
+                {
+                  title: "Automate acceptance criteria",
+                  description:
+                    "Convert business requirements into automated tests that validate your application meets user needs.",
+                },
+                {
+                  title: "Isolate Shiny modules",
+                  description:
+                    "Test each Shiny module independently to ensure they function correctly before integration.",
+                },
+                {
+                  title: "Inject fake dependencies",
+                  description:
+                    "Use dependency injection to replace external services with test doubles for faster, more reliable tests.",
+                },
+                {
+                  title: "Structured testing approach",
+                  description:
+                    "Apply a systematic testing methodology that improves code quality and development speed.",
+                },
+              ]}
+            />
+          </div>
         </div>
-        <div class="space-y-8 font-light">
-          <FeatureList
-            items={[
-              {
-                title: "Test inside-out or outside-in",
-                description:
-                  "Learn different testing strategies and when to apply them for maximum effectiveness in Shiny apps.",
-              },
-              {
-                title: "Automate acceptance criteria",
-                description:
-                  "Convert business requirements into automated tests that validate your application meets user needs.",
-              },
-              {
-                title: "Isolate Shiny modules",
-                description:
-                  "Test each Shiny module independently to ensure they function correctly before integration.",
-              },
-              {
-                title: "Inject fake dependencies",
-                description:
-                  "Use dependency injection to replace external services with test doubles for faster, more reliable tests.",
-              },
-              {
-                title: "Structured testing approach",
-                description:
-                  "Apply a systematic testing methodology that improves code quality and development speed.",
-              },
-            ]}
-          />
-        </div>
-      </div>
-    </div>
-  </Section>
-  <Section id="bdd-tutorial" size="fit" variant="dark">
-    <div class="pb-40 pt-40">
-      <div class="container grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-12">
-        <div class="md:order-1">
-          <Animate>
-            <a
-              href="/assets/user2025.pdf"
-              target="_blank"
-              class="hover:underline"
-            >
-              <h3 class="text-clamp-sm uppercase mb-8 leading-[1em]">
-                Behavior-Driven Development
-              </h3>
-            </a>
-          </Animate>
-          <Animate>
-            <div class="aspect-video w-full overflow-hidden rounded-lg">
-              <iframe
-                class="w-full h-full"
-                src="https://www.youtube.com/embed/e4H28G2J05U?si=ru0yRV6LRHh7TmwI"
-                title="Behavior-Driven Development Tutorial"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowfullscreen
+        <div class="grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-12">
+          <div class="md:order-1">
+            <Animate>
+              <a
+                href="/assets/user2025.pdf"
+                target="_blank"
+                class="hover:underline"
               >
-              </iframe>
-            </div>
-          </Animate>
-        </div>
-        <div class="space-y-8 font-light">
-          <FeatureList
-            items={[
-              {
-                title: "Learn BDD fundamentals",
-                description:
-                  "Understand the core principles of Behavior-Driven Development and why it improves software quality.",
-              },
-              {
-                title: "From Vague Wish to Working Code",
-                description:
-                  "Cooperate with stakeholders to transform vague requirements into clear, testable scenarios.",
-              },
-              {
-                title: "Use Given-When-Then",
-                description:
-                  "Master the Given-When-Then syntax to write scenarios that describe system behavior in a structured way.",
-              },
-              {
-                title: "Use Cucumber",
-                description:
-                  "Execute specifications using an R implementation of Cucumber.",
-              },
-            ]}
-          />
+                <h3 class="text-clamp-sm uppercase mb-8 leading-[1em]">
+                  Behavior-Driven Development
+                </h3>
+              </a>
+            </Animate>
+            <Animate>
+              <div class="aspect-video w-full overflow-hidden rounded-lg">
+                <iframe
+                  class="w-full h-full"
+                  src="https://www.youtube.com/embed/e4H28G2J05U?si=ru0yRV6LRHh7TmwI"
+                  title="Behavior-Driven Development Tutorial"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowfullscreen
+                >
+                </iframe>
+              </div>
+            </Animate>
+          </div>
+          <div class="space-y-8 font-light">
+            <FeatureList
+              items={[
+                {
+                  title: "Learn BDD fundamentals",
+                  description:
+                    "Understand the core principles of Behavior-Driven Development and why it improves software quality.",
+                },
+                {
+                  title: "From Vague Wish to Working Code",
+                  description:
+                    "Cooperate with stakeholders to transform vague requirements into clear, testable scenarios.",
+                },
+                {
+                  title: "Use Given-When-Then",
+                  description:
+                    "Master the Given-When-Then syntax to write scenarios that describe system behavior in a structured way.",
+                },
+                {
+                  title: "Use Cucumber",
+                  description:
+                    "Execute specifications using an R implementation of Cucumber.",
+                },
+              ]}
+            />
+          </div>
         </div>
       </div>
     </div>
   </Section>
-  <!-- <Section id="testimonials">
-    <div class="rounded-lg p-10 bg-background text-white w-full max-w-[65ch]">
-      <div class="text-xl mb-5">
-        <img
-          src="fa_quote-left.svg"
-          class="pb-4 opacity-50 size-10"
-          alt="Double quotes"
-          width="50"
-          height="50"
-        />
-        <span>
-          "[...] many thought provoking posts that he has on his blog [...]"
-        </span>
-      </div>
-      <p class="text-md text-sky-100">
-        Eric Nantz,
-        <a
-          class="text-sky-100 underline"
-          href="https://serve.podhome.fm/episodepage/r-weekly-highlights/issue-2024-w43-highlights"
-        >
-          R Weekly Podcast, Issue 2024-W43
-        </a>
-      </p>
-    </div>
-  </Section> -->
   <Section id="about" size="fit" variant="light">
     <div class="pb-40 pt-40 space-y-40">
       <div class="container grid grid-cols-1 lg:grid-cols-2">

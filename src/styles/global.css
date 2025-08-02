@@ -57,7 +57,7 @@
   .dark {
     --background: 0 0 0%;
     --foreground: 0 0 95%;
-    --card: 0 0 %;
+    --card: 0 0 0%;
     --light: 0 0 5%;
     --dark: 0 0 5%;
     --card-foreground: 0 0 100%;
@@ -91,24 +91,24 @@
 
 .astro-code,
 .astro-code span {
-  background-color: var(--card) !important;
+  background-color: hsl(var(--card)) !important;
 }
 
 html.dark .astro-code,
 html.dark .astro-code span {
   color: var(--shiki-dark) !important;
-  background-color: var(--card) !important;
+  background-color: hsl(var(--card)) !important;
 }
 
 .shiki,
 .shiki span {
-  background-color: var(--card) !important;
+  background-color: hsl(var(--card)) !important;
 }
 
 html.dark .shiki,
 html.dark .shiki span {
   color: var(--shiki-dark) !important;
-  background-color: var(--card) !important;
+  background-color: hsl(var(--card)) !important;
 }
 
 pre {
