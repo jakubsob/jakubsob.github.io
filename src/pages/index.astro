@@ -8,8 +8,15 @@ import { Button } from "@/components/ui/button";
 import { Section } from "@/components/ui/section";
 import { Animate } from "@/components/ui/animate";
 import FeatureList from "@/components/FeatureList.astro";
-import { ArrowDownLeft, Asterisk, ArrowDown } from "lucide-react";
+import {
+  ArrowDownLeft,
+  Asterisk,
+  ArrowDown,
+  CircleArrowRight,
+  Circle,
+} from "lucide-react";
 import authorImage from "/public/author.png";
+import { transformerNotationDiff } from "@shikijs/transformers";
 
 const posts = (await getCollection("blog"))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
@@ -170,8 +177,10 @@ const posts = (await getCollection("blog"))
       </Animate>
     </div>
     <div class="rounded-lg py-20 mx-2 md:mx-10 my-10 space-y-52">
-      <div class="container grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-12">
-        <div>
+      <div
+        class="container grid grid-cols-1 lg:grid-cols-[1fr_2fr] place-center gap-12 relative"
+      >
+        <div class="lg:col-span-2">
           <Animate>
             <a
               href="https://github.com/jakubsob/cucumber"
@@ -191,11 +200,39 @@ const posts = (await getCollection("blog"))
               </h3>
             </a>
           </Animate>
+        </div>
+        <div>
           <Animate>
-            <div class="relative">
-              <div
-                class="absolute -inset-4 bg-gradient-to-br from-ocean-green-500/20 to-red-500/20 rounded-lg blur-xl opacity-30 -z-10"
-              >
+            <div class="space-y-4">
+              <h4 class="text-2xl pb-2">1. Define behavior of the system</h4>
+              <p class="text-muted-foreground">
+                Write scenarios in Gherkin syntax to describe the behavior of
+                your system.
+              </p>
+              <p class="text-muted-foreground">
+                Use <span class="font-mono">Given</span>, <span
+                  class="font-mono">When</span
+                >, <span class="font-mono">Then</span> keywords to shape your specifications
+                clearly.
+              </p>
+            </div>
+          </Animate>
+        </div>
+        <div>
+          <Animate>
+            <div class="text-sm relative group">
+              <div class="absolute w-full h-full">
+                <a
+                  href="https://jakubsobolewski.com/muttest/"
+                  class="w-full h-full text-2xl text-primary opacity-0 group-hover:opacity-100 transition-all backdrop-blur-sm flex items-center justify-center"
+                >
+                  <Button variant="pill" size="xl">
+                    Start writing specifications
+                    <CircleArrowRight
+                      className="inline-block size-[1.5em] ml-2"
+                    />
+                  </Button>
+                </a>
               </div>
               <Code
                 themes={{
@@ -204,7 +241,7 @@ const posts = (await getCollection("blog"))
                 }}
                 wrap={false}
                 lang="gherkin"
-                code={`Feature: View Sales Trends
+                code={`Feature: Sales Trends
   Scenario: User views the sales trend for a product category
     Given the user can view product sales information
     When they view the sales trend for "Electronics"
@@ -218,75 +255,183 @@ const posts = (await getCollection("blog"))
             </div>
           </Animate>
         </div>
-        <div class="space-y-8 font-light">
-          <FeatureList
-            items={[
-              {
-                title: "Human-readable tests",
-                description:
-                  "Write tests in plain language that stakeholders and users can understand, review, and validate.",
-              },
-              {
-                title: "Bridge communication gaps",
-                description:
-                  "Enable collaboration between developers, testers, and business analysts by using a common language.",
-              },
-              {
-                title: "Living documentation",
-                description:
-                  "Your tests become executable documentation that always stays up-to-date with your code.",
-              },
-              {
-                title: "Behavior-driven development",
-                description:
-                  "Focus on the behavior of your software rather than its implementation details.",
-              },
-              {
-                title: "Reusable step definitions",
-                description:
-                  "Create a library of reusable test steps that can be combined to create complex scenarios.",
-              },
-            ]}
-          />
+        <div>
+          <Animate>
+            <div class="space-y-4">
+              <h4 class="text-2xl pb-2">2. Implement steps in R</h4>
+              <p class="text-muted-foreground">
+                Write implmementaion for steps in scenarios as R functions.
+              </p>
+              <p class="text-muted-foreground">
+                Whether it's a package, a Shiny app, or an API – simulate Users
+                interactions with your code.
+              </p>
+            </div>
+          </Animate>
+        </div>
+        <div>
+          <Animate>
+            <div class="text-sm relative group">
+              <div class="absolute w-full h-full">
+                <a
+                  href="https://jakubsobolewski.com/cucumber/"
+                  class="w-full h-full text-2xl text-primary opacity-0 group-hover:opacity-100 transition-all backdrop-blur-sm flex items-center justify-center"
+                >
+                  <Button variant="pill" size="xl">
+                    Implement your specifications
+                    <CircleArrowRight
+                      className="inline-block size-[1.5em] ml-2"
+                    />
+                  </Button>
+                </a>
+              </div>
+              <Code
+                themes={{
+                  light: "github-light",
+                  dark: "github-dark",
+                }}
+                wrap={false}
+                lang="r"
+                code={`library(cucumber)
+
+given("the user can view product sales information", function(context) {
+  # View product sales information
+)}
+
+when("they view the sales trend for {string}", function(product, context) {
+  # View the sales trend for the specified product
+})
+
+then("they should see the sales trend plot for {string}", function(product, context) {
+  # Verify the sales trend plot is displayed for the specified product
+})
+
+`}
+              />
+            </div>
+          </Animate>
+        </div>
+        <div>
+          <Animate>
+            <div class="space-y-4">
+              <h4 class="text-2xl pb-2">3. Verify User behaviors</h4>
+              <p class="text-muted-foreground">
+                Don't ever miss when Users can no longer interact with your code
+                the way you specified.
+              </p>
+              <p class="text-muted-foreground">
+                Run your scenarios and verify the programmed behaviors are still
+                valid.
+              </p>
+            </div>
+          </Animate>
+        </div>
+        <div>
+          <Animate>
+            <div class="text-sm relative group">
+              <div class="absolute w-full h-full">
+                <a
+                  href="https://jakubsobolewski.com/cucumber/"
+                  class="w-full h-full text-2xl text-primary opacity-0 group-hover:opacity-100 transition-all backdrop-blur-sm flex items-center justify-center"
+                >
+                  <Button variant="pill" size="xl">
+                    Start testing!
+                    <CircleArrowRight
+                      className="inline-block size-[1.5em] ml-2"
+                    />
+                  </Button>
+                </a>
+              </div>
+              <Code
+                themes={{
+                  light: "github-light",
+                  dark: "github-dark",
+                }}
+                wrap={false}
+                lang="r"
+                code={`> cucumber::test()
+#> ✔ | F W  S  OK | Context
+#> ✔ |          2 | Feature: Sales Trends
+#>
+#> ══ Results ═══════════════════════════════════════════
+#> [ FAIL 0 | WARN 0 | SKIP 0 | PASS 2 ]`}
+              />
+            </div>
+          </Animate>
+        </div>
+        <div class="lg:col-span-2 text-center">
+          <a href="https://jakubsobolewski.com/cucumber/" target="_blank">
+            <Button
+              size="xl"
+              className="text-2xl my-12 motion-preset-oscillate-sm motion-paused hover:motion-running"
+              variant="pill"
+            >
+              Try it out!
+              <CircleArrowRight className="inline-block size-[1.5em] ml-2" />
+            </Button>
+          </a>
         </div>
       </div>
-      <div class="container grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-12">
-        <div class="order-1 md:order-2 space-y-8 font-light">
-          <div>
-            <Animate>
-              <a
-                href="https://github.com/jakubsob/muttest"
-                class="hover:underline"
-              >
-                <h3
-                  class="text-clamp-sm uppercase mb-12 flex items-center gap-4"
-                >
-                  <div class="size-[100px] flex-shrink-0">
-                    <img
-                      class="w-full h-full object-contain"
-                      src="https://raw.githubusercontent.com/jakubsob/muttest/main/man/figures/logo.png"
-                      alt="muttest logo"
-                      width="100"
-                      height="100"
-                    />
-                  </div>
-                  {"Muttest"}
-                </h3>
-              </a>
-            </Animate>
-            <Animate>
-              <div class="relative">
-                <div
-                  class="absolute -inset-4 bg-gradient-to-br from-red-500/20 to-ocean-green-500/20 rounded-lg blur-xl opacity-30 -z-10"
-                >
+      <div class="container grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-12">
+        <div class="lg:col-span-2">
+          <Animate>
+            <a
+              href="https://github.com/jakubsob/muttest"
+              class="hover:underline"
+            >
+              <h3 class="text-clamp-sm uppercase mb-12 flex items-center gap-4">
+                <div class="size-[100px] flex-shrink-0">
+                  <img
+                    class="w-full h-full object-contain"
+                    src="https://raw.githubusercontent.com/jakubsob/muttest/main/man/figures/logo.png"
+                    alt="muttest logo"
+                    width="100"
+                    height="100"
+                  />
                 </div>
-                <Code
-                  themes={{
-                    light: "github-light-default",
-                    dark: "github-dark",
-                  }}
-                  lang="r"
-                  code={`plan <- muttest::plan(
+                {"Muttest"}
+              </h3>
+            </a>
+          </Animate>
+        </div>
+        <div>
+          <Animate>
+            <div class="space-y-4">
+              <h4 class="text-2xl pb-2">1. Create a test plan</h4>
+              <p class="text-muted-foreground">
+                Define which source files should be mutated and how.
+              </p>
+              <p class="text-muted-foreground">
+                Plan tests for all files or only for files you're working on.
+                You're in control of the scope of your testing.
+              </p>
+            </div>
+          </Animate>
+        </div>
+        <div>
+          <Animate>
+            <div class="text-sm relative group">
+              <div class="absolute w-full h-full">
+                <a
+                  href="https://jakubsobolewski.com/muttest/"
+                  class="w-full h-full text-2xl text-primary opacity-0 group-hover:opacity-100 transition-all backdrop-blur-sm flex items-center justify-center"
+                >
+                  <Button variant="pill" size="xl">
+                    Plan your mutations
+                    <CircleArrowRight
+                      className="inline-block size-[1.5em] ml-2"
+                    />
+                  </Button>
+                </a>
+              </div>
+              <Code
+                themes={{
+                  light: "github-light-default",
+                  dark: "github-dark",
+                }}
+                lang="r"
+                code={`plan <- muttest::plan(
+  source_files = "R/calculate.R",
   mutators = list(
     muttest::operator("+", "-"),
     muttest::operator("-", "+"),
@@ -295,85 +440,163 @@ const posts = (await getCollection("blog"))
     muttest::operator("==", "!="),
     muttest::operator("!=", "==")
   )
-)
-muttest::muttest(plan)`}
-                />
-              </div>
-            </Animate>
-          </div>
+)`}
+              />
+            </div>
+          </Animate>
         </div>
-        <div class="order-1 space-y-6">
-          <FeatureList
-            items={[
-              {
-                title: "Identify test gaps",
-                description:
-                  "Discover weak spots in your test suite by introducing small changes to your code and checking if tests catch them.",
-              },
-              {
-                title: "Quality over quantity",
-                description:
-                  "Focus on test effectiveness rather than just coverage percentages. Muttest reveals if your tests actually validate behavior.",
-              },
-              {
-                title: "Automated mutation testing",
-                description:
-                  "Systematically introduce mutations to your code and run tests to measure how well they detect changes.",
-              },
-              {
-                title: "Improve test reliability",
-                description:
-                  "Build more robust test suites that actually catch bugs and regressions in your R code.",
-              },
-              {
-                title: "Confidence in refactoring",
-                description:
-                  "Refactor code with confidence knowing your tests will catch any breaking changes.",
-              },
-            ]}
-          />
+        <div>
+          <Animate>
+            <div class="space-y-4">
+              <h4 class="text-2xl pb-2">2. Run mutation testing</h4>
+              <p class="text-muted-foreground">
+                Get a score of how often your tests catch mutations (bugs) in
+                your code.
+              </p>
+              <ul class="list-disc pl-6 text-muted-foreground">
+                <li>
+                  0% score → Your tests pass no matter what changes. Your
+                  assertions are weak.
+                </li>
+                <li>
+                  100% score → Every mutation triggers a test failure. Your
+                  tests are robust.
+                </li>
+              </ul>
+            </div>
+          </Animate>
         </div>
-      </div>
-    </div>
-  </Section>
-  <Section id="shiny-behavior-driven-development" size="fit" variant="dark">
-    <div class="flex justify-center pt-52 pb-12">
-      <Animate>
-        <h2
-          class="text-[clamp(2em,5vw,6em)] font-light uppercase flex items-center"
-        >
-          <Asterisk className="inline-block size-[1em] text-red-500 mr-4" />
-          <span>Tutorials</span>
-          <Asterisk className="inline-block size-[1em] text-red-500 mr-4" />
-        </h2>
-      </Animate>
-    </div>
-    <div
-      class="bg-gradient-to-br from-primary/5 to-primary/10 border rounded-lg py-20 mx-2 md:mx-10 my-10"
-    >
-      <div class="container mx-auto space-y-52">
-        <div class="grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-12">
-          <div class="md:order-1">
-            <Animate>
-              <a
-                href="https://github.com/jakubsob/shiny-acceptance-tdd"
-                class="hover:underline"
-              >
-                <h3
-                  class="text-clamp-sm text-wrap uppercase mb-8 leading-[1em]"
+        <div>
+          <Animate>
+            <div class="text-sm relative group">
+              <div class="absolute w-full h-full">
+                <a
+                  href="https://jakubsobolewski.com/muttest/"
+                  class="w-full h-full text-2xl text-primary opacity-0 group-hover:opacity-100 transition-all backdrop-blur-sm flex items-center justify-center"
                 >
-                  Shiny Acceptance Test-Driven Development
-                </h3>
-              </a>
-            </Animate>
-            <Animate>
+                  <Button variant="pill" size="xl">
+                    Kill the bugs
+                    <CircleArrowRight
+                      className="inline-block size-[1.5em] ml-2"
+                    />
+                  </Button>
+                </a>
+              </div>
               <Code
                 themes={{
-                  light: "github-light",
+                  light: "github-light-default",
                   dark: "github-dark",
                 }}
                 lang="r"
-                code={`# tests/acceptance/test-budget.R
+                code={`> muttest::muttest(plan)
+#> ℹ Mutation Testing
+#>   |   K |   S |   E |   T |   % | Mutator  | File
+#> x |   0 |   1 |   0 |   1 |   0 | + → -    | calculate.R
+#> ✔ |   1 |   1 |   0 |   2 |  50 | * → /    | calculate.R
+#> ── Mutation Testing Results ────────────────────────────────────────────────────
+#> [ KILLED 1 | SURVIVED 1 | ERRORS 0 | TOTAL 2 | SCORE 50.0% ]`}
+              />
+            </div>
+          </Animate>
+        </div>
+        <div>
+          <Animate>
+            <div class="space-y-4">
+              <h4 class="text-2xl pb-2">3. Improve your tests</h4>
+              <p class="text-muted-foreground">
+                See which source files needs better tests.
+              </p>
+              <p class="text-muted-foreground">
+                Patch the gaps that won't be caught by your tests or code
+                coverage.
+              </p>
+            </div>
+          </Animate>
+        </div>
+        <div>
+          <Animate>
+            <div class="text-sm relative group">
+              <div class="absolute w-full h-full">
+                <a
+                  href="https://jakubsobolewski.com/muttest/"
+                  class="w-full h-full text-2xl text-primary opacity-0 group-hover:opacity-100 transition-all backdrop-blur-sm flex items-center justify-center"
+                >
+                  <Button variant="pill" size="xl">
+                    See which tests to improve
+                    <CircleArrowRight
+                      className="inline-block size-[1.5em] ml-2"
+                    />
+                  </Button>
+                </a>
+              </div>
+              <Code
+                themes={{
+                  light: "github-light-default",
+                  dark: "github-dark",
+                }}
+                lang="r"
+                transformers={[transformerNotationDiff()]}
+                code={`test_that("calculate returns a numeric", { # [!code --]
+  expect_true(is.numeric(calculate(2, 2))) # [!code --]
+test_that("calculate always returns 0", { # [!code ++]
+  expect_equal(calculate(2, 2), 0) # [!code ++]
+})`}
+              />
+            </div>
+          </Animate>
+        </div>
+        <div class="lg:col-span-2 text-center">
+          <a href="https://jakubsobolewski.com/cucumber/" target="_blank">
+            <Button
+              size="xl"
+              className="text-2xl my-12 motion-preset-oscillate-sm motion-paused hover:motion-running"
+              variant="pill"
+            >
+              Patch the gaps in your tests
+              <CircleArrowRight className="inline-block size-[1.5em] ml-2" />
+            </Button>
+          </a>
+        </div>
+      </div>
+    </div>
+    <Section id="shiny-behavior-driven-development" size="fit" variant="dark">
+      <div class="flex justify-center pt-52 pb-12">
+        <Animate>
+          <h2
+            class="text-[clamp(2em,5vw,6em)] font-light uppercase flex items-center"
+          >
+            <Asterisk className="inline-block size-[1em] text-red-500 mr-4" />
+            <span>Tutorials</span>
+            <Asterisk className="inline-block size-[1em] text-red-500 mr-4" />
+          </h2>
+        </Animate>
+      </div>
+      <div
+        class="bg-gradient-to-br from-primary/5 to-primary/10 border rounded-lg py-20 mx-2 md:mx-10 my-10"
+      >
+        <div class="container mx-auto space-y-52">
+          <div class="grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-12">
+            <div class="md:order-1">
+              <Animate>
+                <a
+                  href="https://github.com/jakubsob/shiny-acceptance-tdd"
+                  class="hover:underline"
+                >
+                  <h3
+                    class="text-clamp-sm text-wrap uppercase mb-8 leading-[1em]"
+                  >
+                    Shiny Acceptance Test-Driven Development
+                  </h3>
+                </a>
+              </Animate>
+              <Animate>
+                <Code
+                  themes={{
+                    light: "github-light",
+                    dark: "github-dark",
+                  }}
+                  lang="r"
+                  code={`# tests/acceptance/test-budget.R
 test_that("Scenario: I can inspect my net balance", {
   # Given
   dsl$record_income(2000)
@@ -386,208 +609,211 @@ test_that("Scenario: I can inspect my net balance", {
   dsl$verify_net_balance(1500)
   dsl$teardown()
 })`}
-              />
-            </Animate>
-          </div>
-          <div class="space-y-8 font-light">
-            <FeatureList
-              items={[
-                {
-                  title: "Start with user stories",
-                  description:
-                    "Transform vague requirements into clear, testable user stories that define what users want to accomplish.",
-                },
-                {
-                  title: "Executable specifications",
-                  description:
-                    "Turn user scenarios into working code that validates your application behaves as expected.",
-                },
-                {
-                  title: "Domain-specific language",
-                  description:
-                    "Create a testing vocabulary that bridges technical implementation with business language.",
-                },
-                {
-                  title: "UI independence",
-                  description:
-                    "Focus on behavior, not implementation details, allowing your UI to evolve without breaking tests.",
-                },
-                {
-                  title: "Shiny best practices",
-                  description:
-                    "Learn practical techniques for building more maintainable, testable Shiny applications.",
-                },
-              ]}
-            />
-          </div>
-        </div>
-        <div class="grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-12">
-          <div class="md:order-2">
-            <Animate>
-              <a
-                href="https://jakubsobolewski.com/shinyconf2024/"
-                target="_blank"
-                class="hover:underline"
-              >
-                <h3 class="text-clamp-sm uppercase mb-8 leading-[1em]">
-                  Shiny Test-Driven Development
-                </h3>
-              </a>
-            </Animate>
-            <Animate>
-              <div class="aspect-video w-full overflow-hidden rounded-lg">
-                <iframe
-                  class="w-full h-full"
-                  src="https://www.youtube.com/embed/HKMhDzLRqM0?si=8UTJjBwTpGTcmyt6"
-                  title="Structured Approach to Testing Shiny Apps - ShinyConf 2024"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowfullscreen
-                >
-                </iframe>
-              </div>
-            </Animate>
-          </div>
-          <div class="space-y-8 font-light">
-            <FeatureList
-              items={[
-                {
-                  title: "Test inside-out or outside-in",
-                  description:
-                    "Learn different testing strategies and when to apply them for maximum effectiveness in Shiny apps.",
-                },
-                {
-                  title: "Automate acceptance criteria",
-                  description:
-                    "Convert business requirements into automated tests that validate your application meets user needs.",
-                },
-                {
-                  title: "Isolate Shiny modules",
-                  description:
-                    "Test each Shiny module independently to ensure they function correctly before integration.",
-                },
-                {
-                  title: "Inject fake dependencies",
-                  description:
-                    "Use dependency injection to replace external services with test doubles for faster, more reliable tests.",
-                },
-                {
-                  title: "Structured testing approach",
-                  description:
-                    "Apply a systematic testing methodology that improves code quality and development speed.",
-                },
-              ]}
-            />
-          </div>
-        </div>
-        <div class="grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-12">
-          <div class="md:order-1">
-            <Animate>
-              <a
-                href="/assets/user2025.pdf"
-                target="_blank"
-                class="hover:underline"
-              >
-                <h3 class="text-clamp-sm uppercase mb-8 leading-[1em]">
-                  Behavior-Driven Development
-                </h3>
-              </a>
-            </Animate>
-            <Animate>
-              <div class="aspect-video w-full overflow-hidden rounded-lg">
-                <iframe
-                  class="w-full h-full"
-                  src="https://www.youtube.com/embed/e4H28G2J05U?si=ru0yRV6LRHh7TmwI"
-                  title="Behavior-Driven Development Tutorial"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowfullscreen
-                >
-                </iframe>
-              </div>
-            </Animate>
-          </div>
-          <div class="space-y-8 font-light">
-            <FeatureList
-              items={[
-                {
-                  title: "Learn BDD fundamentals",
-                  description:
-                    "Understand the core principles of Behavior-Driven Development and why it improves software quality.",
-                },
-                {
-                  title: "From Vague Wish to Working Code",
-                  description:
-                    "Cooperate with stakeholders to transform vague requirements into clear, testable scenarios.",
-                },
-                {
-                  title: "Use Given-When-Then",
-                  description:
-                    "Master the Given-When-Then syntax to write scenarios that describe system behavior in a structured way.",
-                },
-                {
-                  title: "Use Cucumber",
-                  description:
-                    "Execute specifications using an R implementation of Cucumber.",
-                },
-              ]}
-            />
-          </div>
-        </div>
-      </div>
-    </div>
-  </Section>
-  <Section id="about" size="full" variant="light">
-    <div class="py-52">
-      <div class="container grid grid-cols-1 place-items lg:grid-cols-2 gap-12">
-        <div class="flex flex-col gap-4">
-          <Animate>
-            <div class="w-48 h-48 mx-auto lg:mx-0 mb-8 lg:mb-0">
-              <Picture
-                src={authorImage}
-                alt="Jakub Sobolewski"
-                class="w-full h-full object-cover rounded-md border"
-                widths={[192, 384]}
-                sizes="192px"
+                />
+              </Animate>
+            </div>
+            <div class="space-y-8 font-light">
+              <FeatureList
+                items={[
+                  {
+                    title: "Start with user stories",
+                    description:
+                      "Transform vague requirements into clear, testable user stories that define what users want to accomplish.",
+                  },
+                  {
+                    title: "Executable specifications",
+                    description:
+                      "Turn user scenarios into working code that validates your application behaves as expected.",
+                  },
+                  {
+                    title: "Domain-specific language",
+                    description:
+                      "Create a testing vocabulary that bridges technical implementation with business language.",
+                  },
+                  {
+                    title: "UI independence",
+                    description:
+                      "Focus on behavior, not implementation details, allowing your UI to evolve without breaking tests.",
+                  },
+                  {
+                    title: "Shiny best practices",
+                    description:
+                      "Learn practical techniques for building more maintainable, testable Shiny applications.",
+                  },
+                ]}
               />
             </div>
-          </Animate>
+          </div>
+          <div class="grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-12">
+            <div class="md:order-2">
+              <Animate>
+                <a
+                  href="https://jakubsobolewski.com/shinyconf2024/"
+                  target="_blank"
+                  class="hover:underline"
+                >
+                  <h3 class="text-clamp-sm uppercase mb-8 leading-[1em]">
+                    Shiny Test-Driven Development
+                  </h3>
+                </a>
+              </Animate>
+              <Animate>
+                <div class="aspect-video w-full overflow-hidden rounded-lg">
+                  <iframe
+                    class="w-full h-full"
+                    src="https://www.youtube.com/embed/HKMhDzLRqM0?si=8UTJjBwTpGTcmyt6"
+                    title="Structured Approach to Testing Shiny Apps - ShinyConf 2024"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen
+                  >
+                  </iframe>
+                </div>
+              </Animate>
+            </div>
+            <div class="space-y-8 font-light">
+              <FeatureList
+                items={[
+                  {
+                    title: "Test inside-out or outside-in",
+                    description:
+                      "Learn different testing strategies and when to apply them for maximum effectiveness in Shiny apps.",
+                  },
+                  {
+                    title: "Automate acceptance criteria",
+                    description:
+                      "Convert business requirements into automated tests that validate your application meets user needs.",
+                  },
+                  {
+                    title: "Isolate Shiny modules",
+                    description:
+                      "Test each Shiny module independently to ensure they function correctly before integration.",
+                  },
+                  {
+                    title: "Inject fake dependencies",
+                    description:
+                      "Use dependency injection to replace external services with test doubles for faster, more reliable tests.",
+                  },
+                  {
+                    title: "Structured testing approach",
+                    description:
+                      "Apply a systematic testing methodology that improves code quality and development speed.",
+                  },
+                ]}
+              />
+            </div>
+          </div>
+          <div class="grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-12">
+            <div class="md:order-1">
+              <Animate>
+                <a
+                  href="/assets/user2025.pdf"
+                  target="_blank"
+                  class="hover:underline"
+                >
+                  <h3 class="text-clamp-sm uppercase mb-8 leading-[1em]">
+                    Behavior-Driven Development
+                  </h3>
+                </a>
+              </Animate>
+              <Animate>
+                <div class="aspect-video w-full overflow-hidden rounded-lg">
+                  <iframe
+                    class="w-full h-full"
+                    src="https://www.youtube.com/embed/e4H28G2J05U?si=ru0yRV6LRHh7TmwI"
+                    title="Behavior-Driven Development Tutorial"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen
+                  >
+                  </iframe>
+                </div>
+              </Animate>
+            </div>
+            <div class="space-y-8 font-light">
+              <FeatureList
+                items={[
+                  {
+                    title: "Learn BDD fundamentals",
+                    description:
+                      "Understand the core principles of Behavior-Driven Development and why it improves software quality.",
+                  },
+                  {
+                    title: "From Vague Wish to Working Code",
+                    description:
+                      "Cooperate with stakeholders to transform vague requirements into clear, testable scenarios.",
+                  },
+                  {
+                    title: "Use Given-When-Then",
+                    description:
+                      "Master the Given-When-Then syntax to write scenarios that describe system behavior in a structured way.",
+                  },
+                  {
+                    title: "Use Cucumber",
+                    description:
+                      "Execute specifications using an R implementation of Cucumber.",
+                  },
+                ]}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </Section>
+    <Section id="about" size="full" variant="light">
+      <div class="py-52">
+        <div
+          class="container grid grid-cols-1 place-items lg:grid-cols-2 gap-12"
+        >
+          <div class="flex flex-col gap-4">
+            <Animate>
+              <div class="w-48 h-48 mx-auto lg:mx-0 mb-8 lg:mb-0">
+                <Picture
+                  src={authorImage}
+                  alt="Jakub Sobolewski"
+                  class="w-full h-full object-cover rounded-md border"
+                  widths={[192, 384]}
+                  sizes="192px"
+                />
+              </div>
+            </Animate>
+            <Animate>
+              <h2
+                class="text-6xl font-light uppercase mb-12 text-center lg:text-start"
+              >
+                I'm Jakub Sobolewski
+              </h2>
+            </Animate>
+          </div>
           <Animate>
-            <h2
-              class="text-6xl font-light uppercase mb-12 text-center lg:text-start"
-            >
-              I'm Jakub Sobolewski
-            </h2>
+            <div class="max-w-[65ch] space-y-8 font-light">
+              <p>
+                I’m a software engineer specializing in R with 5+ years of
+                experience.
+              </p>
+              <p>
+                I believe automated testing is the key to building quality
+                software.
+              </p>
+              <p>
+                My journey into R testing began with a project where to develop
+                code, you had to be connected to the production environment.
+                Turns out, it was a terrible developer experience.
+              </p>
+              <p>
+                I'm particularly passionate about knowledge sharing, which is
+                why I maintain an active blog and R Tests Gallery. I believe
+                that when we share our testing experiences—both successes and
+                failures—we all become better developers.
+              </p>
+              <p>
+                I approach testing with a practical mindset: tests should make
+                development faster and more confident, not slower and more
+                burdensome. My goal is to help teams find testing strategies
+                that actually enhance their workflow.
+              </p>
+            </div>
           </Animate>
         </div>
-        <Animate>
-          <div class="max-w-[65ch] space-y-8 font-light">
-            <p>
-              I’m a software engineer specializing in R with 5+ years of
-              experience.
-            </p>
-            <p>
-              I believe automated testing is the key to building quality
-              software.
-            </p>
-            <p>
-              My journey into R testing began with a project where to develop
-              code, you had to be connected to the production environment. Turns
-              out, it was a terrible developer experience.
-            </p>
-            <p>
-              I'm particularly passionate about knowledge sharing, which is why
-              I maintain an active blog and R Tests Gallery. I believe that when
-              we share our testing experiences—both successes and failures—we
-              all become better developers.
-            </p>
-            <p>
-              I approach testing with a practical mindset: tests should make
-              development faster and more confident, not slower and more
-              burdensome. My goal is to help teams find testing strategies that
-              actually enhance their workflow.
-            </p>
-          </div>
-        </Animate>
       </div>
-    </div>
+    </Section>
   </Section>
 </BaseLayout>

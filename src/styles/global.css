@@ -52,6 +52,8 @@
       hsl(var(--foreground)),
       hsl(var(--light))
     );
+    --diff-add: 155 50% 40%;
+    --diff-remove: 0 50% 40%;
   }
 
   .dark {
@@ -82,6 +84,8 @@
       hsl(var(--background)),
       hsl(var(--light))
     );
+    --diff-add: 155 50% 10%;
+    --diff-remove: 0 50% 20%;
   }
 }
 
@@ -144,22 +148,22 @@ pre code {
 
 .diff {
   display: inline-block;
-  width: 100vw;
+  width: 100%;
   margin: 0 -12px;
   padding: 0 12px;
 }
 
-.diff.add {
-  background-color: var(--color-ocean-green-800);
+.astro-code .diff.add, .astro-code .diff.add span {
+  background-color: hsl(var(--diff-add)) !important;
 }
 
-.diff.remove {
-  background-color: var(--color-pink-950);
+.astro-code .diff.remove, .astro-code .diff.remove span {
+  background-color: hsl(var(--diff-remove)) !important;
 }
 
-.diff:before {
-  position: absolute;
-  left: 40px;
+.astro-code .diff:before {
+  position: absolute !important;
+  left: 40px !important;
 }
 
 .focused .line {
