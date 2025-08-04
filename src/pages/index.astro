@@ -176,9 +176,9 @@ const posts = (await getCollection("blog"))
         </h2>
       </Animate>
     </div>
-    <div class="rounded-lg py-20 mx-2 lg:mx-10 my-10 space-y-52">
+    <div class="py-20 my-10 space-y-52">
       <div
-        class="container grid grid-cols-1 lg:grid-cols-[1fr_2fr] place-center gap-12 relative"
+        class="container grid grid-cols-1 lg:grid-cols-[1fr_2fr] place-center gap-12"
       >
         <div class="lg:col-span-2 pb-12">
           <Animate>
@@ -572,10 +572,10 @@ expect_equal(calculate(2, 2), 0) # [!code ++]
             </h2>
           </Animate>
         </div>
-        <div
-          class="bg-gradient-to-br from-primary/5 to-primary/10 border rounded-lg py-20 mx-2 md:mx-10 my-10"
-        >
-          <div class="container mx-auto space-y-52">
+        <div class="">
+          <div
+            class="container mx-auto space-y-52 py-20 my-10 bg-gradient-to-br from-primary/5 to-primary/10 border rounded-lg"
+          >
             <div class="grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-12">
               <div class="">
                 <Animate>
@@ -759,64 +759,61 @@ test_that("Scenario: I can inspect my net balance", {
           </div>
         </div>
       </Section>
-      <Section id="about" size="full" variant="light">
-        <div class="py-52">
-          <div
-            class="container grid grid-cols-1 place-items lg:grid-cols-2 gap-12"
-          >
-            <div class="flex flex-col gap-4">
-              <Animate>
-                <div class="w-48 h-48 mx-auto lg:mx-0 mb-8 lg:mb-0">
-                  <Picture
-                    src={authorImage}
-                    alt="Jakub Sobolewski"
-                    class="w-full h-full object-cover rounded-md border"
-                    widths={[192, 384]}
-                    sizes="192px"
-                  />
-                </div>
-              </Animate>
-              <Animate>
-                <h2
-                  class="text-6xl font-light uppercase mb-12 text-center lg:text-start"
-                >
-                  I'm Jakub Sobolewski
-                </h2>
-              </Animate>
+    </div>
+  </Section>
+  <Section id="about" size="full" variant="light">
+    <div class="py-52">
+      <div class="container grid grid-cols-1 place-items lg:grid-cols-2 gap-12">
+        <div class="flex flex-col gap-4">
+          <Animate>
+            <div class="w-48 h-48 mx-auto lg:mx-0 mb-8 lg:mb-0">
+              <Picture
+                src={authorImage}
+                alt="Jakub Sobolewski"
+                class="w-full h-full object-cover rounded-md border"
+                widths={[192, 384]}
+                sizes="192px"
+              />
             </div>
-            <Animate>
-              <div class="max-w-[65ch] space-y-8 font-light">
-                <p>
-                  I’m a software engineer specializing in R with 5+ years of
-                  experience.
-                </p>
-                <p>
-                  I believe automated testing is the key to building quality
-                  software.
-                </p>
-                <p>
-                  My journey into R testing began with a project where to
-                  develop code, you had to be connected to the production
-                  environment. Turns out, it was a terrible developer
-                  experience.
-                </p>
-                <p>
-                  I'm particularly passionate about knowledge sharing, which is
-                  why I maintain an active blog and R Tests Gallery. I believe
-                  that when we share our testing experiences—both successes and
-                  failures—we all become better developers.
-                </p>
-                <p>
-                  I approach testing with a practical mindset: tests should make
-                  development faster and more confident, not slower and more
-                  burdensome. My goal is to help teams find testing strategies
-                  that actually enhance their workflow.
-                </p>
-              </div>
-            </Animate>
-          </div>
+          </Animate>
+          <Animate>
+            <h2
+              class="text-6xl font-light uppercase mb-12 text-center lg:text-start"
+            >
+              I'm Jakub Sobolewski
+            </h2>
+          </Animate>
         </div>
-      </Section>
+        <Animate>
+          <div class="max-w-[65ch] space-y-8 font-light">
+            <p>
+              I’m a software engineer specializing in R with 5+ years of
+              experience.
+            </p>
+            <p>
+              I believe automated testing is the key to building quality
+              software.
+            </p>
+            <p>
+              My journey into R testing began with a project where to develop
+              code, you had to be connected to the production environment. Turns
+              out, it was a terrible developer experience.
+            </p>
+            <p>
+              I'm particularly passionate about knowledge sharing, which is why
+              I maintain an active blog and R Tests Gallery. I believe that when
+              we share our testing experiences—both successes and failures—we
+              all become better developers.
+            </p>
+            <p>
+              I approach testing with a practical mindset: tests should make
+              development faster and more confident, not slower and more
+              burdensome. My goal is to help teams find testing strategies that
+              actually enhance their workflow.
+            </p>
+          </div>
+        </Animate>
+      </div>
     </div>
   </Section>
 </BaseLayout>
