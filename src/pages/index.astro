@@ -66,13 +66,13 @@ const posts = (await getCollection("blog"))
       >
       </div>
       <div
-        class="absolute z-0 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+        class="absolute z-0 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center"
       >
         <h1
           class="text-[clamp(6em,7vw,12em)] uppercase font-light leading-[0.8em] space-y-3 bg-blend-multiply relative"
           id="hero-h1"
         >
-          <a href="/blog">
+          <a href="/blog" class="flex flex-col items-center">
             <Animate variant="header">
               <span class="tracking-[0.05em] flex items-center">
                 <Asterisk
@@ -100,7 +100,7 @@ const posts = (await getCollection("blog"))
                 <span class="letter-hover-green">t</span>
                 <span class="letter-hover-green">y</span>
                 <ArrowDownLeft
-                  className="letter-hover-green inline-block size-[1.5em] stroke-1"
+                  className="letter-hover-green inline-block size-[1em] stroke-1"
                 />
               </span>
             </Animate>
@@ -120,18 +120,24 @@ const posts = (await getCollection("blog"))
             </Animate>
           </a>
         </h1>
-        <div
-          class="visible absolute -bottom-10 left-1/2 -translate-x-1/2 translate-y-full md:max-w-[400px] flex gap-2"
-        >
+        <div class="flex gap-2 mt-20">
           <Animate variant="expand" className="motion-delay-[600ms]">
-            <Button variant="destructive" className="w-full">
-              <a href="/blog"> Read blog </a>
-            </Button>
+            <a href="/course">
+              <Button
+                variant="pill"
+                size="xl"
+                className="font-light bg-destructive text-foreground"
+              >
+                Sign up for testing course
+              </Button>
+            </a>
           </Animate>
           <Animate variant="expand" className="motion-delay-[600ms]">
-            <Button variant="secondary" className="bg-card border w-full">
-              <a href="/course"> Sign up for the course </a>
-            </Button>
+            <a href="/blog">
+              <Button variant="link" size="xl" className="font-light text-xl">
+                Learn from blog
+              </Button>
+            </a>
           </Animate>
         </div>
       </div>
