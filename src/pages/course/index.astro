@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import Card from "./Card.astro";
 import Subscribe from "@/components/Subscribe.astro";
+import HeroBackground from "@/components/HeroBackground.astro";
 
 const title = "Add Automated Tests to Your Shiny App";
 const description =
@@ -24,16 +25,7 @@ const description =
     <div
       class="container mx-auto h-full flex flex-col justify-center items-center text-center relative"
     >
-      <div
-        id="circle"
-        class="absolute z-0 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-gradient-to-b from-background to-ocean-green-700 opacity-20 size-[70vw] md:size-[70vh] rounded-full"
-      >
-      </div>
-      <div
-        id="circle"
-        class="absolute z-0 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-gradient-to-b from-background to-ocean-green-500 opacity-20 size-[100vw] md:size-[100vh] rounded-full"
-      >
-      </div>
+      <HeroBackground />
       <Animate variant="header">
         <h1
           class="text-5xl md:text-6xl max-w-[23ch] font-light uppercase py-4 flex flex-wrap justify-center items-center gap-4"

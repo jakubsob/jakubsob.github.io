@@ -4,6 +4,7 @@ import { Section } from "../../components/ui/section";
 import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { Animate } from "../../components/ui/animate";
+import HeroBackground from "@/components/HeroBackground.astro";
 
 const posts = (await getCollection("blog"))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
@@ -15,16 +16,7 @@ const posts = (await getCollection("blog"))
     <div
       class="container mx-auto h-full flex flex-col justify-center items-center text-center relative"
     >
-      <div
-        id="circle"
-        class="absolute z-0 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-gradient-to-b from-background to-ocean-green-700 opacity-20 h-[80%] aspect-square rounded-full"
-      >
-      </div>
-      <div
-        id="circle"
-        class="absolute z-0 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-gradient-to-b from-background to-ocean-green-500 opacity-20 h-full aspect-square rounded-full"
-      >
-      </div>
+      <HeroBackground />
       <Animate variant="header">
         <h1 class="font-light text-6xl uppercase py-4">
           <span> Build </span>
@@ -33,7 +25,9 @@ const posts = (await getCollection("blog"))
         </h1>
       </Animate>
       <Animate variant="header" className="motion-delay-[200ms]">
-        <h2 class="font-light text-xl text-muted">One test at a time.</h2>
+        <h2 class="font-light text-xl text-muted-foreground">
+          One test at a time.
+        </h2>
       </Animate>
     </div>
   </Section>
