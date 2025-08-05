@@ -15,6 +15,7 @@ import {
   CircleArrowRight,
   Circle,
 } from "lucide-react";
+import HeroBackground from "@/components/HeroBackground.astro";
 import authorImage from "/public/author.png";
 import { transformerNotationDiff } from "@shikijs/transformers";
 
@@ -49,22 +50,7 @@ const posts = (await getCollection("blog"))
   </style>
   <Section variant="dark" size="full" id="hero">
     <div class="h-screen w-screen relative overflow-hidden">
-      <button
-        class="cursor-button fixed z-10 size-36 rounded-full bg-ocean-green-300 uppercase text-xl backdrop-blur-lg hidden md:visible"
-        id="cursor-button"
-      >
-        Read blog
-      </button>
-      <div
-        id="circle"
-        class="absolute z-0 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-gradient-to-b from-background to-ocean-green-700 opacity-20 size-[70vw] md:size-[70vh] rounded-full"
-      >
-      </div>
-      <div
-        id="circle"
-        class="absolute z-0 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-gradient-to-b from-background to-ocean-green-700 opacity-30 size-[100vw] md:size-[100vh] rounded-full"
-      >
-      </div>
+      <HeroBackground />
       <div
         class="absolute z-0 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center"
       >
@@ -126,16 +112,20 @@ const posts = (await getCollection("blog"))
               <Button
                 variant="pill"
                 size="xl"
-                className="bg-destructive text-white"
+                className="bg-destructive"
               >
-                Sign up for testing course
+                <span class="text-sm md:text-xl dark:text-white">
+                  Sign up for testing course
+                </span>
               </Button>
             </a>
           </Animate>
           <Animate variant="expand" className="motion-delay-[600ms]">
             <a href="/blog">
-              <Button variant="link" size="xl" className="text-xl">
-                Learn from blog
+              <Button variant="link" size="xl">
+                <span class="text-sm md:text-xl">
+                  Learn from blog
+                </span>
               </Button>
             </a>
           </Animate>
@@ -162,7 +152,7 @@ const posts = (await getCollection("blog"))
         <div class="order-3 mt-12 md:order-2 md:self-end">
           <Animate>
             <a href="/blog">
-              <Button variant="pill" size="xl"> Read more →</Button>
+              <Button variant="pill" size="xl"> <span class="text-xl">Read more →</span></Button>
             </a>
           </Animate>
         </div>
@@ -232,7 +222,7 @@ const posts = (await getCollection("blog"))
                   href="https://jakubsobolewski.com/cucumber/"
                   class="w-full h-full text-2xl text-primary opacity-0 group-hover:opacity-100 transition-all backdrop-blur-sm flex items-center justify-center"
                 >
-                  <Button variant="pill" size="xl">
+                  <Button variant="pill" >
                     Start writing specifications
                     <CircleArrowRight
                       className="inline-block size-[1.5em] ml-2"
@@ -283,7 +273,7 @@ Scenario: User views the sales trend for a specific product
                   href="https://jakubsobolewski.com/cucumber/"
                   class="w-full h-full text-2xl text-primary opacity-0 group-hover:opacity-100 transition-all backdrop-blur-sm flex items-center justify-center"
                 >
-                  <Button variant="pill" size="xl">
+                  <Button variant="pill" >
                     Implement your specifications
                     <CircleArrowRight
                       className="inline-block size-[1.5em] ml-2"
@@ -340,7 +330,7 @@ then("they should see the sales trend plot for {string}", function(product, cont
                   href="https://jakubsobolewski.com/cucumber/"
                   class="w-full h-full text-2xl text-primary opacity-0 group-hover:opacity-100 transition-all backdrop-blur-sm flex items-center justify-center"
                 >
-                  <Button variant="pill" size="xl">
+                  <Button variant="pill" >
                     Start testing!
                     <CircleArrowRight
                       className="inline-block size-[1.5em] ml-2"
@@ -424,7 +414,7 @@ then("they should see the sales trend plot for {string}", function(product, cont
                   href="https://jakubsobolewski.com/muttest/"
                   class="w-full h-full text-2xl text-primary opacity-0 group-hover:opacity-100 transition-all backdrop-blur-sm flex items-center justify-center"
                 >
-                  <Button variant="pill" size="xl">
+                  <Button variant="pill" >
                     Plan your mutations
                     <CircleArrowRight
                       className="inline-block size-[1.5em] ml-2"
@@ -482,7 +472,7 @@ then("they should see the sales trend plot for {string}", function(product, cont
                   href="https://jakubsobolewski.com/muttest/"
                   class="w-full h-full text-2xl text-primary opacity-0 group-hover:opacity-100 transition-all backdrop-blur-sm flex items-center justify-center"
                 >
-                  <Button variant="pill" size="xl">
+                  <Button variant="pill" >
                     Kill the bugs
                     <CircleArrowRight
                       className="inline-block size-[1.5em] ml-2"
@@ -529,7 +519,7 @@ then("they should see the sales trend plot for {string}", function(product, cont
                   href="https://jakubsobolewski.com/muttest/"
                   class="w-full h-full text-2xl text-primary opacity-0 group-hover:opacity-100 transition-all backdrop-blur-sm flex items-center justify-center"
                 >
-                  <Button variant="pill" size="xl">
+                  <Button variant="pill" >
                     See which tests to improve
                     <CircleArrowRight
                       className="inline-block size-[1.5em] ml-2"
