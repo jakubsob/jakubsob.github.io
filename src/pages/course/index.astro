@@ -14,7 +14,7 @@ import {
 import Card from "./Card.astro";
 import Subscribe from "@/components/Subscribe.astro";
 
-const title = "Add Automated User Tests to Your Shiny Apps";
+const title = "Add Automated Tests to Your Shiny App";
 const description =
   "Tired of fixing breakages only after users complain? Bring bulletproof user testing to your Shiny workflow—even for legacy apps.";
 ---
@@ -38,20 +38,27 @@ const description =
         <h1
           class="text-5xl md:text-6xl max-w-[23ch] font-light uppercase py-4 flex flex-wrap justify-center items-center gap-4"
         >
-          {title.split(" ").map((word, index) => <span class="">{word}</span>)}
+          <p>Add Automated Tests</p>
+          <p>To Your Shiny App</p>
         </h1>
       </Animate>
       <h2
         class="text-muted-foreground font-light text-xl mb-8 max-w-[65ch] space-y-4"
       >
         <Animate variant="header" className="motion-delay-[400ms]">
-          <p>
-            See how you can turn your app descriptions into robust acceptance
-            tests, fast.
-          </p>
+          <div class="space-y-2">
+            <p class="text-balance">
+              Learn how to introduce tests to existing Shiny code — without
+              rewriting everything.
+            </p>
+            <p>
+              Turn app descriptions into reliable acceptance tests that protect
+              your work and your users.
+            </p>
+          </div>
         </Animate>
         <Animate variant="header" className="motion-delay-[800ms]">
-          <p class="text-primary/50">
+          <p class="text-primary/50 mb-10">
             <Braces className="inline size-[1em]" />
             <Bug className="inline size-[1em]" />
             <Rocket className="inline size-[1em]" />
