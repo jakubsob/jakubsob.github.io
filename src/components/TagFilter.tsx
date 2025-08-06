@@ -67,7 +67,7 @@ export function TagFilter({
               {tags.map(({ value, count }) => (
                 <Button
                   key={value}
-                  variant={selectedTags.has(value) ? "secondary" : "outline"}
+                  variant={selectedTags.has(value) ? "secondary" : "ghost"}
                   size="sm"
                   onClick={() => onTagToggle(value)}
                   className="h-8 px-3 text-xs uppercase tracking-wide"

@@ -134,7 +134,7 @@ const Resources: React.FC<ResourcesProps> = ({ items }) => {
                 {(["group", "actionability", "format"] as const).map((key) => (
                   <Button
                     key={key}
-                    variant={sortKey === key ? "default" : "secondary"}
+                    variant={sortKey === key ? "secondary" : "ghost"}
                     size="sm"
                     onClick={() => handleSortChange(key)}
                     className="h-8 px-3 text-xs capitalize"
@@ -153,7 +153,7 @@ const Resources: React.FC<ResourcesProps> = ({ items }) => {
                     {uniqueValuesWithCounts(key).map(({ value, count }) => (
                       <Button
                         key={value}
-                        variant={filters[key].has(value) ? "default" : "secondary"}
+                        variant={filters[key].has(value) ? "secondary" : "ghost"}
                         size="sm"
                         onClick={() => handleFilterChange(key, value)}
                         className="h-8 px-3 text-xs uppercase"

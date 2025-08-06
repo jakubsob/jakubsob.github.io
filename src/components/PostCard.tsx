@@ -37,7 +37,7 @@ export function PostCard({ post, selectedTags, className }: PostCardProps) {
             {post.data.tags.map((tag) => (
               <Badge
                 key={tag}
-                variant={selectedTags.has(tag) ? "secondary" : "outline"}
+                variant={selectedTags.has(tag) ? "secondary" : "ghost"}
                 className="uppercase"
               >
                 {tag}
