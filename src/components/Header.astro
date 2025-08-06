@@ -8,7 +8,7 @@ const currentPath = Astro.url.pathname;
   ...document.querySelectorAll<HTMLAnchorElement>("a:not([data-nav-ignore])"),
 ].forEach((a: HTMLAnchorElement) => {
   if (a.href === currentPath) {
-    a.classList.add("border-b-2", "border-foreground");
+    a.classList.add("text-foreground");
   }
 });
 const { class: className } = Astro.props;
@@ -71,9 +71,9 @@ const { class: className } = Astro.props;
   <nav
     class="max-w-container
       transition-all
-      bg-background text-foreground text-sm
+      bg-background text-muted-foreground text-sm
       duration-600
-      mx-auto px-4 py-2 h-18"
+      mx-auto px-4 py-2 h-18 border-b"
   >
     <!-- Desktop Navigation -->
     <ul

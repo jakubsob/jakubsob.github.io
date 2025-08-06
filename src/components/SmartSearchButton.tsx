@@ -99,12 +99,11 @@ export function SmartSearchButton({ posts, className = "", isMobile = false }: S
       <button
         onClick={handleSearchOpen}
         disabled={!isInitialized}
-        className={`group flex items-center gap-2 border rounded-sm px-4 py-2 transition-all text-sm font-code uppercase tracking-wider hover:border-primary hover:text-primary disabled:opacity-50 disabled:cursor-not-allowed ${className}`}
+        className={`group flex items-center gap-2 rounded-full px-4 py-2 transition-all border text-sm uppercase tracking-wider hover:border-primary hover:text-primary disabled:opacity-50 disabled:cursor-not-allowed ${className}`}
         aria-label="Search all content"
       >
         <Search className="size-[1em]" />
-        <span className="hidden sm:inline">Search</span>
-        <kbd className="hidden sm:inline-flex pointer-events-none select-none items-center gap-1 rounded-sm border px-1.5 group-hover:border-primary">
+        <kbd className="hidden sm:inline-flex pointer-events-none select-none items-center gap-1 rounded-full border px-1.5">
           <span className="text-xs">⌘</span>K
         </kbd>
       </button>
