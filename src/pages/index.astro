@@ -476,9 +476,9 @@ then("they should see the sales trend plot for {string}", function(product, cont
                 lang="r"
                 transformers={[transformerNotationDiff()]}
                 code={`test_that("calculate returns a numeric", { # [!code --]
-expect_true(is.numeric(calculate(2, 2))) # [!code --]
+  expect_true(is.numeric(calculate(2, 2))) # [!code --]
 test_that("calculate always returns 0", { # [!code ++]
-expect_equal(calculate(2, 2), 0) # [!code ++]
+  expect_equal(calculate(2, 2), 0) # [!code ++]
 })`}
               />
             </div>
