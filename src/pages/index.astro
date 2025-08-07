@@ -32,30 +32,20 @@ const posts = (await getCollection("blog"))
         />
       </div>
       <div class="h-full grid grid-cols-1 place-items-center">
-        <div class="flex flex-col items-center">
-          <h1>
-            <a href="/blog" class="flex flex-col items-center">
-              <Animate variant="header" className="motion-delay-[200ms]">
-                <span class="text-[clamp(1.5em,5vw,10em)] uppercase">
-                  Building Quality By Testing
-                </span>
-              </Animate>
-            </a>
-          </h1>
-          <h2>
-            <a href="/blog" class="flex flex-col items-center">
-              <Animate variant="header" className="motion-delay-[400ms]">
-                <div class="flex flex-col mt-6">
-                  <span
-                    class="text-muted-foreground text-center text-lg md:text-xl font-light"
-                  >
-                    I’m Jakub and testing helps me build better software. <br />
-                    Join me to unlock the power of testing.
-                  </span>
-                </div>
-              </Animate>
-            </a>
-          </h2>
+        <div class="flex flex-col items-center justify-center">
+          <Animate variant="header" className="motion-delay-[200ms]">
+            <h1 class="text-6xl uppercase text-center mb-6">
+              Building Quality By Testing
+            </h1>
+          </Animate>
+          <Animate variant="header" className="motion-delay-[400ms]">
+            <h2
+              class="text-muted-foreground text-lg md:text-xl font-light text-center"
+            >
+              I’m Jakub and testing helps me build better software. <br />
+              Join me to unlock the power of testing.
+            </h2>
+          </Animate>
           <div class="flex gap-2 mt-12">
             <Animate variant="expand" className="motion-delay-[600ms]">
               <a href="/course">
