@@ -301,7 +301,7 @@ const FilePreview = ({ selectedFile, dirName }) => {
             ) : error ? (
               /* Error Message */
               <div className="p-6">
-                <div className="text-red-600">
+                <div className="text-destructive">
                   <p>Error loading file content: {error}</p>
                 </div>
               </div>

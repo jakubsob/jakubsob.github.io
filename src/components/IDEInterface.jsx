@@ -60,7 +60,7 @@ const IDEInterface = ({ fileTree, dirName, hasError }) => {
     return (
       <div className="p-6 h-full flex items-center justify-center">
         <div className="text-center">
-          <div className="text-red-500 mb-4">
+          <div className="text-destructive mb-4">
             <svg
               className="w-16 h-16 mx-auto mb-4"
               fill="none"
@@ -74,10 +74,10 @@ const IDEInterface = ({ fileTree, dirName, hasError }) => {
                 d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
               ></path>
             </svg>
-            <h3 className="text-xl font-medium text-red-700 mb-2">
+            <h3 className="text-xl font-medium text-destructive mb-2">
               Unable to Load Repository Data
             </h3>
-            <p className="text-red-600 max-w-md mx-auto">
+            <p className="text-destructive max-w-md mx-auto">
               There was an error fetching the repository contents. This could be
               due to GitHub API rate limits or network issues. Please try again
               later.
@@ -88,7 +88,7 @@ const IDEInterface = ({ fileTree, dirName, hasError }) => {
               href={`https://github.com/jakubsob/r-tests-gallery/tree/main/${dirName}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center px-4 py-2 bg-red-100 text-red-700 rounded-lg hover:bg-red-200 transition-colors"
+              className="inline-flex items-center px-4 py-2 bg-destructive/10 text-destructive rounded-lg hover:bg-destructive/20 transition-colors"
             >
               <svg
                 className="w-4 h-4 mr-2"

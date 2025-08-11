@@ -54,13 +54,13 @@ const posts = (await getCollection("blog"))
               prose-p:my-2
               prose-pre:font-code
               prose-pre:rounded-none
-              prose-blockquote:bg-ocean-green-100/50
+              prose-blockquote:bg-primary/50
               prose-blockquote:border-none
               prose-blockquote:rounded-lg
               prose-blockquote:py-4
               prose-blockquote:not-italic
               prose-blockquote:transition-all
-              hover:prose-blockquote:bg-ocean-green-200/50
+              hover:prose-blockquote:bg-secondary/50
               prose-img:w-full
               px-2"
         >
@@ -100,7 +100,7 @@ const posts = (await getCollection("blog"))
           <hr />
           <div class="flex flex-col md:flex-row gap-6 md:gap-2 justify-between">
             <SubscribeButton
-              class="bg-primary py-4 px-6 rounded-sm text-white font-light text-xl hover:bg-ocean-green-700"
+              class="bg-primary hover:bg-primary/80 py-4 px-6 rounded-sm text-white font-light text-xl"
               text="Subscribe to stay updated"
             />
             <div class="flex items-center justify-center text-muted">or</div>

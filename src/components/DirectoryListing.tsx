@@ -33,7 +33,7 @@ export function DirectoryListing({ directories }: DirectoryListingProps) {
           <div className="mt-4">
             <Button
               variant="outline"
-              className="text-red-700 border-red-200 hover:bg-red-100"
+              className="text-destructive border-destructive/20 hover:bg-destructive/10"
               asChild
             >
               <a

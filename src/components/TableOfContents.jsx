@@ -61,10 +61,8 @@ export default function TableOfContents() {
           >
             <a
               href={`#${heading.id}`}
-              className={`block py-1 transition-colors duration-200 line-clamp-2 hover:text-primary ${
-                activeId === heading.id
-                  ? "text-primary font-medium"
-                  : "text-muted"
+              className={`block py-1 transition-colors duration-200 line-clamp-2 hover:text-foreground ${
+                activeId === heading.id ? "text-foreground" : "text-muted"
               }`}
             >
               {heading.text}

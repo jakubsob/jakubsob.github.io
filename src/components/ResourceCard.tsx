@@ -29,13 +29,13 @@ export function ResourceCard({
   return (
     <Card
       className={cn(
-        "group hover:shadow-lg transition-shadow duration-300 cursor-pointer w-full max-w-[65ch]",
+        "cursor-pointer w-full max-w-[65ch]",
         className
       )}
       onClick={handleClick}
     >
       <CardHeader>
-        <CardTitle className="group-hover:text-primary transition-colors">
+        <CardTitle className="">
           <div className="flex items-center gap-2">
           {title}
           <ExternalLink className="h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity" />
