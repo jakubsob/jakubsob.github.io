@@ -11,6 +11,7 @@ import FeatureList from "@/components/FeatureList.astro";
 import { Asterisk, ArrowDown, CircleArrowRight } from "lucide-react";
 import authorImage from "/public/author.png";
 import Grid from "./grid.png";
+import Grid2 from "./grid2.png";
 import { transformerNotationDiff } from "@shikijs/transformers";
 
 const posts = (await getCollection("blog"))
@@ -107,9 +108,9 @@ const posts = (await getCollection("blog"))
     <div class="container mx-auto flex justify-center pt-52 pb-12">
       <Animate>
         <h2 class="text-clamp-md font-light uppercase flex items-center">
-          <Asterisk className="inline-block size-[1em] text-red-500 mr-4" />
+          <Asterisk className="inline-block size-[1em] text-destructive mr-4" />
           <span>My Open Source</span>
-          <Asterisk className="inline-block size-[1em] text-red-500 mr-4" />
+          <Asterisk className="inline-block size-[1em] text-destructive mr-4" />
         </h2>
       </Animate>
     </div>
@@ -503,15 +504,19 @@ test_that("calculate always returns 0", { # [!code ++]
             <h2
               class="text-[clamp(2em,5vw,6em)] font-light uppercase flex items-center"
             >
-              <Asterisk className="inline-block size-[1em] text-red-500 mr-4" />
+              <Asterisk
+                className="inline-block size-[1em] text-destructive mr-4"
+              />
               <span>Tutorials</span>
-              <Asterisk className="inline-block size-[1em] text-red-500 mr-4" />
+              <Asterisk
+                className="inline-block size-[1em] text-destructive mr-4"
+              />
             </h2>
           </Animate>
         </div>
         <div class="">
           <div
-            class="container mx-auto space-y-52 py-20 my-10 bg-gradient-to-br from-primary/5 to-primary/10 border rounded-lg"
+            class="container mx-auto space-y-52 py-20 my-10 bg-light border rounded-lg"
           >
             <div class="grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-12">
               <div class="">
@@ -698,8 +703,15 @@ test_that("Scenario: I can inspect my net balance", {
       </Section>
     </div>
   </Section>
-  <Section id="about" size="full" variant="light">
-    <div class="py-52">
+  <Section id="about" variant="light">
+    <div class="py-52 relative">
+      <div class="absolute z-0 bottom-0 left-0 size-full">
+        <Picture
+          src={Grid2}
+          class="size-full object-cover object-[center_top] invert opacity-5 dark:opacity-40"
+          alt="Hero background"
+        />
+      </div>
       <div class="container grid grid-cols-1 place-items lg:grid-cols-2 gap-12">
         <div class="flex flex-col gap-4">
           <Animate>
@@ -707,7 +719,7 @@ test_that("Scenario: I can inspect my net balance", {
               <Picture
                 src={authorImage}
                 alt="Jakub Sobolewski"
-                class="w-full h-full object-cover rounded-md border"
+                class="w-full h-full object-cover rounded-md border bg-light"
                 widths={[192, 384]}
                 sizes="192px"
               />
@@ -722,7 +734,9 @@ test_that("Scenario: I can inspect my net balance", {
           </Animate>
         </div>
         <Animate>
-          <div class="max-w-[65ch] space-y-8 font-light">
+          <div
+            class="w-full text-balance space-y-8 font-light text-center lg:text-left"
+          >
             <p>
               I’m a software engineer specializing in R with 5+ years of
               experience.
