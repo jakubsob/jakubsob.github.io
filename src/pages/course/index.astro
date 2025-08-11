@@ -2,18 +2,11 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { Section } from "@/components/ui/section";
 import { Animate } from "@/components/ui/animate";
-import {
-  Braces,
-  Bug,
-  Rocket,
-  CheckCircle2,
-  Users,
-  Code2,
-  FileSearch,
-} from "lucide-react";
-import Card from "./Card.astro";
+import { Braces, Bug, Rocket } from "lucide-react";
+import { Picture } from "astro:assets";
 import Subscribe from "@/components/Subscribe.astro";
 import HeroBackground from "@/components/HeroBackground.astro";
+import Grid from "../grid.png";
 
 const title = "Add Automated Tests to Your Shiny App";
 const description =
@@ -22,6 +15,13 @@ const description =
 
 <BaseLayout title={title} description={description}>
   <Section id="hero" variant="dark" size="full">
+    <div class="absolute z-0 bottom-0 left-0 w-full h-1/2">
+      <Picture
+        src={Grid}
+        class="size-full object-cover object-[center_top] opacity-20 dark:opacity-50"
+        alt="Hero background"
+      />
+    </div>
     <div
       class="container mx-auto h-full flex flex-col justify-center items-center text-center relative"
     >
@@ -50,7 +50,7 @@ const description =
           </div>
         </Animate>
         <Animate variant="header" className="motion-delay-[800ms]">
-          <p class="text-primary/50 mb-10">
+          <p class="text-primary/50">
             <Braces className="inline size-[1em]" />
             <Bug className="inline size-[1em]" />
             <Rocket className="inline size-[1em]" />
