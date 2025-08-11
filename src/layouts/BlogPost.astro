@@ -31,7 +31,7 @@ const posts = (await getCollection("blog"))
   }
 </style>
 
-<BaseLayout {...post.data}>
+<BaseLayout {...post.data} image={`/blog/${post.slug}/og-image.png`}>
   <BlogPostJSONLD slot="head" {...post.data} />
   <Section variant="light" className="pt-[60px]">
     <div
