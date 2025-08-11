@@ -2,7 +2,7 @@ import React, { useState, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ResourceCard } from "@/components/ResourceCard";
-import { Filter, Search as SearchIcon } from "lucide-react";
+import { Asterisk, Filter, Search as SearchIcon } from "lucide-react";
 
 interface ResourceItem {
   title: string;
@@ -82,24 +82,8 @@ const Resources: React.FC<ResourcesProps> = ({ items }) => {
           return (
             <li key={index} className="space-y-4">
               {showHeader && (
-                <h2 className="flex gap-2 items-center text-3xl font-semibold my-2">
-                  <div className="w-8 h-8">
-                    <svg
-                      width="100%"
-                      height="100%"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M12 2V22M19.0711 4.92893L4.92893 19.0711M22 12H2M19.0711 19.0711L4.92893 4.92893"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  </div>
+                <h2 className="flex items-center text-3xl my-2">
+                  <Asterisk className="inline size-[1.5em] stroke-[1.5]" />
                   <span className="capitalize">{header}</span>
                 </h2>
               )}
