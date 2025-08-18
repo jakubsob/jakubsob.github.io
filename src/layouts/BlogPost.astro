@@ -33,7 +33,7 @@ const posts = (await getCollection("blog"))
 
 <BaseLayout {...post.data} image={`/blog/${post.slug}/og-image.png`}>
   <BlogPostJSONLD slot="head" {...post.data} />
-  <Section variant="light" className="pt-[60px]">
+  <Section variant="dark" className="pt-[60px]">
     <div
       class="container mx-auto grid grid-cols-1 lg:grid-cols-[1fr_65ch_1fr] gap-2"
     >
@@ -97,9 +97,8 @@ const posts = (await getCollection("blog"))
             </div>
           </header>
           <slot />
-          <hr />
           <div
-            class="flex flex-col md:flex-row gap-6 md:gap-12 justify-between"
+            class="flex flex-col md:flex-row gap-6 md:gap-12 justify-between py-24 border-t"
           >
             <div class="w-full">
               <SubscribeButton />
@@ -117,18 +116,21 @@ const posts = (await getCollection("blog"))
               </Button>
             </a>
           </div>
-          <hr />
         </article>
-        <div class="px-2 py-24">
-          <h2 class="text-3xl mb-6 flex items-center uppercase">
-            <Asterisk className="size-[1em] block" />
-            <span>You might also like</span>
-          </h2>
-          <PostList posts={posts} showControls={false} />
-        </div>
       </div>
       <div class="relative">
         <TableOfContents client:load />
+      </div>
+    </div>
+  </Section>
+  <Section variant="light">
+    <div class="container mx-auto grid grid-cols-1 gap-2 max-w-[65ch]">
+      <div class="py-24">
+        <h2 class="text-3xl mb-6 flex items-center uppercase">
+          <Asterisk className="size-[1em] block" />
+          <span>You might also like</span>
+        </h2>
+        <PostList posts={posts} showControls={false} />
       </div>
     </div>
   </Section>
