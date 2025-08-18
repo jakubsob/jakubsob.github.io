@@ -1,13 +1,13 @@
 ---
-const { class: buttonClass, text = "Subscribe" } = Astro.props;
+import { Button } from "@/components/ui/button.tsx";
+const { text = "Subscribe" } = Astro.props;
 ---
 
-<button
-  class:list={[
-    "ml-onclick-form transition-all hover:bg-destructive rounded-full",
-    buttonClass,
-  ]}
-  onclick="ml('show', 'Iw0inv', true)"
->
-  {text}
-</button>
+<a class="ml-onclick-form" onclick="ml('show', 'Iw0inv', true)">
+  <Button
+    variant="pill"
+    className="w-full bg-destructive text-background dark:text-foreground border-destructive hover:border-destructive hover:bg-destructive/50"
+  >
+    {text}
+  </Button>
+</a>

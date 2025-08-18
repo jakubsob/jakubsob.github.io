@@ -98,22 +98,20 @@ const posts = (await getCollection("blog"))
           </header>
           <slot />
           <hr />
-          <div class="flex flex-col md:flex-row gap-6 md:gap-2 justify-between">
-            <SubscribeButton
-              class="bg-primary hover:bg-primary/80 py-4 px-6 rounded-sm text-white font-light text-xl"
-              text="Subscribe to stay updated"
-            />
+          <div
+            class="flex flex-col md:flex-row gap-6 md:gap-12 justify-between"
+          >
+            <div class="w-full">
+              <SubscribeButton />
+            </div>
             <div class="flex items-center justify-center text-muted">or</div>
             <a
               href="https://github.com/jakubsob/r-tests-gallery/issues/new/choose"
               target="_blank"
-              class="flex items-center gap-2 no-underline"
+              class="flex items-center gap-2 no-underline w-full"
               rel="noopener noreferrer"
             >
-              <Button
-                variant="pill"
-                className="w-full py-4 px-6 rounded-sm font-light text-xl h-auto"
-              >
+              <Button variant="pill" className="flex-1 font-light h-auto">
                 <ExternalLink className="size-[1em]" />
                 <div>Submit a content request</div>
               </Button>
