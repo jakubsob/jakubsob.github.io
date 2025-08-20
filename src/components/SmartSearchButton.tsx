@@ -18,11 +18,10 @@ declare global {
 
 interface SmartSearchButtonProps {
   posts: any[];
-  className?: string;
   isMobile?: boolean;
 }
 
-export function SmartSearchButton({ posts, className = "", isMobile = false }: SmartSearchButtonProps) {
+export function SmartSearchButton({ posts, isMobile = false }: SmartSearchButtonProps) {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isInitialized, setIsInitialized] = useState(false);
 
@@ -99,7 +98,7 @@ export function SmartSearchButton({ posts, className = "", isMobile = false }: S
       <button
         onClick={handleSearchOpen}
         disabled={!isInitialized}
-        className={`group flex items-center gap-2 rounded-full px-4 py-2 transition-all border text-sm uppercase tracking-wider hover:border-primary hover:text-primary disabled:opacity-50 disabled:cursor-not-allowed ${className}`}
+        className="group flex items-center gap-2 rounded-full px-4 py-2 transition-all border text-sm uppercase tracking-wider hover:border-primary hover:text-primary disabled:opacity-50 disabled:cursor-not-allowed"
         aria-label="Search all content"
       >
         <Search className="size-[1em]" />
