@@ -27,11 +27,11 @@ const menuItems: MenuItemType[] = [
     href: "/",
   },
   {
-    title: "Blog",
+    title: "blog",
     href: "/blog/",
   },
   {
-    title: "Resources",
+    title: "resources",
     items: [
       {
         title: "Learning resources",
@@ -46,7 +46,7 @@ const menuItems: MenuItemType[] = [
     ]
   },
   {
-    title: "Course",
+    title: "course",
     href: "/course/",
     className: "text-destructive",
   },
@@ -137,7 +137,7 @@ export default function Header() {
                           onClick={() => toggleDropdown(item.title)}
                           className="flex items-center justify-between w-full p-3 text-left rounded-md hover:bg-accent transition-colors"
                         >
-                          <span className={cn("font-medium", item.className)}>
+                          <span className={cn("", item.className)}>
                             {item.title}
                           </span>
                           <ChevronDown
@@ -156,7 +156,7 @@ export default function Header() {
                                   className="block p-2 text-sm rounded-md hover:bg-accent transition-colors"
                                   onClick={() => setIsMobileMenuOpen(false)}
                                 >
-                                  <div className="font-medium">{subItem.title}</div>
+                                  <div className="">{subItem.title}</div>
                                   <div className="text-muted-foreground text-xs mt-1">
                                     {subItem.description}
                                   </div>
@@ -171,7 +171,7 @@ export default function Header() {
                       <a
                         href={item.href}
                         className={cn(
-                          "block p-3 rounded-md hover:bg-accent transition-colors font-medium",
+                          "block p-3 rounded-md hover:bg-accent transition-colors",
                           item.className
                         )}
                         onClick={() => setIsMobileMenuOpen(false)}
@@ -205,7 +205,7 @@ const ListItem = React.forwardRef<
           )}
           {...props}
         >
-          <div className="text-sm font-medium leading-none text-foreground">{title}</div>
+          <div className="text-sm leading-none text-foreground">{title}</div>
           <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
             {children}
           </p>
