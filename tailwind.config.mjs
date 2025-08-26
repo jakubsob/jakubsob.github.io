@@ -60,7 +60,6 @@ export default {
           foreground: "hsl(var(--card-foreground))",
         },
         "ocean-green": {
-          DEFAULT: "#37A577",
           50: "#AFE4CE",
           100: "#A0DFC5",
           200: "#81D5B2",
@@ -72,9 +71,9 @@ export default {
           800: "#153E2D",
           900: "#091B14",
           950: "#030A07",
+          DEFAULT: "#37A577",
         },
         sky: {
-          DEFAULT: "#262B36",
           50: "#E1E4EA",
           100: "#C9CED9",
           200: "#99A3B7",
@@ -86,6 +85,14 @@ export default {
           800: "#191D24",
           900: "#15181E",
           950: "#13161B",
+          DEFAULT: "#262B36",
+        },
+        chart: {
+          1: "hsl(var(--chart-1))",
+          2: "hsl(var(--chart-2))",
+          3: "hsl(var(--chart-3))",
+          4: "hsl(var(--chart-4))",
+          5: "hsl(var(--chart-5))",
         },
       },
       borderRadius: {
@@ -95,12 +102,20 @@ export default {
       },
       keyframes: {
         "accordion-down": {
-          from: { height: "0" },
-          to: { height: "var(--radix-accordion-content-height)" },
+          from: {
+            height: "0",
+          },
+          to: {
+            height: "var(--radix-accordion-content-height)",
+          },
         },
         "accordion-up": {
-          from: { height: "var(--radix-accordion-content-height)" },
-          to: { height: "0" },
+          from: {
+            height: "var(--radix-accordion-content-height)",
+          },
+          to: {
+            height: "0",
+          },
         },
       },
       animation: {
@@ -112,6 +127,7 @@ export default {
   plugins: [
     require("tailwindcss-motion"),
     require("tailwindcss-intersect"),
+    require("tailwindcss-animate"),
     require("@tailwindcss/typography"),
     plugin(function ({ addBase, theme }) {
       addBase({

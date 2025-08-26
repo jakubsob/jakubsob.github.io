@@ -1,21 +1,20 @@
 ---
-import Header from "./Header.astro";
-import HeaderLink from "./HeaderLink.astro";
+import Header from "./Header.tsx";
+import { DarkModeToggle } from "./DarkModeToggle";
 import SubscribeButton from "@/components/SubscribeButton.astro";
 import SearchButtonWrapper from "./SearchButtonWrapper.astro";
-import { DarkModeToggle } from "./DarkModeToggle";
 ---
 
-<Header class="fixed top-0 z-10 uppercase">
-  <HeaderLink href="/" class="lowercase">jakub::sobolewski</HeaderLink>
-  <HeaderLink href="/blog/">blog</HeaderLink>
-  <HeaderLink href="/r-tests-gallery/">r tests gallery</HeaderLink>
-  <HeaderLink href="/course/" class:list={"text-destructive"} isNew={true}
-    >course
-  </HeaderLink>
-  <HeaderLink href="/resources/">resources</HeaderLink>
-  <div class="ml-auto"></div>
-  <DarkModeToggle client:load />
-  <SearchButtonWrapper />
-  <SubscribeButton />
-</Header>
+<header class="fixed top-0 z-10 w-full bg-background border-b">
+  <div class="container mx-auto flex items-center justify-between px-4 py-2">
+    <div class="flex items-center space-x-6">
+      <Header client:load />
+    </div>
+
+    <div class="flex items-center gap-2">
+      <DarkModeToggle client:load />
+      <SearchButtonWrapper />
+      <SubscribeButton />
+    </div>
+  </div>
+</header>
