@@ -1,8 +1,8 @@
 ---
-import { Code } from "astro:components";
-import BaseLayout from "../layouts/BaseLayout.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
 import { Section } from "@/components/ui/section";
 import { Checkbox } from "@/components/ui/checkbox";
+import Subscribe from "@/components/Subscribe.astro";
 ---
 
 <BaseLayout
@@ -21,16 +21,15 @@ import { Checkbox } from "@/components/ui/checkbox";
             Advance Your R Testing Roadmap
           </h1>
           <p class="mt-4 max-w-3xl mx-auto text-lg text-muted-foreground">
-            Accelerate your feedback loops. Build tests that help you deliver faster.
+            Accelerate your feedback loops. Build tests that help you deliver
+            faster.
           </p>
         </header>
 
         <!-- Main Content Grid -->
         <main>
           <!-- Section 1: Optimize Test Organization & Execution -->
-          <section
-            class="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 py-8"
-          >
+          <section class="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 py-8">
             <!-- Left Column: Title & Description -->
             <div class="lg:col-span-1 lg:sticky lg:top-8 h-fit">
               <h2 class="text-xl font-semibold text-foreground">
@@ -43,7 +42,7 @@ import { Checkbox } from "@/components/ui/checkbox";
             <!-- Right Column: Checklist Cards -->
             <div class="bg-card p-4 border rounded-sm lg:col-span-2 space-y-4">
               <div class="flex items-start gap-3">
-                <Checkbox client:load/>
+                <Checkbox client:load />
                 <p class="flex-1 text-card-foreground">
                   Organize test files with clear, descriptive prefixes grouping
                   related tests, e.g.:
@@ -52,47 +51,47 @@ import { Checkbox } from "@/components/ui/checkbox";
                 </p>
               </div>
               <div class="flex items-start gap-3">
-                <Checkbox client:load/>
+                <Checkbox client:load />
                 <div class="flex-1">
                   <p class="text-card-foreground">
                     Use selective running by filtering on file prefixes for
                     super-fast feedback during development:
                   </p>
-                  <code>testthat::test_dir("tests/testthat", filter = "plots")</code>
+                  <code
+                    >testthat::test_dir("tests/testthat", filter = "plots")</code
+                  >
                 </div>
               </div>
-
             </div>
           </section>
 
           <!-- Section 2: Design for Maintainability -->
-          <section
-            class="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 py-8"
-          >
+          <section class="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 py-8">
             <div class="lg:col-span-1 lg:sticky lg:top-8 h-fit">
               <h2 class="text-xl font-semibold text-foreground">
                 Design for Maintainability & Reliability
               </h2>
               <p class="mt-2 text-muted-foreground">
-                Convey testing intent with clear, descriptive test names and messages.
+                Convey testing intent with clear, descriptive test names and
+                messages.
               </p>
             </div>
             <div class="bg-card p-4 border rounded-sm lg:col-span-2 space-y-4">
               <div class="flex items-start gap-3">
-                <Checkbox client:load/>
+                <Checkbox client:load />
                 <p class="flex-1 text-card-foreground">
                   Describe expected behavior in test titles.
                 </p>
               </div>
               <div class="flex items-start gap-3">
-                <Checkbox client:load/>
+                <Checkbox client:load />
                 <p class="flex-1 text-card-foreground">
-                  Ensure tests are independent, isolated, and reproducible. Avoid
-                  shared state or hard-to-control external effects.
+                  Ensure tests are independent, isolated, and reproducible.
+                  Avoid shared state or hard-to-control external effects.
                 </p>
               </div>
               <div class="flex items-start gap-3">
-                <Checkbox client:load/>
+                <Checkbox client:load />
                 <p class="flex-1 text-card-foreground">
                   Use Arrange, Act, Assert comments for clarity and consistency.
                 </p>
@@ -101,9 +100,7 @@ import { Checkbox } from "@/components/ui/checkbox";
           </section>
 
           <!-- Section 3: Robust Test Data Management -->
-          <section
-            class="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 py-8"
-          >
+          <section class="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 py-8">
             <div class="lg:col-span-1 lg:sticky lg:top-8 h-fit">
               <h2 class="text-xl font-semibold text-foreground">
                 Use Robust Test Data Management
@@ -114,28 +111,30 @@ import { Checkbox } from "@/components/ui/checkbox";
             </div>
             <div class="bg-card p-4 border rounded-sm lg:col-span-2 space-y-4">
               <div class="flex items-start gap-3">
-                <Checkbox client:load/>
+                <Checkbox client:load />
                 <p class="flex-1 text-card-foreground">
                   Create reusable fixture functions with clear, consistent
                   naming:
-                  <br><code>fixture_barchart &lt;- function() &#123; &#125;</code>
-                  <br><code>fixture_calculate_metrics &lt;- function() &#123; &#125;</code>
+                  <br /><code
+                    >fixture_barchart &lt;- function() &#123; &#125;</code
+                  >
+                  <br /><code
+                    >fixture_calculate_metrics &lt;- function() &#123; &#125;</code
+                  >
                 </p>
               </div>
               <div class="flex items-start gap-3">
-                <Checkbox client:load/>
+                <Checkbox client:load />
                 <p class="flex-1 text-card-foreground">
-                  For larger datasets, store data externally in human-readable formats (e.g., JSON, CSV) and
-                  load via fixtures.
+                  For larger datasets, store data externally in human-readable
+                  formats (e.g., JSON, CSV) and load via fixtures.
                 </p>
               </div>
             </div>
           </section>
 
           <!-- Section 4: Mocking and Stubbing -->
-          <section
-            class="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 py-8"
-          >
+          <section class="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 py-8">
             <div class="lg:col-span-1 lg:sticky lg:top-8 h-fit">
               <h2 class="text-xl font-semibold text-foreground">
                 Replace External Dependencies
@@ -146,35 +145,32 @@ import { Checkbox } from "@/components/ui/checkbox";
             </div>
             <div class="bg-card p-4 border rounded-sm lg:col-span-2 space-y-4">
               <div class="flex items-start gap-3">
-                <Checkbox client:load/>
+                <Checkbox client:load />
                 <p class="flex-1 text-card-foreground">
-                  Use <code
-                    >testthat::local_mocked_bindings()</code
-                  > and/or the <code>mockery</code> package or dependency injection
-                  for mocks and fakes.
+                  Use <code>testthat::local_mocked_bindings()</code> and/or the <code
+                    >mockery</code
+                  > package or dependency injection for mocks and fakes.
                 </p>
               </div>
               <div class="flex items-start gap-3">
-                <Checkbox client:load/>
+                <Checkbox client:load />
                 <p class="flex-1 text-card-foreground">
                   Decouple business logic from external APIs and databases in
                   your code to enable isolated, reliable tests.
                 </p>
               </div>
               <div class="flex items-start gap-3">
-                <Checkbox client:load/>
+                <Checkbox client:load />
                 <p class="flex-1 text-card-foreground">
-                  Test for success, failure, and edge case responses to
-                  cover all realistic conditions.
+                  Test for success, failure, and edge case responses to cover
+                  all realistic conditions.
                 </p>
               </div>
             </div>
           </section>
 
           <!-- Section 5: Speed Up Feedback -->
-          <section
-            class="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 py-8"
-          >
+          <section class="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 py-8">
             <div class="lg:col-span-1 lg:sticky lg:top-8 h-fit">
               <h2 class="text-xl font-semibold text-foreground">
                 Build a Reliable Pipeline
@@ -185,31 +181,31 @@ import { Checkbox } from "@/components/ui/checkbox";
             </div>
             <div class="bg-card p-4 border rounded-sm lg:col-span-2 space-y-4">
               <div class="flex items-start gap-3">
-                <Checkbox client:load/>
+                <Checkbox client:load />
                 <p class="flex-1 text-card-foreground">
-                  Keep your unit test suite runtime as fast as possible. (under 5 minutes)
+                  Keep your unit test suite runtime as fast as possible. (under
+                  5 minutes)
                 </p>
               </div>
               <div class="flex items-start gap-3">
-                <Checkbox client:load/>
+                <Checkbox client:load />
                 <p class="flex-1 text-card-foreground">
                   Use selective filtered test runs continuously in development
                   to speed iteration cycles.
                 </p>
               </div>
               <div class="flex items-start gap-3">
-                <Checkbox client:load/>
+                <Checkbox client:load />
                 <p class="flex-1 text-card-foreground">
-                  Fix any intermittent test failures immediately to maintain trust in the pipeline.
+                  Fix any intermittent test failures immediately to maintain
+                  trust in the pipeline.
                 </p>
               </div>
             </div>
           </section>
 
           <!-- Section 6: Focus Testing Effort -->
-          <section
-            class="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 py-8"
-          >
+          <section class="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 py-8">
             <div class="lg:col-span-1 lg:sticky lg:top-8 h-fit">
               <h2 class="text-xl font-semibold text-foreground">
                 Focus Testing on Impactful Areas
@@ -220,33 +216,31 @@ import { Checkbox } from "@/components/ui/checkbox";
             </div>
             <div class="bg-card p-4 border rounded-sm lg:col-span-2 space-y-4">
               <div class="flex items-start gap-3">
-                <Checkbox client:load/>
+                <Checkbox client:load />
                 <p class="flex-1 text-card-foreground">
                   Prioritize testing critical features, recent fixes, and
                   high-risk code paths.
                 </p>
               </div>
               <div class="flex items-start gap-3">
-                <Checkbox client:load/>
+                <Checkbox client:load />
                 <p class="flex-1 text-card-foreground">
                   Balance coverage pragmatically. Aim to test what protects your
                   code, not every line blindly.
                 </p>
               </div>
               <div class="flex items-start gap-3">
-                <Checkbox client:load/>
+                <Checkbox client:load />
                 <p class="flex-1 text-card-foreground">
-                  Use mutation testing (with <code>muttest</code>) to evaluate test quality and reveal gaps
-                  in protection.
+                  Use mutation testing (with <code>muttest</code>) to evaluate
+                  test quality and reveal gaps in protection.
                 </p>
               </div>
             </div>
           </section>
 
           <!-- Section 7: Acceptance Testing -->
-          <section
-            class="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 py-8"
-          >
+          <section class="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 py-8">
             <div class="lg:col-span-1 lg:sticky lg:top-8 h-fit">
               <h2 class="text-xl font-semibold text-foreground">
                 Acceptance Testing
@@ -257,21 +251,22 @@ import { Checkbox } from "@/components/ui/checkbox";
             </div>
             <div class="bg-card p-4 border rounded-sm lg:col-span-2 space-y-4">
               <div class="flex items-start gap-3">
-                <Checkbox client:load/>
+                <Checkbox client:load />
                 <p class="flex-1 text-card-foreground">
-                  Describe key user journeys and expected outcomes. Write tests that validate these scenarios.
-                  Use <code>testthat</code> or adopt BDD approaches with <code>cucumber</code>
+                  Describe key user journeys and expected outcomes. Write tests
+                  that validate these scenarios. Use <code>testthat</code> or adopt
+                  BDD approaches with <code>cucumber</code>
                 </p>
               </div>
               <div class="flex items-start gap-3">
-                <Checkbox client:load/>
+                <Checkbox client:load />
                 <p class="flex-1 text-card-foreground">
                   Automate acceptance tests to detect workflow gaps early,
                   ensuring your code delivers actual user value.
                 </p>
               </div>
               <div class="flex items-start gap-3">
-                <Checkbox client:load/>
+                <Checkbox client:load />
                 <p class="flex-1 text-card-foreground">
                   Keep acceptance tests stable, readable, and easy to maintain
                   alongside evolving code needs.
@@ -281,9 +276,7 @@ import { Checkbox } from "@/components/ui/checkbox";
           </section>
 
           <!-- Section 8: Embed Testing Culture -->
-          <section
-            class="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 py-8"
-          >
+          <section class="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 py-8">
             <div class="lg:col-span-1 lg:sticky lg:top-8 h-fit">
               <h2 class="text-xl font-semibold text-foreground">
                 Embed a Testing Culture
@@ -294,28 +287,28 @@ import { Checkbox } from "@/components/ui/checkbox";
             </div>
             <div class="bg-card p-4 border rounded-sm lg:col-span-2 space-y-4">
               <div class="flex items-start gap-3">
-                <Checkbox client:load/>
+                <Checkbox client:load />
                 <p class="flex-1 text-card-foreground">
                   Add a reminder in your Pull Request (PR) template prompting
                   developers to include tests for all new or changed features.
                 </p>
               </div>
               <div class="flex items-start gap-3">
-                <Checkbox client:load/>
+                <Checkbox client:load />
                 <p class="flex-1 text-card-foreground">
                   Foster shared ownership of quality by encouraging your team to
                   review and improve tests regularly.
                 </p>
               </div>
               <div class="flex items-start gap-3">
-                <Checkbox client:load/>
+                <Checkbox client:load />
                 <p class="flex-1 text-card-foreground">
                   Monitor test suite health to quickly identify and fix flaky
                   tests or gaps.
                 </p>
               </div>
               <div class="flex items-start gap-3">
-                <Checkbox client:load/>
+                <Checkbox client:load />
                 <p class="flex-1 text-card-foreground">
                   Track code coverage trend for legacy codebases.
                 </p>
@@ -324,9 +317,7 @@ import { Checkbox } from "@/components/ui/checkbox";
           </section>
 
           <!-- Section 9: Take Action Today -->
-          <section
-            class="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 py-8"
-          >
+          <section class="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 py-8">
             <div class="lg:col-span-1 lg:sticky lg:top-8 h-fit">
               <h2 class="text-xl font-semibold">Take Action Today</h2>
               <p class="mt-2 text-muted-foreground">
@@ -335,34 +326,34 @@ import { Checkbox } from "@/components/ui/checkbox";
             </div>
             <div class="bg-card p-4 border rounded-sm lg:col-span-2 space-y-4">
               <div class="flex items-start gap-3">
-                <Checkbox client:load/>
+                <Checkbox client:load />
                 <p class="flex-1 text-card-foreground">
                   Identify your top 3 testing bottlenecks or pain points.
                 </p>
               </div>
               <div class="flex items-start gap-3">
-                <Checkbox client:load/>
+                <Checkbox client:load />
                 <p class="flex-1 text-card-foreground">
                   Write or improve one high-impact, fast feedback test on code
                   you change often.
                 </p>
               </div>
               <div class="flex items-start gap-3">
-                <Checkbox client:load/>
+                <Checkbox client:load />
                 <p class="flex-1 text-card-foreground">
                   Organize test files with domain prefixes and create helpers
                   for selective testing.
                 </p>
               </div>
               <div class="flex items-start gap-3">
-                <Checkbox client:load/>
+                <Checkbox client:load />
                 <p class="flex-1 text-card-foreground">
                   Automate tests locally and in CI for full, fast cycle
                   feedback.
                 </p>
               </div>
               <div class="flex items-start gap-3">
-                <Checkbox client:load/>
+                <Checkbox client:load />
                 <p class="flex-1 text-card-foreground">
                   Add or enhance the test reminder in your PR template to make
                   tests part of your team’s DNA.
@@ -374,9 +365,7 @@ import { Checkbox } from "@/components/ui/checkbox";
           <!-- Section 10: Remember -->
           <section class="mt-12 md:mt-16 text-center">
             <div class="bg-light border p-8 rounded-lg max-w-7xl mx-auto">
-              <h3 class="text-lg font-semibold text-foreground">
-                Remember
-              </h3>
+              <h3 class="text-lg font-semibold text-foreground">Remember</h3>
               <p class="mt-2 text-foreground">
                 Make tests work for you. Test what will help you move faster.
               </p>
@@ -388,6 +377,6 @@ import { Checkbox } from "@/components/ui/checkbox";
         &copy; 2025 Jakub Sobolewski
       </footer>
     </article>
-    <hr>
+    <hr />
   </Section>
 </BaseLayout>

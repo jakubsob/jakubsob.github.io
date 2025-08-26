@@ -2,7 +2,7 @@
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 interface Props {
-  variant: "waitlist" | "blog";
+  variant: "waitlist" | "blog" | "roadmap";
 }
 
 const { variant: variantName = "blog" } = Astro.props as Props;
@@ -25,6 +25,15 @@ const variants = {
       "https://assets.mailerlite.com/jsonp/1677606/forms/160385023715837460/subscribe",
     fetchUrl:
       "https://assets.mailerlite.com/jsonp/1677606/forms/160385023715837460/takel",
+  },
+  roadmap: {
+    title: "Get The Roadmap",
+    subscribedText: "Thank you! Check your email to download the roadmap.",
+    id: "30002885",
+    action:
+      "https://assets.mailerlite.com/jsonp/1677606/forms/163641482071246280/subscribe",
+    fetchUrl:
+      "https://assets.mailerlite.com/jsonp/1677606/forms/163641482071246280/takel",
   },
 };
 const variant = variants[variantName];

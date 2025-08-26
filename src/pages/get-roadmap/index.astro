@@ -1,0 +1,52 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { Section } from "@/components/ui/section";
+import Subscribe from "@/components/Subscribe.astro";
+import { Picture } from "astro:assets";
+import HeroBackground from "@/components/HeroBackground.astro";
+import Grid from "../grid.png";
+import { Animate } from "@/components/ui/animate";
+---
+
+<BaseLayout
+  title="R Testing Checklist"
+  description="Build trust in your software — one test at a time. Essential guide for getting started with automated testing in R."
+>
+  <Section id="hero" variant="dark" size="full">
+    <div class="absolute z-0 bottom-0 left-0 w-full h-1/2">
+      <Picture
+        src={Grid}
+        class="size-full object-cover object-[center_top] opacity-20 dark:opacity-50"
+        alt="Hero background"
+      />
+    </div>
+    <div
+      class="container mx-auto h-full flex flex-col justify-center items-center text-center relative"
+    >
+      <HeroBackground />
+      <Animate variant="header">
+        <h1
+          class="text-5xl md:text-6xl max-w-[23ch] font-light uppercase py-4 flex flex-wrap justify-center items-center gap-4"
+        >
+          <p>Advance Your R Testing Roadmap</p>
+        </h1>
+      </Animate>
+      <h2
+        class="text-muted-foreground font-light text-xl mb-8 max-w-[65ch] space-y-4"
+      >
+        <Animate variant="header" className="motion-delay-[400ms]">
+          <div class="space-y-2">
+            <p class="text-balance">
+        Accelerate your feedback loops. Build tests that help you deliver
+        faster.
+            </p>
+          </div>
+        </Animate>
+      </h2>
+      <Animate variant="expand" className="motion-delay-[800ms]">
+        <Subscribe variant="roadmap" />
+      </Animate>
+    </div>
+  </Section>
+
+</BaseLayout>
