@@ -2,10 +2,8 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { Section } from "@/components/ui/section";
 import Subscribe from "@/components/Subscribe.astro";
-import { Picture } from "astro:assets";
-import HeroBackground from "@/components/HeroBackground.astro";
-import Grid from "../grid.png";
 import { Animate } from "@/components/ui/animate";
+import { Zap, Package, Target, ClipboardCheck } from "lucide-react";
 ---
 
 <BaseLayout
@@ -13,40 +11,124 @@ import { Animate } from "@/components/ui/animate";
   description="Build trust in your software — one test at a time. Essential guide for getting started with automated testing in R."
 >
   <Section id="hero" variant="dark" size="full">
-    <div class="absolute z-0 bottom-0 left-0 w-full h-1/2">
-      <Picture
-        src={Grid}
-        class="size-full object-cover object-[center_top] opacity-20 dark:opacity-50"
-        alt="Hero background"
-      />
-    </div>
+    <div class="absolute inset-0 overflow-hidden"></div>
     <div
-      class="container mx-auto h-full flex flex-col justify-center items-center text-center relative"
+      class="container mx-auto h-full flex flex-col justify-center items-center text-center relative z-10"
     >
-      <HeroBackground />
       <Animate variant="header">
         <h1
-          class="text-5xl md:text-6xl max-w-[23ch] font-light uppercase py-4 flex flex-wrap justify-center items-center gap-4"
+          class="text-5xl md:text-6xl font-light uppercase py-4 flex flex-wrap justify-center items-center gap-4"
         >
           <p>Advance Your R Testing Roadmap</p>
         </h1>
       </Animate>
       <h2
-        class="text-muted-foreground font-light text-xl mb-8 max-w-[65ch] space-y-4"
+        class="text-foreground font-light text-xl mb-8 max-w-[65ch] space-y-4"
       >
         <Animate variant="header" className="motion-delay-[400ms]">
           <div class="space-y-2">
             <p class="text-balance">
-        Accelerate your feedback loops. Build tests that help you deliver
-        faster.
+              Accelerate your feedback loops. Build tests that help you deliver
+              faster.
             </p>
           </div>
         </Animate>
       </h2>
-      <Animate variant="expand" className="motion-delay-[800ms]">
+
+      <Animate variant="header" className="motion-delay-[600ms]">
+        <div class="mb-6 max-w-4xl text-muted-foreground font-light">
+          <p class="text-lg">
+            Are your test runs slow, brittle, or hard to maintain?<br />
+            This roadmap shows you the steps used by experienced R developers to:
+          </p>
+        </div>
+      </Animate>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-12 max-w-4xl">
+        <Animate variant="expand" className="motion-delay-[800ms]">
+          <div
+            class="bg-card/50 backdrop-blur-sm border border-border/50 rounded-lg p-4 flex items-start gap-3"
+          >
+            <div
+              class="flex-shrink-0 w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center mt-1"
+            >
+              <Zap className="w-4 h-4 text-primary" />
+            </div>
+            <div class="text-start">
+              <h3 class="font-medium text-sm mb-1">Speed up feedback</h3>
+              <p class="text-muted-foreground text-sm">
+                With targeted and automated test runs
+              </p>
+            </div>
+          </div>
+        </Animate>
+
+        <Animate variant="expand" className="motion-delay-[1000ms]">
+          <div
+            class="bg-card/50 backdrop-blur-sm border border-border/50 rounded-lg p-4 flex items-start gap-3"
+          >
+            <div
+              class="flex-shrink-0 w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center mt-1"
+            >
+              <Package className="w-4 h-4 text-primary" />
+            </div>
+            <div class="text-start">
+              <h3 class="font-medium text-sm mb-1">Manage reusable fixtures</h3>
+              <p class="text-muted-foreground text-sm">
+                And isolate flaky dependencies
+              </p>
+            </div>
+          </div>
+        </Animate>
+
+        <Animate variant="expand" className="motion-delay-[1200ms]">
+          <div
+            class="bg-card/50 backdrop-blur-sm border border-border/50 rounded-lg p-4 flex items-start gap-3"
+          >
+            <div
+              class="flex-shrink-0 w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center mt-1"
+            >
+              <Target className="w-4 h-4 text-primary" />
+            </div>
+            <div class="text-start">
+              <h3 class="font-medium text-sm mb-1">
+                Focus effort on critical code
+              </h3>
+              <p class="text-muted-foreground text-sm">
+                (Not coverage for coverage's sake)
+              </p>
+            </div>
+          </div>
+        </Animate>
+
+        <Animate variant="expand" className="motion-delay-[1400ms]">
+          <div
+            class="bg-card/50 backdrop-blur-sm border border-border/50 rounded-lg p-4 flex items-start gap-3"
+          >
+            <div
+              class="flex-shrink-0 w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center mt-1"
+            >
+              <ClipboardCheck className="w-4 h-4 text-primary" />
+            </div>
+            <div class="text-start">
+              <h3 class="font-medium text-sm mb-1">
+                Embed quality in your workflow
+              </h3>
+              <p class="text-muted-foreground text-sm">
+                With PR template reminders
+              </p>
+            </div>
+          </div>
+        </Animate>
+      </div>
+
+      <Animate variant="expand" className="motion-delay-[1600ms]">
+        <p class="text-muted-foreground text-sm text-center max-w-4xl mb-2">
+          Download now to start building faster, more reliable code—without the
+          headaches.
+        </p>
         <Subscribe variant="roadmap" />
       </Animate>
     </div>
   </Section>
-
 </BaseLayout>
