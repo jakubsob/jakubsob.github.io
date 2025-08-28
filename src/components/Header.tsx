@@ -29,9 +29,11 @@ const menuItems: MenuItemType[] = [
   {
     title: "blog",
     href: "/blog/",
+    className: "uppercase",
   },
   {
     title: "resources",
+    className: "uppercase",
     items: [
       {
         title: "Learning resources",
@@ -48,7 +50,7 @@ const menuItems: MenuItemType[] = [
   {
     title: "course",
     href: "/course/",
-    className: "text-destructive",
+    className: "text-destructive uppercase",
   },
 ]
 
@@ -76,7 +78,8 @@ export default function Header() {
                 {item.items ? (
                   // Dropdown menu
                   <>
-                    <NavigationMenuTrigger>{item.title}</NavigationMenuTrigger>
+                    <NavigationMenuTrigger
+                      className={cn(navigationMenuTriggerStyle(), item.className)}>{item.title}</NavigationMenuTrigger>
                     <NavigationMenuContent>
                       <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-1 lg:w-[600px]">
                         {item.items.map((subItem) => (
@@ -135,7 +138,7 @@ export default function Header() {
                       <div>
                         <button
                           onClick={() => toggleDropdown(item.title)}
-                          className="flex items-center justify-between w-full p-3 text-left rounded-md hover:bg-accent transition-colors"
+                          className="flex items-center justify-between w-full p-3 text-left rounded-md hover:bg-muted transition-colors"
                         >
                           <span className={cn("", item.className)}>
                             {item.title}
@@ -153,7 +156,7 @@ export default function Header() {
                               <li key={subItem.title}>
                                 <a
                                   href={subItem.href}
-                                  className="block p-2 text-sm rounded-md hover:bg-accent transition-colors"
+                                  className="block p-2 text-sm rounded-md hover:bg-muted transition-colors"
                                   onClick={() => setIsMobileMenuOpen(false)}
                                 >
                                   <div className="">{subItem.title}</div>
@@ -171,7 +174,7 @@ export default function Header() {
                       <a
                         href={item.href}
                         className={cn(
-                          "block p-3 rounded-md hover:bg-accent transition-colors",
+                          "block p-3 rounded-md hover:bg-muted transition-colors",
                           item.className
                         )}
                         onClick={() => setIsMobileMenuOpen(false)}
@@ -200,7 +203,7 @@ const ListItem = React.forwardRef<
         <a
           ref={ref}
           className={cn(
-            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-muted hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
             className
           )}
           {...props}
