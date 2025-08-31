@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import { cn } from "@/lib/utils"
-import { Menu, X, ChevronDown, BookOpen } from "lucide-react"
+import { Menu, X, ChevronDown } from "lucide-react"
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -47,13 +47,16 @@ const menuItems: MenuItemType[] = [
     className: "uppercase",
     items: [
       {
-        icon: <BookOpen className="inline-block mr-2 h-4 w-4 align-text-bottom" />,
         title: "Learning resources",
         href: "/resources/",
         description: "Browse what helped me become a better engineer.",
       },
       {
-        icon: <BookOpen className="inline-block mr-2 h-4 w-4 align-text-bottom" />,
+        title: "Dashboard Templates",
+        href: "/dashboard-templates/",
+        description: "Beautiful Shiny dashboard templates ready to use for your applications.",
+      },
+      {
         title: "Advance Your R Testing Roadmap",
         href: "/get-roadmap/",
         description: "Step-by-step guide to building better tests for R developers.",

@@ -1,0 +1,35 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { Section } from "@/components/ui/section";
+import { Animate } from "../../components/ui/animate";
+import HeroBackground from "@/components/HeroBackground.astro";
+import DashboardTemplateCards from "./DashboardTemplateCards.tsx";
+---
+
+<BaseLayout
+  title="Dashboard Templates"
+  meta="Beautiful Shiny dashboard templates ready to use for your applications. Professional designs and layouts."
+>
+  <Section id="hero" variant="dark" size="md">
+    <div
+      class="container mx-auto h-full flex flex-col justify-center items-center text-center relative border-b"
+    >
+      <HeroBackground />
+      <Animate variant="header">
+        <h1 class="font-light text-6xl uppercase py-4">
+          Dashboard Templates
+        </h1>
+      </Animate>
+      <Animate variant="header" className="motion-delay-[200ms]">
+        <h2 class="text-muted-foreground font-light text-xl">
+          Ready to use for your apps.
+        </h2>
+      </Animate>
+    </div>
+  </Section>
+  <Section variant="dark">
+    <div class="container mx-auto">
+      <DashboardTemplateCards client:load />
+    </div>
+  </Section>
+</BaseLayout>
