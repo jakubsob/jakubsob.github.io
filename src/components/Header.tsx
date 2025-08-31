@@ -64,6 +64,12 @@ const menuItems: MenuItemType[] = [
     ]
   },
   {
+    title: "R Tests Gallery",
+    href: "/r-tests-gallery/",
+    description: "Explore a collection of R tests and examples.",
+    className: "uppercase",
+  },
+  {
     title: "course",
     href: "/course/",
     className: "text-destructive uppercase",
