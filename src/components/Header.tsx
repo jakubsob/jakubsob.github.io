@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import { cn } from "@/lib/utils"
-import { Menu, X, ChevronDown } from "lucide-react"
+import { Menu, X, ChevronDown, BookOpen } from "lucide-react"
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -13,18 +13,29 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
 
+const Logo = ({ className }: { className?: string }) => (
+  <svg width="164" height="168" viewBox="0 0 164 168" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
+    <path d="M152 55.5V26C152 19.3726 146.627 14 140 14H24C17.3726 14 12 19.3726 12 26V49V72C12 78.6274 17.3726 84 24 84H65M127.5 84H140C146.627 84 152 89.3726 152 96V142C152 148.627 146.627 154 140 154H24C17.3726 154 12 148.627 12 142V112" stroke-width="12" stroke-linecap="round" />
+    <path d="M34 114C34 114 33.9469 117.576 38 122.5C42.0532 127.424 49 130 56 130C63 130 66 126 69.5 122.5C73 119 127.839 41.1541 130.006 38" stroke-width="12" stroke-linecap="round" />
+  </svg>
+);
+
 type MenuItemType = {
   title: string;
   href?: string;
   description?: string;
   className?: string;
-  items?: { title: string; href: string; description: string }[];
-}
+  icon?: React.ReactNode;
+  items?: { title: string; href: string; description: string; icon?: React.ReactNode }[];
+};
 
 const menuItems: MenuItemType[] = [
   {
-    title: "jakub::sobolewski",
+    title: "Jakub Sobolewski",
     href: "/",
+    icon: <Logo className="inline-block size-[1em] mr-2 stroke-current" />,
+    description: "Go to homepage",
+    className: "uppercase",
   },
   {
     title: "blog",
@@ -36,11 +47,13 @@ const menuItems: MenuItemType[] = [
     className: "uppercase",
     items: [
       {
+        icon: <BookOpen className="inline-block mr-2 h-4 w-4 align-text-bottom" />,
         title: "Learning resources",
         href: "/resources/",
         description: "Browse what helped me become a better engineer.",
       },
       {
+        icon: <BookOpen className="inline-block mr-2 h-4 w-4 align-text-bottom" />,
         title: "Advance Your R Testing Roadmap",
         href: "/get-roadmap/",
         description: "Step-by-step guide to building better tests for R developers.",
@@ -100,8 +113,9 @@ export default function Header() {
                     <a
                       href={item.href}
                       className={cn(navigationMenuTriggerStyle(), item.className)}
-                    >
-                      {item.title}
+                      >
+                        {item?.icon}
+                        {item.title}
                     </a>
                   </NavigationMenuLink>
                 )}
@@ -116,7 +130,7 @@ export default function Header() {
         {/* Mobile Menu Button */}
         <button
           onClick={toggleMobileMenu}
-          className="p-2 rounded-md hover:bg-accent transition-colors"
+          className="p-2 rounded-md hover:text-primary transition-colors"
           aria-label="Toggle mobile menu"
         >
           {isMobileMenuOpen ? (
@@ -179,6 +193,7 @@ export default function Header() {
                         )}
                         onClick={() => setIsMobileMenuOpen(false)}
                       >
+                          {item?.icon}
                         {item.title}
                       </a>
                     )}
@@ -203,13 +218,13 @@ const ListItem = React.forwardRef<
         <a
           ref={ref}
           className={cn(
-            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-muted hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors group hover:text-primary",
             className
           )}
           {...props}
         >
-          <div className="text-sm leading-none text-foreground">{title}</div>
-          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+          <div className="text-sm leading-none text-foreground group-hover:text-current">{title}</div>
+          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground group-hover:text-current">
             {children}
           </p>
         </a>
