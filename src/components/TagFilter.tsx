@@ -27,7 +27,7 @@ export function TagFilter({
     <div className={cn("space-y-3", className)}>
       <div className="flex items-center gap-3">
         <Button
-          variant="secondary"
+          variant="default"
           size="sm"
           onClick={onToggleVisibility}
           className="shrink-0"
@@ -43,7 +43,7 @@ export function TagFilter({
 
         {selectedCount > 0 && (
           <Button
-            variant="destructive"
+            variant="secondary"
             size="sm"
             onClick={() => {
               tags.forEach(tag => {
@@ -62,7 +62,6 @@ export function TagFilter({
       {isVisible && (
         <div className="rounded-sm bg-card border p-4">
           <div className="space-y-3">
-            <h3 className="text-sm text-muted">Filter by tags</h3>
             <div className="flex flex-wrap gap-2">
               {tags.map(({ value, count }) => (
                 <Button
