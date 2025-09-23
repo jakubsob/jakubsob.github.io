@@ -62,7 +62,6 @@ export const GET: APIRoute = async function GET({ params, props }) {
             marginBottom: '0px',
             maxWidth: '100%',
             textAlign: 'left',
-            textTransform: 'capitalize',
             textWrap: 'balance',
           }
         }, [post.data.title]),
