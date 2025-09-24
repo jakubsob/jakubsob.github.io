@@ -11,6 +11,8 @@ Your tests become slow, fragile, and unreliable when they depend on external API
 
 The solution is simple: wrap external dependencies in your own functions and stub them with `testthat::local_mocked_bindings`.
 
+> [Level-up your testing game! Grab your copy of the R testing roadmap.](http://jakubsobolewski.com/get-roadmap/)
+
 ## Why Wrap External Dependencies?
 
 External dependencies make testing painful in three ways:
