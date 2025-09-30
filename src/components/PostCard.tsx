@@ -34,7 +34,7 @@ export function PostCard({ post, selectedTags, className }: PostCardProps) {
         <CardFooter className="gap-4">
           <FormattedDate date={post.data.pubDate} />
           <div className="flex items-center gap-1 flex-nowrap">
-            {post.data.tags.map((tag) => (
+            {post.data.tags.sort((a: string, b: string): any => a.localeCompare(b)).map((tag) => (
               <Badge
                 key={tag}
                 variant={selectedTags.has(tag) ? "secondary" : "ghost"}
