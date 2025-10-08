@@ -4,6 +4,7 @@ import { defineCollection, z } from 'astro:content';
 const allowedTags = [
   'bdd',
   'cucumber',
+  'deployment',
   'llm',
   'plumber',
   'r',
