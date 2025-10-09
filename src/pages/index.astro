@@ -48,7 +48,12 @@ const posts = (await getCollection("blog"))
           <div class="flex gap-2 mt-12">
             <Animate variant="expand" className="motion-delay-[600ms]">
               <a href="/course">
-                <Button variant="pill" size="xl" className="bg-destructive">
+                <Button
+                  variant="pill"
+                  size="xl"
+                  shape="pill"
+                  className="bg-destructive"
+                >
                   <span class="text-sm md:text-xl dark:text-white">
                     Sign up for testing course
                   </span>
@@ -59,6 +64,7 @@ const posts = (await getCollection("blog"))
               <a href="/get-roadmap">
                 <Button
                   variant="pill"
+                  shape="pill"
                   size="xl"
                   className="bg-transparent text-foreground"
                 >
@@ -90,9 +96,9 @@ const posts = (await getCollection("blog"))
         <div class="order-3 mt-12 md:order-2 md:self-end">
           <Animate>
             <a href="/blog">
-              <Button variant="pill" size="xl">
-                <span class="text-xl">Read more →</span></Button
-              >
+              <Button variant="pill" size="xl" shape="pill">
+                <span class="text-xl">Read more →</span>
+              </Button>
             </a>
           </Animate>
         </div>
@@ -162,7 +168,7 @@ const posts = (await getCollection("blog"))
                   href="https://jakubsobolewski.com/cucumber/"
                   class="w-full h-full text-2xl text-primary opacity-0 group-hover:opacity-100 transition-all backdrop-blur-sm flex items-center justify-center"
                 >
-                  <Button variant="pill">
+                  <Button variant="pill" shape="pill">
                     Start writing specifications
                     <CircleArrowRight
                       className="inline-block size-[1.5em] ml-2"
@@ -213,7 +219,7 @@ Scenario: User views the sales trend for a specific product
                   href="https://jakubsobolewski.com/cucumber/"
                   class="w-full h-full text-2xl text-primary opacity-0 group-hover:opacity-100 transition-all backdrop-blur-sm flex items-center justify-center"
                 >
-                  <Button variant="pill">
+                  <Button variant="pill" shape="pill">
                     Implement your specifications
                     <CircleArrowRight
                       className="inline-block size-[1.5em] ml-2"
@@ -270,7 +276,7 @@ then("they should see the sales trend plot for {string}", function(product, cont
                   href="https://jakubsobolewski.com/cucumber/"
                   class="w-full h-full text-2xl text-primary opacity-0 group-hover:opacity-100 transition-all backdrop-blur-sm flex items-center justify-center"
                 >
-                  <Button variant="pill">
+                  <Button variant="pill" shape="pill">
                     Start testing!
                     <CircleArrowRight
                       className="inline-block size-[1.5em] ml-2"
@@ -301,6 +307,7 @@ then("they should see the sales trend plot for {string}", function(product, cont
               size="xl"
               className="text-2xl my-12 motion-preset-oscillate-sm motion-paused hover:motion-running"
               variant="pill"
+              shape="pill"
             >
               Try it out!
               <CircleArrowRight className="inline-block size-[1.5em] ml-2" />
@@ -354,7 +361,7 @@ then("they should see the sales trend plot for {string}", function(product, cont
                   href="https://jakubsobolewski.com/muttest/"
                   class="w-full h-full text-2xl text-primary opacity-0 group-hover:opacity-100 transition-all backdrop-blur-sm flex items-center justify-center"
                 >
-                  <Button variant="pill">
+                  <Button variant="pill" shape="pill">
                     Plan your mutations
                     <CircleArrowRight
                       className="inline-block size-[1.5em] ml-2"
@@ -412,7 +419,7 @@ then("they should see the sales trend plot for {string}", function(product, cont
                   href="https://jakubsobolewski.com/muttest/"
                   class="w-full h-full text-2xl text-primary opacity-0 group-hover:opacity-100 transition-all backdrop-blur-sm flex items-center justify-center"
                 >
-                  <Button variant="pill">
+                  <Button variant="pill" shape="pill">
                     Kill the bugs
                     <CircleArrowRight
                       className="inline-block size-[1.5em] ml-2"
@@ -459,7 +466,7 @@ then("they should see the sales trend plot for {string}", function(product, cont
                   href="https://jakubsobolewski.com/muttest/"
                   class="w-full h-full text-2xl text-primary opacity-0 group-hover:opacity-100 transition-all backdrop-blur-sm flex items-center justify-center"
                 >
-                  <Button variant="pill">
+                  <Button variant="pill" shape="pill">
                     See which tests to improve
                     <CircleArrowRight
                       className="inline-block size-[1.5em] ml-2"
@@ -489,6 +496,7 @@ test_that("calculate always returns 0", { # [!code ++]
               size="xl"
               className="text-2xl my-12 motion-preset-oscillate-sm motion-paused hover:motion-running"
               variant="pill"
+              shape="pill"
             >
               Patch the gaps in your tests
               <CircleArrowRight className="inline-block size-[1.5em] ml-2" />

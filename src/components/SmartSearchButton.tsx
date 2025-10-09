@@ -3,6 +3,7 @@ import { Search } from "lucide-react";
 import { GlobalSearch } from "./GlobalSearch";
 import { smartSearchService } from "@/lib/smartSearch";
 import { populateRTestsGallerySearch } from "@/lib/gallerySearchData";
+import { Button } from "@/components/ui/button";
 
 // Global search state interface
 declare global {
@@ -95,17 +96,19 @@ export function SmartSearchButton({ posts, isMobile = false }: SmartSearchButton
 
   return (
     <>
-      <button
+      <Button
+        variant="secondary"
+        shape="pill"
         onClick={handleSearchOpen}
         disabled={!isInitialized}
-        className="group flex items-center gap-2 rounded-full px-4 py-2 transition-all border text-sm uppercase tracking-wider hover:border-primary hover:text-primary disabled:opacity-50 disabled:cursor-not-allowed"
+        className="group flex items-center gap-2 text-sm uppercase tracking-wider disabled:opacity-50 disabled:cursor-not-allowed"
         aria-label="Search all content"
       >
         <Search className="size-[1em]" />
-        <kbd className="hidden sm:inline-flex pointer-events-none select-none items-center gap-1 rounded-full border px-1.5">
+        <kbd className="hidden sm:inline-flex pointer-events-none select-none items-center gap-1 rounded-full border border-muted-foreground px-1.5">
           <span className="text-xs">⌘</span>K
         </kbd>
-      </button>
+      </Button>
 
       {isInitialized && (
         <GlobalSearch
