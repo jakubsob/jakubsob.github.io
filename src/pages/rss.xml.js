@@ -28,7 +28,7 @@ export async function GET(context) {
       const link = new URL(`/blog/${post.slug}`, context.url.origin).toString();
       let heroImage = post.data.heroImage;
       if (!heroImage) {
-        heroImage = `/blog/${post.slug}/code_block_1.png`;
+        heroImage = `rss-image.png`;
       }
 
       return {
