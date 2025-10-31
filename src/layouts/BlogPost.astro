@@ -110,7 +110,11 @@ const posts = (await getCollection("blog"))
               class="flex items-center gap-2 no-underline w-full"
               rel="noopener noreferrer"
             >
-              <Button variant="pill" className="flex-1 font-light h-auto">
+              <Button
+                variant="pill"
+                shape="pill"
+                className="flex-1 font-light h-auto"
+              >
                 <ExternalLink className="size-[1em]" />
                 <div>Submit a content request</div>
               </Button>
