@@ -2,7 +2,7 @@
 title: 'Behavior-Driven Development in R Shiny: A Step-By-Step Example'
 description: 'Follow each step as I develop a form with Shiny and Behavior-Driven Development. Learn practical techniques for better software design through automated tests.'
 pubDate:  'October 10 2025'
-tags: ["r", "tests", "bdd"]
+tags: ["r", "tests", "bdd", "shiny", "shinytest2"]
 ---
 
 Testing your Shiny applications shouldn't be an afterthought.
