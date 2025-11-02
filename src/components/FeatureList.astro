@@ -17,15 +17,11 @@ const { items } = Astro.props;
     items.map((item: Item, index: number) => (
       <Animate>
         <div class="transition-colors hover:bg-primary/40 p-4 rounded-sm">
-          <h4
-            class="text-xl mb-2 flex items-center justify-between"
-          >
+          <h4 class="text-xl mb-2 flex items-center justify-between">
             <div>{item.title}</div>
             <div>{(index + 1).toString().padStart(2, "0")}</div>
           </h4>
-          <p class="text-sky-200">
-            {item.description}
-          </p>
+          <p class="text-muted-foreground">{item.description}</p>
         </div>
       </Animate>
     ))
