@@ -33,7 +33,7 @@ const socialLinks = getSocialLinks();
         <div class="lg:justify-self-center font-light">
           <div class="flex flex-row gap-10">
             <div class="flex flex-col gap-4">
-              <h2 class="text-muted-foreground/50">Quick links</h2>
+              <h2 class="text-muted">Quick links</h2>
               <ul class="list-none text-muted-foreground space-y-4">
                 {
                   footerRoutes.map((route) => (
@@ -45,11 +45,11 @@ const socialLinks = getSocialLinks();
               </ul>
             </div>
             <div class="flex flex-col gap-4">
-              <h2 class="text-muted-foreground/50">Let's connect</h2>
+              <h2 class="text-muted">Let's connect</h2>
               <ul class="list-none text-muted-foreground space-y-4">
                 {
                   socialLinks.map((link) => (
-                    <li class="transition-colors hover:text-muted">
+                    <li class="transition-colors hover:text-muted-foreground">
                       <AnimatedLink href={link.path} target="_blank">
                         {link.label}
                       </AnimatedLink>
