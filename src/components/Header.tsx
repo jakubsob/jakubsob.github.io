@@ -71,7 +71,7 @@ const menuItems: MenuItemType[] = [
   },
   {
     title: "course",
-    href: "/course/",
+    href: "https://courses.jakubsobolewski.com",
     className: "text-destructive uppercase",
   },
 ]
