@@ -2,18 +2,19 @@ import { defineCollection, z } from 'astro:content';
 
 // Define allowed tags
 const allowedTags = [
-  'bdd',
-  'cucumber',
-  'deployment',
-  'llm',
-  'plumber',
-  'r',
-  'resource',
-  'shiny',
-  'shinytest2',
-  'tdd',
-  'tests',
-  'ui',
+  "bdd",
+  "cucumber",
+  "deployment",
+  "llm",
+  "mutation testing",
+  "plumber",
+  "r",
+  "resource",
+  "shiny",
+  "shinytest2",
+  "tdd",
+  "tests",
+  "ui",
 ] as const;
 
 const blog = defineCollection({
