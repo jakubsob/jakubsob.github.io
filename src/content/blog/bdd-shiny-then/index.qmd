@@ -1,0 +1,277 @@
+---
+title: 'Behavior-Driven Development in R Shiny: Writing Then Steps That Assert Outcomes'
+description: 'Learn how to write Then steps that assert outcomes without coupling to implementation. Build custom testthat expectations and keep your BDD assertions at the right level.'
+pubDate: 'May 23 2026'
+tags: ["r", "tests", "bdd", "shiny", "shinytest2"]
+draft: true
+---
+
+You've set up all the preconditions.
+
+You've triggered the action.
+
+Now the specification needs to answer one question: did the system do the right thing?
+
+That's what Then steps are for — and how precisely you answer that question determines whether your specifications act as a reliable safety net or a source of false confidence.
+
+---
+
+This article is the 3rd part of a series on writing BDD specifications for Shiny applications. We've built a data submission form, managed preconditions with Given steps, and modeled user interactions with When steps.
+
+Read the previous articles to get full context, or continue here to focus on writing Then steps.
+
+1. **[Behavior-Driven Development in R Shiny: A Step-By-Step Example](https://jakubsobolewski.com/blog/bdd-shiny-feature/)**
+2. **[Behavior-Driven Development in R Shiny: Setting Up Test Preconditions with Given Steps](https://jakubsobolewski.com/blog/bdd-shiny-given/)**
+3. **[Behavior-Driven Development in R Shiny: Writing When Steps That Model User Behavior](https://jakubsobolewski.com/blog/bdd-shiny-when/)**
+
+---
+
+> [Level-up your testing game! Grab your copy of the R testing roadmap.](https://jakubsobolewski.com/get-roadmap/)
+
+## The Purpose of Then
+
+Then steps answer one question: **What changed as a result of the user's action?**
+
+Not how it changed internally. What the user can now observe — or what the system has now done — that wasn't true before.
+
+This distinction shapes every Then step you write. The assertion lives at the level of the outcome, not at the level of the mechanism that produced it.
+
+```{r}
+#| eval: false
+# Outcome — what the user cares about
+then_there_are_entries <- function(context, n) {
+  expect_equal(context$storage$size(), n)
+  context
+}
+
+# Mechanism — how the app stored it internally
+then_the_database_table_has_n_rows <- function(context, n) {
+  expect_equal(nrow(DBI::dbReadTable(context$conn, "entries")), n)
+  context
+}
+```
+
+Both assertions verify the same underlying fact — that the entry was saved — but the first one survives a switch from disk cache to database to API. The second breaks the moment you change the storage technology.
+
+**Assert what the user or system guarantees. Leave how it's achieved to implementation tests.**
+
+## What to Assert
+
+Then steps verify outcomes across three kinds of observable evidence. These categories describe *what* you can check — they don't prescribe how many steps to use. How to group assertions into steps is a separate question, covered in the next section.
+
+### User-visible state
+
+Did the UI change the way a user would expect?
+
+```{r}
+#| eval: false
+then_i_am_prompted_to_provide_required_fields <- function(context) {
+  context$driver$expect_validation_feedback()
+  context
+}
+```
+
+Assertions use driver methods — the same translation layer that When steps use — so they're protected from UI implementation details.
+
+### System state
+
+Sometimes the most meaningful evidence isn't what the user sees but what the system now holds.
+
+```{r}
+#| eval: false
+then_the_entry_has_title <- function(context, expected_title) {
+  entry <- context$storage$get_first()
+  expect_equal(entry$title, expected_title)
+  context
+}
+```
+
+These assertions reach directly into the storage object that Given steps configured. They're faster than UI assertions and more precise: they check the exact state of the system without waiting for the browser to render anything.
+
+### Side effects
+
+Some behaviors produce no visible UI change and no stored data — they trigger side effects: emails, API calls, log entries. These still need verification.
+
+```{r}
+#| eval: false
+then_email_notification_is_sent <- function(context) {
+  context$email_service$expect_sent()
+  context
+}
+
+then_i_am_informed_email_was_not_sent <- function(context) {
+  context$driver$expect_visible("email_failure_message")
+  context
+}
+```
+
+The first assertion works because the email service test double (set up in Given) records whether it was called. The second checks that the app communicated the failure to the user — which is the behavior the specification is actually about.
+
+## Implementing Then Steps in the Driver
+
+Then steps that check UI state belong in the driver, just like When steps. This keeps the assertion details hidden from the specification:
+
+```{r}
+#| eval: false
+#' tests/testthat/setup-driver.R
+MyAppDriver <- R6::R6Class(
+  classname = "MyAppDriver",
+  inherit = shinytest2::AppDriver,
+  public = list(
+    expect_visible = function(output_id) {
+      # Find if HTML element is visible
+      invisible(self)
+    },
+    expect_entry_count = function(n) {
+      # Find number of HTML elements
+      invisible(self)
+    },
+    expect_validation_feedback = function() {
+      # Check if HTML element is visible
+      invisible(self)
+    }
+  )
+)
+```
+
+Each driver method is a named, reusable assertion. If the HTML structure changes, you fix it in one place.
+
+## Grouping Then Steps
+
+The right question is not "how many assertions per step?" but "which assertions belong together?"
+
+**Group assertions that describe the same observable behavior. Split when outcomes can diverge independently.**
+
+Consider what happens when a user successfully submits an entry: the storage grows by one, and a confirmation message appears. These two outcomes are two sides of the same coin — if one is true, the other should be too. Splitting them into separate steps implies they can diverge, which invites the reader to wonder what it would mean for storage to succeed but no confirmation to appear, or vice versa. Grouping them into a single step names the behavior directly:
+
+```{r}
+#| eval: false
+then_entry_is_submitted <- function(context) {
+  expect_equal(context$storage$size(), 1)
+  context$driver$expect_visible("confirmation_message")
+  context
+}
+```
+
+Email notification is different. Submission can succeed even when the email service fails — the two outcomes genuinely can diverge. That's exactly when a separate step is the right call:
+
+```{r}
+#| eval: false
+it("should submit entry and send notification", {
+  given_no_content() |>
+    given_an_authenticated_user(email = "user@example.com") |>
+    given_email_service_is_available() |>
+    when_i_submit_entry_with_all_required_fields() |>
+    then_entry_is_submitted() |>
+    then_notification_was_sent_to_the_authenticated_user()
+})
+```
+
+Two steps, not three — because the spec now reflects the actual structure of the behavior. If `then_entry_is_submitted` fails, you know the core submission broke. If `then_notification_was_sent_to_the_authenticated_user` fails, you know the side effect broke. The split carries information because it maps to a real divergence point.
+
+Then steps should also be **read-only**. They inspect state; they don't change it. A Then step that modifies storage or triggers side effects is doing the wrong job. Keep the flow clean: Given sets up, When acts, Then observes.
+
+## Making Failure Messages Helpful
+
+A failing test with a good message saves minutes. A failing test with a bad message wastes hours.
+
+The most common mistake is letting low-level assertion failures surface directly. When `expect_equal(nrow(df), 2)` fails with `"actual 0, expected 2"`, that tells you nothing about which scenario failed or what the data looked like.
+
+The `label` argument sets the name testthat uses for the *object* (first argument) in the failure message. Keep it short and descriptive — testthat appends the actual and expected values itself:
+
+```{r}
+then_there_are_entries <- function(context, n) {
+  testthat::expect_equal(
+    context$storage$size(), n,
+    label = "number of entries in storage"
+  )
+  context
+}
+```
+
+A failure now reads: `"Expected number of entries in storage to equal n"` — immediately clear without any manual formatting.
+
+For UI assertions, label the element being checked:
+
+```{r}
+#| eval: false
+expect_visible = function(output_id) {
+  val <- self$get_value(output = output_id)
+  testthat::expect_true(
+    !is.null(val) && nchar(val) > 0,
+    label = sprintf("output '%s'", output_id)
+  )
+  invisible(self)
+}
+```
+
+A failure reads: `"Expected output 'confirmation_message' to be TRUE"` — which immediately tells you which element to look at.
+
+## What Doesn't Belong in Then Steps
+
+**Don't push implementation tests up to Then steps.**
+
+If you're asserting the exact text of an error message, the CSS class applied to an invalid input, or the exact SQL that was executed — those are implementation details. They don't belong here.
+
+Acceptance-level Then steps answer: did the right thing happen from the user's perspective?
+
+## The Complete Picture
+
+Putting it all together, a well-formed specification has a clear structure at every level:
+
+```{r}
+#| eval: false
+describe("data submission", {
+  it("should submit entry and send notification", {
+    given_no_content() |>
+      given_an_authenticated_user(email = "user@example.com") |>
+      given_email_service_is_available() |>
+      when_i_submit_entry_with_all_required_fields() |>
+      then_entry_is_submitted() |>
+      then_notification_was_sent_to_the_authenticated_user()
+  })
+
+  it("should handle email service failure gracefully", {
+    given_no_content() |>
+      given_an_authenticated_user() |>
+      given_email_service_is_unavailable() |>
+      when_i_submit_entry_with_all_required_fields() |>
+      then_entry_is_submitted() |>
+      then_i_am_informed_email_was_not_sent()
+  })
+
+  it("should require all required fields", {
+    given_no_content() |>
+      given_an_authenticated_user() |>
+      when_i_submit_entry_with_missing_required_fields() |>
+      then_i_am_prompted_to_provide_required_fields()
+  })
+})
+```
+
+Each specification reads like a sentence. None of them mention `shinytest2`, input IDs, or database queries. The implementation lives behind the DSL, where it can change without touching the specifications.
+
+## Wrapping Up
+
+Then steps are where a specification earns its credibility.
+
+A specification that only tests easy outcomes gives you false confidence. One that asserts at the right level — user-visible state, system state, and side effects — gives you a safety net that actually catches real problems.
+
+**Assert outcomes, not implementations.**
+
+**Group assertions by observable behavior — split only when outcomes can genuinely diverge.**
+
+**Write failure messages that save time, not waste it.**
+
+**Push implementation details down to unit and module tests.**
+
+With Given, When, and Then steps working together, your specifications become something more than a test suite. They become living documentation — a precise description of what your application does, written in terms any stakeholder can follow, and enforced automatically on every build.
+
+## Further Reading
+
+- [Behavior-Driven Development in R Shiny: A Step-By-Step Example](https://jakubsobolewski.com/blog/bdd-shiny-feature/)
+- [Setting Up Test Preconditions with Given Steps](https://jakubsobolewski.com/blog/bdd-shiny-given/)
+- [Writing When Steps That Model User Behavior](https://jakubsobolewski.com/blog/bdd-shiny-when/)
+- [Designing testable R6 interfaces](https://jakubsobolewski.com/blog/testable-r6-interfaces/)
+- [How to write robust shinytest2 tests](https://jakubsobolewski.com/blog/robust-shinytest2/)
+- [Mocks test your assumptions, not your code](https://jakubsobolewski.com/blog/the-problem-with-mocking/)
