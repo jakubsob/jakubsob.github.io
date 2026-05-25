@@ -49,12 +49,11 @@ const posts = (await getCollection("blog"))
             <Animate variant="expand" className="motion-delay-[600ms]">
               <a href="/course">
                 <Button
-                  variant="pill"
-                  size="xl"
+                  variant="cta"
                   shape="pill"
-                  className="bg-destructive"
+                  size="xl"
                 >
-                  <span class="text-sm md:text-xl dark:text-white">
+                  <span class="text-sm md:text-xl">
                     Sign up for testing course
                   </span>
                 </Button>
@@ -79,7 +78,7 @@ const posts = (await getCollection("blog"))
     <Animate variant="header" className="motion-delay-[1000ms]">
       <a
         href="#blog"
-        class="cursor-pointer text-destructive/50 motion-preset-oscillate border-destructive/50 absolute bottom-0 left-1/2 -translate-x-1/2 size-8 mb-2 rounded-full border-2"
+        class="cursor-pointer text-foreground/40 motion-preset-oscillate border-foreground/40 absolute bottom-0 left-1/2 -translate-x-1/2 size-8 mb-2 rounded-full border-2"
       >
         <ArrowDown className="block size-full" />
       </a>
@@ -114,7 +113,7 @@ const posts = (await getCollection("blog"))
         <h2 class="text-clamp-md font-light uppercase flex items-center">
           <Asterisk className="inline-block size-[1em] text-destructive mr-4" />
           <span>My Open Source</span>
-          <Asterisk className="inline-block size-[1em] text-destructive mr-4" />
+          <Asterisk className="inline-block size-[1em] text-destructive ml-4" />
         </h2>
       </Animate>
     </div>
@@ -184,15 +183,15 @@ const posts = (await getCollection("blog"))
                 wrap={false}
                 lang="gherkin"
                 code={`Feature: Sales Trends
-Scenario: User views the sales trend for a product category
-  Given the user can view product sales information
-  When they view the sales trend for "Electronics"
-  Then they should see the sales trend plot for "Electronics"
+  Scenario: User views the sales trend for a product category
+    Given the user can view product sales information
+    When they view the sales trend for "Electronics"
+    Then they should see the sales trend plot for "Electronics"
 
-Scenario: User views the sales trend for a specific product
-  Given the user can view product sales information
-  When they view the sales trend for "Smartphone"
-  Then they should see the sales trend plot for "Smartphone"`}
+  Scenario: User views the sales trend for a specific product
+    Given the user can view product sales information
+    When they view the sales trend for "Smartphone"
+    Then they should see the sales trend plot for "Smartphone"`}
               />
             </div>
           </Animate>
@@ -202,7 +201,7 @@ Scenario: User views the sales trend for a specific product
             <div class="space-y-4">
               <h4 class="text-2xl pb-2">2. Implement steps in R</h4>
               <p class="text-muted-foreground">
-                Write implmementaion for steps in scenarios as R functions.
+                Write implementation for steps in scenarios as R functions.
               </p>
               <p class="text-muted-foreground">
                 Whether it's a package, a Shiny app, or an API – simulate Users
@@ -371,7 +370,7 @@ then("they should see the sales trend plot for {string}", function(product, cont
               </div>
               <Code
                 themes={{
-                  light: "github-light-default",
+                  light: "github-light",
                   dark: "github-dark",
                 }}
                 lang="r"
@@ -427,7 +426,7 @@ then("they should see the sales trend plot for {string}", function(product, cont
               </div>
               <Code
                 themes={{
-                  light: "github-light-default",
+                  light: "github-light",
                   dark: "github-dark",
                 }}
                 lang="r"
@@ -482,7 +481,7 @@ then("they should see the sales trend plot for {string}", function(product, cont
               </div>
               <Code
                 themes={{
-                  light: "github-light-default",
+                  light: "github-light",
                   dark: "github-dark",
                 }}
                 lang="r"
@@ -521,7 +520,7 @@ test_that("calculate always returns 0", { # [!code ++]
               />
               <span>Tutorials</span>
               <Asterisk
-                className="inline-block size-[1em] text-destructive mr-4"
+                className="inline-block size-[1em] text-destructive ml-4"
               />
             </h2>
           </Animate>

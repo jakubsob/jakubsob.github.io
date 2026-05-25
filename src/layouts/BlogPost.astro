@@ -67,7 +67,7 @@ const posts = (await getCollection("blog"))
         >
           <header class="border-b-[1px] border-solid pb-2">
             <h1 class="lead text-balance">{title}</h1>
-            {description && <h2 class="m-0">{description}</h2>}
+            {description && <p class="text-xl font-normal text-muted-foreground m-0">{description}</p>}
             <div class="flex flex-row items-baseline gap-6 text-sm uppercase">
               <div>
                 {pubDate && <FormattedDate date={pubDate} />}

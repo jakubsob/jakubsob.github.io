@@ -54,14 +54,16 @@ const menuItems: MenuItemType[] = [
       {
         title: "Dashboard Templates",
         href: "/dashboard-templates/",
-        description: "Beautiful Shiny dashboard templates ready to use for your applications.",
+        description:
+          "Beautiful Shiny dashboard templates ready to use for your applications.",
       },
       {
         title: "Advance Your R Testing Roadmap",
         href: "/get-roadmap/",
-        description: "Step-by-step guide to building better tests for R developers.",
+        description:
+          "Step-by-step guide to building better tests for R developers.",
       },
-    ]
+    ],
   },
   {
     title: "R Tests Gallery",
@@ -72,9 +74,9 @@ const menuItems: MenuItemType[] = [
   {
     title: "course",
     href: "https://courses.jakubsobolewski.com",
-    className: "text-destructive uppercase",
+    className: "text-cta uppercase",
   },
-]
+];
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false)
