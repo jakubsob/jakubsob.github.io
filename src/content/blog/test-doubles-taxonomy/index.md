@@ -1,6 +1,6 @@
 ---
-title: 'The Full Test Doubles Taxonomy Every R Developer Should Know'
-description: 'Dummy, Stub, Spy, Mock, Fake — you might call them all "mock". Here is what each one actually is, when to reach for it, and what goes wrong when you mix them up.'
+title: 'You Call Them All Mocks. Here Is the Test Doubles Taxonomy for R.'
+description: 'Dummy, Stub, Spy, Mock, Fake — you probably call them all "mock". What each one actually is, when to reach for it, and what goes wrong when you mix them up.'
 pubDate: 2026-05-25
 tags: ["r", "tests"]
 draft: true
@@ -8,9 +8,9 @@ draft: true
 
 You might call them all “mock”.
 
-Mock the database. Mock the API. Mock the function. The word becomes a catch-all for any test double — any object you substitute for a real dependency in a test. Lumping them together makes it harder to choose the right tool, and the wrong choice leads to brittle, misleading tests.
+Mock the database. Mock the API. Mock the function. The word becomes a catch-all for any test double, any object you substitute for a real dependency in a test. Lumping them together makes it harder to choose the right tool, and the wrong choice leads to brittle, misleading tests.
 
-There are five distinct types. Each has a specific job. Knowing the difference is how you stop writing tests that lie to you.
+There are five distinct types, each with a specific job. Knowing which is which is how you stop writing tests that mislead.
 
 ## The code under test
 
@@ -38,7 +38,7 @@ It has three dependencies: `payment_gateway`, `logger`, and `notifier`. Each one
 
 **💡 Definition:** an object passed to satisfy a required parameter but never actually used by the test.
 
-`process_payment` always calls `logger$log` — the logger is required. But for a test that’s only checking whether the correct transaction ID is returned, we don’t care what gets logged. We just need something that won’t blow up when called.
+`process_payment` always calls `logger$log`. The logger is required. But for a test that’s only checking whether the correct transaction ID is returned, we don’t care what gets logged. We just need something that won’t blow up when called.
 
 ``` r
 test_that("returns the transaction ID on successful payment", {
@@ -86,13 +86,13 @@ test_that("throws an error when payment is declined", {
 })
 ```
 
-    Test passed with 1 success 😸.
+    Test passed with 1 success 😀.
 
 The stub provides inputs *to* the system under test. You assert on what the code did *with* those inputs (in this case, that it threw the right error).
 
 Notice that `process_payment` accepts `payment_gateway` as an argument. That’s dependency injection: the function doesn’t create or import its own gateway, so the test can pass in anything with the same interface. Without it you’d need a patching library to intercept the real dependency mid-call. With it, a plain list with a `charge` function is enough. Stubs work best when the code is designed this way: dependencies accepted as arguments, not hardwired inside.
 
-When the dependency *isn’t* declared in the interface — when the function calls another function directly by name — `mockery::stub()` can patch it for the duration of a test:
+When the dependency *isn’t* declared in the interface, when the function calls another function directly by name, `mockery::stub()` can patch it for the duration of a test:
 
 ``` r
 # A function that calls charge_card() internally, with no way to inject it
@@ -130,13 +130,13 @@ test_that("returns transaction ID when charge succeeds", {
 
 Use `mockery::stub()` when you’re working with legacy code that wasn’t built with testability in mind and you can’t refactor the interface right now. It lets you get tests in place quickly. Treat it as a stepping stone: once the characterization tests are green, refactor toward dependency injection and replace the patch with a plain stub passed as an argument.
 
-When you need to control what a dependency returns and don’t care how it was called, a stub is what you want.
+When you need to control what a dependency returns and don’t care how it was called, reach for a stub.
 
 ## 3. Spy
 
 **💡 Definition:** a stub that also records calls made to it, so you can assert on them afterward.
 
-Sometimes the behavior you’re testing is a side effect. A notification that should have been sent, a message that should have been logged. The code doesn’t return a value you can assert on; it calls something. A spy captures those calls.
+Sometimes the behavior you’re testing is a side effect. A notification that should have been sent, a message that should have been logged. The code doesn’t return a value you can assert on. It calls something. A spy captures those calls.
 
 ``` r
 make_notifier_spy <- function() {
@@ -171,7 +171,7 @@ test_that("notifies the customer after successful payment", {
 })
 ```
 
-    Test passed with 3 successes 😸.
+    Test passed with 3 successes 😀.
 
 The spy is a stub with memory. You call the code, then interrogate the spy to see what happened. Assertions come *after* the Act step.
 
@@ -198,7 +198,7 @@ test_that("notifies the customer after successful payment (mockery spy)", {
 })
 ```
 
-    Test passed with 3 successes 🎊.
+    Test passed with 3 successes 🥳.
 
 The handwritten version is clearer when you want the recording mechanism visible to readers, useful in a codebase where not everyone knows `mockery`. `mockery::mock()` is more concise once the team is familiar with the library.
 
@@ -208,7 +208,7 @@ The difference from a mock comes down to return values. A spy records calls and 
 
 **💡 Definition:** a double pre-programmed with expectations that form a specification of the calls it should receive. A true mock can throw if it receives a call it doesn’t expect, and is checked during verification to confirm it got all the calls it was expecting.<sup>[\[1\]](#references)</sup>
 
-`mockery::mock()` is looser than that definition. It accepts any call without complaining and doesn’t enforce expectations upfront. What it does do is record every call it receives (the arguments, the order, the count) and return pre-programmed values you supply. Verification is your responsibility in the Assert step.
+`mockery::mock()` is looser than that definition. It accepts any call without complaining and doesn’t enforce expectations upfront. It records every call it receives (the arguments, the order, the count) and returns pre-programmed values you supply. Verification is your responsibility in the Assert step.
 
 ``` r
 test_that("sends exactly one notification with correct arguments", {
@@ -227,13 +227,13 @@ test_that("sends exactly one notification with correct arguments", {
 })
 ```
 
-    Test passed with 5 successes 😀.
+    Test passed with 5 successes 🥇.
 
-Use a mock when the *interaction itself* is what you’re testing: not what the code returns, but whether it called the dependency in the right way.
+Use a mock when the *interaction itself* is what you’re testing: whether the code called the dependency in the right way, with the right arguments.
 
-They’re also the easiest double to overuse. Assert on every call to every dependency and you’ve written an overspecified test — one that breaks whenever the implementation changes, even when the behavior stays the same.
+They’re also the easiest double to overuse. Assert on every call to every dependency and you’ve written an overspecified test, one that breaks whenever the implementation changes even when the behavior stays the same.
 
-Prefer a spy when you only need to record calls; a plain list with a function that appends to a vector is often enough. Reach for a mock when you also need to control what the dependency returns. The risk is the same with any interaction-based assertion: check every call to every dependency and you end up with a test that mirrors the implementation rather than the behaviour, breaking whenever the internals change even when the outcome doesn’t.
+Prefer a spy when you only need to record calls. A plain list with a function that appends to a vector is often enough. Reach for a mock when you also need to control what the dependency returns. The risk is the same with any interaction-based assertion: check every call to every dependency and you end up with a test that mirrors the implementation rather than the behaviour, breaking whenever the internals change even when the outcome doesn’t.
 
 ## 5. Fake
 
@@ -280,7 +280,7 @@ test_that("successful charges are recorded in the gateway", {
 })
 ```
 
-    Test passed with 2 successes 😀.
+    Test passed with 2 successes 🎊.
 
 Fakes work well when you need to test behaviour across multiple operations: place an order, query its status, refund it. A stub would need to be reprogrammed for each call. A fake just handles it.
 
@@ -299,13 +299,13 @@ The cost is that fakes take time to build and maintain. They need to be kept in 
 | Mock | Pre-programmed only | ✅ | ✅ | ✅ | Pin an exact interaction as a hard contract |
 | Fake | ✅ | ❌ | ❌ | ❌ | Replace stateful or multi-call dependencies |
 
-The key difference is between stub and mock. A stub returns values; you assert on the outcome. A mock records calls and can return pre-programmed values; you assert on both in the Assert step. Using a mock where a stub would do couples your test to implementation details. Using a stub where a mock is needed means missing the interaction you were trying to verify.
+The key difference is between stub and mock. A stub returns values. You assert on the outcome. A mock records calls and can return pre-programmed values. You assert on both in the Assert step. Using a mock where a stub would do couples your test to implementation details. Using a stub where a mock is needed means missing the interaction you were trying to verify.
 
 When in doubt: if you’re asserting on a return value or a state change, use a stub. If you’re asserting that a specific call was made, use a spy or a mock. If the dependency has real state that needs to survive across calls, build a fake.
 
 ## Appendix: implementing an eager mock by hand
 
-*`mockery::mock()` is sufficient for everyday use — skip this if you’re not curious about what a mock looks like under the hood.*
+*`mockery::mock()` is sufficient for everyday use. Skip this if you’re not curious about what a mock looks like under the hood.*
 
 This is what a mock matching Fowler’s definition looks like in R. It takes a list of expected calls in the Arrange step, fails immediately on anything unexpected, and exposes a `verify()` function to confirm every expected call was made.
 
@@ -421,7 +421,7 @@ test_that("passes when all expected calls are made and no unexpected ones occur"
 })
 ```
 
-    Test passed with 1 success 🎊.
+    Test passed with 1 success 🥳.
 
 ## References
 
