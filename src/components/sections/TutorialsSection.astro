@@ -1,44 +1,104 @@
 ---
 import { Code } from "astro:components";
+import { Button } from "@/components/ui/button";
 import { Section } from "@/components/ui/section";
 import { Animate } from "@/components/ui/animate";
-import FeatureList from "@/components/FeatureList.astro";
+import { Asterisk, CircleArrowRight } from "lucide-react";
 ---
 
-<Section id="shiny-behavior-driven-development" size="fit" variant="dark">
-  <div class="container pt-52 pb-12">
+<Section id="tutorials" size="fit" variant="dark">
+  <div class="container mx-auto flex justify-center pt-52 pb-12">
     <Animate>
-      <h2
-        class="text-[clamp(2em,5vw,6em)] font-light uppercase border-foreground/15 pt-10"
-      >
-        Tutorials
+      <h2 class="text-clamp-md font-light uppercase flex items-center">
+        <Asterisk className="inline-block size-[1em] text-destructive mr-4" />
+        <span>Tutorials</span>
+        <Asterisk className="inline-block size-[1em] text-destructive ml-4" />
       </h2>
     </Animate>
   </div>
-  <div class="">
-    <div class="container mx-auto space-y-24 py-20 my-10">
-      <div class="grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-12">
-        <div class="">
-          <Animate>
-            <a
-              href="https://github.com/jakubsob/shiny-acceptance-tdd"
-              class="hover:underline"
-            >
-              <h3
-                class="text-clamp-sm text-wrap uppercase mb-8 leading-[1em]"
+
+  <div class="py-20 my-10">
+    <div class="container">
+      <!-- Tutorial 1: Shiny Acceptance TDD -->
+      <div class="pb-16">
+        <Animate>
+          <div class="flex items-start gap-6">
+            <div>
+              <a
+                href="https://github.com/jakubsob/shiny-acceptance-tdd"
+                class="hover:underline"
               >
-                Shiny Acceptance Test-Driven Development
-              </h3>
-            </a>
-          </Animate>
-          <Animate>
-            <Code
-              themes={{
-                light: "github-light",
-                dark: "github-dark",
-              }}
-              lang="r"
-              code={`# tests/acceptance/test-budget.R
+                <h3 class="text-clamp-sm uppercase leading-none">
+                  Shiny Acceptance TDD
+                </h3>
+              </a>
+              <p class="text-muted-foreground mt-3 max-w-[55ch]">
+                Build Shiny apps from the outside in. Write acceptance tests
+                first, then let them drive every design decision down to the
+                module level.
+              </p>
+            </div>
+          </div>
+        </Animate>
+      </div>
+
+      <div class="space-y-0">
+        <Animate>
+          <div
+            class="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-8 lg:gap-16 items-start pb-16 border-b border-foreground/10"
+          >
+            <div>
+              <p
+                class="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-3"
+              >
+                <span class="text-destructive mr-1">✗</span>vague requirements
+              </p>
+              <p
+                class="text-sm text-muted-foreground leading-relaxed max-w-[36ch]"
+              >
+                Stories written in prose stay prose. They can't be run, so
+                nobody knows when the app actually satisfies them. Requirements
+                drift the moment code ships.
+              </p>
+            </div>
+            <div class="text-sm ring-1 ring-destructive/40 rounded-lg">
+              <Code
+                themes={{ light: "github-light", dark: "github-dark" }}
+                lang="text"
+                code={`Budget tracking
+  As a user I want to see my net balance
+  so that I can understand my financial situation.
+
+  Acceptance: shows income, expenses, and net.
+  // ← lives in a doc, never executed`}
+              />
+            </div>
+          </div>
+        </Animate>
+
+        <Animate>
+          <div
+            class="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-8 lg:gap-16 items-start py-12 border-b border-foreground/10"
+          >
+            <div>
+              <p
+                class="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-3"
+              >
+                <span class="text-success mr-1">✓</span>executable specification
+              </p>
+              <p
+                class="text-sm text-muted-foreground leading-relaxed max-w-[36ch]"
+              >
+                The same scenario becomes a test. Given-When-Then forces you to
+                name preconditions, actions, and outcomes. When it passes, the
+                feature is done.
+              </p>
+            </div>
+            <div class="text-sm ring-1 ring-success/40 rounded-lg">
+              <Code
+                themes={{ light: "github-light", dark: "github-dark" }}
+                lang="r"
+                code={`# tests/acceptance/test-budget.R
 test_that("Scenario: I can inspect my net balance", {
   # Given
   dsl$record_income(2000)
@@ -51,55 +111,92 @@ test_that("Scenario: I can inspect my net balance", {
   dsl$verify_net_balance(1500)
   dsl$teardown()
 })`}
-            />
-          </Animate>
-        </div>
-        <div class="space-y-8 font-light">
-          <FeatureList
-            items={[
-              {
-                title: "Start with user stories",
-                description:
-                  "Transform vague requirements into clear, testable user stories that define what users want to accomplish.",
-              },
-              {
-                title: "Executable specifications",
-                description:
-                  "Turn user scenarios into working code that validates your application behaves as expected.",
-              },
-              {
-                title: "Domain-specific language",
-                description:
-                  "Create a testing vocabulary that bridges technical implementation with business language.",
-              },
-              {
-                title: "UI independence",
-                description:
-                  "Focus on behavior, not implementation details, allowing your UI to evolve without breaking tests.",
-              },
-              {
-                title: "Shiny best practices",
-                description:
-                  "Learn practical techniques for building more maintainable, testable Shiny applications.",
-              },
-            ]}
-          />
-        </div>
+              />
+            </div>
+          </div>
+        </Animate>
+
+        <Animate>
+          <div
+            class="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-8 lg:gap-16 items-start py-12"
+          >
+            <div>
+              <p
+                class="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-3"
+              >
+                what you'll learn
+              </p>
+              <ul
+                class="text-sm text-muted-foreground leading-relaxed space-y-2 max-w-[36ch]"
+              >
+                <li class="flex items-start gap-2">
+                  <span class="text-success shrink-0">✓</span>Transform user
+                  stories into runnable tests
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-success shrink-0">✓</span>Build a DSL that
+                  hides UI details from specs
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-success shrink-0">✓</span>Keep tests green
+                  as the UI evolves
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-success shrink-0">✓</span>Structure Shiny
+                  modules for testability
+                </li>
+              </ul>
+            </div>
+          </div>
+        </Animate>
       </div>
-      <div class="grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-12">
-        <div class="">
+
+      <div class="text-center pt-4 pb-4">
+        <a
+          href="https://github.com/jakubsob/shiny-acceptance-tdd"
+          target="_blank"
+        >
+          <Button
+            size="xl"
+            className="text-2xl motion-preset-oscillate-sm motion-paused hover:motion-running"
+            variant="pill"
+            shape="pill"
+          >
+            View on GitHub
+            <CircleArrowRight className="inline-block size-[1.5em] ml-2" />
+          </Button>
+        </a>
+      </div>
+
+      <!-- Tutorial 2: Shiny TDD (ShinyConf 2024) -->
+      <div class="container pt-24 mt-24 border-t border-foreground/10 px-0">
+        <div class="pb-16">
           <Animate>
-            <a
-              href="https://jakubsobolewski.com/shinyconf2024/"
-              target="_blank"
-              class="hover:underline"
-            >
-              <h3 class="text-clamp-sm uppercase mb-8 leading-[1em]">
-                Shiny Test-Driven Development
-              </h3>
-            </a>
+            <div class="flex items-start gap-6">
+              <div>
+                <a
+                  href="https://jakubsobolewski.com/shinyconf2024/"
+                  target="_blank"
+                  class="hover:underline"
+                >
+                  <h3 class="text-clamp-sm uppercase leading-none">
+                    Shiny Test-Driven Development
+                  </h3>
+                </a>
+                <p class="text-muted-foreground mt-3 max-w-[55ch]">
+                  ShinyConf 2024. A structured approach to testing Shiny apps:
+                  inside-out unit tests, outside-in acceptance tests, and the
+                  loop that connects them.
+                </p>
+              </div>
+            </div>
           </Animate>
-          <Animate>
+        </div>
+
+        <Animate>
+          <div
+            class="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-8 lg:gap-16 items-start pb-16 border-b border-foreground/10"
+          >
             <div class="aspect-video w-full overflow-hidden rounded-lg">
               <iframe
                 class="w-full h-full"
@@ -110,54 +207,66 @@ test_that("Scenario: I can inspect my net balance", {
               >
               </iframe>
             </div>
-          </Animate>
-        </div>
-        <div class="space-y-8 font-light">
-          <FeatureList
-            items={[
-              {
-                title: "Test inside-out or outside-in",
-                description:
-                  "Learn different testing strategies and when to apply them for maximum effectiveness in Shiny apps.",
-              },
-              {
-                title: "Automate acceptance criteria",
-                description:
-                  "Convert business requirements into automated tests that validate your application meets user needs.",
-              },
-              {
-                title: "Isolate Shiny modules",
-                description:
-                  "Test each Shiny module independently to ensure they function correctly before integration.",
-              },
-              {
-                title: "Inject fake dependencies",
-                description:
-                  "Use dependency injection to replace external services with test doubles for faster, more reliable tests.",
-              },
-              {
-                title: "Structured testing approach",
-                description:
-                  "Apply a systematic testing methodology that improves code quality and development speed.",
-              },
-            ]}
-          />
-        </div>
+            <div>
+              <p
+                class="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-3"
+              >
+                what you'll learn
+              </p>
+              <ul
+                class="text-sm text-muted-foreground leading-relaxed space-y-2"
+              >
+                <li class="flex items-start gap-2">
+                  <span class="text-success shrink-0">✓</span>Inside-out vs.
+                  outside-in strategies
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-success shrink-0">✓</span>Automate
+                  acceptance criteria
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-success shrink-0">✓</span>Isolate and test
+                  Shiny modules
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-success shrink-0">✓</span>Inject fake
+                  dependencies
+                </li>
+              </ul>
+            </div>
+          </div>
+        </Animate>
       </div>
-      <div class="grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-12">
-        <div class="">
+
+      <!-- Tutorial 3: BDD -->
+      <div class="container pt-24 mt-24 border-t border-foreground/10 px-0">
+        <div class="pb-16">
           <Animate>
-            <a
-              href="/assets/user2025.pdf"
-              target="_blank"
-              class="hover:underline"
-            >
-              <h3 class="text-clamp-sm uppercase mb-8 leading-[1em]">
-                Behavior-Driven Development
-              </h3>
-            </a>
+            <div class="flex items-start gap-6">
+              <div>
+                <a
+                  href="/assets/user2025.pdf"
+                  target="_blank"
+                  class="hover:underline"
+                >
+                  <h3 class="text-clamp-sm uppercase leading-none">
+                    Behavior-Driven Development
+                  </h3>
+                </a>
+                <p class="text-muted-foreground mt-3 max-w-[55ch]">
+                  useR! 2025. From vague wish to working code: how to cooperate
+                  with stakeholders, write Gherkin scenarios, and execute them
+                  with Cucumber for R.
+                </p>
+              </div>
+            </div>
           </Animate>
-          <Animate>
+        </div>
+
+        <Animate>
+          <div
+            class="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-8 lg:gap-16 items-start"
+          >
             <div class="aspect-video w-full overflow-hidden rounded-lg">
               <iframe
                 class="w-full h-full"
@@ -168,34 +277,35 @@ test_that("Scenario: I can inspect my net balance", {
               >
               </iframe>
             </div>
-          </Animate>
-        </div>
-        <div class="space-y-8 font-light">
-          <FeatureList
-            items={[
-              {
-                title: "Learn BDD fundamentals",
-                description:
-                  "Understand the core principles of Behavior-Driven Development and why it improves software quality.",
-              },
-              {
-                title: "From Vague Wish to Working Code",
-                description:
-                  "Cooperate with stakeholders to transform vague requirements into clear, testable scenarios.",
-              },
-              {
-                title: "Use Given-When-Then",
-                description:
-                  "Master the Given-When-Then syntax to write scenarios that describe system behavior in a structured way.",
-              },
-              {
-                title: "Use Cucumber",
-                description:
-                  "Execute specifications using an R implementation of Cucumber.",
-              },
-            ]}
-          />
-        </div>
+            <div>
+              <p
+                class="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-3"
+              >
+                what you'll learn
+              </p>
+              <ul
+                class="text-sm text-muted-foreground leading-relaxed space-y-2"
+              >
+                <li class="flex items-start gap-2">
+                  <span class="text-success shrink-0">✓</span>BDD fundamentals
+                  and why they work
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-success shrink-0">✓</span>Given-When-Then
+                  scenario structure
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-success shrink-0">✓</span>Run specs with
+                  Cucumber for R
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-success shrink-0">✓</span>Align code with
+                  business language
+                </li>
+              </ul>
+            </div>
+          </div>
+        </Animate>
       </div>
     </div>
   </div>
