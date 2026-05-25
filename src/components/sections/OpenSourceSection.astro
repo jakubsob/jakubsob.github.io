@@ -3,20 +3,15 @@ import { Code } from "astro:components";
 import { Button } from "@/components/ui/button";
 import { Section } from "@/components/ui/section";
 import { Animate } from "@/components/ui/animate";
-import { Asterisk, CircleArrowRight } from "lucide-react";
+import { CodeFrame } from "@/components/ui/code-frame";
+import { EyebrowLabel } from "@/components/ui/eyebrow-label";
+import SectionHeading from "@/components/ui/section-heading.astro";
+import { CircleArrowRight } from "lucide-react";
 import { transformerNotationDiff } from "@shikijs/transformers";
 ---
 
 <Section id="opensource" size="fit" variant="dark">
-  <div class="container mx-auto flex justify-center pt-52 pb-12">
-    <Animate>
-      <h2 class="text-clamp-md font-light uppercase flex items-center">
-        <Asterisk className="inline-block size-[1em] text-destructive mr-4" />
-        <span>My Open Source</span>
-        <Asterisk className="inline-block size-[1em] text-destructive ml-4" />
-      </h2>
-    </Animate>
-  </div>
+  <SectionHeading title="My Open Source" />
   <div class="py-20 my-10">
     <div class="container">
       <div class="pb-16">
@@ -54,11 +49,9 @@ import { transformerNotationDiff } from "@shikijs/transformers";
             class="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-8 lg:gap-16 items-start pb-16 border-b border-foreground/10"
           >
             <div>
-              <p
-                class="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-3"
-              >
+              <EyebrowLabel>
                 <span class="text-destructive mr-1">✗</span>comments as specs
-              </p>
+              </EyebrowLabel>
               <p
                 class="text-sm text-muted-foreground leading-relaxed max-w-[36ch]"
               >
@@ -67,7 +60,7 @@ import { transformerNotationDiff } from "@shikijs/transformers";
                 they drift — and a stale comment is worse than no comment.
               </p>
             </div>
-            <div class="text-sm ring-1 ring-destructive/40 rounded-lg">
+            <CodeFrame variant="destructive">
               <Code
                 themes={{
                   light: "github-light",
@@ -83,7 +76,7 @@ import { transformerNotationDiff } from "@shikijs/transformers";
   expect_s3_class(result, "ggplot")
 })`}
               />
-            </div>
+            </CodeFrame>
           </div>
         </Animate>
 
@@ -92,11 +85,9 @@ import { transformerNotationDiff } from "@shikijs/transformers";
             class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start py-12 border-b border-foreground/10"
           >
             <div>
-              <p
-                class="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-3"
-              >
+              <EyebrowLabel>
                 <span class="text-success mr-1">✓</span>the specification
-              </p>
+              </EyebrowLabel>
               <p
                 class="text-sm text-muted-foreground leading-relaxed max-w-[36ch] mb-6"
               >
@@ -104,7 +95,7 @@ import { transformerNotationDiff } from "@shikijs/transformers";
                 required, what action is taken, what outcome is observable.
                 Vague intent doesn't survive the structure.
               </p>
-              <div class="text-sm ring-1 ring-success/40 rounded-lg">
+              <CodeFrame variant="success">
                 <Code
                   themes={{
                     light: "github-light",
@@ -118,14 +109,12 @@ import { transformerNotationDiff } from "@shikijs/transformers";
     When the user views the trend for "Electronics"
     Then the sales trend plot for "Electronics" is shown`}
                 />
-              </div>
+              </CodeFrame>
             </div>
             <div>
-              <p
-                class="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-3"
-              >
+              <EyebrowLabel>
                 <span class="text-success mr-1">✓</span>the implementation
-              </p>
+              </EyebrowLabel>
               <p
                 class="text-sm text-muted-foreground leading-relaxed max-w-[36ch] mb-6"
               >
@@ -133,7 +122,7 @@ import { transformerNotationDiff } from "@shikijs/transformers";
                 phrase becomes the function signature — the same words, now
                 executable.
               </p>
-              <div class="text-sm ring-1 ring-success/40 rounded-lg">
+              <CodeFrame variant="success">
                 <Code
                   themes={{
                     light: "github-light",
@@ -153,19 +142,17 @@ then("the sales trend plot for {string} is shown", function(category, context) {
   expect_equal(context$plot$labels$title, category)
 })`}
                 />
-              </div>
+              </CodeFrame>
             </div>
           </div>
         </Animate>
 
         <Animate>
           <div class="py-12">
-            <p
-              class="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-3"
-            >
+            <EyebrowLabel>
               <span class="text-success mr-1">✓</span>verification
-            </p>
-            <div class="text-sm ring-1 ring-success/40 rounded-lg">
+            </EyebrowLabel>
+            <CodeFrame variant="success">
               <Code
                 themes={{
                   light: "github-light",
@@ -179,7 +166,7 @@ then("the sales trend plot for {string} is shown", function(category, context) {
 #> ══ Results ═══════════════════════════════════════════════════
 #> [ FAIL 0 | WARN 0 | SKIP 0 | PASS 1 ]`}
               />
-            </div>
+            </CodeFrame>
           </div>
         </Animate>
       </div>
@@ -234,11 +221,7 @@ then("the sales trend plot for {string} is shown", function(category, context) {
             class="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-8 lg:gap-16 items-start pb-16 border-b border-foreground/10"
           >
             <div>
-              <p
-                class="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-3"
-              >
-                the code
-              </p>
+              <EyebrowLabel>the code</EyebrowLabel>
               <p
                 class="text-sm text-muted-foreground leading-relaxed max-w-[36ch]"
               >
@@ -267,11 +250,7 @@ is_adult <- function(age) {
             class="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-8 lg:gap-16 items-start pb-12 pt-12 border-b border-foreground/10"
           >
             <div>
-              <p
-                class="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-3"
-              >
-                mutation score
-              </p>
+              <EyebrowLabel>mutation score</EyebrowLabel>
               <div
                 class="text-[clamp(5rem,12vw,9rem)] font-light leading-none tabular-nums text-destructive"
               >
@@ -287,12 +266,10 @@ is_adult <- function(age) {
               </p>
             </div>
             <div class="text-sm">
-              <p
-                class="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-3"
-              >
+              <EyebrowLabel>
                 <span class="text-destructive mr-1">✗</span>the tests
-              </p>
-              <div class="ring-1 ring-destructive/40 rounded-lg">
+              </EyebrowLabel>
+              <CodeFrame variant="destructive">
                 <Code
                   themes={{
                     light: "github-light",
@@ -307,19 +284,15 @@ test_that("is_adult returns FALSE for minors", {
   expect_false(is_adult(10))  # passes even with age > 18
 })`}
                 />
-              </div>
+              </CodeFrame>
             </div>
           </div>
         </Animate>
 
         <Animate>
           <div class="py-12 border-b border-foreground/10">
-            <p
-              class="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-3"
-            >
-              run mutation testing
-            </p>
-            <div class="text-sm ring-1 ring-destructive/40 rounded-lg">
+            <EyebrowLabel>run mutation testing</EyebrowLabel>
+            <CodeFrame variant="destructive">
               <Code
                 themes={{
                   light: "github-light",
@@ -340,7 +313,7 @@ test_that("is_adult returns FALSE for minors", {
 #> ── Results ──────────────────────────────────────────────────────────────────
 #> [ KILLED 1 | SURVIVED 1 | ERRORS 0 | TOTAL 2 | SCORE 50.0% ]`}
               />
-            </div>
+            </CodeFrame>
           </div>
         </Animate>
 
@@ -349,11 +322,7 @@ test_that("is_adult returns FALSE for minors", {
             class="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-8 lg:gap-16 items-start pt-12"
           >
             <div>
-              <p
-                class="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-3"
-              >
-                after the fix
-              </p>
+              <EyebrowLabel>after the fix</EyebrowLabel>
               <div
                 class="text-[clamp(5rem,12vw,9rem)] font-light leading-none tabular-nums text-ocean-green-400"
               >
@@ -367,12 +336,10 @@ test_that("is_adult returns FALSE for minors", {
               </p>
             </div>
             <div class="text-sm">
-              <p
-                class="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-3"
-              >
+              <EyebrowLabel>
                 <span class="text-success mr-1">✓</span>the fix
-              </p>
-              <div class="ring-1 ring-success/40 rounded-lg">
+              </EyebrowLabel>
+              <CodeFrame variant="success">
                 <Code
                   themes={{
                     light: "github-light",
@@ -392,7 +359,7 @@ test_that("is_adult is TRUE at the boundary", { # [!code ++]
   expect_true(is_adult(18))  # kills >= → > # [!code ++]
 }) # [!code ++]`}
                 />
-              </div>
+              </CodeFrame>
             </div>
           </div>
         </Animate>

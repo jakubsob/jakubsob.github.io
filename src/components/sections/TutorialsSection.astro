@@ -3,19 +3,14 @@ import { Code } from "astro:components";
 import { Button } from "@/components/ui/button";
 import { Section } from "@/components/ui/section";
 import { Animate } from "@/components/ui/animate";
-import { Asterisk, CircleArrowRight } from "lucide-react";
+import { CodeFrame } from "@/components/ui/code-frame";
+import { EyebrowLabel } from "@/components/ui/eyebrow-label";
+import SectionHeading from "@/components/ui/section-heading.astro";
+import { CircleArrowRight } from "lucide-react";
 ---
 
 <Section id="tutorials" size="fit" variant="dark">
-  <div class="container mx-auto flex justify-center pt-52 pb-12">
-    <Animate>
-      <h2 class="text-clamp-md font-light uppercase flex items-center">
-        <Asterisk className="inline-block size-[1em] text-destructive mr-4" />
-        <span>Tutorials</span>
-        <Asterisk className="inline-block size-[1em] text-destructive ml-4" />
-      </h2>
-    </Animate>
-  </div>
+  <SectionHeading title="Tutorials" />
 
   <div class="py-20 my-10">
     <div class="container">
@@ -48,11 +43,9 @@ import { Asterisk, CircleArrowRight } from "lucide-react";
             class="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-8 lg:gap-16 items-start pb-16 border-b border-foreground/10"
           >
             <div>
-              <p
-                class="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-3"
-              >
+              <EyebrowLabel>
                 <span class="text-destructive mr-1">✗</span>vague requirements
-              </p>
+              </EyebrowLabel>
               <p
                 class="text-sm text-muted-foreground leading-relaxed max-w-[36ch]"
               >
@@ -61,7 +54,7 @@ import { Asterisk, CircleArrowRight } from "lucide-react";
                 drift the moment code ships.
               </p>
             </div>
-            <div class="text-sm ring-1 ring-destructive/40 rounded-lg">
+            <CodeFrame variant="destructive">
               <Code
                 themes={{ light: "github-light", dark: "github-dark" }}
                 lang="text"
@@ -72,7 +65,7 @@ import { Asterisk, CircleArrowRight } from "lucide-react";
   Acceptance: shows income, expenses, and net.
   // ← lives in a doc, never executed`}
               />
-            </div>
+            </CodeFrame>
           </div>
         </Animate>
 
@@ -81,11 +74,9 @@ import { Asterisk, CircleArrowRight } from "lucide-react";
             class="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-8 lg:gap-16 items-start py-12 border-b border-foreground/10"
           >
             <div>
-              <p
-                class="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-3"
-              >
+              <EyebrowLabel>
                 <span class="text-success mr-1">✓</span>executable specification
-              </p>
+              </EyebrowLabel>
               <p
                 class="text-sm text-muted-foreground leading-relaxed max-w-[36ch]"
               >
@@ -94,7 +85,7 @@ import { Asterisk, CircleArrowRight } from "lucide-react";
                 feature is done.
               </p>
             </div>
-            <div class="text-sm ring-1 ring-success/40 rounded-lg">
+            <CodeFrame variant="success">
               <Code
                 themes={{ light: "github-light", dark: "github-dark" }}
                 lang="r"
@@ -112,7 +103,7 @@ test_that("Scenario: I can inspect my net balance", {
   dsl$teardown()
 })`}
               />
-            </div>
+            </CodeFrame>
           </div>
         </Animate>
 
@@ -121,11 +112,7 @@ test_that("Scenario: I can inspect my net balance", {
             class="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-8 lg:gap-16 items-start py-12"
           >
             <div>
-              <p
-                class="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-3"
-              >
-                what you'll learn
-              </p>
+              <EyebrowLabel>what you'll learn</EyebrowLabel>
               <ul
                 class="text-sm text-muted-foreground leading-relaxed space-y-2 max-w-[36ch]"
               >
@@ -208,11 +195,7 @@ test_that("Scenario: I can inspect my net balance", {
               </iframe>
             </div>
             <div>
-              <p
-                class="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-3"
-              >
-                what you'll learn
-              </p>
+              <EyebrowLabel>what you'll learn</EyebrowLabel>
               <ul
                 class="text-sm text-muted-foreground leading-relaxed space-y-2"
               >
@@ -278,11 +261,7 @@ test_that("Scenario: I can inspect my net balance", {
               </iframe>
             </div>
             <div>
-              <p
-                class="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-3"
-              >
-                what you'll learn
-              </p>
+              <EyebrowLabel>what you'll learn</EyebrowLabel>
               <ul
                 class="text-sm text-muted-foreground leading-relaxed space-y-2"
               >

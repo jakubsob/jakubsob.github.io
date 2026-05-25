@@ -1,0 +1,20 @@
+---
+import { Animate } from "@/components/ui/animate";
+import { Asterisk } from "lucide-react";
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<div class="container mx-auto flex justify-center pt-52 pb-12">
+  <Animate>
+    <h2 class="text-clamp-md font-light uppercase flex items-center">
+      <Asterisk className="inline-block size-[1em] text-destructive mr-4" />
+      <span>{title}</span>
+      <Asterisk className="inline-block size-[1em] text-destructive ml-4" />
+    </h2>
+  </Animate>
+</div>
