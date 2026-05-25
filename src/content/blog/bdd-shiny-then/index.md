@@ -12,7 +12,7 @@ You’ve triggered the action.
 
 Now the specification needs to answer one question: did the system do the right thing?
 
-That’s what Then steps are for — and how precisely you answer that question determines whether your specifications act as a reliable safety net or a source of false confidence.
+That’s what Then steps are for. How precisely you answer it determines whether your specifications act as a reliable safety net or produce false confidence.
 
 ------------------------------------------------------------------------
 
@@ -242,21 +242,13 @@ describe("data submission", {
 
 Each specification reads like a sentence. None of them mention `shinytest2`, input IDs, or database queries. The implementation lives behind the DSL, where it can change without touching the specifications.
 
-## Wrapping Up
+## Wrapping up
 
 Then steps are where a specification earns its credibility.
 
-A specification that only tests easy outcomes gives you false confidence. One that asserts at the right level — user-visible state, system state, and side effects — gives you a safety net that actually catches real problems.
+A specification that only tests easy outcomes produces false confidence. One that asserts user-visible state, system state, and side effects actually catches real problems. Assert outcomes, not implementations. Group assertions by observable behavior and split them only where they can genuinely diverge. Write failure messages that save time. Push implementation details down to unit and module tests.
 
-**Assert outcomes, not implementations.**
-
-**Group assertions by observable behavior — split only when outcomes can genuinely diverge.**
-
-**Write failure messages that save time, not waste it.**
-
-**Push implementation details down to unit and module tests.**
-
-With Given, When, and Then steps working together, your specifications become something more than a test suite. They become living documentation — a precise description of what your application does, written in terms any stakeholder can follow, and enforced automatically on every build.
+With Given, When, and Then steps in place, the specifications read like requirements and run on every build. That’s worth more than any testing framework on its own.
 
 ## Further Reading
 
