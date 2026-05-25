@@ -1,0 +1,36 @@
+---
+import { getCollection } from "astro:content";
+import PostList from "@/components/PostList.jsx";
+import { Button } from "@/components/ui/button";
+import { Section } from "@/components/ui/section";
+import { Animate } from "@/components/ui/animate";
+
+const posts = (await getCollection("blog"))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .filter((post) => post.data.draft !== true)
+  .filter((_, index) => index < 3);
+---
+
+<Section id="blog" size="fit" variant="light">
+  <div class="py-40 space-y-52">
+    <div class="container grid grid-cols-1 lg:grid-cols-2">
+      <div class="mb-12">
+        <Animate>
+          <h2 class="flex text-clamp-sm uppercase">New on the blog</h2>
+        </Animate>
+      </div>
+      <div class="order-3 mt-12 md:order-2 md:self-end">
+        <Animate>
+          <a href="/blog">
+            <Button variant="pill" size="xl" shape="pill">
+              <span class="text-xl">Read more →</span>
+            </Button>
+          </a>
+        </Animate>
+      </div>
+      <div class="h-full max-w-[65ch] row-span-2">
+        <PostList client:load posts={posts} showControls={false} />
+      </div>
+    </div>
+  </div>
+</Section>

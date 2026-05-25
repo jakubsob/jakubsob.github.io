@@ -54,8 +54,12 @@
       hsl(var(--foreground)),
       hsl(var(--light))
     );
-    --diff-add: 155 50% 40%;
-    --diff-remove: 0 50% 40%;
+    --success: 155 50% 43%;
+    --success-foreground: 210 40% 98%;
+    --diff-add-bg: 155 55% 91%;
+    --diff-add-text: 155 55% 28%;
+    --diff-remove-bg: 0 70% 95%;
+    --diff-remove-text: 0 60% 38%;
   }
 
   .dark {
@@ -88,8 +92,12 @@
       hsl(var(--background)),
       hsl(var(--light))
     );
-    --diff-add: 155 50% 10%;
-    --diff-remove: 0 50% 20%;
+    --success: 155 50% 43%;
+    --success-foreground: 210 40% 98%;
+    --diff-add-bg: 155 40% 13%;
+    --diff-add-text: 155 60% 58%;
+    --diff-remove-bg: 0 45% 14%;
+    --diff-remove-text: 0 65% 62%;
   }
 }
 
@@ -157,17 +165,34 @@ pre code {
   padding: 0 12px;
 }
 
-.astro-code .diff.add, .astro-code .diff.add span {
-  background-color: hsl(var(--diff-add)) !important;
+.astro-code .diff.add {
+  background-color: hsl(var(--diff-add-bg)) !important;
 }
 
-.astro-code .diff.remove, .astro-code .diff.remove span {
-  background-color: hsl(var(--diff-remove)) !important;
+.astro-code .diff.add span {
+  background-color: transparent !important;
+}
+
+.astro-code .diff.remove {
+  background-color: hsl(var(--diff-remove-bg)) !important;
+}
+
+.astro-code .diff.remove span {
+  background-color: transparent !important;
 }
 
 .astro-code .diff:before {
   position: absolute !important;
   left: 40px !important;
+  font-weight: 700;
+}
+
+.astro-code .diff.add:before {
+  color: hsl(var(--diff-add-text)) !important;
+}
+
+.astro-code .diff.remove:before {
+  color: hsl(var(--diff-remove-text)) !important;
 }
 
 .focused .line {

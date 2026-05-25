@@ -1,0 +1,74 @@
+---
+import { Picture } from "astro:assets";
+import { Section } from "@/components/ui/section";
+import { Animate } from "@/components/ui/animate";
+import authorImage from "/public/author.png";
+import Grid2 from "../../pages/grid2.png";
+---
+
+<Section id="about" variant="light">
+  <div class="py-52 relative">
+    <div class="absolute z-0 bottom-0 left-0 size-full">
+      <Picture
+        src={Grid2}
+        class="size-full object-cover object-[center_top] invert opacity-5 dark:opacity-40"
+        alt="Hero background"
+      />
+    </div>
+    <div
+      class="container grid grid-cols-1 place-items-center lg:grid-cols-2 gap-12"
+    >
+      <div class="flex flex-col gap-6">
+        <Animate>
+          <div class="w-56 h-56 mx-auto lg:mx-0">
+            <Picture
+              src={authorImage}
+              alt="Jakub Sobolewski"
+              class="w-full h-full object-cover rounded-md border bg-light"
+              widths={[224, 448]}
+              sizes="224px"
+            />
+          </div>
+        </Animate>
+        <Animate>
+          <h2
+            class="text-[clamp(3rem,7vw,6.5rem)] font-light uppercase mb-8 text-center lg:text-start leading-[0.92]"
+          >
+            I'm Jakub Sobolewski
+          </h2>
+        </Animate>
+      </div>
+      <Animate>
+        <div
+          class="w-full text-balance space-y-8 font-light text-center lg:text-left"
+        >
+          <p>
+            I'm a software engineer specializing in R with 5+ years of
+            experience.
+          </p>
+          <p>
+            I believe automated testing is the key to building quality
+            software.
+          </p>
+          <p>
+            My journey into R testing began with a project where to develop
+            code, you had to be connected to the production environment. Turns
+            out, it was a terrible developer experience.
+          </p>
+          <p>
+            I'm particularly passionate about knowledge sharing, which is why
+            I maintain an active blog and R Tests Gallery. I believe that when
+            we share our testing experiences—both successes and failures—we
+            all become better developers.
+          </p>
+          <p>
+            I approach testing with a practical mindset: tests should make
+            development faster and more confident, not slower and more
+            burdensome. My goal is to help teams find testing strategies that
+            actually enhance their workflow.
+          </p>
+        </div>
+      </Animate>
+    </div>
+  </div>
+</Section>

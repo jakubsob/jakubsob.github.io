@@ -1,0 +1,418 @@
+---
+import { Code } from "astro:components";
+import { Button } from "@/components/ui/button";
+import { Section } from "@/components/ui/section";
+import { Animate } from "@/components/ui/animate";
+import { Asterisk, CircleArrowRight } from "lucide-react";
+import { transformerNotationDiff } from "@shikijs/transformers";
+import TutorialsSection from "./TutorialsSection.astro";
+---
+
+<Section id="opensource" size="fit" variant="dark">
+  <div class="container mx-auto flex justify-center pt-52 pb-12">
+    <Animate>
+      <h2 class="text-clamp-md font-light uppercase flex items-center">
+        <Asterisk className="inline-block size-[1em] text-destructive mr-4" />
+        <span>My Open Source</span>
+        <Asterisk className="inline-block size-[1em] text-destructive ml-4" />
+      </h2>
+    </Animate>
+  </div>
+  <div class="py-20 my-10">
+    <div class="container">
+      <div class="pb-16">
+        <Animate>
+          <div class="flex items-start gap-6">
+            <div class="size-[120px] flex-shrink-0">
+              <img
+                class="w-full h-full object-contain"
+                src="https://raw.githubusercontent.com/jakubsob/cucumber/main/man/figures/logo.png"
+                alt="cucumber logo"
+                width="120"
+                height="120"
+              />
+            </div>
+            <div>
+              <a
+                href="https://github.com/jakubsob/cucumber"
+                class="hover:underline"
+              >
+                <h3 class="text-clamp-sm uppercase leading-none">Cucumber</h3>
+              </a>
+              <p class="text-muted-foreground mt-3 max-w-[55ch]">
+                Write behavior specifications in plain English, implement them
+                as R functions, and run them as tests. Requirements stay in
+                sync with the code because they are the code.
+              </p>
+            </div>
+          </div>
+        </Animate>
+      </div>
+
+      <div class="space-y-0">
+        <Animate>
+          <div
+            class="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-8 lg:gap-16 items-start pb-16 border-b border-foreground/10"
+          >
+            <div>
+              <p
+                class="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-3"
+              >
+                <span class="text-destructive mr-1">✗</span>comments as specs
+              </p>
+              <p
+                class="text-sm text-muted-foreground leading-relaxed max-w-[36ch]"
+              >
+                Comments encode intent but not procedure. They don't separate
+                precondition from action from outcome. They can't be run, so
+                they drift — and a stale comment is worse than no comment.
+              </p>
+            </div>
+            <div class="text-sm ring-1 ring-destructive/40 rounded-lg">
+              <Code
+                themes={{
+                  light: "github-light",
+                  dark: "github-dark",
+                }}
+                lang="r"
+                code={`test_that("sales trend works", {
+  # sales data is available
+  # check the plot for Electronics
+  # make sure it looks right
+
+  result <- get_sales_trend("Electronics")
+  expect_s3_class(result, "ggplot")
+})`}
+              />
+            </div>
+          </div>
+        </Animate>
+
+        <Animate>
+          <div
+            class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start py-12 border-b border-foreground/10"
+          >
+            <div>
+              <p
+                class="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-3"
+              >
+                <span class="text-success mr-1">✓</span>the specification
+              </p>
+              <p
+                class="text-sm text-muted-foreground leading-relaxed max-w-[36ch] mb-6"
+              >
+                Gherkin forces you to think in procedure: what state is
+                required, what action is taken, what outcome is observable.
+                Vague intent doesn't survive the structure.
+              </p>
+              <div class="text-sm ring-1 ring-success/40 rounded-lg">
+                <Code
+                  themes={{
+                    light: "github-light",
+                    dark: "github-dark",
+                  }}
+                  lang="gherkin"
+                  code={`Feature: Sales Trends
+
+  Scenario: User views trend for a category
+    Given the sales data is loaded
+    When the user views the trend for "Electronics"
+    Then the sales trend plot for "Electronics" is shown`}
+                />
+              </div>
+            </div>
+            <div>
+              <p
+                class="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-3"
+              >
+                <span class="text-success mr-1">✓</span>the implementation
+              </p>
+              <p
+                class="text-sm text-muted-foreground leading-relaxed max-w-[36ch] mb-6"
+              >
+                Each line of the spec maps to one R function. The English
+                phrase becomes the function signature — the same words, now
+                executable.
+              </p>
+              <div class="text-sm ring-1 ring-success/40 rounded-lg">
+                <Code
+                  themes={{
+                    light: "github-light",
+                    dark: "github-dark",
+                  }}
+                  lang="r"
+                  code={`given("the sales data is loaded", function(context) {
+  context$data <- load_sales_data()
+})
+
+when("the user views the trend for {string}", function(category, context) {
+  context$plot <- get_sales_trend(context$data, category)
+})
+
+then("the sales trend plot for {string} is shown", function(category, context) {
+  expect_s3_class(context$plot, "ggplot")
+  expect_equal(context$plot$labels$title, category)
+})`}
+                />
+              </div>
+            </div>
+          </div>
+        </Animate>
+
+        <Animate>
+          <div class="py-12">
+            <p
+              class="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-3"
+            >
+              <span class="text-success mr-1">✓</span>verification
+            </p>
+            <div class="text-sm ring-1 ring-success/40 rounded-lg">
+              <Code
+                themes={{
+                  light: "github-light",
+                  dark: "github-dark",
+                }}
+                lang="r"
+                code={`> cucumber::test()
+#> ✔ | F W  S  OK | Context
+#> ✔ |          1 | Feature: Sales Trends
+#>
+#> ══ Results ═══════════════════════════════════════════════════
+#> [ FAIL 0 | WARN 0 | SKIP 0 | PASS 1 ]`}
+              />
+            </div>
+          </div>
+        </Animate>
+      </div>
+
+      <div class="text-center pt-4 pb-4">
+        <a href="https://jakubsobolewski.com/cucumber/" target="_blank">
+          <Button
+            size="xl"
+            className="text-2xl motion-preset-oscillate-sm motion-paused hover:motion-running"
+            variant="pill"
+            shape="pill"
+          >
+            Try it out!
+            <CircleArrowRight className="inline-block size-[1.5em] ml-2" />
+          </Button>
+        </a>
+      </div>
+    </div>
+    <div class="container pt-24 mt-24 border-t border-foreground/10">
+      <div class="pb-16">
+        <Animate>
+          <div class="flex items-start gap-6">
+            <div class="size-[120px] flex-shrink-0">
+              <img
+                class="w-full h-full object-contain"
+                src="https://raw.githubusercontent.com/jakubsob/muttest/main/man/figures/logo.png"
+                alt="muttest logo"
+                width="120"
+                height="120"
+              />
+            </div>
+            <div>
+              <a
+                href="https://github.com/jakubsob/muttest"
+                class="hover:underline"
+              >
+                <h3 class="text-clamp-sm uppercase leading-none">Muttest</h3>
+              </a>
+              <p class="text-muted-foreground mt-3 max-w-[55ch]">
+                Mutation testing for R. Introduces small changes to your
+                source code and checks whether your tests catch them. Reveals
+                gaps that code coverage misses.
+              </p>
+            </div>
+          </div>
+        </Animate>
+      </div>
+
+      <div class="space-y-0">
+        <Animate>
+          <div
+            class="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-8 lg:gap-16 items-start pb-16 border-b border-foreground/10"
+          >
+            <div>
+              <p
+                class="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-3"
+              >
+                the code
+              </p>
+              <p
+                class="text-sm text-muted-foreground leading-relaxed max-w-[36ch]"
+              >
+                A simple boundary check. Two tests cover adults and minors —
+                but never the edge.
+              </p>
+            </div>
+            <div class="text-sm">
+              <Code
+                themes={{
+                  light: "github-light",
+                  dark: "github-dark",
+                }}
+                lang="r"
+                code={`# R/is_adult.R
+is_adult <- function(age) {
+  age >= 18
+}`}
+              />
+            </div>
+          </div>
+        </Animate>
+
+        <Animate>
+          <div
+            class="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-8 lg:gap-16 items-start pb-12 pt-12 border-b border-foreground/10"
+          >
+            <div>
+              <p
+                class="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-3"
+              >
+                mutation score
+              </p>
+              <div
+                class="text-[clamp(5rem,12vw,9rem)] font-light leading-none tabular-nums text-destructive"
+              >
+                50%
+              </div>
+              <p
+                class="text-muted-foreground mt-4 text-sm leading-relaxed max-w-[36ch]"
+              >
+                The <code class="font-mono text-xs">{">"} 18</code> mutant survived.
+                Boundary value 18 is never tested — your suite can't tell <code
+                  class="font-mono text-xs">{">="}</code
+                > from <code class="font-mono text-xs">{">"}</code>.
+              </p>
+            </div>
+            <div class="text-sm">
+              <p
+                class="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-3"
+              >
+                <span class="text-destructive mr-1">✗</span>the tests
+              </p>
+              <div class="ring-1 ring-destructive/40 rounded-lg">
+                <Code
+                  themes={{
+                    light: "github-light",
+                    dark: "github-dark",
+                  }}
+                  lang="r"
+                  code={`test_that("is_adult returns TRUE for adults", {
+  expect_true(is_adult(25))  # passes even with age > 18
+})
+
+test_that("is_adult returns FALSE for minors", {
+  expect_false(is_adult(10))  # passes even with age > 18
+})`}
+                />
+              </div>
+            </div>
+          </div>
+        </Animate>
+
+        <Animate>
+          <div class="py-12 border-b border-foreground/10">
+            <p
+              class="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-3"
+            >
+              run mutation testing
+            </p>
+            <div class="text-sm ring-1 ring-destructive/40 rounded-lg">
+              <Code
+                themes={{
+                  light: "github-light",
+                  dark: "github-dark",
+                }}
+                lang="r"
+                code={`> muttest::muttest(plan)
+#> ℹ Mutation Testing
+#>   |   K |   S |   E |   T |   % | Mutator  | File
+#> ✔ |   1 |   0 |   0 |   1 | 100 | >= → <=  | is_adult.R
+#> x |   1 |   1 |   0 |   2 |  50 | >= → >   | is_adult.R
+#>
+#> ── Survived Mutants ─────────────────────────────────────────────────────────
+#> is_adult.R  >= → >
+#>   2-   age >= 18
+#>   2+   age > 18
+#>
+#> ── Results ──────────────────────────────────────────────────────────────────
+#> [ KILLED 1 | SURVIVED 1 | ERRORS 0 | TOTAL 2 | SCORE 50.0% ]`}
+              />
+            </div>
+          </div>
+        </Animate>
+
+        <Animate>
+          <div
+            class="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-8 lg:gap-16 items-start pt-12"
+          >
+            <div>
+              <p
+                class="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-3"
+              >
+                after the fix
+              </p>
+              <div
+                class="text-[clamp(5rem,12vw,9rem)] font-light leading-none tabular-nums text-ocean-green-400"
+              >
+                100%
+              </div>
+              <p
+                class="text-muted-foreground mt-4 text-sm leading-relaxed max-w-[36ch]"
+              >
+                Every mutation triggers a failure. Adding the boundary test
+                kills the survivor.
+              </p>
+            </div>
+            <div class="text-sm">
+              <p
+                class="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-3"
+              >
+                <span class="text-success mr-1">✓</span>the fix
+              </p>
+              <div class="ring-1 ring-success/40 rounded-lg">
+                <Code
+                  themes={{
+                    light: "github-light",
+                    dark: "github-dark",
+                  }}
+                  lang="r"
+                  transformers={[transformerNotationDiff()]}
+                  code={`test_that("is_adult returns TRUE for adults", {
+  expect_true(is_adult(25))
+})
+
+test_that("is_adult returns FALSE for minors", {
+  expect_false(is_adult(10))
+})
+
+test_that("is_adult is TRUE at the boundary", { # [!code ++]
+  expect_true(is_adult(18))  # kills >= → > # [!code ++]
+}) # [!code ++]`}
+                />
+              </div>
+            </div>
+          </div>
+        </Animate>
+      </div>
+
+      <div class="text-center pt-16 pb-4">
+        <a href="https://jakubsobolewski.com/muttest/" target="_blank">
+          <Button
+            size="xl"
+            className="text-2xl motion-preset-oscillate-sm motion-paused hover:motion-running"
+            variant="pill"
+            shape="pill"
+          >
+            Patch the gaps in your tests
+            <CircleArrowRight className="inline-block size-[1.5em] ml-2" />
+          </Button>
+        </a>
+      </div>
+    </div>
+    <TutorialsSection />
+  </div>
+</Section>
