@@ -1,0 +1,68 @@
+version: '3'
+
+tasks:
+  quarto:
+    desc: Render a .qmd file to markdown, restoring frontmatter and removing the H1 heading
+    preconditions:
+      - sh: command -v fzf
+        msg: "fzf is required: brew install fzf"
+      - sh: command -v quarto
+        msg: "quarto is required: brew install quarto"
+    cmds:
+      - |
+        qmd="{{.CLI_ARGS}}"
+        if [ -z "$qmd" ]; then
+          qmd=$(find src/content/blog -name "*.qmd" | fzf)
+          if [ -z "$qmd" ]; then
+            exit 1
+          fi
+        fi
+
+        dir=$(dirname "$qmd")
+        base=$(basename "$qmd" .qmd)
+        out="$dir/$base.md"
+
+        # Render
+        (cd "$dir" && PRIVATE_GITHUB_TOKEN=dummy quarto render "$(basename "$qmd")" --to gfm -M wrap:preserve)
+
+        # Restore original frontmatter and strip injected H1
+        python3 scripts/fix_md.py "$qmd"
+
+  quarto:slug:
+    desc: Render a single .qmd file to markdown using a slug, e.g. `quarto:build:slug -- test-doubles-taxonomy`
+    preconditions:
+      - sh: command -v fzf
+        msg: "fzf is required: brew install fzf"
+    cmds:
+      - |
+        slug="{{.CLI_ARGS}}"
+        if [ -z "$slug" ]; then
+          slug=$(find src/content/blog -name "*.qmd" -exec dirname {} \; | xargs -I{} basename {} | fzf)
+          if [ -z "$slug" ]; then
+            exit 1
+          fi
+        fi
+
+        qmd=$(find src/content/blog -name "*.qmd" | grep "/$slug/index.qmd")
+        if [ -z "$qmd" ]; then
+          echo "No .qmd file found for slug '$slug'"
+          exit 1
+        fi
+
+        task quarto -- "$qmd"
+
+  quarto:watch:
+    desc: Watch for changes in .qmd files and rebuild automatically
+    preconditions:
+      - sh: command -v entr
+        msg: "entr is required: brew install entr"
+    cmds:
+      - find src/content/blog -name "*.qmd" | entr -p task quarto -- /_
+
+  quarto:all:
+    desc: Render all .qmd files in src/content/blog subdirectories
+    cmds:
+      - |
+        find src/content/blog -name "*.qmd" | while read qmd; do
+          task quarto -- "$qmd"
+        done
