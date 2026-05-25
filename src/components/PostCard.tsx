@@ -21,10 +21,10 @@ interface PostCardProps {
 
 export function PostCard({ post, selectedTags, className }: PostCardProps) {
   return (
-    <a href={`/blog/${post.slug}/`}>
-      <Card className={cn("", className)}>
-        <CardHeader >
-          <CardTitle className="transition-colors">
+    <a href={`/blog/${post.slug}/`} className="group/card">
+      <Card className={cn("transition-all duration-300 group-hover/card:shadow-md group-hover/card:-translate-y-0.5", className)}>
+        <CardHeader>
+          <CardTitle className="transition-colors group-hover/card:text-foreground">
             {post.data.title}
           </CardTitle>
         </CardHeader>

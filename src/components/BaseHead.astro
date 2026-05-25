@@ -93,6 +93,27 @@ const shouldLoadAnalytics = import.meta.env.PROD;
   </script>
   <!-- End MailerLite Universal -->
 
+  <!-- Developer Easter egg -->
+  <script is:inline>
+    (function () {
+      var msg = [
+        "%c# jakubsob.github.io",
+        "%c",
+        "%c# Hey, you opened the console — fellow developer!",
+        "%c# This site is built with Astro, React, and Tailwind.",
+        "%c# Source: github.com/jakubsob/jakubsob.github.io",
+        "%c#",
+        "%c# If R testing is your thing, you're in the right place.",
+      ].join("\n");
+      var style = "color: #7dd3fc; font-family: monospace; font-size: 13px;";
+      var muted = "color: #6b7280; font-family: monospace; font-size: 13px;";
+      console.log(
+        msg,
+        style, muted, muted, muted, muted, muted, muted
+      );
+    })();
+  </script>
+
   <!-- Follow.it  -->
   <meta name="follow.it-verification-code" content="UzA851QwnL0Gqry6AJNE" />
 

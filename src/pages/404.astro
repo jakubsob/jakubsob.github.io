@@ -2,37 +2,35 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { Section } from "../components/ui/section";
 import { Animate } from "../components/ui/animate";
-import { Ban, CircleArrowLeft } from "lucide-react";
+import { CircleArrowLeft } from "lucide-react";
 
 const title = "404 - Page Not Found";
 const description = "The page you are looking for does not exist.";
+
+const url = Astro.url.pathname;
 ---
 
 <BaseLayout title={title} description={description}>
   <Section id="hero" variant="dark" size="full">
     <div
-      class="container mx-auto h-full flex flex-col justify-center items-center text-center"
+      class="container mx-auto h-full flex flex-col justify-center items-center"
     >
       <Animate variant="header">
-        <h1 class="text-destructive text-6xl uppercase py-4 flex flex-wrap justify-center items-center gap-4">
-          <Ban className="size-[1em]" />
-          <span>Page</span>
-          <span>Not</span>
-          <span>Found</span>
-        </h1>
+        <pre class="font-mono text-sm md:text-base leading-relaxed text-left bg-card border rounded-sm px-6 py-5 max-w-xl w-full">
+<span class="text-destructive">Error</span><span class="text-muted-foreground"> in </span><span class="text-sky-300">navigate</span><span class="text-muted-foreground">(</span><span class="text-amber-300">"{url}"</span><span class="text-muted-foreground">) :</span>
+<span class="text-muted-foreground">  could not find page</span>
+
+<span class="text-muted-foreground">In addition: </span><span class="text-amber-400">Warning message:</span>
+<span class="text-muted-foreground">Did you mean </span><span class="text-sky-300">'/'</span><span class="text-muted-foreground"> ?</span></pre>
       </Animate>
-      <Animate variant="header" className="motion-delay-[400ms]">
-        <h2 class="text-sky-200 text-2xl mb-8">
-          The page you are looking for does not exist.
-        </h2>
-      </Animate>
-      <Animate variant="fadeIn" className="motion-delay-[1000ms]">
-        <div class="transition-colors hover:text-sky-200">
-          <a href="/" class="text-3xl flex items-center">
-            <CircleArrowLeft className="mr-2 size-[1em]" />
-            Go back
-          </a>
-        </div>
+      <Animate variant="fadeIn" className="motion-delay-[600ms]">
+        <a
+          href="/"
+          class="mt-8 text-lg text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"
+        >
+          <CircleArrowLeft className="size-[1em]" />
+          Take me home
+        </a>
       </Animate>
     </div>
   </Section>

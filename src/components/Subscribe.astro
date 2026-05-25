@@ -70,6 +70,62 @@ const variant = variants[variantName];
     }
   }
 
+  @keyframes success-fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes circle-draw {
+    from {
+      stroke-dashoffset: 160;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  @keyframes check-draw {
+    from {
+      stroke-dashoffset: 48;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  .success-animate {
+    animation: success-fade-up 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .checkmark-wrap {
+    display: flex;
+    justify-content: center;
+  }
+
+  .checkmark {
+    width: 52px;
+    height: 52px;
+    color: oklch(72% 0.15 160);
+  }
+
+  .checkmark-circle {
+    stroke-dasharray: 160;
+    stroke-dashoffset: 160;
+    animation: circle-draw 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+  }
+
+  .checkmark-check {
+    stroke-dasharray: 48;
+    stroke-dashoffset: 48;
+    animation: check-draw 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
+  }
+
   /* Error states styling - required for JS validation */
   .ml-error input {
     border-color: red !important;
@@ -129,8 +185,14 @@ const variant = variants[variantName];
         </form>
       </div>
       <div class="ml-form-successBody row-success text-white">
-        <div class="text-center">
-          <h4 class="text-xl font-light text-ocean-green-500">
+        <div class="text-center success-animate">
+          <div class="checkmark-wrap" aria-hidden="true">
+            <svg class="checkmark" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle class="checkmark-circle" cx="26" cy="26" r="24" stroke="currentColor" stroke-width="2" fill="none"/>
+              <path class="checkmark-check" d="M14 26l8 8 16-16" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            </svg>
+          </div>
+          <h4 class="text-xl font-light text-ocean-green-500 mt-3">
             {variant.subscribedText}
           </h4>
         </div>
