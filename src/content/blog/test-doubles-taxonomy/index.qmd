@@ -1,0 +1,403 @@
+---
+title: 'The Full Test Doubles Taxonomy Every R Developer Should Know'
+description: 'Dummy, Stub, Spy, Mock, Fake — you might call them all "mock". Here is what each one actually is, when to reach for it, and what goes wrong when you mix them up.'
+pubDate: 2026-05-25
+tags: ["r", "tests"]
+draft: true
+---
+
+You might call them all "mock".
+
+Mock the database. Mock the API. Mock the function. The word becomes a catch-all for any test double — any object you substitute for a real dependency in a test. Lumping them together makes it harder to choose the right tool, and the wrong choice leads to brittle, misleading tests.
+
+There are five distinct types. Each has a specific job. Knowing the difference is how you stop writing tests that lie to you.
+
+## The code under test
+
+All five examples use a single function: `process_payment`. It charges a card, logs the attempt, and optionally notifies the customer.
+
+```{r}
+process_payment <- function(order, payment_gateway, logger, notifier = NULL) {
+  logger$log(paste("Processing order", order$id))
+
+  result <- payment_gateway$charge(order$amount, order$card_token)
+
+  if (!result$success) stop("Payment failed: ", result$error)
+
+  if (!is.null(notifier)) {
+    notifier$send(order$customer_id, result$transaction_id)
+  }
+
+  result$transaction_id
+}
+```
+
+It has three dependencies: `payment_gateway`, `logger`, and `notifier`. Each one will be replaced with a different kind of double depending on what we're trying to test.
+
+```{r, echo=FALSE}
+library(testthat)
+```
+
+## 1. Dummy
+
+**💡 Definition:** an object passed to satisfy a required parameter but never actually used by the test.
+
+`process_payment` always calls `logger$log` — the logger is required. But for a test that's only checking whether the correct transaction ID is returned, we don't care what gets logged. We just need something that won't blow up when called.
+
+```{r}
+test_that("returns the transaction ID on successful payment", {
+  # Arrange
+  order <- list(id = "ord-1", amount = 100, card_token = "tok_visa", customer_id = "cust-42")
+  dummy_logger <- list(log = function(...) invisible(NULL))
+  stub_gateway <- list(charge = function(amount, token) list(success = TRUE, transaction_id = "txn-abc"))
+
+  # Act
+  result <- process_payment(order, payment_gateway = stub_gateway, logger = dummy_logger)
+
+  # Assert
+  expect_equal(result, "txn-abc")
+})
+```
+
+`dummy_logger` accepts any call and does nothing. The test doesn't assert on it at all. Its only job is to satisfy the function signature.
+
+A dummy should be the simplest thing that compiles. Recording calls or setting expectations would make it something else. If you find yourself writing a dummy that crashes, or does something unexpected when called, the code path you're testing actually does use the dependency.
+
+Worth knowing.
+
+## 2. Stub
+
+**💡 Definition:** a replacement that returns pre-programmed responses, used to control what the code under test receives.
+
+A stub lets you put the system in a specific state without involving real infrastructure. If you want to test what `process_payment` does when a card is declined, you don't need a real payment API. You just return the response you want.
+
+```{r}
+test_that("throws an error when payment is declined", {
+  # Arrange
+  order <- list(id = "ord-2", amount = 200, card_token = "tok_declined", customer_id = "cust-7")
+  dummy_logger <- list(log = function(...) invisible(NULL))
+  stub_gateway <- list(
+    charge = function(amount, token) list(success = FALSE, error = "insufficient funds")
+  )
+
+  # Act & Assert
+  expect_error(
+    process_payment(order, payment_gateway = stub_gateway, logger = dummy_logger),
+    "insufficient funds"
+  )
+})
+```
+
+The stub provides inputs *to* the system under test. You assert on what the code did *with* those inputs (in this case, that it threw the right error).
+
+Notice that `process_payment` accepts `payment_gateway` as an argument. That's dependency injection: the function doesn't create or import its own gateway, so the test can pass in anything with the same interface. Without it you'd need a patching library to intercept the real dependency mid-call. With it, a plain list with a `charge` function is enough. Stubs work best when the code is designed this way: dependencies accepted as arguments, not hardwired inside.
+
+When the dependency *isn't* declared in the interface — when the function calls another function directly by name — `mockery::stub()` can patch it for the duration of a test:
+
+```{r}
+# A function that calls charge_card() internally, with no way to inject it
+process_payment_legacy <- function(order) {
+  result <- charge_card(order$amount, order$card_token)
+  if (!result$success) stop("Payment failed: ", result$error)
+  result$transaction_id
+}
+
+charge_card <- function(amount, token) {
+  stop("would call real payment API")
+}
+
+test_that("returns transaction ID when charge succeeds", {
+  # Arrange
+  order <- list(amount = 100, card_token = "tok_visa")
+  mockery::stub(
+    process_payment_legacy, "charge_card",
+    function(amount, token) list(success = TRUE, transaction_id = "txn-stub")
+  )
+
+  # Act
+  result <- process_payment_legacy(order)
+
+  # Assert
+  expect_equal(result, "txn-stub")
+})
+```
+
+`mockery::stub()` replaces `charge_card` inside the scope of `process_payment_legacy` for that one test call, without touching the real function anywhere else.
+
+`mockery::stub()` has a catch. The stub is targeted by function name as a string, so if you rename `charge_card`, the stub silently stops working and the test passes against the real function with no warning. The test is also coupled to an implementation detail: if you refactor `process_payment_legacy` to call `payment_gateway$charge()` instead, the stub breaks even if the behavior is unchanged. That's the Overspecification smell applied at the patching level.
+
+Use `mockery::stub()` when you're working with legacy code that wasn't built with testability in mind and you can't refactor the interface right now. It lets you get tests in place quickly. Treat it as a stepping stone: once the characterization tests are green, refactor toward dependency injection and replace the patch with a plain stub passed as an argument.
+
+When you need to control what a dependency returns and don't care how it was called, a stub is what you want.
+
+## 3. Spy
+
+**💡 Definition:** a stub that also records calls made to it, so you can assert on them afterward.
+
+Sometimes the behavior you're testing is a side effect. A notification that should have been sent, a message that should have been logged. The code doesn't return a value you can assert on; it calls something. A spy captures those calls.
+
+```{r}
+make_notifier_spy <- function() {
+  calls <- list()
+  list(
+    send = function(customer_id, transaction_id) {
+      calls[[length(calls) + 1]] <<- list(
+        customer_id    = customer_id,
+        transaction_id = transaction_id
+      )
+    },
+    calls = function() calls
+  )
+}
+```
+
+```{r}
+test_that("notifies the customer after successful payment", {
+  # Arrange
+  order <- list(id = "ord-3", amount = 50, card_token = "tok_visa", customer_id = "cust-99")
+  dummy_logger <- list(log = function(...) invisible(NULL))
+  stub_gateway <- list(charge = function(amount, token) list(success = TRUE, transaction_id = "txn-xyz"))
+  spy_notifier <- make_notifier_spy()
+
+  # Act
+  process_payment(order, payment_gateway = stub_gateway, logger = dummy_logger, notifier = spy_notifier)
+
+  # Assert
+  expect_length(spy_notifier$calls(), 1)
+  expect_equal(spy_notifier$calls()[[1]]$customer_id, "cust-99")
+  expect_equal(spy_notifier$calls()[[1]]$transaction_id, "txn-xyz")
+})
+```
+
+The spy is a stub with memory. You call the code, then interrogate the spy to see what happened. Assertions come *after* the Act step.
+
+You don't always need to build a spy by hand. `mockery::mock()` also collects calls, so it can serve as a spy when you want the recording behaviour without writing the closure yourself:
+
+```{r}
+test_that("notifies the customer after successful payment (mockery spy)", {
+  # Arrange
+  order <- list(id = "ord-3b", amount = 50, card_token = "tok_visa", customer_id = "cust-99")
+  dummy_logger <- list(log = function(...) invisible(NULL))
+  stub_gateway <- list(charge = function(amount, token) list(success = TRUE, transaction_id = "txn-xyz"))
+  spy_send <- mockery::mock()
+
+  # Act
+  process_payment(order,
+    payment_gateway = stub_gateway, logger = dummy_logger,
+    notifier = list(send = spy_send)
+  )
+
+  # Assert
+  mockery::expect_called(spy_send, 1)
+  expect_equal(mockery::mock_args(spy_send)[[1]][[1]], "cust-99")
+  expect_equal(mockery::mock_args(spy_send)[[1]][[2]], "txn-xyz")
+})
+```
+
+The handwritten version is clearer when you want the recording mechanism visible to readers, useful in a codebase where not everyone knows `mockery`. `mockery::mock()` is more concise once the team is familiar with the library.
+
+The difference from a mock comes down to return values. A spy records calls and nothing else. A mock records calls and can also return pre-programmed values, which makes it useful when you need the dependency to behave a specific way and want to assert on how it was used. With either, the assertions live in the Assert step.
+
+## 4. Mock
+
+**💡 Definition:** a double pre-programmed with expectations that form a specification of the calls it should receive. A true mock can throw if it receives a call it doesn't expect, and is checked during verification to confirm it got all the calls it was expecting.<sup>[[1]](#references)</sup>
+
+`mockery::mock()` is looser than that definition. It accepts any call without complaining and doesn't enforce expectations upfront. What it does do is record every call it receives (the arguments, the order, the count) and return pre-programmed values you supply. Verification is your responsibility in the Assert step.
+
+```{r}
+test_that("sends exactly one notification with correct arguments", {
+  # Arrange
+  order <- list(id = "ord-4", amount = 75, card_token = "tok_visa", customer_id = "cust-11")
+  dummy_logger <- list(log = function(...) invisible(NULL))
+  stub_gateway <- list(charge = function(amount, token) list(success = TRUE, transaction_id = "txn-def"))
+  mock_notifier <- list(send = mockery::mock())
+
+  # Act
+  process_payment(order, payment_gateway = stub_gateway, logger = dummy_logger, notifier = mock_notifier)
+
+  # Assert
+  mockery::expect_called(mock_notifier$send, 1)
+  mockery::expect_args(mock_notifier$send, 1, "cust-11", "txn-def")
+})
+```
+
+Use a mock when the *interaction itself* is what you're testing: not what the code returns, but whether it called the dependency in the right way.
+
+They're also the easiest double to overuse. Assert on every call to every dependency and you've written an overspecified test — one that breaks whenever the implementation changes, even when the behavior stays the same.
+
+Prefer a spy when you only need to record calls; a plain list with a function that appends to a vector is often enough. Reach for a mock when you also need to control what the dependency returns. The risk is the same with any interaction-based assertion: check every call to every dependency and you end up with a test that mirrors the implementation rather than the behaviour, breaking whenever the internals change even when the outcome doesn't.
+
+## 5. Fake
+
+**💡 Definition:** a working implementation that's simpler than the real thing, suitable for tests but not production.
+
+A fake isn't just a pre-programmed response. It has real behavior. An in-memory database is a fake: it stores and retrieves data like the real thing, just without persistence or network overhead. It behaves correctly across multiple calls, which a stub can't do.
+
+```{r}
+make_fake_payment_gateway <- function() {
+  transactions <- list()
+
+  list(
+    charge = function(amount, token) {
+      if (amount <= 0) {
+        return(list(success = FALSE, error = "invalid amount"))
+      }
+      if (token == "tok_declined") {
+        return(list(success = FALSE, error = "card declined"))
+      }
+
+      id <- paste0("txn-", length(transactions) + 1)
+      transactions[[id]] <<- list(amount = amount, token = token)
+      list(success = TRUE, transaction_id = id)
+    },
+    find = function(transaction_id) transactions[[transaction_id]]
+  )
+}
+```
+
+```{r}
+test_that("successful charges are recorded in the gateway", {
+  # Arrange
+  order <- list(id = "ord-5", amount = 120, card_token = "tok_visa", customer_id = "cust-3")
+  dummy_logger <- list(log = function(...) invisible(NULL))
+  fake_gateway <- make_fake_payment_gateway()
+
+  # Act
+  txn_id <- process_payment(order, payment_gateway = fake_gateway, logger = dummy_logger)
+
+  # Assert
+  recorded <- fake_gateway$find(txn_id)
+  expect_equal(recorded$amount, 120)
+  expect_equal(recorded$token, "tok_visa")
+})
+```
+
+Fakes work well when you need to test behaviour across multiple operations: place an order, query its status, refund it. A stub would need to be reprogrammed for each call. A fake just handles it.
+
+They're also a good fit for acceptance tests and manual inspection. An acceptance test exercises a full user-facing behaviour end-to-end, several layers of the application working together. At that level you don't want stubs reprogrammed for individual calls; you want a dependency that behaves realistically across the whole flow. A fake payment gateway, a fake email sender, a fake file store: these let your acceptance test suite run in CI without connecting to external services, needing credentials, or leaving side effects behind. You can also wire the same fakes into a development mode of the app. Spin up the Shiny app pointing at the in-memory gateway and you can click through every payment scenario without touching a real API.
+
+The cost is that fakes take time to build and maintain. They need to be kept in sync with the real interface they're replacing. For a small, stable interface that's used heavily across your test suite and in manual workflows, the investment pays off. For a dependency you only use in one unit test, a stub is simpler.
+
+## When to reach for each one
+
+| Double           |    Has behaviour    | Records calls | Returns programmed values | Rejects unexpected calls | When to use                                        |
+| ---------------- | :-----------------: | :-----------: | :-----------------------: | :----------------------: | -------------------------------------------------- |
+| Dummy            |         ❌          |      ❌       |            ❌             |            ❌            | Fill a required parameter you won't touch          |
+| Stub             | Pre-programmed only |      ❌       |            ✅             |            ❌            | Control what the code receives                     |
+| Spy              | Pre-programmed only |      ✅       |            ❌             |            ❌            | Assert on side effects after the fact              |
+| Mock (`mockery`) | Pre-programmed only |      ✅       |            ✅             |            ❌            | Assert on calls and control what the code receives |
+| Mock             | Pre-programmed only |      ✅       |            ✅             |            ✅            | Pin an exact interaction as a hard contract        |
+| Fake             |         ✅          |      ❌       |            ❌             |            ❌            | Replace stateful or multi-call dependencies        |
+
+The key difference is between stub and mock. A stub returns values; you assert on the outcome. A mock records calls and can return pre-programmed values; you assert on both in the Assert step. Using a mock where a stub would do couples your test to implementation details. Using a stub where a mock is needed means missing the interaction you were trying to verify.
+
+When in doubt: if you're asserting on a return value or a state change, use a stub. If you're asserting that a specific call was made, use a spy or a mock. If the dependency has real state that needs to survive across calls, build a fake.
+
+## Appendix: implementing an eager mock by hand
+
+*`mockery::mock()` is sufficient for everyday use — skip this if you're not curious about what a mock looks like under the hood.*
+
+This is what a mock matching Fowler's definition looks like in R. It takes a list of expected calls in the Arrange step, fails immediately on anything unexpected, and exposes a `verify()` function to confirm every expected call was made.
+
+```{r}
+make_mock_notifier <- function(expected_calls) {
+  received <- list()
+
+  list(
+    send = function(customer_id, transaction_id) {
+      call <- list(
+        customer_id = customer_id,
+        transaction_id = transaction_id
+      )
+      match <- any(sapply(expected_calls, identical, call))
+      if (!match) {
+        testthat::fail(sprintf(
+          "Unexpected call: send('%s', '%s')",
+          customer_id,
+          transaction_id
+        ))
+      }
+      received[[length(received) + 1]] <<- call
+    },
+    verify = function() {
+      for (exp in expected_calls) {
+        found <- any(sapply(received, identical, exp))
+        if (!found) {
+          testthat::fail(sprintf(
+            "Expected call never made: send('%s', '%s')",
+            exp$customer_id, exp$transaction_id
+          ))
+        }
+      }
+      testthat::succeed()
+    }
+  )
+}
+```
+
+The mock rejects unexpected calls on the spot:
+
+```{r}
+#| error: true
+test_that("throws immediately when called with unexpected arguments", {
+  # Arrange
+  order <- list(id = "ord-4b", amount = 75, card_token = "tok_visa", customer_id = "cust-11")
+  dummy_logger <- list(log = function(...) invisible(NULL))
+  stub_gateway <- list(charge = function(amount, token) list(success = TRUE, transaction_id = "txn-def"))
+  mock_notifier <- make_mock_notifier(
+    expected_calls = list(list(customer_id = "cust-WRONG", transaction_id = "txn-def"))
+  )
+
+  # Act — throws before we even reach Assert
+  process_payment(order, payment_gateway = stub_gateway, logger = dummy_logger, notifier = mock_notifier)
+})
+```
+
+And `verify()` catches expected calls that were never made:
+
+```{r}
+#| error: true
+test_that("fails verification when an expected call was never made", {
+  # Arrange
+  order <- list(id = "ord-4c", amount = 75, card_token = "tok_visa", customer_id = "cust-11")
+  dummy_logger <- list(log = function(...) invisible(NULL))
+  stub_gateway <- list(charge = function(amount, token) list(success = TRUE, transaction_id = "txn-def"))
+  mock_notifier <- make_mock_notifier(
+    expected_calls = list(
+      list(customer_id = "cust-11", transaction_id = "txn-def"),
+      list(customer_id = "cust-99", transaction_id = "txn-xyz")  # will never be called
+    )
+  )
+
+  # Act
+  process_payment(order, payment_gateway = stub_gateway, logger = dummy_logger, notifier = mock_notifier)
+
+  # Assert
+  mock_notifier$verify()
+})
+```
+
+The happy path passes both checks:
+
+```{r}
+test_that("passes when all expected calls are made and no unexpected ones occur", {
+  # Arrange
+  order <- list(id = "ord-4d", amount = 75, card_token = "tok_visa", customer_id = "cust-11")
+  dummy_logger <- list(log = function(...) invisible(NULL))
+  stub_gateway <- list(charge = function(amount, token) list(success = TRUE, transaction_id = "txn-def"))
+  mock_notifier <- make_mock_notifier(
+    expected_calls = list(list(customer_id = "cust-11", transaction_id = "txn-def"))
+  )
+
+  # Act
+  process_payment(order, payment_gateway = stub_gateway, logger = dummy_logger, notifier = mock_notifier)
+
+  # Assert
+  mock_notifier$verify()
+})
+```
+
+## References
+
+1. Martin Fowler — [TestDouble](https://www.martinfowler.com/bliki/TestDouble.html)
+2. Gerard Meszaros — [Test Double Patterns](http://xunitpatterns.com/Test%20Double%20Patterns.html)
