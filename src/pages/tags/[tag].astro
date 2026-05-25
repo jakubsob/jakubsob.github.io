@@ -1,8 +1,9 @@
 ---
-import HeaderDefault from "../../components/HeaderDefault.astro";
 import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import { Section } from "@/components/ui/section";
 import PostList from "../../components/PostList.jsx";
+import PageHeader from "@/components/PageHeader.astro";
 
 export async function getStaticPaths() {
   const posts = (await getCollection("blog"))
@@ -22,53 +23,14 @@ const { tag } = Astro.params;
 const { posts } = Astro.props;
 ---
 
-<!doctype html>
-<html lang="en">
-  <BaseLayout>
-    <main>
-      <HeaderDefault />
-      <section
-        id="hero"
-        class="bg-background h-[50vh]
-        relative
-        overflow-hidden
-        text-white
-        grid
-        items-center justify-items-start
-        grid-cols-1 grid-rows-1
-        lg:grid-cols-1 lg:grid-rows-1
-        p-4"
-      >
-        <div class="mx-auto text-white">
-          <h1
-            class="text-white text-3xl py-4 tracking-wider flex flex-row gap-2 items-end flex-wrap"
-          >
-            There are {posts.length} posts tagged with
-            <span class="font-code uppercase">{tag}</span>
-            <span class="size-8 text-sky-400">
-              <svg
-                width="100%"
-                height="100%"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M8 8H8.01M2 5.2L2 9.67451C2 10.1637 2 10.4083 2.05526 10.6385C2.10425 10.8425 2.18506 11.0376 2.29472 11.2166C2.4184 11.4184 2.59135 11.5914 2.93726 11.9373L10.6059 19.6059C11.7939 20.7939 12.388 21.388 13.0729 21.6105C13.6755 21.8063 14.3245 21.8063 14.927 21.6105C15.612 21.388 16.2061 20.7939 17.3941 19.6059L19.6059 17.3941C20.7939 16.2061 21.388 15.612 21.6105 14.927C21.8063 14.3245 21.8063 13.6755 21.6105 13.0729C21.388 12.388 20.7939 11.7939 19.6059 10.6059L11.9373 2.93726C11.5914 2.59135 11.4184 2.4184 11.2166 2.29472C11.0376 2.18506 10.8425 2.10425 10.6385 2.05526C10.4083 2 10.1637 2 9.67452 2L5.2 2C4.0799 2 3.51984 2 3.09202 2.21799C2.7157 2.40973 2.40973 2.71569 2.21799 3.09202C2 3.51984 2 4.07989 2 5.2ZM8.5 8C8.5 8.27614 8.27614 8.5 8 8.5C7.72386 8.5 7.5 8.27614 7.5 8C7.5 7.72386 7.72386 7.5 8 7.5C8.27614 7.5 8.5 7.72386 8.5 8Z"
-                  stroke="currentColor"
-                  stroke-width="3"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"></path>
-              </svg>
-            </span>
-          </h1>
-        </div>
-      </section>
-      <section id="blog" class="bg-marine-50">
-        <div class="max-w-[65ch] mx-auto">
-          <PostList client:load posts={posts} showControls={false} />
-        </div>
-      </section>
-    </main>
-  </BaseLayout>
-</html>
+<BaseLayout>
+  <Section variant="dark">
+    <div class="container mx-auto py-16 lg:py-24">
+      <PageHeader
+        label="Tag"
+        subtitle={`${posts.length} post${posts.length === 1 ? "" : "s"} tagged "${tag}"`}
+      />
+      <PostList client:load posts={posts} showControls={true} />
+    </div>
+  </Section>
+</BaseLayout>

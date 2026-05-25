@@ -6,16 +6,11 @@ export default function TableOfContents() {
   const [activeId, setActiveId] = useState('');
 
   useEffect(() => {
-    // Find the article content
     const articleContent = document.querySelector('article');
     if (articleContent) {
-      // Get the HTML content
-      const content = articleContent.innerHTML;
-      // Extract headings
-      const toc = generateTableOfContents(content);
+      const toc = generateTableOfContents(articleContent.innerHTML);
       setHeadings(toc);
 
-      // Set up intersection observer to highlight the active heading
       const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
@@ -27,14 +22,11 @@ export default function TableOfContents() {
         { rootMargin: '-100px 0px -66%' }
       );
 
-      // Observe all heading elements
       document.querySelectorAll('h2, h3, h4').forEach((heading) => {
         observer.observe(heading);
       });
 
-      return () => {
-        observer.disconnect();
-      };
+      return () => observer.disconnect();
     }
   }, []);
 
@@ -43,26 +35,26 @@ export default function TableOfContents() {
   }
 
   return (
-    <nav className="hidden lg:block sticky top-20 self-start ml-10 w-[250px] max-h-[calc(100vh-120px)] overflow-y-auto pr-4 scrollbar-thin scrollbar-track-gray-100 scrollbar-thumb-gray-300 hover:scrollbar-thumb-gray-400">
-      <p className="font-medium mb-4 text-sm uppercase tracking-wider text-muted-foreground">
-        Table of Contents
+    <nav className="hidden lg:block sticky top-20 self-start w-[200px] max-h-[calc(100vh-120px)] overflow-y-auto">
+      <p className="text-xs uppercase tracking-widest text-muted-foreground/60 font-medium mb-3">
+        On this page
       </p>
-      <ul className="space-y-2 text-sm">
+      <ul className="space-y-0">
         {headings.map((heading) => (
           <li
             key={heading.id}
-            className={`${
-              heading.level === 2
-                ? "ml-0"
-                : heading.level === 3
-                ? "ml-4"
-                : "ml-8"
-            }`}
+            className={
+              heading.level === 2 ? "ml-0" :
+              heading.level === 3 ? "ml-3" :
+              "ml-6"
+            }
           >
             <a
               href={`#${heading.id}`}
-              className={`block py-1 transition-colors duration-200 line-clamp-2 text-muted-foreground hover:text-foreground ${
-                activeId === heading.id ? "font-bold" : ""
+              className={`block py-1.5 text-xs transition-colors duration-150 line-clamp-2 ${
+                activeId === heading.id
+                  ? "text-foreground"
+                  : "text-muted-foreground/50 hover:text-muted-foreground"
               }`}
             >
               {heading.text}

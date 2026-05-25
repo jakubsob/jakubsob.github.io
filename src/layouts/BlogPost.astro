@@ -3,8 +3,8 @@ import BaseLayout from "./BaseLayout.astro";
 import BlogPostJSONLD from "../components/BlogPostJSONLD.astro";
 import FormattedDate from "../components/FormattedDate";
 import { Section } from "@/components/ui/section";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { TagList } from "@/components/TagList";
 import { Asterisk, ExternalLink } from "lucide-react";
 import SubscribeButton from "@/components/SubscribeButton.astro";
 import { getReadingTime } from "../utils/getReadingTime";
@@ -67,8 +67,16 @@ const posts = (await getCollection("blog"))
         >
           <header class="border-b pb-6">
             <h1 class="lead text-balance">{title}</h1>
-            {description && <p class="text-xl font-normal text-muted-foreground m-0">{description}</p>}
-            <div class="flex flex-row items-baseline gap-6 text-sm uppercase">
+            {
+              description && (
+                <p class="text-xl font-normal text-muted-foreground m-0">
+                  {description}
+                </p>
+              )
+            }
+            <div
+              class="flex flex-row items-center gap-4 text-xs text-muted-foreground/60 uppercase"
+            >
               <div>
                 {pubDate && <FormattedDate date={pubDate} />}
                 {
@@ -79,22 +87,10 @@ const posts = (await getCollection("blog"))
                   )
                 }
               </div>
-              <span class="flex gap-2">
-                {
-                  tags
-                    .sort((a: string, b: string): any => a.localeCompare(b))
-                    .map((tag: any): any => (
-                      <Badge variant="secondary">
-                        <a href={`/tags/${tag}`} class="no-underline">
-                          {tag}
-                        </a>
-                      </Badge>
-                    ))
-                }
-              </span>
-              <div class="ms-auto text-muted">
+              <TagList tags={tags} linked={true} client:load />
+              <span class="ml-auto tabular-nums">
                 {readingTime}
-              </div>
+              </span>
             </div>
           </header>
           <slot />

@@ -1,35 +1,18 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { Section } from "@/components/ui/section";
-import Resources from "../../components/Resources.tsx";
-import { Animate } from "../../components/ui/animate";
-import HeroBackground from "@/components/HeroBackground.astro";
+import { ResourceList } from "@/components/ResourceList";
+import PageHeader from "@/components/PageHeader.astro";
 ---
 
 <BaseLayout
   title="Resources for learning Shiny"
   meta="A collection of resources to help you learn Shiny, a web application framework for R. Learn software and UI design."
 >
-  <Section id="hero" variant="dark" size="md" className="border-b">
-    <div
-      class="container mx-auto h-full flex flex-col justify-center items-center text-center relative"
-    >
-      <HeroBackground />
-      <Animate variant="header">
-        <h1 class="font-light text-6xl uppercase py-4">
-          What made me a better engineer
-        </h1>
-      </Animate>
-      <Animate variant="header" className="motion-delay-[200ms]">
-        <h2 class="text-muted-foreground font-light text-xl">
-          Learning TDD, BDD, software and UI design.
-        </h2>
-      </Animate>
-    </div>
-  </Section>
   <Section variant="dark">
-    <div class="container mx-auto">
-      <Resources
+    <div class="container mx-auto py-16 lg:py-24">
+      <PageHeader label="Resources" subtitle="What made me a better engineer" />
+      <ResourceList
         client:load
         items={[
           {

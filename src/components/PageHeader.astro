@@ -1,0 +1,16 @@
+---
+interface Props {
+  label: string;
+  subtitle?: string;
+}
+const { label, subtitle } = Astro.props;
+---
+
+<header class="mb-12 border-b border-border/50 pb-6">
+  <h1 class="text-xs uppercase tracking-widest text-muted-foreground/60 font-medium">
+    {label}
+  </h1>
+  {subtitle && (
+    <p class="mt-3 text-2xl font-light text-foreground">{subtitle}</p>
+  )}
+</header>

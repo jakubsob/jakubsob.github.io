@@ -3,8 +3,7 @@ import PostList from "../../components/PostList.jsx";
 import { Section } from "../../components/ui/section";
 import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import { Animate } from "../../components/ui/animate";
-import HeroBackground from "@/components/HeroBackground.astro";
+import PageHeader from "@/components/PageHeader.astro";
 
 const posts = (await getCollection("blog"))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
@@ -12,55 +11,10 @@ const posts = (await getCollection("blog"))
 ---
 
 <BaseLayout>
-  <Section id="hero" variant="dark" size="md" className="border-b">
-    <div
-      class="container mx-auto h-full flex flex-col justify-center items-center text-center relative"
-    >
-      <HeroBackground />
-      <Animate variant="header">
-        <h1 class="font-light text-6xl uppercase py-4">
-          Build trust in your software
-        </h1>
-      </Animate>
-      <Animate variant="header" className="motion-delay-[200ms]">
-        <h2 class="font-light text-xl text-muted-foreground">
-          One test at a time.
-        </h2>
-      </Animate>
-    </div>
-  </Section>
   <Section id="blog" variant="dark">
-    <div
-      class="container mx-auto
-      grid
-      grid-cols-1
-      grid-rows-[1fr_auto]
-      lg:grid-cols-[1fr_minmax(65ch,_1fr)_1fr]
-      lg:grid-rows-1"
-    >
-      <div
-        class="col-start-1 w-full max-w-[65ch] mx-auto order-2
-          lg:col-start-2 lg:row-start-1 lg:order-1 py-4"
-      >
-        <PostList client:load posts={posts} />
-      </div>
-
-      <div
-        class="col-start-1 order-2 mx-auto hidden lg:block
-      lg:col-start-3 lg:row-start-1 lg:order-2"
-      >
-        <div class="sticky top-0 pt-[56px] text-muted-foreground">
-          <h3>Also read</h3>
-          <ul>
-            <li>
-              <a href="https://rweekly.org/">R-Weekly</a>
-            </li>
-            <li>
-              <a href="https://www.r-bloggers.com">R-Bloggers</a>
-            </li>
-          </ul>
-        </div>
-      </div>
+    <div class="container mx-auto py-16 lg:py-24">
+      <PageHeader label="Writing" />
+      <PostList client:load posts={posts} showControls={true} />
     </div>
   </Section>
 </BaseLayout>

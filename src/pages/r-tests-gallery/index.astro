@@ -1,12 +1,11 @@
 ---
 import { createMarkdownProcessor } from "@astrojs/markdown-remark";
 import { Section } from "@/components/ui/section";
-import { Animate } from "../../components/ui/animate";
 import { DirectoryListing } from "../../components/DirectoryListing.tsx";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { Button } from "@/components/ui/button";
 import { ExternalLink, ArrowDownRight, Asterisk } from "lucide-react";
-import HeroBackground from "@/components/HeroBackground.astro";
+import PageHeader from "@/components/PageHeader.astro";
 
 // Create markdown processor with the same config as astro.config.mjs
 const markdownProcessor = await createMarkdownProcessor({
@@ -190,37 +189,13 @@ try {
 ---
 
 <BaseLayout title="R Tests Gallery" image="/ogimg-r_tests_gallery.png">
-  <Section id="hero" variant="dark" size="md" className="border-b">
-    <div
-      class="container mx-auto h-full flex flex-col justify-center items-center text-center relative"
-    >
-      <HeroBackground />
-      <h1 class="text-6xl uppercase py-4">
-        <Animate variant="header" className="font-light">
-          The R Tests Gallery
-        </Animate>
-      </h1>
-      <Animate variant="header" className="motion-delay-[400ms]">
-        <h2 class="text-muted-foreground font-light text-xl">
-          A collection of testing patterns I've used in R projects.
-        </h2>
-      </Animate>
-    </div>
-  </Section>
-  <Section id="content" variant="dark" size="md">
-    <div class="container mx-auto h-full grid place-items-center max-w-[65ch]">
-      <div class="w-full">
-        <h3 class="text-3xl mb-6 flex gap-2 items-center">
-          <ArrowDownRight className="size-[1.2em] inline-block" />
-          Examples
-        </h3>
+  <Section variant="dark">
+    <div class="container mx-auto py-16 lg:py-24 max-w-[65ch]">
+      <PageHeader label="R Tests Gallery" subtitle="A collection of testing patterns I've used in R projects." />
+      <div class="mb-24">
         <DirectoryListing directories={relevantDirs} />
       </div>
-    </div>
-  </Section>
-  <Section variant="dark" size="md">
-    <div class="container mx-auto h-full grid max-w-[65ch]">
-      <div class="border-t py-24">
+      <div class="border-t py-16">
         <h3 class="text-3xl mb-6 flex items-center">
           <Asterisk className="size-[1em] inline-block" />
           Haven't found what you're looking for?

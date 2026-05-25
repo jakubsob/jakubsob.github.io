@@ -29,7 +29,7 @@ const posts = (await getCollection("blog"))
         </Animate>
       </div>
       <div class="h-full max-w-[65ch] row-span-2">
-        <PostList client:load posts={posts} showControls={false} />
+        <PostList client:load posts={posts} showControls={false} variant="featured" />
       </div>
     </div>
   </div>

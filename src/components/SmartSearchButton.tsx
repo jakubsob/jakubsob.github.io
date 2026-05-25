@@ -101,20 +101,14 @@ export function SmartSearchButton({ posts, isMobile = false }: SmartSearchButton
         shape="pill"
         onClick={handleSearchOpen}
         disabled={!isInitialized}
-        className="group flex items-center gap-2 text-sm uppercase tracking-wider disabled:opacity-50 disabled:cursor-not-allowed"
+        className="group flex aspect-square items-center gap-2 text-sm uppercase tracking-wider disabled:opacity-50 disabled:cursor-not-allowed"
         aria-label="Search all content"
       >
         <Search className="size-[1em]" />
-        <kbd className="hidden sm:inline-flex pointer-events-none select-none items-center gap-1 rounded-full border border-muted-foreground px-1.5">
-          <span className="text-xs">⌘</span>K
-        </kbd>
       </Button>
 
       {isInitialized && (
-        <GlobalSearch
-          isOpen={isSearchOpen}
-          onClose={handleSearchClose}
-        />
+        <GlobalSearch isOpen={isSearchOpen} onClose={handleSearchClose} />
       )}
     </>
   );
