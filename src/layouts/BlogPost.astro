@@ -35,7 +35,7 @@ const posts = (await getCollection("blog"))
   <BlogPostJSONLD slot="head" {...post.data} />
   <Section variant="dark" className="pt-[60px]">
     <div
-      class="container mx-auto grid grid-cols-1 lg:grid-cols-[1fr_65ch_1fr] gap-2"
+      class="container mx-auto grid grid-cols-1 lg:grid-cols-[1fr_65ch_1fr] gap-8"
     >
       <div class="lg:col-start-2">
         <article
@@ -65,7 +65,7 @@ const posts = (await getCollection("blog"))
               prose-img:w-full
               px-2"
         >
-          <header class="border-b-[1px] border-solid pb-2">
+          <header class="border-b pb-6">
             <h1 class="lead text-balance">{title}</h1>
             {description && <p class="text-xl font-normal text-muted-foreground m-0">{description}</p>}
             <div class="flex flex-row items-baseline gap-6 text-sm uppercase">

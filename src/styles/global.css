@@ -26,11 +26,11 @@
 @layer base {
   :root {
     --background: 0 0% 98%;
-    --foreground: 0 0 5%;
+    --foreground: 0 0% 5%;
     --card: 0 0% 100%;
-    --light: 0 0 95%;
-    --dark: 0 0 5%;
-    --card-foreground: 0 0 5%;
+    --light: 0 0% 95%;
+    --dark: 0 0% 5%;
+    --card-foreground: 0 0% 5%;
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
     --primary: 155 50% 43%;
@@ -39,14 +39,14 @@
     --cta-foreground: 210 40% 98%;
     --secondary: 0 0% 90%;
     --secondary-foreground: 222.2 84% 4.9%;
-    --muted: 0 0 75%;
-    --muted-foreground: 0 0 50%;
+    --muted: 0 0% 75%;
+    --muted-foreground: 0 0% 50%;
     --accent: 210 40% 96%;
     --accent-foreground: 222.2 84% 4.9%;
     --destructive: 0 60% 50%;
     --destructive-foreground: 210 40% 98%;
-    --border: 0 0 90%;
-    --input: 0 0 50%;
+    --border: 0 0% 90%;
+    --input: 0 0% 50%;
     --ring: 155 50% 43%;
     --radius: 0.5rem;
     --gradient: linear-gradient(
@@ -63,12 +63,12 @@
   }
 
   .dark {
-    --background: 0 0 0%;
-    --foreground: 0 0 95%;
-    --card: 0 0 0%;
-    --light: 0 0 5%;
-    --dark: 0 0 5%;
-    --card-foreground: 0 0 100%;
+    --background: 155 4% 5%;
+    --foreground: 0 0% 95%;
+    --card: 155 3% 8%;
+    --light: 155 3% 10%;
+    --dark: 0 0% 5%;
+    --card-foreground: 0 0% 100%;
     --popover: 0 0% 5%;
     --popover-foreground: 222.2 84% 4.9%;
     --primary: 155 50% 43%;
@@ -76,15 +76,15 @@
     --cta: 0 60% 50%;
     --cta-foreground: 210 40% 98%;
     --secondary: 0 0% 20%;
-    --secondary-foreground: 0 0 50%;
-    --muted: 0 0 75%;
-    --muted-foreground: 0 0 50%;
+    --secondary-foreground: 0 0% 50%;
+    --muted: 0 0% 75%;
+    --muted-foreground: 0 0% 50%;
     --accent: 210 40% 96%;
     --accent-foreground: 222.2 84% 4.9%;
     --destructive: 0 60% 40%;
     --destructive-foreground: 210 40% 98%;
-    --border: 0 0 10%;
-    --input: 0 0 50%;
+    --border: 0 0% 10%;
+    --input: 0 0% 50%;
     --ring: 155 50% 43%;
     --radius: 0.5rem;
     --gradient: linear-gradient(
