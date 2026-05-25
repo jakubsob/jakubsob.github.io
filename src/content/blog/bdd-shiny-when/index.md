@@ -10,7 +10,7 @@ A specification tells a story.
 
 Given describes the world before the action. When describes the action itself. Then describes what changed as a result.
 
-If Given is the setup and Then is the payoff, When is where the plot happens — and how you write it determines whether your specifications stay readable for months or decay after the very first change you make to your project.
+If Given is the setup and Then is the payoff, When is where the plot happens, and how you write it determines whether your specifications stay readable for months or decay after the very first change you make to your project.
 
 ------------------------------------------------------------------------
 
@@ -379,27 +379,16 @@ The specifications read naturally. None of them mention input IDs, button select
 
 ------------------------------------------------------------------------
 
-Note how specifications don’t even reveal it’s a Shiny app. They don’t reveal how we interact with the app. We could use `shinytest2` or `selenider` or any other method, however we want. It’s all hidden and irrelevant to the story we’re telling about user behavior.
-- We can always, safely swap insides and keep the same specifications true.
-- We can even swap the implementation of the system, and as long as it serves the same business requirements, you won’t need to update the specification.
-- There is no risk of refactoring tests and loosing track of what has been already implemented. It is live, it is executable. It’s not some list of tickets in an external system.
+Note how specifications don’t even reveal it’s a Shiny app. They don’t reveal how we interact with it — `shinytest2`, `selenider`, anything goes. It’s all hidden and irrelevant to the story we’re telling. You can swap the internals and keep the same specifications true. You can even swap the system implementation entirely, and as long as it still satisfies the same business requirements, the specifications don’t need touching. It’s live and executable — not a list of tickets in an external system no one reads.
 
 That’s exactly the opposite of what happens when we write tests that are tightly coupled to the UI structure.
 
 ------------------------------------------------------------------------
 
-## Wrapping Up
+## Wrapping up
 
 When steps model user behavior, not UI implementation.
 
-That distinction is what keeps specifications readable days, weeks, months later, when the form has been refactored a few times, the button IDs have changed, the form has been moved to another page and nobody remembers what the original implementation looked like.
+That distinction is what keeps specifications readable days, weeks, months later, when the form has been refactored, button IDs have changed, and nobody remembers what the original implementation looked like. Keep steps focused on one action. Put the implementation details in the driver. Use domain language, not UI language.
 
-**Keep When steps focused on one action.**
-
-**Put implementation details in the driver.**
-
-**Use domain language, not UI language.**
-
-The payoff is specifications that read like requirements and survive refactors like they were designed for it.
-
-In the next article in the series we’ll look at Then steps — where we assert that the right things happened, at the right level, with failure messages that actually help.
+Specifications written this way tend to survive refactors you haven’t thought of yet.
