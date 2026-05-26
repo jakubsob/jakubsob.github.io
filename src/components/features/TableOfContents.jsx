@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { generateTableOfContents } from '../utils/generateTableOfContents';
+import { generateTableOfContents } from '../../utils/generateTableOfContents';
 
 export default function TableOfContents() {
   const [headings, setHeadings] = useState([]);

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { TagFilter } from "@/components/TagFilter";
+import { TagFilter } from "@/components/features/TagFilter";
 import { SearchX } from "lucide-react";
 
 interface FilteredListProps<T> {

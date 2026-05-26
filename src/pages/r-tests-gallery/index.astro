@@ -1,11 +1,11 @@
 ---
 import { createMarkdownProcessor } from "@astrojs/markdown-remark";
 import { Section } from "@/components/ui/section";
-import { DirectoryListing } from "../../components/DirectoryListing.tsx";
+import { DirectoryListing } from "../../components/features/DirectoryListing.tsx";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { Button } from "@/components/ui/button";
 import { ExternalLink, ArrowDownRight, Asterisk } from "lucide-react";
-import PageHeader from "@/components/PageHeader.astro";
+import PageHeader from "@/components/features/PageHeader.astro";
 
 // Create markdown processor with the same config as astro.config.mjs
 const markdownProcessor = await createMarkdownProcessor({

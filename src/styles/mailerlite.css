@@ -1,0 +1,105 @@
+@import url("https://assets.mlcdn.com/fonts.css?version=1753253");
+
+/* Essential styles for MailerLite form functionality */
+.ml-form-embedSubmitLoad {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+}
+
+.ml-form-embedSubmitLoad:after {
+  content: " ";
+  display: block;
+  width: 11px;
+  height: 11px;
+  margin: 1px;
+  border-radius: 50%;
+  border: 4px solid hsl(var(--primary-foreground));
+  border-color: hsl(var(--primary-foreground)) hsl(var(--primary-foreground)) hsl(var(--primary-foreground)) transparent;
+  animation: ml-form-embedSubmitLoad 1.2s linear infinite;
+}
+
+@keyframes ml-form-embedSubmitLoad {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes success-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes circle-draw {
+  from {
+    stroke-dashoffset: 160;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes check-draw {
+  from {
+    stroke-dashoffset: 48;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.success-animate {
+  animation: success-fade-up 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.checkmark-wrap {
+  display: flex;
+  justify-content: center;
+}
+
+.checkmark {
+  width: 52px;
+  height: 52px;
+  color: #37A577;
+}
+
+.checkmark-circle {
+  stroke-dasharray: 160;
+  stroke-dashoffset: 160;
+  animation: circle-draw 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+}
+
+.checkmark-check {
+  stroke-dasharray: 48;
+  stroke-dashoffset: 48;
+  animation: check-draw 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
+}
+
+/* Error states styling - required for JS validation */
+.ml-error input {
+  border-color: red !important;
+}
+
+.ml-error .label-description,
+.ml-error label:first-child {
+  color: hsl(var(--destructive)) !important;
+}
+
+/* These classes are required for JS functionality */
+.ml-form-embedSubmit button.loading {
+  display: none;
+}
+
+/* Form state visibility control */
+.ml-form-successBody {
+  display: none;
+}

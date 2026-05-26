@@ -1,5 +1,5 @@
-import { FilteredList } from "@/components/FilteredList";
-import { Resource, type ResourceItem } from "@/components/Resource";
+import { FilteredList } from "@/components/features/FilteredList";
+import { Resource, type ResourceItem } from "@/components/features/Resource";
 
 interface ResourceListProps {
   items: ResourceItem[];

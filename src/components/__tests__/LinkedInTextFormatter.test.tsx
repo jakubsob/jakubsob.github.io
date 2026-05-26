@@ -6,7 +6,7 @@ import {
   formatCodeText,
   formatMarkdownText,
   unicodeMappings
-} from '../LinkedInTextFormatterUtils';
+} from '../features/LinkedInTextFormatterUtils';
 
 describe('LinkedInTextFormatter', () => {
   describe('applyUnicodeMapping', () => {

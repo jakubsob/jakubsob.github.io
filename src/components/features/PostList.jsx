@@ -1,5 +1,5 @@
-import { Post } from "@/components/Post";
-import { FilteredList } from "@/components/FilteredList";
+import { Post } from "@/components/features/Post";
+import { FilteredList } from "@/components/features/FilteredList";
 import { Animate } from "@/components/ui/animate";
 
 function PostList({ posts, showControls = true, variant = "card" }) {

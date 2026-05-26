@@ -1,8 +1,8 @@
 ---
 import Header from "./Header.tsx";
 import { DarkModeToggle } from "./DarkModeToggle";
-import SubscribeButton from "@/components/SubscribeButton.astro";
-import SearchButtonWrapper from "./SearchButtonWrapper.astro";
+import GetRoadmapButton from "@/components/features/GetRoadmapButton.astro";
+import SearchButtonWrapper from "@/components/features/SearchButtonWrapper.astro";
 ---
 
 <header class="fixed top-0 z-10 w-full bg-background border-b">
@@ -14,7 +14,7 @@ import SearchButtonWrapper from "./SearchButtonWrapper.astro";
     <div class="flex items-center gap-2">
       <DarkModeToggle client:load />
       <SearchButtonWrapper />
-      <SubscribeButton />
+      <GetRoadmapButton />
     </div>
   </div>
 </header>

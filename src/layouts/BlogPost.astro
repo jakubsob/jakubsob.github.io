@@ -1,15 +1,15 @@
 ---
 import BaseLayout from "./BaseLayout.astro";
-import BlogPostJSONLD from "../components/BlogPostJSONLD.astro";
-import FormattedDate from "../components/FormattedDate";
+import BlogPostJSONLD from "../components/features/BlogPostJSONLD.astro";
+import FormattedDate from "../components/features/FormattedDate";
 import { Section } from "@/components/ui/section";
 import { Button } from "@/components/ui/button";
-import { TagList } from "@/components/TagList";
+import { TagList } from "@/components/features/TagList";
 import { Asterisk, ExternalLink } from "lucide-react";
-import SubscribeButton from "@/components/SubscribeButton.astro";
+import GetRoadmapButton from "@/components/features/GetRoadmapButton.astro";
 import { getReadingTime } from "../utils/getReadingTime";
-import TableOfContents from "../components/TableOfContents";
-import PostList from "@/components/PostList";
+import TableOfContents from "../components/features/TableOfContents";
+import PostList from "@/components/features/PostList";
 import { getCollection } from "astro:content";
 
 const { post } = Astro.props;
@@ -98,7 +98,7 @@ const posts = (await getCollection("blog"))
             class="flex flex-col md:flex-row gap-6 md:gap-12 justify-between py-24 border-t"
           >
             <div class="w-full">
-              <SubscribeButton />
+              <GetRoadmapButton />
             </div>
             <div class="flex items-center justify-center text-muted">or</div>
             <a
