@@ -1,9 +1,8 @@
 ---
-title: 'Behavior-Driven Development in R Shiny: Writing When Steps That Model User Behavior'
+title: 'Behavior-Driven Development in R Shiny: Modeling User Behavior with When Steps'
 description: 'Learn how to write When steps that describe user actions without leaking implementation details. Build a clean DSL that survives UI refactors and keeps specifications readable.'
-pubDate: 'May 22 2026'
+pubDate: 'May 26 2026'
 tags: ["r", "tests", "bdd", "shiny", "shinytest2"]
-draft: true
 ---
 
 A specification tells a story.
@@ -31,7 +30,7 @@ When steps answer one question: **What is the user doing?**
 
 Not what button they clicked. Not what input ID was set. What **they** did, from **their perspective**.
 
-The difference matters because UI implementations change constantly. Input IDs get renamed, buttons get moved, forms get refactored into modules. If your When steps name those details, they break every time something shifts. If they describe user intent, they survive almost any UI change.
+The difference matters because UI implementations change constantly, user behaviors change only when business requirements change. Input IDs get renamed, buttons get moved, forms get refactored into modules. But users still interact with the same form, they submit the same data. If your When steps name those interface details, they break every time something shifts. If they describe user intent, they survive almost any UI change.
 
 A When step should read like a sentence from a user story.
 
@@ -39,14 +38,20 @@ Compare these two:
 
 ```{r}
 #| eval: false
-# Implementation-coupled! Breaks when the button ID changes
-when_i_click_submit_button <- function(context) { ... }
+# Implementation-coupled! Breaks when the submit button is removed or chaned
+when_i_click_submit_button <- function(context) {
+  ...
+}
 
 # Behavior-focused! Survives any UI refactor
-when_i_submit_entry_with_all_required_fields <- function(context) { ... }
+when_i_submit_entry_with_all_required_fields <- function(context) {
+  ...
+}
 ```
 
-The second version tells you what the user accomplished, not how the app was wired. That's the goal.
+The second version tells you what the user accomplished, not how the app was wired.
+
+That's the goal.
 
 ## Starting the App
 
@@ -179,7 +184,9 @@ when_i_change_settings(...) # composite step, implicitly navigates to the settin
 when_i_navigate_to_submissions_page()
 ```
 
-This way, the step names reflect the user's goals, not the UI structure. If we later change how navigation works — say we add another page and move our targeted component there — we can update the driver methods without changing the When step names. The specifications remain stable and focused on user behavior, not implementation details.
+This way, the step names reflect the user's goals, not the UI structure. If we later change how navigation works — say we add another page and move our targeted component there — we can update the driver methods without changing the When step names.
+
+That's how specifications stay stable and focused on user behavior, not implementation details.
 
 That's how specifications stay stable and don't need updating every time the UI changes.
 
@@ -214,8 +221,6 @@ it("should show confirmation after submitting", {
 ```
 
 The pipeline works because every step function — Given, When, or Then — has the same contract: receive `context`, return `context`. That uniformity is what lets pipe operator connect them.
-
-> This is basically how [cucumber](https://github.com/jakubsob/cucumber) works under the hood.
 
 Here is the pattern on its own, with no Shiny involved. The When steps are thin — each one just calls a driver method and returns context:
 
@@ -327,7 +332,9 @@ Use parameters when the difference between scenarios is data, not behavior. Keep
 
 ---
 
-> [cucumber](https://github.com/jakubsob/cucumber) allows you to write multiple variants of scenarios with `Scenario Outline` and `Examples` keywords.
+### The Cucumber Way
+
+[cucumber](https://github.com/jakubsob/cucumber) allows you to write multiple variants of scenarios with `Scenario Outline` and `Examples` keywords.
 
 In a cucumber feature file this scenario would look like this:
 
@@ -398,8 +405,6 @@ The specifications read naturally. None of them mention input IDs, button select
 Note how specifications don't even reveal it's a Shiny app. They don't reveal how we interact with it — `shinytest2`, `selenider`, anything goes. It's all hidden and irrelevant to the story we're telling. You can swap the internals and keep the same specifications true. You can even swap the system implementation entirely, and as long as it still satisfies the same business requirements, the specifications don't need touching. It's live and executable — not a list of tickets in an external system no one reads.
 
 That's exactly the opposite of what happens when we write tests that are tightly coupled to the UI structure.
-
----
 
 ## Wrapping up
 
