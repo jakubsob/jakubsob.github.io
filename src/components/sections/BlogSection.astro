@@ -23,13 +23,18 @@ const posts = (await getCollection("blog"))
         <Animate>
           <a href="/blog">
             <Button variant="pill" size="xl" shape="pill">
-              <span class="text-xl">Read more →</span>
+              <span class="text-3xl uppercase">Read more →</span>
             </Button>
           </a>
         </Animate>
       </div>
       <div class="h-full max-w-[65ch] row-span-2">
-        <PostList client:load posts={posts} showControls={false} variant="featured" />
+        <PostList
+          client:load
+          posts={posts}
+          showControls={false}
+          variant="featured"
+        />
       </div>
     </div>
   </div>

@@ -20,7 +20,7 @@ const buttonVariants = cva(
         ghost:
           "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
         link: "text-primary underline-offset-4 hover:underline",
-        pill: "rounded-[50px] w-fit px-2 py-2 bg-foreground text-background transition-all duration-300 border-2 border-transparent hover:border-foreground hover:bg-background hover:text-foreground hover:rounded-sm",
+        pill: "rounded-[50px] w-fit px-2 py-2 bg-foreground text-background transition-all duration-300 border-2 border-transparent hover:border-foreground hover:bg-background hover:text-foreground",
         cta: "bg-cta text-cta-foreground hover:bg-cta/80",
       },
       size: {
@@ -32,16 +32,16 @@ const buttonVariants = cva(
       },
       shape: {
         default: "rounded-sm",
-        pill: "rounded-[50px] px-2 py-2 transition-all duration-300 border-2 border-transparent hover:rounded-sm"
-      }
+        pill: "rounded-[50px] px-2 py-2 transition-all duration-300 border-2 border-transparent hover:rounded-none",
+      },
     },
     defaultVariants: {
       variant: "default",
       size: "default",
-      shape: "default"
+      shape: "default",
     },
-  }
-)
+  },
+);
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
