@@ -12,7 +12,7 @@ const posts = (await getCollection("blog"))
 ---
 
 <Section id="blog" size="fit" variant="light">
-  <div class="py-52 space-y-40">
+  <div class="py-20 md:py-52 space-y-16 md:space-y-40">
     <div class="container grid grid-cols-1 lg:grid-cols-2">
       <div class="mb-12">
         <Animate>
@@ -23,7 +23,7 @@ const posts = (await getCollection("blog"))
         <Animate>
           <a href="/blog">
             <Button variant="pill" size="xl" shape="pill">
-              <span class="text-3xl uppercase">Read more →</span>
+              <span class="text-xl lg:text-3xl uppercase">Read more →</span>
             </Button>
           </a>
         </Animate>

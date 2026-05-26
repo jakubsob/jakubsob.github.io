@@ -13,7 +13,7 @@ const sectionVariants = cva(
       },
       size: {
         fit: "h-fit",
-        full: "h-screen",
+        full: "h-[100svh]",
         md: "h-[50vh] min-h-[50vh]",
         lg: "h-[75vh] min-h-[75vh]",
         xl: "h-[90vh] min-h-[90vh]",

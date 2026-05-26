@@ -128,7 +128,7 @@ html.dark .shiki span {
 }
 
 pre {
-  @apply bg-card border border-border rounded-lg shadow-sm overflow-hidden;
+  @apply bg-card border border-border rounded-lg shadow-sm overflow-x-auto;
   @apply p-0;
 }
 
