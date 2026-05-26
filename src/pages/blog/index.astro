@@ -13,7 +13,7 @@ const posts = (await getCollection("blog"))
 <BaseLayout>
   <Section id="blog" variant="dark">
     <div class="container mx-auto py-16 lg:py-24">
-      <PageHeader label="Writing" />
+      <PageHeader label="Blog" subtitle="Sharing what I've learned" />
       <PostList client:load posts={posts} showControls={true} />
     </div>
   </Section>
