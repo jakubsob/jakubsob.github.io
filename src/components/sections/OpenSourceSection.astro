@@ -13,8 +13,8 @@ import { transformerStepAnimation } from "@/lib/transformerStepAnimation";
 
 <Section id="opensource" size="fit" variant="dark">
   <SectionHeading title="My Open Source" />
-  <div class="container py-16">
-    <div class="pb-16">
+  <div class="container pt-4 pb-16">
+    <div class="pb-12">
       <Animate>
         <div class="flex items-start gap-6" id="cucumber-header">
           <div class="size-[120px] flex-shrink-0">
@@ -164,7 +164,7 @@ then("the sales trend plot for {string} is shown", function(category, context) {
       </div>
 
       <Animate>
-        <div class="py-16">
+        <div class="pt-8 pb-12">
           <EyebrowLabel>
             <span class="text-success mr-1">✓</span>verification
           </EyebrowLabel>
@@ -183,7 +183,7 @@ then("the sales trend plot for {string} is shown", function(category, context) {
       </Animate>
     </div>
 
-    <div class="text-center pt-8 pb-8">
+    <div class="pt-6 pb-12">
       <a href="https://jakubsobolewski.com/cucumber/" target="_blank">
         <Button size="xl" className="text-2xl" variant="pill" shape="pill">
           Try it out!
@@ -225,7 +225,7 @@ then("the sales trend plot for {string} is shown", function(category, context) {
       <div>
         <Animate>
           <div
-            class="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-8 lg:gap-16 items-start pb-16 border-b border-foreground/10"
+            class="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-8 lg:gap-16 items-start pb-10 border-b border-foreground/10"
           >
             <div>
               <EyebrowLabel>the code</EyebrowLabel>
@@ -250,7 +250,7 @@ is_adult <- function(age) {
 
         <Animate>
           <div
-            class="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-8 lg:gap-16 items-start py-16 border-b border-foreground/10"
+            class="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-8 lg:gap-16 items-start py-10 border-b border-foreground/10"
           >
             <div>
               <EyebrowLabel>mutation score</EyebrowLabel>
@@ -290,7 +290,7 @@ test_that("is_adult returns FALSE for minors", {
         </Animate>
 
         <Animate>
-          <div class="py-16 border-b border-foreground/10">
+          <div class="py-10 border-b border-foreground/10">
             <EyebrowLabel>run mutation testing</EyebrowLabel>
             <Card variant="destructive">
               <Code
@@ -315,7 +315,7 @@ test_that("is_adult returns FALSE for minors", {
 
         <Animate>
           <div
-            class="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-8 lg:gap-16 items-start pt-16 pb-0"
+            class="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-8 lg:gap-16 items-start pt-10 pb-0"
           >
             <div>
               <EyebrowLabel>after the fix</EyebrowLabel>
@@ -358,7 +358,7 @@ test_that("is_adult is TRUE at the boundary", { # [!code ++]
         </Animate>
       </div>
 
-      <div class="text-center pt-16 pb-8">
+      <div class="pt-12 pb-8">
         <a href="https://jakubsobolewski.com/muttest/" target="_blank">
           <Button size="xl" className="text-2xl" variant="pill" shape="pill">
             Patch the gaps in your tests

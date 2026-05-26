@@ -106,13 +106,11 @@ test_that("Scenario: I can inspect my net balance", {
         </Animate>
 
         <Animate>
-          <div
-            class="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-8 lg:gap-16 items-start py-16"
-          >
+          <div class="py-12">
             <div>
               <EyebrowLabel>what you'll learn</EyebrowLabel>
               <ul
-                class="text-sm text-muted-foreground leading-relaxed space-y-2 max-w-[36ch]"
+                class="text-sm text-muted-foreground leading-relaxed space-y-2 columns-2 max-w-[56ch]"
               >
                 <li class="flex items-start gap-2">
                   <span class="text-success shrink-0">✓</span>Transform user
@@ -136,17 +134,12 @@ test_that("Scenario: I can inspect my net balance", {
         </Animate>
       </div>
 
-      <div class="text-center pt-8 pb-8">
+      <div class="pt-6 pb-12">
         <a
           href="https://github.com/jakubsob/shiny-acceptance-tdd"
           target="_blank"
         >
-          <Button
-            size="xl"
-            className="text-2xl motion-preset-oscillate-sm motion-paused hover:motion-running"
-            variant="pill"
-            shape="pill"
-          >
+          <Button size="xl" className="text-2xl" variant="pill" shape="pill">
             View on GitHub
             <CircleArrowRight className="inline-block size-[1.5em] ml-2" />
           </Button>
