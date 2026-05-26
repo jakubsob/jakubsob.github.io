@@ -1,5 +1,5 @@
 ---
-import { Code } from "astro:components";
+import Code from "@/components/Code.astro";
 import { Button } from "@/components/ui/button";
 import { Section } from "@/components/ui/section";
 import { Animate } from "@/components/ui/animate";
@@ -62,10 +62,6 @@ import { transformerStepAnimation } from "@/lib/transformerStepAnimation";
           </div>
           <Card variant="destructive">
             <Code
-              themes={{
-                light: "github-light",
-                dark: "github-dark",
-              }}
               lang="r"
               code={`test_that("sales trend works", {
   # sales data is available
@@ -123,10 +119,6 @@ import { transformerStepAnimation } from "@/lib/transformerStepAnimation";
           </p>
           <Card variant="success">
             <Code
-              themes={{
-                light: "github-light",
-                dark: "github-dark",
-              }}
               lang="gherkin"
               transformers={[transformerStepAnimation()]}
               code={`Feature: Sales Trends
@@ -152,10 +144,6 @@ import { transformerStepAnimation } from "@/lib/transformerStepAnimation";
           </p>
           <Card variant="success">
             <Code
-              themes={{
-                light: "github-light",
-                dark: "github-dark",
-              }}
               lang="r"
               transformers={[transformerStepAnimation()]}
               code={`given("the sales data is loaded", function(context) { # [!code step:1]
@@ -182,10 +170,6 @@ then("the sales trend plot for {string} is shown", function(category, context) {
           </EyebrowLabel>
           <Card variant="success">
             <Code
-              themes={{
-                light: "github-light",
-                dark: "github-dark",
-              }}
               lang="r"
               code={`> cucumber::test()
 #> ✔ | F W  S  OK | Context
@@ -259,10 +243,6 @@ then("the sales trend plot for {string} is shown", function(category, context) {
             </div>
             <Card>
               <Code
-                themes={{
-                  light: "github-light",
-                  dark: "github-dark",
-                }}
                 lang="r"
                 code={`# R/is_adult.R
 is_adult <- function(age) {
@@ -300,10 +280,6 @@ is_adult <- function(age) {
               </EyebrowLabel>
               <Card variant="destructive">
                 <Code
-                  themes={{
-                    light: "github-light",
-                    dark: "github-dark",
-                  }}
                   lang="r"
                   code={`test_that("is_adult returns TRUE for adults", {
   expect_true(is_adult(25))  # passes even with age > 18
@@ -323,10 +299,6 @@ test_that("is_adult returns FALSE for minors", {
             <EyebrowLabel>run mutation testing</EyebrowLabel>
             <Card variant="destructive">
               <Code
-                themes={{
-                  light: "github-light",
-                  dark: "github-dark",
-                }}
                 lang="r"
                 code={`> muttest::muttest(plan)
 #> ℹ Mutation Testing
@@ -371,10 +343,6 @@ test_that("is_adult returns FALSE for minors", {
               </EyebrowLabel>
               <Card variant="success">
                 <Code
-                  themes={{
-                    light: "github-light",
-                    dark: "github-dark",
-                  }}
                   lang="r"
                   transformers={[transformerNotationDiff()]}
                   code={`test_that("is_adult returns TRUE for adults", {

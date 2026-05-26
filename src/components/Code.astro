@@ -1,0 +1,13 @@
+---
+import { Code as AstroCode } from "astro:components";
+import type { ComponentProps } from "astro/types";
+
+type Props = Omit<ComponentProps<typeof AstroCode>, "themes" | "theme"> & {
+  themes?: ComponentProps<typeof AstroCode>["themes"];
+};
+
+const { themes = { light: "github-light", dark: "github-dark" }, ...rest } =
+  Astro.props;
+---
+
+<AstroCode themes={themes} {...rest} />

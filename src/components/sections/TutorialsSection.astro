@@ -1,5 +1,5 @@
 ---
-import { Code } from "astro:components";
+import Code from "@/components/Code.astro";
 import { Button } from "@/components/ui/button";
 import { Section } from "@/components/ui/section";
 import { Animate } from "@/components/ui/animate";
@@ -56,7 +56,6 @@ import { CircleArrowRight } from "lucide-react";
             </div>
             <Card variant="destructive">
               <Code
-                themes={{ light: "github-light", dark: "github-dark" }}
                 lang="text"
                 code={`Budget tracking
   As a user I want to see my net balance
@@ -87,7 +86,6 @@ import { CircleArrowRight } from "lucide-react";
             </div>
             <Card variant="success">
               <Code
-                themes={{ light: "github-light", dark: "github-dark" }}
                 lang="r"
                 code={`# tests/acceptance/test-budget.R
 test_that("Scenario: I can inspect my net balance", {

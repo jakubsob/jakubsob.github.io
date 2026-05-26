@@ -1,5 +1,5 @@
 ---
-import { Code } from "astro:components";
+import Code from "@/components/Code.astro";
 import type { BundledLanguage } from "shiki";
 
 type Variant = "default" | "destructive" | "success" | "neutral";
@@ -33,7 +33,6 @@ const { code, lang = "text", variant = "default" } = Astro.props;
   <Code
     code={code}
     lang={lang}
-    themes={{ light: "github-light", dark: "github-dark" }}
   />
 </div>
 
