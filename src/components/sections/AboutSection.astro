@@ -6,7 +6,7 @@ import authorImage from "/public/author.png";
 import Grid2 from "../../pages/grid2.png";
 ---
 
-<Section id="about" variant="light">
+<Section id="about" variant="dark">
   <div class="pt-16 pb-24 md:pt-20 md:pb-32 relative">
     <div class="absolute z-0 bottom-0 left-0 size-full">
       <Picture
@@ -16,13 +16,15 @@ import Grid2 from "../../pages/grid2.png";
       />
     </div>
     <div class="px-6 md:px-12 lg:px-16">
-      <div class="grid grid-cols-1 lg:grid-cols-[2fr_7fr] gap-12 lg:gap-16 items-start">
+      <div
+        class="grid grid-cols-1 lg:grid-cols-[2fr_7fr] gap-12 lg:gap-16 items-start"
+      >
         <Animate>
           <div class="w-full max-w-[200px] lg:max-w-none">
             <Picture
               src={authorImage}
               alt="Jakub Sobolewski"
-              class="w-full h-auto object-cover border bg-light aspect-[3/4]"
+              class="w-full h-auto object-cover border bg-card/50 aspect-[3/4]"
               widths={[200, 320, 480]}
               sizes="(min-width: 1024px) 18vw, 200px"
             />
@@ -43,24 +45,25 @@ import Grid2 from "../../pages/grid2.png";
                 experience.
               </p>
               <p>
-                I believe automated testing is the key to building quality software.
+                I believe automated testing is the key to building quality
+                software.
               </p>
               <p>
-                My journey into R testing began with a project where, to write any
-                code, you had to be connected to the production environment.
+                My journey into R testing began with a project where, to write
+                any code, you had to be connected to the production environment.
                 Terrible developer experience.
               </p>
               <p>
-                I'm particularly passionate about knowledge sharing, which is why I
-                maintain an active blog and R Tests Gallery. When we share our
-                testing experiences (both successes and failures) we all become
-                better developers.
+                I'm particularly passionate about knowledge sharing, which is
+                why I maintain an active blog and R Tests Gallery. When we share
+                our testing experiences (both successes and failures) we all
+                become better developers.
               </p>
               <p>
                 I approach testing with a practical mindset: tests should make
                 development faster and more confident, not slower and more
-                burdensome. My goal is to help teams find testing strategies that
-                actually enhance their workflow.
+                burdensome. My goal is to help teams find testing strategies
+                that actually enhance their workflow.
               </p>
             </div>
           </div>

@@ -2,13 +2,12 @@
 import Code from "@/components/features/Code.astro";
 import type { BundledLanguage } from "shiki";
 
-type Variant = "default" | "destructive" | "success" | "neutral";
+type Variant = "default" | "destructive" | "success";
 
 const variantBorder: Record<Variant, string> = {
   default: "hover:border-muted",
   destructive: "border-destructive/60",
   success: "border-success/60",
-  neutral: "border-border/60",
 };
 
 interface Props {
@@ -30,10 +29,7 @@ const { code, lang = "text", variant = "default" } = Astro.props;
       Copy
     </button>
   </div>
-  <Code
-    code={code}
-    lang={lang}
-  />
+  <Code code={code} lang={lang} />
 </div>
 
 <script>
@@ -44,7 +40,9 @@ const { code, lang = "text", variant = "default" } = Astro.props;
       const text = block.querySelector("code")?.innerText ?? "";
       await navigator.clipboard.writeText(text);
       btn.textContent = "Copied";
-      setTimeout(() => { btn.textContent = "Copy"; }, 700);
+      setTimeout(() => {
+        btn.textContent = "Copy";
+      }, 700);
     });
   });
 </script>

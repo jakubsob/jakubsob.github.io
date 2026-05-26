@@ -11,7 +11,7 @@ import { transformerNotationDiff } from "@shikijs/transformers";
 import { transformerStepAnimation } from "@/lib/transformerStepAnimation";
 ---
 
-<Section id="opensource" size="fit" variant="dark">
+<Section id="opensource" size="fit" variant="light">
   <SectionHeading title="My Open Source" />
   <div class="container pt-4 pb-16">
     <div class="pb-12">
@@ -78,7 +78,7 @@ import { transformerStepAnimation } from "@/lib/transformerStepAnimation";
     </div>
   </div>
 
-  <div class="bg-light py-16 js-strike-reveal select-none">
+  <div class="bg-secondary py-16 js-strike-reveal select-none">
     <div class="container">
       <div class="relative inline-block">
         <span
@@ -192,7 +192,7 @@ then("the sales trend plot for {string} is shown", function(category, context) {
       </a>
     </div>
   </div>
-  <div class="bg-light mt-16">
+  <div class="bg-background mt-16">
     <div class="container">
       <div class="pt-12 pb-16">
         <Animate>
@@ -292,7 +292,7 @@ test_that("is_adult returns FALSE for minors", {
         <Animate>
           <div class="py-10 border-b border-foreground/10">
             <EyebrowLabel>run mutation testing</EyebrowLabel>
-            <Card variant="destructive">
+            <Card>
               <Code
                 lang="r"
                 code={`> muttest::muttest(plan)

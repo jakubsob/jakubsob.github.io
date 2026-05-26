@@ -88,7 +88,8 @@ const cols = Array.from({ length: 8 });
             <Button
               variant="cta"
               size="xl"
-              className="rounded-none uppercase tracking-wide text-sm md:text-base font-bold whitespace-nowrap"
+              shape="pill"
+              className="uppercase tracking-wide text-sm md:text-base font-bold whitespace-nowrap"
             >
               Take the testing course
             </Button>
@@ -96,12 +97,7 @@ const cols = Array.from({ length: 8 });
         </Animate>
         <Animate variant="expand" className="motion-delay-[750ms]">
           <a href="/get-roadmap" class="block">
-            <Button
-              size="xl"
-              className="rounded-none uppercase tracking-wide text-sm md:text-base bg-transparent border border-foreground/40 text-foreground hover:bg-foreground hover:text-background transition-colors whitespace-nowrap"
-            >
-              Get Roadmap
-            </Button>
+            <Button size="xl" variant="link"> Get Roadmap </Button>
           </a>
         </Animate>
       </div>
@@ -132,6 +128,12 @@ const cols = Array.from({ length: 8 });
     background-size: 100% var(--row-h);
     background-position: 0 bottom;
     animation: grid-fade-in 1.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+  }
+
+  @media (max-width: 1023px) {
+    .hero-grid {
+      padding-bottom: var(--row-h);
+    }
   }
 
   @media (min-width: 1024px) {

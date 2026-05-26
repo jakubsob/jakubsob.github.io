@@ -11,12 +11,11 @@ const cardVariants = cva(
         default: "hover:border-muted",
         destructive: "border-destructive/60",
         success: "border-success/60",
-        neutral: "border-border/60",
       },
     },
     defaultVariants: { variant: "default" },
-  }
-)
+  },
+);
 
 export interface CardProps
   extends React.HTMLAttributes<HTMLDivElement>,

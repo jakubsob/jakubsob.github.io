@@ -9,7 +9,7 @@ import SectionHeading from "@/components/ui/section-heading.astro";
 import { CircleArrowRight } from "lucide-react";
 ---
 
-<Section id="tutorials" size="fit" variant="dark">
+<Section id="tutorials" size="fit" variant="light">
   <SectionHeading title="Tutorials" />
 
   <div class="py-16">
@@ -175,15 +175,37 @@ test_that("Scenario: I can inspect my net balance", {
           <div
             class="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-8 lg:gap-16 items-start py-16 border-b border-foreground/10"
           >
-            <div class="aspect-video w-full overflow-hidden rounded-lg">
-              <iframe
-                class="w-full h-full"
-                src="https://www.youtube.com/embed/HKMhDzLRqM0?si=8UTJjBwTpGTcmyt6"
-                title="Structured Approach to Testing Shiny Apps - ShinyConf 2024"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowfullscreen
+            <div
+              class="aspect-video w-full overflow-hidden rounded-[--radius-surface]"
+            >
+              <button
+                class="yt-facade w-full h-full relative group block cursor-pointer"
+                data-video-id="HKMhDzLRqM0"
+                data-title="Structured Approach to Testing Shiny Apps - ShinyConf 2024"
+                aria-label="Play: Structured Approach to Testing Shiny Apps - ShinyConf 2024"
               >
-              </iframe>
+                <img
+                  src="https://img.youtube.com/vi/HKMhDzLRqM0/maxresdefault.jpg"
+                  alt=""
+                  class="w-full h-full object-cover"
+                  loading="lazy"
+                />
+                <div
+                  class="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/20 transition-colors"
+                >
+                  <div
+                    class="size-16 rounded-full bg-white/90 flex items-center justify-center group-hover:scale-110 transition-transform"
+                  >
+                    <svg
+                      viewBox="0 0 24 24"
+                      class="size-7 fill-black translate-x-0.5"
+                      aria-hidden="true"
+                    >
+                      <path d="M8 5v14l11-7z"></path>
+                    </svg>
+                  </div>
+                </div>
+              </button>
             </div>
             <div>
               <EyebrowLabel>what you'll learn</EyebrowLabel>
@@ -241,15 +263,37 @@ test_that("Scenario: I can inspect my net balance", {
           <div
             class="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-8 lg:gap-16 items-start"
           >
-            <div class="aspect-video w-full overflow-hidden rounded-lg">
-              <iframe
-                class="w-full h-full"
-                src="https://www.youtube.com/embed/e4H28G2J05U?si=ru0yRV6LRHh7TmwI"
-                title="Behavior-Driven Development Tutorial"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowfullscreen
+            <div
+              class="aspect-video w-full overflow-hidden rounded-[--radius-surface]"
+            >
+              <button
+                class="yt-facade w-full h-full relative group block cursor-pointer"
+                data-video-id="e4H28G2J05U"
+                data-title="Behavior-Driven Development Tutorial"
+                aria-label="Play: Behavior-Driven Development Tutorial"
               >
-              </iframe>
+                <img
+                  src="https://img.youtube.com/vi/e4H28G2J05U/maxresdefault.jpg"
+                  alt=""
+                  class="w-full h-full object-cover"
+                  loading="lazy"
+                />
+                <div
+                  class="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/20 transition-colors"
+                >
+                  <div
+                    class="size-16 rounded-full bg-white/90 flex items-center justify-center group-hover:scale-110 transition-transform"
+                  >
+                    <svg
+                      viewBox="0 0 24 24"
+                      class="size-7 fill-black translate-x-0.5"
+                      aria-hidden="true"
+                    >
+                      <path d="M8 5v14l11-7z"></path>
+                    </svg>
+                  </div>
+                </div>
+              </button>
             </div>
             <div>
               <EyebrowLabel>what you'll learn</EyebrowLabel>
@@ -280,3 +324,20 @@ test_that("Scenario: I can inspect my net balance", {
     </div>
   </div>
 </Section>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>(".yt-facade").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const id = btn.dataset.videoId;
+      const title = btn.dataset.title ?? "";
+      const iframe = document.createElement("iframe");
+      iframe.src = `https://www.youtube.com/embed/${id}?autoplay=1`;
+      iframe.title = title;
+      iframe.allow =
+        "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+      iframe.allowFullscreen = true;
+      iframe.className = "w-full h-full";
+      btn.replaceWith(iframe);
+    });
+  });
+</script>
