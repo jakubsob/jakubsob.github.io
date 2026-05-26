@@ -1,65 +1,72 @@
 ---
-import { Picture } from "astro:assets";
 import { Button } from "@/components/ui/button";
 import { Section } from "@/components/ui/section";
 import { Animate } from "@/components/ui/animate";
 import { ArrowDown } from "lucide-react";
-import Grid from "../../pages/grid.png";
+
+const splitLetters = (text: string) =>
+  text
+    .split("")
+    .map((char) =>
+      char === " "
+        ? `<span class="hero-letter" aria-hidden="true">&nbsp;</span>`
+        : `<span class="hero-letter" aria-hidden="true">${char}</span>`
+    )
+    .join("");
 ---
 
 <Section variant="dark" size="full" id="hero">
   <div class="h-[100svh] w-full relative overflow-hidden">
-    <div class="absolute z-0 bottom-0 left-0 w-full h-1/2">
-      <Picture
-        src={Grid}
-        class="size-full object-cover object-[center_top] opacity-20 dark:opacity-50"
-        alt="Hero background"
-      />
+    <div class="absolute inset-0 z-0 hero-graph-paper pointer-events-none">
     </div>
-    <div class="h-full grid grid-cols-1 place-items-center">
-      <div class="flex flex-col items-center justify-center">
+
+    <div
+      class="h-full flex flex-col justify-end pb-16 md:pb-24 px-6 md:px-12 lg:px-16 relative z-0"
+    >
+      <div class="flex flex-col gap-8">
         <Animate variant="header" className="motion-delay-[200ms]">
-          <h1
-            class="text-4xl sm:text-5xl md:text-7xl uppercase text-center mb-6 tracking-[-0.04em]"
-          >
-            Building Quality By Testing
+          <h1 class="hero-headline text-[clamp(3.5rem,16vw,14rem)] uppercase leading-[0.88] font-bold">
+            <span class="hero-line" set:html={splitLetters("Building")} />
+            <span class="hero-line" set:html={splitLetters("Quality")} />
+            <span class="hero-line text-primary" set:html={splitLetters("By Testing")} />
           </h1>
         </Animate>
-        <Animate variant="header" className="motion-delay-[400ms]">
-          <p
-            class="text-muted-foreground text-lg md:text-xl font-serif font-light text-center"
-          >
-            I'm Jakub and testing helps me build better software. <br />
-            Practical articles and open-source tools for developers who want to build
-            software they trust.
-          </p>
-        </Animate>
-        <div class="flex gap-2 mt-12">
-          <Animate variant="expand" className="motion-delay-[600ms]">
-            <a href="/course">
-              <Button variant="cta" shape="pill" size="xl">
-                <span class="text-sm md:text-xl">
+
+        <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 md:gap-12">
+          <Animate variant="header" className="motion-delay-[400ms]">
+            <p class="text-foreground/70 text-base md:text-lg font-serif font-light leading-relaxed max-w-[44ch]">
+              I'm Jakub. Practical articles and open-source tools for developers
+              who want to build software they trust.
+            </p>
+          </Animate>
+          <div class="flex flex-row gap-3 shrink-0">
+            <Animate variant="expand" className="motion-delay-[600ms]">
+              <a href="/course" class="block">
+                <Button
+                  variant="cta"
+                  size="xl"
+                  className="rounded-none uppercase tracking-wide text-sm md:text-base font-bold whitespace-nowrap"
+                >
                   Take the testing course
-                </span>
-              </Button>
-            </a>
-          </Animate>
-          <Animate variant="expand" className="motion-delay-[600ms]">
-            <a href="/get-roadmap">
-              <Button
-                variant="pill"
-                shape="pill"
-                size="xl"
-                className="bg-transparent text-foreground"
-              >
-                <span class="text-sm md:text-xl"> Get Roadmap </span>
-              </Button>
-            </a>
-          </Animate>
+                </Button>
+              </a>
+            </Animate>
+            <Animate variant="expand" className="motion-delay-[700ms]">
+              <a href="/get-roadmap" class="block">
+                <Button
+                  size="xl"
+                  className="rounded-none uppercase tracking-wide text-sm md:text-base bg-transparent border border-foreground/40 text-foreground hover:bg-foreground hover:text-background transition-colors whitespace-nowrap"
+                >
+                  Get Roadmap
+                </Button>
+              </a>
+            </Animate>
+          </div>
         </div>
       </div>
     </div>
   </div>
+
   <Animate variant="header" className="motion-delay-[1000ms]">
     <a
       href="#blog"
@@ -69,3 +76,64 @@ import Grid from "../../pages/grid.png";
     </a>
   </Animate>
 </Section>
+
+<style>
+  @keyframes grid-fade-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  .hero-graph-paper {
+    animation: grid-fade-in 1.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+    background-image: linear-gradient(
+        to right,
+        rgba(0, 0, 0, 0.07) 1px,
+        transparent 1px
+      ),
+      linear-gradient(to bottom, rgba(0, 0, 0, 0.07) 1px, transparent 1px),
+      linear-gradient(to right, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+    /* major = line-height (16vw × 0.88); minor = major ÷ 5 */
+    background-size:
+      14.08vw 14.08vw,
+      14.08vw 14.08vw,
+      2.816vw 2.816vw,
+      2.816vw 2.816vw;
+  }
+
+  .hero-line {
+    display: block;
+    letter-spacing: -0.04em;
+    white-space: nowrap;
+  }
+
+  :global(.hero-letter) {
+    display: inline-block;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  :global(.hero-letter:hover) {
+    transform: translateY(-10px);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-graph-paper { animation: none; }
+    :global(.hero-letter) { transition: none; }
+  }
+
+  :global(.dark) .hero-graph-paper {
+    background-image: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0.08) 1px,
+        transparent 1px
+      ),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+      linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size:
+      80px 80px,
+      80px 80px,
+      16px 16px,
+      16px 16px;
+  }
+</style>
