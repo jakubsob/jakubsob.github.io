@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { cn } from "@/lib/utils"
-import { Menu, X, ChevronDown } from "lucide-react"
+import * as React from "react";
+import { cn } from "@/lib/utils";
+import { Menu, X, ChevronDown } from "lucide-react";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -11,12 +11,27 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu"
+} from "@/components/ui/navigation-menu";
 
 const Logo = ({ className }: { className?: string }) => (
-  <svg width="164" height="168" viewBox="0 0 164 168" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
-    <path d="M152 55.5V26C152 19.3726 146.627 14 140 14H24C17.3726 14 12 19.3726 12 26V49V72C12 78.6274 17.3726 84 24 84H65M127.5 84H140C146.627 84 152 89.3726 152 96V142C152 148.627 146.627 154 140 154H24C17.3726 154 12 148.627 12 142V112" strokeWidth="12" strokeLinecap="round" />
-    <path d="M34 114C34 114 33.9469 117.576 38 122.5C42.0532 127.424 49 130 56 130C63 130 66 126 69.5 122.5C73 119 127.839 41.1541 130.006 38" strokeWidth="12" strokeLinecap="round" />
+  <svg
+    width="164"
+    height="168"
+    viewBox="0 0 164 168"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className={className}
+  >
+    <path
+      d="M152 55.5V26C152 19.3726 146.627 14 140 14H24C17.3726 14 12 19.3726 12 26V49V72C12 78.6274 17.3726 84 24 84H65M127.5 84H140C146.627 84 152 89.3726 152 96V142C152 148.627 146.627 154 140 154H24C17.3726 154 12 148.627 12 142V112"
+      strokeWidth="12"
+      strokeLinecap="round"
+    />
+    <path
+      d="M34 114C34 114 33.9469 117.576 38 122.5C42.0532 127.424 49 130 56 130C63 130 66 126 69.5 122.5C73 119 127.839 41.1541 130.006 38"
+      strokeWidth="12"
+      strokeLinecap="round"
+    />
   </svg>
 );
 
@@ -26,16 +41,22 @@ type MenuItemType = {
   description?: string;
   className?: string;
   icon?: React.ReactNode;
-  items?: { title: string; href: string; description: string; icon?: React.ReactNode }[];
+  brand?: boolean;
+  items?: {
+    title: string;
+    href: string;
+    description: string;
+    icon?: React.ReactNode;
+  }[];
 };
 
 const menuItems: MenuItemType[] = [
   {
     title: "Jakub Sobolewski",
     href: "/",
-    icon: <Logo className="inline-block size-[1em] mr-2 stroke-current" />,
     description: "Go to homepage",
     className: "uppercase",
+    brand: true,
   },
   {
     title: "blog",
@@ -79,17 +100,17 @@ const menuItems: MenuItemType[] = [
 ];
 
 export default function Header() {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false)
-  const [openDropdown, setOpenDropdown] = React.useState<string | null>(null)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
+  const [openDropdown, setOpenDropdown] = React.useState<string | null>(null);
 
   const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen)
-    setOpenDropdown(null) // Close any open dropdowns when toggling mobile menu
-  }
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+    setOpenDropdown(null); // Close any open dropdowns when toggling mobile menu
+  };
 
   const toggleDropdown = (title: string) => {
-    setOpenDropdown(openDropdown === title ? null : title)
-  }
+    setOpenDropdown(openDropdown === title ? null : title);
+  };
 
   return (
     <>
@@ -103,30 +124,70 @@ export default function Header() {
                   // Dropdown menu
                   <>
                     <NavigationMenuTrigger
-                      className={cn(navigationMenuTriggerStyle(), item.className)}>{item.title}</NavigationMenuTrigger>
+                      className={cn(
+                        navigationMenuTriggerStyle(),
+                        item.className,
+                      )}
+                    >
+                      {item.title}
+                    </NavigationMenuTrigger>
                     <NavigationMenuContent>
-                      <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-1 lg:w-[600px]">
-                        {item.items.map((subItem) => (
-                          <ListItem
+                      <ul className="grid w-[400px] gap-2 p-3 md:w-[500px] md:grid-cols-1 lg:w-[600px]">
+                        {item.items.map((subItem, subIndex) => (
+                          <li
                             key={subItem.title}
-                            title={subItem.title}
-                            href={subItem.href}
+                            className="animate-in fade-in slide-in-from-top-1 [animation-fill-mode:both]"
+                            style={{
+                              animationDelay: `${subIndex * 60}ms`,
+                              animationDuration: "220ms",
+                            }}
                           >
-                            {subItem.description}
-                          </ListItem>
+                            <NavigationMenuLink asChild>
+                              <a
+                                href={subItem.href}
+                                className="block select-none rounded-md p-3 leading-none no-underline outline-none transition-all duration-300 hover:rounded-none hover:bg-secondary group"
+                              >
+                                <div className="text-sm font-medium leading-none text-foreground mb-1">
+                                  {subItem.title}
+                                </div>
+                                <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                                  {subItem.description}
+                                </p>
+                              </a>
+                            </NavigationMenuLink>
+                          </li>
                         ))}
                       </ul>
                     </NavigationMenuContent>
                   </>
+                ) : item.brand ? (
+                  // Brand link with logo + name hover effects
+                  <NavigationMenuLink asChild>
+                    <a
+                      href={item.href}
+                      className={cn(
+                        navigationMenuTriggerStyle(),
+                        item.className,
+                        "group",
+                      )}
+                    >
+                      <Logo className="inline-block size-[1em] mr-2 stroke-current transition-colors duration-500 group-hover:stroke-[hsl(var(--cta))]" />
+                      <span className="inline-block transition-transform duration-300 origin-left group-hover:scale-x-[1.03]">
+                        {item.title}
+                      </span>
+                    </a>
+                  </NavigationMenuLink>
                 ) : (
                   // Regular link
                   <NavigationMenuLink asChild>
                     <a
                       href={item.href}
-                      className={cn(navigationMenuTriggerStyle(), item.className)}
-                      >
-                        {item?.icon}
-                        {item.title}
+                      className={cn(
+                        navigationMenuTriggerStyle(),
+                        item.className,
+                      )}
+                    >
+                      {item.title}
                     </a>
                   </NavigationMenuLink>
                 )}
@@ -171,7 +232,7 @@ export default function Header() {
                           <ChevronDown
                             className={cn(
                               "h-4 w-4 transition-transform",
-                              openDropdown === item.title && "rotate-180"
+                              openDropdown === item.title && "rotate-180",
                             )}
                           />
                         </button>
@@ -194,17 +255,31 @@ export default function Header() {
                           </ul>
                         )}
                       </div>
+                    ) : item.brand ? (
+                      // Mobile brand link
+                      <a
+                        href={item.href}
+                        className={cn(
+                          "flex items-center p-3 rounded-md hover:bg-muted transition-colors group",
+                          item.className,
+                        )}
+                        onClick={() => setIsMobileMenuOpen(false)}
+                      >
+                        <Logo className="inline-block size-[1em] mr-2 stroke-current transition-colors duration-500 group-hover:stroke-[hsl(var(--cta))]" />
+                        <span className="transition-[letter-spacing] duration-300 group-hover:tracking-wider">
+                          {item.title}
+                        </span>
+                      </a>
                     ) : (
                       // Mobile regular link
                       <a
                         href={item.href}
                         className={cn(
                           "block p-3 rounded-md hover:bg-muted transition-colors",
-                          item.className
+                          item.className,
                         )}
                         onClick={() => setIsMobileMenuOpen(false)}
                       >
-                          {item?.icon}
                         {item.title}
                       </a>
                     )}
@@ -216,7 +291,7 @@ export default function Header() {
         )}
       </div>
     </>
-  )
+  );
 }
 
 const ListItem = React.forwardRef<
@@ -230,17 +305,19 @@ const ListItem = React.forwardRef<
           ref={ref}
           className={cn(
             "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors group hover:text-muted-foreground",
-            className
+            className,
           )}
           {...props}
         >
-          <div className="text-sm leading-none text-foreground group-hover:text-current">{title}</div>
+          <div className="text-sm leading-none text-foreground group-hover:text-current">
+            {title}
+          </div>
           <p className="line-clamp-2 text-sm leading-snug text-muted-foreground group-hover:text-current">
             {children}
           </p>
         </a>
       </NavigationMenuLink>
     </li>
-  )
-})
-ListItem.displayName = "ListItem"
+  );
+});
+ListItem.displayName = "ListItem";
