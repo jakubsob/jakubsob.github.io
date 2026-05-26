@@ -3,15 +3,15 @@ import { Picture } from "astro:assets";
 import { Section } from "@/components/ui/section";
 import { Animate } from "@/components/ui/animate";
 import authorImage from "/public/author.png";
-import Grid2 from "../../pages/grid2.png";
+import Grid from "../../pages/grid.png";
 ---
 
 <Section id="about" variant="dark">
   <div class="pt-16 pb-24 md:pt-20 md:pb-32 relative">
     <div class="absolute z-0 bottom-0 left-0 size-full">
       <Picture
-        src={Grid2}
-        class="size-full object-cover object-[center_top] invert opacity-5 dark:opacity-40"
+        src={Grid}
+        class="size-full object-cover object-[center_top] invert opacity-10 dark:opacity-40"
         alt="Hero background"
       />
     </div>
