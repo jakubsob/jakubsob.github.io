@@ -1,19 +1,21 @@
 ---
 import { Section } from "@/components/ui/section";
 import { EyebrowLabel } from "@/components/ui/eyebrow-label";
+import { Animate } from "@/components/ui/animate";
 import Subscribe from "@/components/features/Subscribe.astro";
 import { getFooterRoutes, getSocialLinks } from "../../lib/routes";
 
 const today = new Date();
 
-// Get routes automatically
 const footerRoutes = getFooterRoutes();
 const socialLinks = getSocialLinks();
 ---
 
 <footer>
-  <Section variant="dark">
-    <div class="container mx-auto h-full flex flex-col justify-between">
+  <Section variant="darker">
+    <div
+      class="container mx-auto h-full flex flex-col justify-between border-t border-border"
+    >
       <div
         class="grid grid-cols-1 gap-12 lg:gap-20 lg:grid-cols-2 place-items-start
         h-full
@@ -21,46 +23,64 @@ const socialLinks = getSocialLinks();
         py-16 lg:py-40"
       >
         <div class="lg:justify-self-center flex flex-col gap-8">
-          <p class="text-3xl lg:text-6xl uppercase font-light">
-            Learn efficient R development
-          </p>
-          <div class="text-lg">
-            <Subscribe variant="blog" />
-          </div>
+          <Animate client:visible>
+            <p class="text-3xl lg:text-6xl uppercase font-light">
+              Learn efficient R development
+            </p>
+            <div class="text-lg mt-8">
+              <Subscribe variant="blog" />
+            </div>
+          </Animate>
         </div>
         <div class="lg:justify-self-center font-light">
-          <div class="flex flex-row gap-10">
-            <div class="flex flex-col gap-4">
-              <EyebrowLabel>Quick links</EyebrowLabel>
-              <ul class="list-none text-muted-foreground space-y-4">
-                {
-                  footerRoutes.map((route) => (
-                    <li class="transition-colors hover:text-muted">
-                      <a href={route.path}>{route.label}</a>
-                    </li>
-                  ))
-                }
-              </ul>
+          <Animate client:visible delay="200">
+            <div class="flex flex-row gap-10">
+              <div class="flex flex-col gap-4">
+                <EyebrowLabel>Quick links</EyebrowLabel>
+                <ul class="list-none text-muted-foreground space-y-4">
+                  {
+                    footerRoutes.map((route) => (
+                      <li>
+                        <a href={route.path} class="link-underline">
+                          {route.label}
+                        </a>
+                      </li>
+                    ))
+                  }
+                </ul>
+              </div>
+              <div class="flex flex-col gap-4">
+                <EyebrowLabel>Let's connect</EyebrowLabel>
+                <ul class="list-none text-muted-foreground space-y-4">
+                  {
+                    socialLinks.map((link) => (
+                      <li>
+                        <a
+                          href={link.path}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          class="link-underline"
+                        >
+                          {link.label}
+                        </a>
+                      </li>
+                    ))
+                  }
+                </ul>
+              </div>
             </div>
-            <div class="flex flex-col gap-4">
-              <EyebrowLabel>Let's connect</EyebrowLabel>
-              <ul class="list-none text-muted-foreground space-y-4">
-                {
-                  socialLinks.map((link) => (
-                    <li class="transition-colors hover:text-muted">
-                      <a href={link.path} target="_blank">
-                        {link.label}
-                      </a>
-                    </li>
-                  ))
-                }
-              </ul>
-            </div>
-          </div>
+          </Animate>
         </div>
       </div>
-      <div class="text-center text-base text-muted-foreground mt-auto">
-        &copy; {today.getFullYear()} Jakub Sobolewski. All rights reserved.
+      <div
+        class="flex items-center justify-between text-sm text-muted-foreground mt-auto pb-8 lg:pb-12"
+      >
+        <Animate client:visible delay="400">
+          <span>&copy; {today.getFullYear()} Jakub Sobolewski</span>
+        </Animate>
+        <Animate client:visible delay="500" class="hidden sm:inline">
+          <span>Made by me</span>
+        </Animate>
       </div>
     </div>
   </Section>

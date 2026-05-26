@@ -3,28 +3,26 @@ import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
-const sectionVariants = cva(
-  "w-full",
-  {
-    variants: {
-      variant: {
-        light: "bg-light text-foreground text-sm lg:text-base",
-        dark: "bg-background text-foreground text-sm lg:text-base",
-      },
-      size: {
-        fit: "h-fit",
-        full: "h-[100svh]",
-        md: "h-[50vh] min-h-[50vh]",
-        lg: "h-[75vh] min-h-[75vh]",
-        xl: "h-[90vh] min-h-[90vh]",
-      },
+const sectionVariants = cva("w-full", {
+  variants: {
+    variant: {
+      light: "bg-light text-foreground text-sm lg:text-base",
+      dark: "bg-background text-foreground text-sm lg:text-base",
+      darker: "bg-secondary text-foreground text-sm lg:text-base",
     },
-    defaultVariants: {
-      variant: "light",
-      size: "fit",
+    size: {
+      fit: "h-fit",
+      full: "h-[100svh]",
+      md: "h-[50vh] min-h-[50vh]",
+      lg: "h-[75vh] min-h-[75vh]",
+      xl: "h-[90vh] min-h-[90vh]",
     },
-  }
-)
+  },
+  defaultVariants: {
+    variant: "light",
+    size: "fit",
+  },
+});
 
 export interface SectionProps
   extends React.HTMLAttributes<HTMLElement>,

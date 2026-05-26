@@ -113,6 +113,39 @@ html.dark .shiki span {
   background-color: hsl(var(--card)) !important;
 }
 
+@layer components {
+  .link-underline {
+    @apply relative inline-block transition-colors duration-200;
+    color: inherit;
+  }
+
+  .link-underline::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 0;
+    height: 1px;
+    background-color: currentColor;
+    transition: width 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .link-underline:hover {
+    @apply text-foreground;
+  }
+
+  .link-underline:hover::after {
+    width: 100%;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .link-underline::after,
+    .link-underline {
+      transition: none;
+    }
+  }
+}
+
 .prose pre {
   @apply bg-card border border-border shadow-sm overflow-x-auto p-4;
   border-radius: var(--radius-surface);

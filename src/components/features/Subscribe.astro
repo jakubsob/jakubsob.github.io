@@ -48,7 +48,7 @@ const variant = variants[variantName];
     <div class="ml-form-embedWrapper embedForm">
       <div class="ml-form-embedBody ml-form-embedBodyDefault row-form">
         <form
-          class="ml-block-form w-full grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-4"
+          class="ml-block-form w-full grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-0"
           action={variant.action}
           data-code=""
           method="post"
@@ -70,7 +70,11 @@ const variant = variants[variantName];
           </div>
           <input type="hidden" name="ml-submit" value="1" />
           <div class="ml-form-embedSubmit">
-            <Button type="submit" className="w-full">
+            <Button
+              type="submit"
+              className="w-full rounded-l-none"
+              shape="pill"
+            >
               {variant.title || "Subscribe"}
             </Button>
           </div>
@@ -80,9 +84,28 @@ const variant = variants[variantName];
       <div class="ml-form-successBody row-success text-white">
         <div class="text-center success-animate">
           <div class="checkmark-wrap" aria-hidden="true">
-            <svg class="checkmark" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle class="checkmark-circle" cx="26" cy="26" r="24" stroke="currentColor" stroke-width="2" fill="none"/>
-              <path class="checkmark-check" d="M14 26l8 8 16-16" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            <svg
+              class="checkmark"
+              viewBox="0 0 52 52"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <circle
+                class="checkmark-circle"
+                cx="26"
+                cy="26"
+                r="24"
+                stroke="currentColor"
+                stroke-width="2"
+                fill="none"></circle>
+              <path
+                class="checkmark-check"
+                d="M14 26l8 8 16-16"
+                stroke="currentColor"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                fill="none"></path>
             </svg>
           </div>
           <h4 class="text-xl font-light text-ocean-green-500 mt-3">
