@@ -83,6 +83,25 @@ import { transformerStepAnimation } from "@/lib/transformerStepAnimation";
         </Animate>
 
         <div
+          class="js-strike-reveal py-12 border-b border-foreground/10 select-none"
+        >
+          <div class="relative inline-block">
+            <span class="js-strike-text block text-[clamp(2rem,7vw,5rem)] font-bold leading-tight text-destructive/60">
+              Comments and docs
+              <span
+                class="js-strike-line absolute left-0 top-[55%] h-[4px] w-0 bg-destructive rounded-full"
+                aria-hidden="true"
+              ></span>
+            </span>
+          </div>
+          <div
+            class="js-strike-result block text-[clamp(2rem,7vw,5rem)] font-bold leading-tight text-success opacity-0 translate-y-4 transition-none"
+          >
+            Executable specifications
+          </div>
+        </div>
+
+        <div
           id="cucumber-corr"
           data-step-animate
           class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start py-12 border-b border-foreground/10"
@@ -421,4 +440,35 @@ test_that("is_adult is TRUE at the boundary", { # [!code ++]
 
 <script>
   import "@/scripts/stepAnimation";
+</script>
+
+<script>
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const container = entry.target as HTMLElement;
+        const line = container.querySelector<HTMLElement>(".js-strike-line");
+        const result = container.querySelector<HTMLElement>(".js-strike-result");
+        if (!line || !result) return;
+
+        line.style.transition = "width 0.5s cubic-bezier(0.4,0,0.2,1)";
+        line.style.width = "100%";
+
+        setTimeout(() => {
+          result.style.transition =
+            "opacity 0.5s ease, transform 0.5s ease";
+          result.style.opacity = "1";
+          result.style.transform = "translateY(0)";
+        }, 550);
+
+        observer.unobserve(container);
+      });
+    },
+    { threshold: 0.5 }
+  );
+
+  document.querySelectorAll<HTMLElement>(".js-strike-reveal").forEach((el) => {
+    observer.observe(el);
+  });
 </script>
