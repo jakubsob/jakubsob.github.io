@@ -3,7 +3,7 @@ import { Code } from "astro:components";
 import { Button } from "@/components/ui/button";
 import { Section } from "@/components/ui/section";
 import { Animate } from "@/components/ui/animate";
-import { CodeFrame } from "@/components/ui/code-frame";
+import { Card } from "@/components/ui/card";
 import { EyebrowLabel } from "@/components/ui/eyebrow-label";
 import SectionHeading from "@/components/ui/section-heading.astro";
 import { CircleArrowRight } from "lucide-react";
@@ -60,7 +60,7 @@ import { transformerStepAnimation } from "@/lib/transformerStepAnimation";
               drift — and a stale comment is worse than no comment.
             </p>
           </div>
-          <CodeFrame variant="destructive">
+          <Card variant="destructive">
             <Code
               themes={{
                 light: "github-light",
@@ -76,7 +76,7 @@ import { transformerStepAnimation } from "@/lib/transformerStepAnimation";
   expect_s3_class(result, "ggplot")
 })`}
             />
-          </CodeFrame>
+          </Card>
         </div>
       </Animate>
     </div>
@@ -121,7 +121,7 @@ import { transformerStepAnimation } from "@/lib/transformerStepAnimation";
             what action is taken, what outcome is observable. Vague intent
             doesn't survive the structure.
           </p>
-          <CodeFrame variant="success">
+          <Card variant="success">
             <Code
               themes={{
                 light: "github-light",
@@ -136,7 +136,7 @@ import { transformerStepAnimation } from "@/lib/transformerStepAnimation";
     When the user views the trend for "Electronics" # [!code step:2]
     Then the sales trend plot for "Electronics" is shown # [!code step:3]`}
             />
-          </CodeFrame>
+          </Card>
         </div>
 
         <!-- Right: R implementation -->
@@ -150,7 +150,7 @@ import { transformerStepAnimation } from "@/lib/transformerStepAnimation";
             Each line of the spec maps to one R function. The English phrase
             becomes the function signature — the same words, now executable.
           </p>
-          <CodeFrame variant="success">
+          <Card variant="success">
             <Code
               themes={{
                 light: "github-light",
@@ -171,7 +171,7 @@ then("the sales trend plot for {string} is shown", function(category, context) {
   expect_equal(context$plot$labels$title, category) # [!code step:3]
 }) # [!code step:3]`}
             />
-          </CodeFrame>
+          </Card>
         </div>
       </div>
 
@@ -180,7 +180,7 @@ then("the sales trend plot for {string} is shown", function(category, context) {
           <EyebrowLabel>
             <span class="text-success mr-1">✓</span>verification
           </EyebrowLabel>
-          <CodeFrame variant="success">
+          <Card variant="success">
             <Code
               themes={{
                 light: "github-light",
@@ -194,7 +194,7 @@ then("the sales trend plot for {string} is shown", function(category, context) {
 #> ══ Results ═══════════════════════════════════════════════════
 #> [ FAIL 0 | WARN 0 | SKIP 0 | PASS 1 ]`}
             />
-          </CodeFrame>
+          </Card>
         </div>
       </Animate>
     </div>
@@ -257,7 +257,7 @@ then("the sales trend plot for {string} is shown", function(category, context) {
                 never the edge.
               </p>
             </div>
-            <div class="text-sm">
+            <Card>
               <Code
                 themes={{
                   light: "github-light",
@@ -269,7 +269,7 @@ is_adult <- function(age) {
   age >= 18
 }`}
               />
-            </div>
+            </Card>
           </div>
         </Animate>
 
@@ -294,11 +294,11 @@ is_adult <- function(age) {
                 > from <code class="font-mono text-xs">{">"}</code>.
               </p>
             </div>
-            <div class="text-sm">
+            <div>
               <EyebrowLabel>
                 <span class="text-destructive mr-1">✗</span>the tests
               </EyebrowLabel>
-              <CodeFrame variant="destructive">
+              <Card variant="destructive">
                 <Code
                   themes={{
                     light: "github-light",
@@ -313,7 +313,7 @@ test_that("is_adult returns FALSE for minors", {
   expect_false(is_adult(10))  # passes even with age > 18
 })`}
                 />
-              </CodeFrame>
+              </Card>
             </div>
           </div>
         </Animate>
@@ -321,7 +321,7 @@ test_that("is_adult returns FALSE for minors", {
         <Animate>
           <div class="py-16 border-b border-foreground/10">
             <EyebrowLabel>run mutation testing</EyebrowLabel>
-            <CodeFrame variant="destructive">
+            <Card variant="destructive">
               <Code
                 themes={{
                   light: "github-light",
@@ -342,7 +342,7 @@ test_that("is_adult returns FALSE for minors", {
 #> ── Results ──────────────────────────────────────────────────────────────────
 #> [ KILLED 1 | SURVIVED 1 | ERRORS 0 | TOTAL 2 | SCORE 50.0% ]`}
               />
-            </CodeFrame>
+            </Card>
           </div>
         </Animate>
 
@@ -365,11 +365,11 @@ test_that("is_adult returns FALSE for minors", {
                 kills the survivor.
               </p>
             </div>
-            <div class="text-sm">
+            <div>
               <EyebrowLabel>
                 <span class="text-success mr-1">✓</span>the fix
               </EyebrowLabel>
-              <CodeFrame variant="success">
+              <Card variant="success">
                 <Code
                   themes={{
                     light: "github-light",
@@ -389,7 +389,7 @@ test_that("is_adult is TRUE at the boundary", { # [!code ++]
   expect_true(is_adult(18))  # kills >= → > # [!code ++]
 }) # [!code ++]`}
                 />
-              </CodeFrame>
+              </Card>
             </div>
           </div>
         </Animate>

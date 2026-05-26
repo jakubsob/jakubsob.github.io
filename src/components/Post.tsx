@@ -26,7 +26,7 @@ export function Post({ post, selectedTags, variant = "card", className }: PostPr
   if (variant === "featured") {
     return (
       <a href={`/blog/${post.slug}/`} className={cn("group/card", className)}>
-        <div className="bg-card border border-border rounded-md p-8 transition-all duration-300 group-hover/card:shadow-md group-hover/card:-translate-y-0.5 group-hover/card:rounded-none">
+        <div className="bg-card border border-border rounded-[var(--radius-surface)] p-8 transition-all duration-300 group-hover/card:shadow-md group-hover/card:-translate-y-0.5 group-hover/card:rounded-none">
           <h2 className="text-2xl leading-snug mb-3 transition-colors group-hover/card:text-muted-foreground">
             {post.data.title}
           </h2>
@@ -47,7 +47,7 @@ export function Post({ post, selectedTags, variant = "card", className }: PostPr
 
   return (
     <a href={`/blog/${post.slug}/`} className={cn("group/card", className)}>
-      <div className="bg-card border border-border rounded-md p-4 transition-all duration-300 group-hover/card:shadow-md group-hover/card:-translate-y-0.5 group-hover/card:rounded-none">
+      <div className="bg-card border border-border rounded-[var(--radius-surface)] p-4 transition-all duration-300 group-hover/card:shadow-md group-hover/card:-translate-y-0.5 group-hover/card:rounded-none">
         <h2 className="text-lg mb-2 transition-colors group-hover/card:text-muted-foreground">
           {post.data.title}
         </h2>

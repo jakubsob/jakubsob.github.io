@@ -3,7 +3,7 @@ import { Code } from "astro:components";
 import { Button } from "@/components/ui/button";
 import { Section } from "@/components/ui/section";
 import { Animate } from "@/components/ui/animate";
-import { CodeFrame } from "@/components/ui/code-frame";
+import { Card } from "@/components/ui/card";
 import { EyebrowLabel } from "@/components/ui/eyebrow-label";
 import SectionHeading from "@/components/ui/section-heading.astro";
 import { CircleArrowRight } from "lucide-react";
@@ -54,7 +54,7 @@ import { CircleArrowRight } from "lucide-react";
                 drift the moment code ships.
               </p>
             </div>
-            <CodeFrame variant="destructive">
+            <Card variant="destructive">
               <Code
                 themes={{ light: "github-light", dark: "github-dark" }}
                 lang="text"
@@ -65,7 +65,7 @@ import { CircleArrowRight } from "lucide-react";
   Acceptance: shows income, expenses, and net.
   // ← lives in a doc, never executed`}
               />
-            </CodeFrame>
+            </Card>
           </div>
         </Animate>
 
@@ -85,7 +85,7 @@ import { CircleArrowRight } from "lucide-react";
                 feature is done.
               </p>
             </div>
-            <CodeFrame variant="success">
+            <Card variant="success">
               <Code
                 themes={{ light: "github-light", dark: "github-dark" }}
                 lang="r"
@@ -103,7 +103,7 @@ test_that("Scenario: I can inspect my net balance", {
   dsl$teardown()
 })`}
               />
-            </CodeFrame>
+            </Card>
           </div>
         </Animate>
 

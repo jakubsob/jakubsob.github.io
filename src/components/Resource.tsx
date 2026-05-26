@@ -30,7 +30,7 @@ export function Resource({ item, selectedTags, variant = "card", className }: Re
         rel="noopener noreferrer"
         className={cn("group/card", className)}
       >
-        <div className="bg-card border border-border rounded-md p-8 transition-all duration-300 group-hover/card:shadow-md group-hover/card:-translate-y-0.5">
+        <div className="bg-card border border-border rounded-[var(--radius-surface)] p-8 transition-all duration-300 group-hover/card:shadow-md group-hover/card:-translate-y-0.5">
           <h2 className="text-2xl font-light leading-snug mb-3 transition-colors group-hover/card:text-muted-foreground flex items-center gap-2">
             {item.title}
             <ExternalLink className="h-4 w-4 opacity-0 group-hover/card:opacity-50 transition-opacity shrink-0" />
@@ -53,7 +53,7 @@ export function Resource({ item, selectedTags, variant = "card", className }: Re
       rel="noopener noreferrer"
       className={cn("group/card", className)}
     >
-      <div className="bg-card border border-border rounded-md p-4 transition-all duration-300 group-hover/card:shadow-md group-hover/card:-translate-y-0.5">
+      <div className="bg-card border border-border rounded-[var(--radius-surface)] p-4 transition-all duration-300 group-hover/card:shadow-md group-hover/card:-translate-y-0.5">
         <h2 className="font-medium mb-2 transition-colors group-hover/card:text-muted-foreground flex items-center gap-2">
           {item.title}
           <ExternalLink className="h-3.5 w-3.5 opacity-0 group-hover/card:opacity-50 transition-opacity shrink-0" />

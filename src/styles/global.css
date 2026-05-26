@@ -49,6 +49,7 @@
     --input: 0 0% 50%;
     --ring: 155 50% 43%;
     --radius: 0.5rem;
+    --radius-surface: var(--radius);
     --gradient: linear-gradient(
       0deg,
       hsl(var(--foreground)),
@@ -127,14 +128,19 @@ html.dark .shiki span {
   background-color: hsl(var(--card)) !important;
 }
 
+.prose pre {
+  @apply bg-card border border-border shadow-sm overflow-x-auto p-4;
+  border-radius: var(--radius-surface);
+}
+
 pre {
-  @apply bg-card border border-border rounded-lg shadow-sm overflow-x-auto;
-  @apply p-0;
+  @apply overflow-x-auto p-4;
 }
 
 pre code {
-  @apply block p-4;
+  @apply block;
   background: transparent !important;
+  padding: 0 !important;
 }
 
 /* Style inline code */
