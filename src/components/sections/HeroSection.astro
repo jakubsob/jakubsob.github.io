@@ -10,59 +10,100 @@ const splitLetters = (text: string) =>
     .map((char) =>
       char === " "
         ? `<span class="hero-letter" aria-hidden="true">&nbsp;</span>`
-        : `<span class="hero-letter" aria-hidden="true">${char}</span>`
+        : `<span class="hero-letter" aria-hidden="true">${char}</span>`,
     )
     .join("");
+
+const cols = Array.from({ length: 8 });
 ---
 
 <Section variant="dark" size="full" id="hero">
-  <div class="h-[100svh] w-full relative overflow-hidden">
-    <div class="absolute inset-0 z-0 hero-graph-paper pointer-events-none">
+  <div class="hero-grid h-[100svh] w-full relative overflow-hidden">
+    <!-- Vertical column lines -->
+    <div class="absolute inset-0 z-[1] pointer-events-none flex hero-cols">
+      {cols.map(() => <div class="flex-1 border-r border-foreground/[0.07]" />)}
     </div>
 
-    <div
-      class="h-full flex flex-col justify-end pb-16 md:pb-24 px-6 md:px-12 lg:px-16 relative z-0"
-    >
-      <div class="flex flex-col gap-8">
-        <Animate variant="header" className="motion-delay-[200ms]">
-          <h1 class="hero-headline text-[clamp(3.5rem,16vw,14rem)] uppercase leading-[0.88] font-bold">
-            <span class="hero-line" set:html={splitLetters("Building")} />
-            <span class="hero-line" set:html={splitLetters("Quality")} />
-            <span class="hero-line text-primary" set:html={splitLetters("By Testing")} />
-          </h1>
-        </Animate>
+    <!-- Spacer: absorbs height above text rows -->
+    <div aria-hidden="true" class="col-span-8"></div>
 
-        <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 md:gap-12">
-          <Animate variant="header" className="motion-delay-[400ms]">
-            <p class="text-foreground/70 text-base md:text-lg font-serif font-light leading-relaxed max-w-[44ch]">
-              I'm Jakub. Practical articles and open-source tools for developers
-              who want to build software they trust.
-            </p>
-          </Animate>
-          <div class="flex flex-row gap-3 shrink-0">
-            <Animate variant="expand" className="motion-delay-[600ms]">
-              <a href="/course" class="block">
-                <Button
-                  variant="cta"
-                  size="xl"
-                  className="rounded-none uppercase tracking-wide text-sm md:text-base font-bold whitespace-nowrap"
-                >
-                  Take the testing course
-                </Button>
-              </a>
-            </Animate>
-            <Animate variant="expand" className="motion-delay-[700ms]">
-              <a href="/get-roadmap" class="block">
-                <Button
-                  size="xl"
-                  className="rounded-none uppercase tracking-wide text-sm md:text-base bg-transparent border border-foreground/40 text-foreground hover:bg-foreground hover:text-background transition-colors whitespace-nowrap"
-                >
-                  Get Roadmap
-                </Button>
-              </a>
-            </Animate>
-          </div>
-        </div>
+    <!--
+      h1 with display:contents — children become direct grid items.
+      aria-label preserves semantics for screen readers.
+    -->
+    <h1 aria-label="Building Quality By Testing" class="[display:contents]">
+      <div
+        class="col-span-8 flex items-end overflow-hidden relative z-10 px-6 md:px-12 lg:px-16"
+      >
+        <Animate variant="header" className="motion-delay-[200ms]">
+          <span
+            class="hero-line block text-[clamp(3.5rem,16vw,14rem)] font-bold uppercase leading-[0.88] tracking-[-0.04em] whitespace-nowrap mb-[-0.175em]"
+            set:html={splitLetters("Building")}
+          />
+        </Animate>
+      </div>
+      <div
+        class="col-span-8 flex items-end overflow-hidden relative z-10 px-6 md:px-12 lg:px-16"
+      >
+        <Animate variant="header" className="motion-delay-[300ms]">
+          <span
+            class="hero-line block text-[clamp(3.5rem,16vw,14rem)] font-bold uppercase leading-[0.88] tracking-[-0.04em] whitespace-nowrap mb-[-0.175em]"
+            set:html={splitLetters("Quality")}
+          />
+        </Animate>
+      </div>
+      <div
+        class="col-span-8 flex items-end overflow-hidden relative z-10 px-6 md:px-12 lg:px-16"
+      >
+        <Animate variant="header" className="motion-delay-[400ms]">
+          <span
+            class="hero-line block text-[clamp(3.5rem,16vw,14rem)] font-bold uppercase leading-[0.88] tracking-[-0.04em] whitespace-nowrap mb-[-0.175em] text-primary"
+            set:html={splitLetters("By Testing")}
+          />
+        </Animate>
+      </div>
+    </h1>
+
+    <!-- Description: full-width on mobile, cols 1-5 on lg -->
+    <div
+      class="col-span-8 lg:col-span-5 flex items-start overflow-hidden relative z-10 pl-6 md:pl-12 lg:pl-16"
+    >
+      <Animate variant="header" className="motion-delay-[550ms]">
+        <p
+          class="text-foreground/70 text-base md:text-lg font-serif font-light leading-relaxed max-w-[44ch]"
+        >
+          I'm Jakub. Practical articles and open-source tools for developers who
+          want to build software they trust.
+        </p>
+      </Animate>
+    </div>
+
+    <!-- Buttons: full-width on mobile, cols 6-8 on lg (same row as description) -->
+    <div
+      class="col-span-8 lg:col-span-3 flex items-start overflow-hidden relative z-10 pr-6 pl-6 lg:pl-0 lg:justify-end"
+    >
+      <div class="flex flex-row gap-3 shrink-0">
+        <Animate variant="expand" className="motion-delay-[650ms]">
+          <a href="/course" class="block">
+            <Button
+              variant="cta"
+              size="xl"
+              className="rounded-none uppercase tracking-wide text-sm md:text-base font-bold whitespace-nowrap"
+            >
+              Take the testing course
+            </Button>
+          </a>
+        </Animate>
+        <Animate variant="expand" className="motion-delay-[750ms]">
+          <a href="/get-roadmap" class="block">
+            <Button
+              size="xl"
+              className="rounded-none uppercase tracking-wide text-sm md:text-base bg-transparent border border-foreground/40 text-foreground hover:bg-foreground hover:text-background transition-colors whitespace-nowrap"
+            >
+              Get Roadmap
+            </Button>
+          </a>
+        </Animate>
       </div>
     </div>
   </div>
@@ -78,62 +119,72 @@ const splitLetters = (text: string) =>
 </Section>
 
 <style>
-  @keyframes grid-fade-in {
-    from { opacity: 0; }
-    to   { opacity: 1; }
-  }
-
-  .hero-graph-paper {
-    animation: grid-fade-in 1.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+  .hero-grid {
+    --row-h: calc(0.88 * clamp(3.5rem, 16vw, 14rem));
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: 1fr repeat(5, var(--row-h));
     background-image: linear-gradient(
-        to right,
-        rgba(0, 0, 0, 0.07) 1px,
-        transparent 1px
-      ),
-      linear-gradient(to bottom, rgba(0, 0, 0, 0.07) 1px, transparent 1px),
-      linear-gradient(to right, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
-    /* major = line-height (16vw × 0.88); minor = major ÷ 5 */
-    background-size:
-      14.08vw 14.08vw,
-      14.08vw 14.08vw,
-      2.816vw 2.816vw,
-      2.816vw 2.816vw;
+      to bottom,
+      rgba(0, 0, 0, 0.07) 1px,
+      transparent 1px
+    );
+    background-size: 100% var(--row-h);
+    background-position: 0 bottom;
+    animation: grid-fade-in 1.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
   }
 
-  .hero-line {
-    display: block;
-    letter-spacing: -0.04em;
-    white-space: nowrap;
+  @media (min-width: 1024px) {
+    .hero-grid {
+      grid-template-rows: 1fr repeat(4, var(--row-h));
+    }
+  }
+
+  .hero-cols {
+    animation: grid-fade-in 1.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+  }
+
+  @keyframes grid-fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  /* text-box-trim removes descender space so cap baseline sits on the grid line */
+  @supports (text-box-trim: trim-end) {
+    .hero-line {
+      margin-bottom: 0;
+      text-box-trim: trim-end;
+      text-box-edge: cap alphabetic;
+    }
   }
 
   :global(.hero-letter) {
     display: inline-block;
     transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   }
-
   :global(.hero-letter:hover) {
     transform: translateY(-10px);
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .hero-graph-paper { animation: none; }
-    :global(.hero-letter) { transition: none; }
+  :global(.dark) .hero-grid {
+    background-image: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.08) 1px,
+      transparent 1px
+    );
   }
 
-  :global(.dark) .hero-graph-paper {
-    background-image: linear-gradient(
-        to right,
-        rgba(255, 255, 255, 0.08) 1px,
-        transparent 1px
-      ),
-      linear-gradient(to bottom, rgba(255, 255, 255, 0.08) 1px, transparent 1px),
-      linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-    background-size:
-      80px 80px,
-      80px 80px,
-      16px 16px,
-      16px 16px;
+  @media (prefers-reduced-motion: reduce) {
+    .hero-grid,
+    .hero-cols {
+      animation: none;
+    }
+    :global(.hero-letter) {
+      transition: none;
+    }
   }
 </style>
