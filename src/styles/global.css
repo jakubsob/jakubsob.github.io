@@ -1,23 +1,8 @@
 @import "@fontsource-variable/fira-code";
-@import "@fontsource/geist-mono/100.css";
-@import "@fontsource/geist-mono/200.css";
-@import "@fontsource/geist-mono/300.css";
-@import "@fontsource/geist-mono/400.css";
-@import "@fontsource/geist-mono/500.css";
-@import "@fontsource/geist-mono/600.css";
-@import "@fontsource/geist-mono/700.css";
-@import "@fontsource/geist-mono/800.css";
-@import "@fontsource/geist-mono/900.css";
-@import "@fontsource/geist-sans/100.css";
-@import "@fontsource/geist-sans/200.css";
-@import "@fontsource/geist-sans/300.css";
-@import "@fontsource/geist-sans/400.css";
-@import "@fontsource/geist-sans/500.css";
-@import "@fontsource/geist-sans/600.css";
-@import "@fontsource/geist-sans/700.css";
-@import "@fontsource/geist-sans/800.css";
-@import "@fontsource/geist-sans/900.css";
-@import "@fontsource/libre-caslon-text/400-italic.css";
+@import "@fontsource-variable/source-serif-4";
+@import "@fontsource/barlow/400.css";
+@import "@fontsource/barlow/600.css";
+@import "@fontsource/barlow/700.css";
 
 @tailwind base;
 @tailwind components;
@@ -49,7 +34,7 @@
     --input: 0 0% 50%;
     --ring: 155 50% 43%;
     --radius: 0.5rem;
-    --radius-surface: var(--radius);
+    --radius-surface: 0;
     --gradient: linear-gradient(
       0deg,
       hsl(var(--foreground)),

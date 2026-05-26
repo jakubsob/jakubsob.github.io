@@ -32,18 +32,15 @@ importers:
       '@fontsource-variable/fira-code':
         specifier: ^5.2.6
         version: 5.2.6
+      '@fontsource-variable/source-serif-4':
+        specifier: ^5.2.9
+        version: 5.2.9
       '@fontsource-variable/syne':
         specifier: ^5.2.6
         version: 5.2.6
-      '@fontsource/geist-mono':
-        specifier: ^5.2.6
-        version: 5.2.6
-      '@fontsource/geist-sans':
-        specifier: ^5.2.5
-        version: 5.2.5
-      '@fontsource/libre-caslon-text':
-        specifier: ^5.2.6
-        version: 5.2.6
+      '@fontsource/barlow':
+        specifier: ^5.2.8
+        version: 5.2.8
       '@fontsource/monoton':
         specifier: ^5.2.6
         version: 5.2.6
@@ -689,17 +686,14 @@ packages:
   '@fontsource-variable/fira-code@5.2.6':
     resolution: {integrity: sha512-TZe+3xOB0JofZOTNeITYVsD1y/OiFucwTmcmhC19mj+GOgCnNkbp7bb1Jobfg+HjlAHr11HdptENKu0B+VkWLg==}
 
+  '@fontsource-variable/source-serif-4@5.2.9':
+    resolution: {integrity: sha512-PPcxjLFk/fS0WHg79pDM2YNvz61kC+oYZ5cWZZyCS0DHpJncmuYOuiZAsvj4tDxlWPBEvxxcRLQQNmSaRbPkqw==}
+
   '@fontsource-variable/syne@5.2.6':
     resolution: {integrity: sha512-aUeK7LuZs0+bAbNMIF1I4gom+sOvhNcEhFqVh88MvqWmk6mBauKUH3JaO3yvfFOgeJPf2owymiNuay3YqotvKg==}
 
-  '@fontsource/geist-mono@5.2.6':
-    resolution: {integrity: sha512-I3hsRP+8Gmhk35cwlPAR4w5xqk7e5pro2F1o51ZmB+lN+dPcwN3jYHKN+u0E5AMuiQKpTdkrqfEpvBjzQax3cQ==}
-
-  '@fontsource/geist-sans@5.2.5':
-    resolution: {integrity: sha512-anllOHyJbElRs9fV15TeDRqAeb1IKm4bSknPl6ZMoyPTx1BBy7logudcUwpNjmQLkzn4Q0JGQLRCUKJYoyST6A==}
-
-  '@fontsource/libre-caslon-text@5.2.6':
-    resolution: {integrity: sha512-CuTfyMllTKCT7RdP/Y5dszqDP1790ljcr6X/kfvRv259oyxKnANgnqKVdVPB4UBNCUguIYh0okhNi7AzYZkjFQ==}
+  '@fontsource/barlow@5.2.8':
+    resolution: {integrity: sha512-iuFOnY4OI2cd1STrJ3NdJNzWjhcwv6JarmqfdoZzAmz9g0jTVjES86MNbuBxqVR3ydbTEjo4opEl24GXScRM7w==}
 
   '@fontsource/monoton@5.2.6':
     resolution: {integrity: sha512-Tsw1P00EXvDMAfnB0BGuSXNB6MRIsGaV+TJv7keu0KfWlJPArSQLK2BeL9XfmRu4iCM/KkFuDDaSuuXGFP2i+Q==}
@@ -4572,13 +4566,11 @@ snapshots:
 
   '@fontsource-variable/fira-code@5.2.6': {}
 
+  '@fontsource-variable/source-serif-4@5.2.9': {}
+
   '@fontsource-variable/syne@5.2.6': {}
 
-  '@fontsource/geist-mono@5.2.6': {}
-
-  '@fontsource/geist-sans@5.2.5': {}
-
-  '@fontsource/libre-caslon-text@5.2.6': {}
+  '@fontsource/barlow@5.2.8': {}
 
   '@fontsource/monoton@5.2.6': {}
 

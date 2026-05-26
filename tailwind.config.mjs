@@ -14,10 +14,15 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ["Geist Sans", "sans-serif"],
-        serif: ["Libre Caslon Text", "sans-serif"],
-        mono: ["Geist Mono", "monospace"],
-        code: ["Fira Code", "monospace"],
+        sans: ["Barlow", "sans-serif"],
+        serif: [
+          "Source Serif 4 Variable",
+          "Source Serif 4",
+          "Georgia",
+          "serif",
+        ],
+        mono: ["Fira Code Variable", "Fira Code", "monospace"],
+        code: ["Fira Code Variable", "Fira Code", "monospace"],
       },
       fontSize: {
         "clamp-sm": "clamp(2em, 3vw, 3em)",

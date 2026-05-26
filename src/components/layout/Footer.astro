@@ -1,6 +1,6 @@
 ---
-import AnimatedLink from "@/components/features/AnimatedLink.astro";
 import { Section } from "@/components/ui/section";
+import { EyebrowLabel } from "@/components/ui/eyebrow-label";
 import Subscribe from "@/components/features/Subscribe.astro";
 import { getFooterRoutes, getSocialLinks } from "../../lib/routes";
 
@@ -12,7 +12,7 @@ const socialLinks = getSocialLinks();
 ---
 
 <footer>
-  <Section variant="dark" className="border-t">
+  <Section variant="dark">
     <div class="container mx-auto h-full flex flex-col justify-between">
       <div
         class="grid grid-cols-1 gap-12 lg:gap-20 lg:grid-cols-2 place-items-start
@@ -31,7 +31,7 @@ const socialLinks = getSocialLinks();
         <div class="lg:justify-self-center font-light">
           <div class="flex flex-row gap-10">
             <div class="flex flex-col gap-4">
-              <h2 class="text-muted">Quick links</h2>
+              <EyebrowLabel>Quick links</EyebrowLabel>
               <ul class="list-none text-muted-foreground space-y-4">
                 {
                   footerRoutes.map((route) => (
@@ -43,14 +43,14 @@ const socialLinks = getSocialLinks();
               </ul>
             </div>
             <div class="flex flex-col gap-4">
-              <h2 class="text-muted">Let's connect</h2>
+              <EyebrowLabel>Let's connect</EyebrowLabel>
               <ul class="list-none text-muted-foreground space-y-4">
                 {
                   socialLinks.map((link) => (
-                    <li class="transition-colors hover:text-muted-foreground">
-                      <AnimatedLink href={link.path} target="_blank">
+                    <li class="transition-colors hover:text-muted">
+                      <a href={link.path} target="_blank">
                         {link.label}
-                      </AnimatedLink>
+                      </a>
                     </li>
                   ))
                 }

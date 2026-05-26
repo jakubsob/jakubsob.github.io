@@ -42,21 +42,19 @@ const posts = (await getCollection("blog"))
           class="mx-auto
               prose
               dark:prose-invert
-              prose-h1:mb-2
-              prose-h1:font-medium
-              prose-h2:font-normal
-              prose-h3:font-normal
-              prose-h4:font-normal
-              prose-h2:my-6
-              prose-h3:my-4
-              prose-h4:my-2
+              font-serif
+              prose-h1:font-sans prose-h1:mb-2 prose-h1:font-medium
+              prose-h2:font-sans prose-h2:font-medium prose-h2:my-6
+              prose-h3:font-sans prose-h3:font-medium prose-h3:my-4
+              prose-h4:font-sans prose-h4:font-medium prose-h4:my-2
               prose-p:my-2
+              prose-code:font-mono
               prose-pre:font-code
               prose-pre:rounded-[var(--radius-surface)]
               prose-blockquote:bg-destructive/20
               prose-blockquote:border
               prose-blockquote:border-destructive/30
-              prose-blockquote:rounded-sm
+              prose-blockquote:rounded-[--radius-surface]
               prose-blockquote:py-4
               prose-blockquote:shadow-md
               prose-blockquote:not-italic
@@ -66,7 +64,7 @@ const posts = (await getCollection("blog"))
               px-2"
         >
           <header class="border-b pb-6">
-            <h1 class="lead text-balance">{title}</h1>
+            <h1 class="text-balance">{title}</h1>
             {
               description && (
                 <p class="text-xl font-normal text-muted-foreground m-0">

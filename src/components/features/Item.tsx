@@ -19,8 +19,8 @@ const titleVariants = cva(
   {
     variants: {
       variant: {
-        featured: "text-2xl leading-snug mb-3",
-        card: "font-medium mb-2",
+        featured: "text-2xl mb-3",
+        card: "text-xl mb-2",
       },
     },
     defaultVariants: { variant: "card" },
