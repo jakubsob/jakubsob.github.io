@@ -8,37 +8,9 @@ import { EyebrowLabel } from "@/components/ui/eyebrow-label";
 import SectionHeading from "@/components/ui/section-heading.astro";
 import { CircleArrowRight } from "lucide-react";
 import { transformerNotationDiff } from "@shikijs/transformers";
+import { transformerStepAnimation } from "@/lib/transformerStepAnimation";
 ---
 
-<style>
-  /* github-light tokens */
-  :root {
-    --corr-bg: #ffffff;
-    --corr-text: #24292f;
-    --corr-kw-struct: #0550ae;
-    --corr-kw-step: #cf222e;
-    --corr-string: #0a3069;
-    --corr-fn: #8250df;
-    --corr-param: #953800;
-  }
-  /* github-dark tokens */
-  :root.dark {
-    --corr-bg: #0d1117;
-    --corr-text: #e6edf3;
-    --corr-kw-struct: #7ee787;
-    --corr-kw-step: #ff7b72;
-    --corr-string: #a5d6ff;
-    --corr-fn: #d2a8ff;
-    --corr-param: #ffa657;
-  }
-  .corr-pre-bg { background: var(--corr-bg); color: var(--corr-text); }
-  .corr-kw-struct { color: var(--corr-kw-struct); }
-  .corr-kw-step { color: var(--corr-kw-step); }
-  .corr-text { color: var(--corr-text); }
-  .corr-string { color: var(--corr-string); }
-  .corr-fn { color: var(--corr-fn); }
-  .corr-param { color: var(--corr-param); }
-</style>
 
 <Section id="opensource" size="fit" variant="dark">
   <SectionHeading title="My Open Source" />
@@ -112,6 +84,7 @@ import { transformerNotationDiff } from "@shikijs/transformers";
 
         <div
           id="cucumber-corr"
+          data-step-animate
           class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start py-12 border-b border-foreground/10"
         >
           <!-- Left: Gherkin spec -->
@@ -124,9 +97,22 @@ import { transformerNotationDiff } from "@shikijs/transformers";
               what action is taken, what outcome is observable. Vague intent
               doesn't survive the structure.
             </p>
-            <div class="rounded-lg border border-success/60 overflow-hidden">
-              <pre class="p-4 m-0 overflow-x-auto text-[0.82rem] leading-[1.65]" class="corr-pre-bg" style="font-family:ui-monospace,monospace"><span class="corr-pre corr-preamble" style="display:block;opacity:0;transition:opacity 0.35s ease-out"><span class="corr-kw-struct">Feature</span><span class="corr-text">: Sales Trends</span></span><span class="corr-pre corr-preamble" style="display:block;opacity:0;transition:opacity 0.35s ease-out"> </span><span class="corr-pre corr-preamble" style="display:block;opacity:0;transition:opacity 0.35s ease-out"><span class="corr-text">  </span><span class="corr-kw-struct">Scenario</span><span class="corr-text">: User views trend for a category</span></span><span class="corr-pre corr-step rounded-sm" data-step="1" style="display:block;opacity:0;transition:opacity 0.35s ease-out,background-color 0.1s ease-out"><span class="corr-text">    </span><span class="corr-kw-step" style="font-weight:600">Given</span><span class="corr-text"> the sales data is loaded</span></span><span class="corr-pre corr-step rounded-sm" data-step="2" style="display:block;opacity:0;transition:opacity 0.35s ease-out,background-color 0.1s ease-out"><span class="corr-text">    </span><span class="corr-kw-step" style="font-weight:600">When</span><span class="corr-text"> the user views the trend for </span><span class="corr-string">"Electronics"</span></span><span class="corr-pre corr-step rounded-sm" data-step="3" style="display:block;opacity:0;transition:opacity 0.35s ease-out,background-color 0.1s ease-out"><span class="corr-text">    </span><span class="corr-kw-step" style="font-weight:600">Then</span><span class="corr-text"> the sales trend plot for </span><span class="corr-string">"Electronics"</span><span class="corr-text"> is shown</span></span></pre>
-            </div>
+            <CodeFrame variant="success">
+              <Code
+                themes={{
+                  light: "github-light",
+                  dark: "github-dark",
+                }}
+                lang="gherkin"
+                transformers={[transformerStepAnimation()]}
+                code={`Feature: Sales Trends
+
+  Scenario: User views trend for a category
+    Given the sales data is loaded # [!code step:1]
+    When the user views the trend for "Electronics" # [!code step:2]
+    Then the sales trend plot for "Electronics" is shown # [!code step:3]`}
+              />
+            </CodeFrame>
           </div>
 
           <!-- Right: R implementation -->
@@ -138,18 +124,28 @@ import { transformerNotationDiff } from "@shikijs/transformers";
               Each line of the spec maps to one R function. The English phrase
               becomes the function signature — the same words, now executable.
             </p>
-            <div class="rounded-lg border border-success/60 overflow-hidden">
-              <pre class="p-4 m-0 overflow-x-auto text-[0.82rem] leading-[1.65]" class="corr-pre-bg" style="font-family:ui-monospace,monospace"><span class="corr-pre corr-block rounded-sm" data-step="1" style="display:block;opacity:0;transition:opacity 0.35s ease-out,background-color 0.1s ease-out"><span class="corr-fn">given</span><span class="corr-text">(</span><span class="corr-string">"the sales data is loaded"</span><span class="corr-text">, </span><span class="corr-kw-step">function</span><span class="corr-text">(context) {</span>
-<span class="corr-text">  context</span><span class="corr-text">$</span><span class="corr-text">data </span><span class="corr-text">&lt;-</span><span class="corr-text"> </span><span class="corr-fn">load_sales_data</span><span class="corr-text">()</span>
-<span class="corr-text">})</span></span><span class="corr-pre corr-block rounded-sm" data-step="2" style="display:block;opacity:0;transition:opacity 0.35s ease-out,background-color 0.1s ease-out">
-<span class="corr-fn">when</span><span class="corr-text">(</span><span class="corr-string">"the user views the trend for </span><span class="corr-param">&#123;string&#125;</span><span class="corr-string">"</span><span class="corr-text">, </span><span class="corr-kw-step">function</span><span class="corr-text">(category, context) {</span>
-<span class="corr-text">  context$plot </span><span class="corr-text">&lt;-</span><span class="corr-text"> </span><span class="corr-fn">get_sales_trend</span><span class="corr-text">(context$data, category)</span>
-<span class="corr-text">})</span></span><span class="corr-pre corr-block rounded-sm" data-step="3" style="display:block;opacity:0;transition:opacity 0.35s ease-out,background-color 0.1s ease-out">
-<span class="corr-fn">then</span><span class="corr-text">(</span><span class="corr-string">"the sales trend plot for </span><span class="corr-param">&#123;string&#125;</span><span class="corr-string"> is shown"</span><span class="corr-text">, </span><span class="corr-kw-step">function</span><span class="corr-text">(category, context) {</span>
-<span class="corr-text">  </span><span class="corr-fn">expect_s3_class</span><span class="corr-text">(context$plot, </span><span class="corr-string">"ggplot"</span><span class="corr-text">)</span>
-<span class="corr-text">  </span><span class="corr-fn">expect_equal</span><span class="corr-text">(context$plot$labels$title, category)</span>
-<span class="corr-text">})</span></span></pre>
-            </div>
+            <CodeFrame variant="success">
+              <Code
+                themes={{
+                  light: "github-light",
+                  dark: "github-dark",
+                }}
+                lang="r"
+                transformers={[transformerStepAnimation()]}
+                code={`given("the sales data is loaded", function(context) { # [!code step:1]
+  context$data <- load_sales_data() # [!code step:1]
+}) # [!code step:1]
+
+when("the user views the trend for {string}", function(category, context) { # [!code step:2]
+  context$plot <- get_sales_trend(context$data, category) # [!code step:2]
+}) # [!code step:2]
+
+then("the sales trend plot for {string} is shown", function(category, context) { # [!code step:3]
+  expect_s3_class(context$plot, "ggplot") # [!code step:3]
+  expect_equal(context$plot$labels$title, category) # [!code step:3]
+}) # [!code step:3]`}
+              />
+            </CodeFrame>
           </div>
         </div>
 
@@ -424,52 +420,5 @@ test_that("is_adult is TRUE at the boundary", { # [!code ++]
 </script>
 
 <script>
-  const HIGHLIGHT_COLOR = "oklch(72% 0.08 145 / 0.18)";
-  const STEP_DELAY = 600;
-  const PREAMBLE_DELAY = 200;
-
-  function flash(elements: NodeListOf<Element>) {
-    elements.forEach((el) => {
-      (el as HTMLElement).style.backgroundColor = HIGHLIGHT_COLOR;
-      setTimeout(() => {
-        (el as HTMLElement).style.backgroundColor = "transparent";
-      }, STEP_DELAY);
-    });
-  }
-
-  function runCucumberAnim(container: HTMLElement) {
-    const preambles = container.querySelectorAll<HTMLElement>(".corr-preamble");
-    const steps = [1, 2, 3];
-
-    preambles.forEach((el) => {
-      el.style.opacity = "1";
-    });
-
-    steps.forEach((step, i) => {
-      setTimeout(() => {
-        const leftEl = container.querySelector<HTMLElement>(`.corr-step[data-step="${step}"]`);
-        const rightEl = container.querySelector<HTMLElement>(`.corr-block[data-step="${step}"]`);
-        if (leftEl) leftEl.style.opacity = "1";
-        if (rightEl) rightEl.style.opacity = "1";
-        const paired = container.querySelectorAll(`[data-step="${step}"]`);
-        flash(paired);
-      }, PREAMBLE_DELAY + (i + 1) * STEP_DELAY);
-    });
-  }
-
-  const corrContainer = document.getElementById("cucumber-corr");
-  if (corrContainer) {
-    const corrObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            runCucumberAnim(entry.target as HTMLElement);
-            corrObserver.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.25 }
-    );
-    corrObserver.observe(corrContainer);
-  }
+  import "@/scripts/stepAnimation";
 </script>
