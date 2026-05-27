@@ -95,7 +95,7 @@ const menuItems: MenuItemType[] = [
   {
     title: "course",
     href: "https://courses.jakubsobolewski.com",
-    className: "text-cta uppercase",
+    className: "text-primary uppercase",
   },
 ];
 
@@ -171,7 +171,7 @@ export default function Header() {
                         "group",
                       )}
                     >
-                      <Logo className="inline-block size-[1em] mr-2 stroke-current transition-colors duration-500 group-hover:stroke-[hsl(var(--cta))]" />
+                      <Logo className="inline-block size-[1em] mr-2 stroke-current transition-colors duration-500 group-hover:stroke-primary" />
                       <span className="inline-block transition-transform duration-300 origin-left group-hover:scale-x-[1.03]">
                         {item.title}
                       </span>
@@ -265,7 +265,7 @@ export default function Header() {
                         )}
                         onClick={() => setIsMobileMenuOpen(false)}
                       >
-                        <Logo className="inline-block size-[1em] mr-2 stroke-current transition-colors duration-500 group-hover:stroke-[hsl(var(--cta))]" />
+                        <Logo className="inline-block size-[1em] mr-2 stroke-current transition-colors duration-500 group-hover:stroke-primary" />
                         <span className="transition-[letter-spacing] duration-300 group-hover:tracking-wider">
                           {item.title}
                         </span>
