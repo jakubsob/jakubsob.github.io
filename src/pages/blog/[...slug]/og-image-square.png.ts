@@ -39,8 +39,8 @@ export const GET: APIRoute = async function GET({ props }) {
         alignItems: 'flex-start',
         width: '100%',
         height: '100%',
-        color: '#f2f2f2',
-        background: 'linear-gradient(135deg, #0d0d0d 0%, #1a1a1a 100%)',
+        color: '#f0ebe6',
+        background: 'linear-gradient(135deg, #141210 0%, #1f1c18 100%)',
         padding: '20px 20px',
         fontFamily: 'Geist Sans, "Lucide Icons',
       }
@@ -73,7 +73,7 @@ export const GET: APIRoute = async function GET({ props }) {
             marginTop: '24px',
             lineHeight: 1.4,
             maxWidth: '100%',
-            color: '#808080',
+            color: '#9e9590',
             textWrap: 'balance',
           }
         }, post.data.description),
@@ -102,7 +102,7 @@ export const GET: APIRoute = async function GET({ props }) {
             style: {
               width: '60px',
               height: '60px',
-              border: '2px solid #808080',
+              border: '2px solid #9e9590',
               borderRadius: '50%',
               overflow: 'hidden',
               display: 'flex',
@@ -125,10 +125,10 @@ export const GET: APIRoute = async function GET({ props }) {
           createElement('span', {
             style: {
               padding: '16px 24px',
-              background: '#f2f2f2',
+              background: '#d4820a',
               borderRadius: '50px',
-              border: '2px solid #f2f2f2',
-              color: '#000000',
+              border: '2px solid #d4820a',
+              color: '#141210',
               fontWeight: 400,
               fontSize: '20px',
             }
