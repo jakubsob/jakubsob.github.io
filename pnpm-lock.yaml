@@ -41,6 +41,9 @@ importers:
       '@fontsource/barlow':
         specifier: ^5.2.8
         version: 5.2.8
+      '@fontsource/geist-sans':
+        specifier: ^5.2.5
+        version: 5.2.5
       '@fontsource/monoton':
         specifier: ^5.2.6
         version: 5.2.6
@@ -694,6 +697,9 @@ packages:
 
   '@fontsource/barlow@5.2.8':
     resolution: {integrity: sha512-iuFOnY4OI2cd1STrJ3NdJNzWjhcwv6JarmqfdoZzAmz9g0jTVjES86MNbuBxqVR3ydbTEjo4opEl24GXScRM7w==}
+
+  '@fontsource/geist-sans@5.2.5':
+    resolution: {integrity: sha512-anllOHyJbElRs9fV15TeDRqAeb1IKm4bSknPl6ZMoyPTx1BBy7logudcUwpNjmQLkzn4Q0JGQLRCUKJYoyST6A==}
 
   '@fontsource/monoton@5.2.6':
     resolution: {integrity: sha512-Tsw1P00EXvDMAfnB0BGuSXNB6MRIsGaV+TJv7keu0KfWlJPArSQLK2BeL9XfmRu4iCM/KkFuDDaSuuXGFP2i+Q==}
@@ -4571,6 +4577,8 @@ snapshots:
   '@fontsource-variable/syne@5.2.6': {}
 
   '@fontsource/barlow@5.2.8': {}
+
+  '@fontsource/geist-sans@5.2.5': {}
 
   '@fontsource/monoton@5.2.6': {}
 
