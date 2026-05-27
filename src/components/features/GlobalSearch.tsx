@@ -3,7 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { EyebrowLabel } from "@/components/ui/eyebrow-label";
-import { Search, X, FileText, Layers, BookOpen, TestTube } from "lucide-react";
+import { Search, X, FileText } from "lucide-react";
 import { smartSearchService, type GroupedSearchResults, type SearchResult } from "@/lib/smartSearch";
 import { Item } from "@/components/features/Item";
 import { TagList } from "@/components/features/TagList";

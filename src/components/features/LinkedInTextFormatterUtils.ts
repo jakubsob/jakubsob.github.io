@@ -192,8 +192,6 @@ export const processTokens = (
 
   // Separate complete and incomplete tags
   // Bold tags without closing ** are considered incomplete
-  const incompleteTokens = tokens.filter(token => !validTokens.includes(token));
-
   // Process nested tags - handle the special cases for the tests
   // For "This is **bold with *italic* inside**", we need to make sure
   // the entire content is bold and not process the nested italic tag

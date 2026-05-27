@@ -4,8 +4,6 @@ import { loadRenderers } from "astro:container";
 import { getCollection } from "astro:content";
 import rss from "@astrojs/rss";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
-import fs from "fs";
-import path from "path";
 
 export async function GET(context) {
   const renderers = await loadRenderers([getMDXRenderer()]);

@@ -3,7 +3,7 @@ import satori from "satori";
 import sharp from "sharp";
 import type { APIRoute } from "astro";
 import { createElement } from "react";
-import { getCollection, getEntry } from "astro:content";
+import { getCollection } from "astro:content";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
@@ -13,7 +13,7 @@ export async function getStaticPaths() {
   }));
 }
 
-export const GET: APIRoute = async function GET({ params, props }) {
+export const GET: APIRoute = async function GET({ props }) {
   // Get the blog post data
   const post = props;
 

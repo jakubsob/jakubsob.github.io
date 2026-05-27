@@ -1,4 +1,3 @@
-import React from 'react';
 
 // Default patterns to ignore
 const DEFAULT_IGNORE_PATTERNS = [

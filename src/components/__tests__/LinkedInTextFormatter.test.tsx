@@ -5,7 +5,6 @@ import {
   formatItalicText,
   formatCodeText,
   formatMarkdownText,
-  unicodeMappings
 } from '../features/LinkedInTextFormatterUtils';
 
 describe('LinkedInTextFormatter', () => {

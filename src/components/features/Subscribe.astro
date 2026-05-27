@@ -128,6 +128,6 @@ const variant = variants[variantName];
   is:inline
   src="https://groot.mailerlite.com/js/w/webforms.min.js?v176e10baa5e7ed80d35ae235be3d5024"
   type="text/javascript"></script>
-<script define:vars={{ fetchUrl: variant.fetchUrl }}>
+<script is:inline define:vars={{ fetchUrl: variant.fetchUrl }}>
   fetch(fetchUrl);
 </script>

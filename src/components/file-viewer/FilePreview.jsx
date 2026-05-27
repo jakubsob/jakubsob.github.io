@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
-const FilePreview = ({ selectedFile, dirName }) => {
+const FilePreview = ({ selectedFile }) => {
   const [fileContent, setFileContent] = useState("");
   const [highlightedContent, setHighlightedContent] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -141,7 +141,6 @@ const FilePreview = ({ selectedFile, dirName }) => {
   };
 
   const cleanupExpiredCache = () => {
-    const now = Date.now();
     for (const [key, value] of fileCache.current.entries()) {
       if (isExpired(value.timestamp)) {
         fileCache.current.delete(key);

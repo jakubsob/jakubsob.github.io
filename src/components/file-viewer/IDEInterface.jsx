@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import FileTreeComponent from "./FileTreeComponent.jsx";
 import FilePreview from "./FilePreview.jsx";
 

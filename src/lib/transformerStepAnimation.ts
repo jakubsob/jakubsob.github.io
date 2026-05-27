@@ -10,7 +10,7 @@ export function transformerStepAnimation(): ShikiTransformer {
 
   return {
     name: "step-animation",
-    line(node, line) {
+    line(node, _line) {
       const lineEl = node;
       // Collect all text content of this line to check for notation
       let notationMatch: RegExpMatchArray | null = null;
