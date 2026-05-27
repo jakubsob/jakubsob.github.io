@@ -94,13 +94,17 @@ const cols = Array.from({ length: 8 });
               shape="pill"
               className="uppercase tracking-wide text-sm md:text-base font-bold whitespace-nowrap"
             >
-              Take the testing course
+              <span class="sm:hidden">Testing course</span>
+              <span class="hidden sm:inline">Take the testing course</span>
             </Button>
           </a>
         </Animate>
         <Animate variant="expand" className="motion-delay-[750ms]">
           <a href="/get-roadmap" class="block">
-            <Button size="xl" variant="link"> Get Roadmap </Button>
+            <Button size="xl" variant="link">
+              <span class="sm:hidden">Roadmap</span>
+              <span class="hidden sm:inline">Get Roadmap</span>
+            </Button>
           </a>
         </Animate>
       </div>
@@ -133,7 +137,14 @@ const cols = Array.from({ length: 8 });
     animation: grid-fade-in 1.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
   }
 
-  @media (max-width: 1023px) {
+  @media (max-width: 639px) {
+    .hero-grid {
+      grid-template-rows: 1fr repeat(3, var(--row-h)) auto auto;
+      padding-bottom: 1.5rem;
+    }
+  }
+
+  @media (min-width: 640px) and (max-width: 1023px) {
     .hero-grid {
       padding-bottom: var(--row-h);
     }
