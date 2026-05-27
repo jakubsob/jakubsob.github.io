@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Search } from "lucide-react";
 import { GlobalSearch } from "./GlobalSearch";
 import { smartSearchService } from "@/lib/smartSearch";
@@ -19,10 +19,9 @@ declare global {
 
 interface SmartSearchButtonProps {
   posts: any[];
-  isMobile?: boolean;
 }
 
-export function SmartSearchButton({ posts, isMobile = false }: SmartSearchButtonProps) {
+export function SmartSearchButton({ posts }: SmartSearchButtonProps) {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isInitialized, setIsInitialized] = useState(false);
 
@@ -47,7 +46,6 @@ export function SmartSearchButton({ posts, isMobile = false }: SmartSearchButton
         smartSearchService.initialize(smartSearchService.getAllItems());
 
         setIsInitialized(true);
-        console.log(`Initialized search with ${smartSearchService.getAllItems().length} items`);
       } catch (error) {
         console.warn('Failed to initialize search service:', error);
         // Initialize with fallback data

@@ -32,7 +32,7 @@
     --destructive-foreground: 210 40% 98%;
     --border: 0 0% 90%;
     --input: 0 0% 50%;
-    --ring: 155 50% 43%;
+    --ring: 28 90% 52%;
     --radius: 0.5rem;
     --radius-surface: 0;
     --gradient: linear-gradient(
@@ -61,8 +61,8 @@
     --primary-foreground: 0 0% 8%;
     --cta: 28 90% 55%;
     --cta-foreground: 0 0% 8%;
-    --secondary: 0 0% 20%;
-    --secondary-foreground: 0 0% 50%;
+    --secondary: 24 68% 10%;
+    --secondary-foreground: 0 0% 90%;
     --muted: 0 0% 75%;
     --muted-foreground: 0 0% 50%;
     --accent: 210 40% 96%;
