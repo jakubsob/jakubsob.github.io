@@ -22,7 +22,9 @@ const socialLinks = getSocialLinks();
       >
         <div class="lg:justify-self-center flex flex-col gap-8">
           <Animate client:visible>
-            <p class="text-3xl lg:text-6xl uppercase font-light">
+            <p
+              class="text-[clamp(2.5rem,5vw,5rem)] font-bold uppercase leading-[0.88] tracking-[-0.03em]"
+            >
               Learn efficient R development
             </p>
             <div class="text-lg mt-8">
@@ -76,7 +78,7 @@ const socialLinks = getSocialLinks();
         <Animate client:visible delay="400">
           <span>&copy; {today.getFullYear()} Jakub Sobolewski</span>
         </Animate>
-        <Animate client:visible delay="500" class="hidden sm:inline">
+        <Animate client:visible delay="500" className="hidden sm:inline">
           <span>Made by me</span>
         </Animate>
       </div>

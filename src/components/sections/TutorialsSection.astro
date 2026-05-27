@@ -21,7 +21,7 @@ import { CircleArrowRight } from "lucide-react";
             <div>
               <a
                 href="https://github.com/jakubsob/shiny-acceptance-tdd"
-                class="hover:underline"
+                class="link-underline"
               >
                 <h3 class="text-clamp-sm uppercase leading-none">
                   Shiny Acceptance TDD
@@ -44,7 +44,7 @@ import { CircleArrowRight } from "lucide-react";
           >
             <div>
               <EyebrowLabel>
-                <span class="text-destructive mr-1">✗</span>vague requirements
+                <span class="text-destructive mr-1">✗ vague requirements</span>
               </EyebrowLabel>
               <p
                 class="text-sm text-muted-foreground leading-relaxed max-w-[36ch]"
@@ -54,7 +54,7 @@ import { CircleArrowRight } from "lucide-react";
                 drift the moment code ships.
               </p>
             </div>
-            <Card variant="destructive">
+            <Card variant="bordered">
               <Code
                 lang="text"
                 code={`Budget tracking
@@ -74,7 +74,8 @@ import { CircleArrowRight } from "lucide-react";
           >
             <div>
               <EyebrowLabel>
-                <span class="text-success mr-1">✓</span>executable specification
+                <span class="text-success mr-1">✓ executable specification</span
+                >
               </EyebrowLabel>
               <p
                 class="text-sm text-muted-foreground leading-relaxed max-w-[36ch]"
@@ -84,7 +85,7 @@ import { CircleArrowRight } from "lucide-react";
                 feature is done.
               </p>
             </div>
-            <Card variant="success">
+            <Card variant="bordered">
               <Code
                 lang="r"
                 code={`# tests/acceptance/test-budget.R
@@ -147,7 +148,7 @@ test_that("Scenario: I can inspect my net balance", {
       </div>
 
       <!-- Tutorial 2: Shiny TDD (ShinyConf 2024) -->
-      <div class="mt-16 pt-12 border-t border-foreground/10">
+      <div class="mt-16 pt-12">
         <div class="pb-16">
           <Animate>
             <div class="flex items-start gap-6">
@@ -155,7 +156,7 @@ test_that("Scenario: I can inspect my net balance", {
                 <a
                   href="https://jakubsobolewski.com/shinyconf2024/"
                   target="_blank"
-                  class="hover:underline"
+                  class="link-underline"
                 >
                   <h3 class="text-clamp-sm uppercase leading-none">
                     Shiny Test-Driven Development
@@ -173,7 +174,7 @@ test_that("Scenario: I can inspect my net balance", {
 
         <Animate>
           <div
-            class="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-8 lg:gap-16 items-start py-16 border-b border-foreground/10"
+            class="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-8 lg:gap-16 items-start py-16"
           >
             <div
               class="aspect-video w-full overflow-hidden rounded-[--radius-surface]"
@@ -235,7 +236,7 @@ test_that("Scenario: I can inspect my net balance", {
       </div>
 
       <!-- Tutorial 3: BDD -->
-      <div class="mt-16 pt-12 border-t border-foreground/10">
+      <div class="mt-16 pt-12">
         <div class="pb-16">
           <Animate>
             <div class="flex items-start gap-6">
@@ -243,7 +244,7 @@ test_that("Scenario: I can inspect my net balance", {
                 <a
                   href="/assets/user2025.pdf"
                   target="_blank"
-                  class="hover:underline"
+                  class="link-underline"
                 >
                   <h3 class="text-clamp-sm uppercase leading-none">
                     Behavior-Driven Development

@@ -6,7 +6,6 @@ import { Animate } from "@/components/ui/animate";
 import { Card } from "@/components/ui/card";
 import { EyebrowLabel } from "@/components/ui/eyebrow-label";
 import SectionHeading from "@/components/ui/section-heading.astro";
-import { CircleArrowRight } from "lucide-react";
 import { transformerNotationDiff } from "@shikijs/transformers";
 import { transformerStepAnimation } from "@/lib/transformerStepAnimation";
 ---
@@ -29,7 +28,7 @@ import { transformerStepAnimation } from "@/lib/transformerStepAnimation";
           <div>
             <a
               href="https://github.com/jakubsob/cucumber"
-              class="hover:underline"
+              class="link-underline"
             >
               <h3 class="text-clamp-sm uppercase leading-none">Cucumber</h3>
             </a>
@@ -50,7 +49,7 @@ import { transformerStepAnimation } from "@/lib/transformerStepAnimation";
         >
           <div>
             <EyebrowLabel>
-              <span class="text-destructive mr-1">✗</span>comments as specs
+              <span class="text-destructive mr-1">✗ comments as specs</span>
             </EyebrowLabel>
             <p
               class="text-sm text-muted-foreground leading-relaxed max-w-[36ch]"
@@ -60,15 +59,15 @@ import { transformerStepAnimation } from "@/lib/transformerStepAnimation";
               drift — and a stale comment is worse than no comment.
             </p>
           </div>
-          <Card variant="destructive">
+          <Card variant="bordered">
             <Code
               lang="r"
-              code={`test_that("sales trend works", {
-  # sales data is available
-  # check the plot for Electronics
+              code={`test_that("sales trend works for Electronics", {
+  # load the sales data
+  # get trend for "Electronics"
   # make sure it looks right
-
-  result <- get_sales_trend("Electronics")
+  data <- load_sales_data()
+  result <- get_sales_trend(data, "Electronics")
   expect_s3_class(result, "ggplot")
 })`}
             />
@@ -82,16 +81,16 @@ import { transformerStepAnimation } from "@/lib/transformerStepAnimation";
     <div class="container">
       <div class="relative inline-block">
         <span
-          class="js-strike-text block uppercase text-[clamp(2rem,7vw,5rem)] font-bold leading-tight text-destructive/60"
+          class="js-strike-text block uppercase text-[clamp(2rem,7vw,5rem)] leading-tight text-destructive/60"
         >
-          Comments and docs
+          Comments and tickets
           <span
             class="js-strike-line absolute left-0 top-[55%] h-[4px] w-0 bg-destructive rounded-full"
             aria-hidden="true"></span>
         </span>
       </div>
       <div
-        class="js-strike-result block uppercase text-[clamp(2rem,7vw,5rem)] font-bold leading-tight text-success opacity-0 translate-y-4 transition-none"
+        class="js-strike-result block uppercase text-[clamp(2rem,7vw,5rem)] leading-tight text-success opacity-0 translate-y-4 transition-none"
       >
         Executable specifications
       </div>
@@ -108,7 +107,7 @@ import { transformerStepAnimation } from "@/lib/transformerStepAnimation";
         <!-- Left: Gherkin spec -->
         <div>
           <EyebrowLabel>
-            <span class="text-success mr-1">✓</span>the specification
+            <span class="text-success mr-1">✓ the specification</span>
           </EyebrowLabel>
           <p
             class="text-sm text-muted-foreground leading-relaxed max-w-[42ch] mb-6"
@@ -117,7 +116,7 @@ import { transformerStepAnimation } from "@/lib/transformerStepAnimation";
             what action is taken, what outcome is observable. Vague intent
             doesn't survive the structure.
           </p>
-          <Card variant="success">
+          <Card variant="bordered">
             <Code
               lang="gherkin"
               transformers={[transformerStepAnimation()]}
@@ -134,7 +133,7 @@ import { transformerStepAnimation } from "@/lib/transformerStepAnimation";
         <!-- Right: R implementation -->
         <div>
           <EyebrowLabel>
-            <span class="text-success mr-1">✓</span>the implementation
+            <span class="text-success mr-1">✓ the implementation</span>
           </EyebrowLabel>
           <p
             class="text-sm text-muted-foreground leading-relaxed max-w-[36ch] mb-6"
@@ -142,7 +141,7 @@ import { transformerStepAnimation } from "@/lib/transformerStepAnimation";
             Each line of the spec maps to one R function. The English phrase
             becomes the function signature — the same words, now executable.
           </p>
-          <Card variant="success">
+          <Card variant="bordered">
             <Code
               lang="r"
               transformers={[transformerStepAnimation()]}
@@ -166,9 +165,9 @@ then("the sales trend plot for {string} is shown", function(category, context) {
       <Animate>
         <div class="pt-8 pb-12">
           <EyebrowLabel>
-            <span class="text-success mr-1">✓</span>verification
+            <span class="text-success mr-1">✓ verification</span>
           </EyebrowLabel>
-          <Card variant="success">
+          <Card variant="bordered">
             <Code
               lang="r"
               code={`> cucumber::test()
@@ -186,8 +185,7 @@ then("the sales trend plot for {string} is shown", function(category, context) {
     <div class="pt-6 pb-12">
       <a href="https://jakubsobolewski.com/cucumber/" target="_blank">
         <Button size="xl" className="text-2xl" variant="pill" shape="pill">
-          Try it out!
-          <CircleArrowRight className="inline-block size-[1.5em] ml-2" />
+          Try it out →
         </Button>
       </a>
     </div>
@@ -209,7 +207,7 @@ then("the sales trend plot for {string} is shown", function(category, context) {
             <div>
               <a
                 href="https://github.com/jakubsob/muttest"
-                class="hover:underline"
+                class="link-underline"
               >
                 <h3 class="text-clamp-sm uppercase leading-none">Muttest</h3>
               </a>
@@ -236,7 +234,7 @@ then("the sales trend plot for {string} is shown", function(category, context) {
                 never the edge.
               </p>
             </div>
-            <Card>
+            <Card variant="bordered">
               <Code
                 lang="r"
                 code={`# R/is_adult.R
@@ -271,9 +269,9 @@ is_adult <- function(age) {
             </div>
             <div>
               <EyebrowLabel>
-                <span class="text-destructive mr-1">✗</span>the tests
+                <span class="text-destructive mr-1">✗ the tests</span>
               </EyebrowLabel>
-              <Card variant="destructive">
+              <Card variant="bordered">
                 <Code
                   lang="r"
                   code={`test_that("is_adult returns TRUE for adults", {
@@ -292,7 +290,7 @@ test_that("is_adult returns FALSE for minors", {
         <Animate>
           <div class="py-10 border-b border-foreground/10">
             <EyebrowLabel>run mutation testing</EyebrowLabel>
-            <Card>
+            <Card variant="bordered">
               <Code
                 lang="r"
                 code={`> muttest::muttest(plan)
@@ -320,7 +318,7 @@ test_that("is_adult returns FALSE for minors", {
             <div>
               <EyebrowLabel>after the fix</EyebrowLabel>
               <div
-                class="text-[clamp(5rem,12vw,9rem)] font-bold leading-none tabular-nums text-ocean-green-400 js-count-up"
+                class="text-[clamp(5rem,12vw,9rem)] font-bold leading-none tabular-nums text-success js-count-up"
                 data-target="100"
               >
                 0%
@@ -334,9 +332,9 @@ test_that("is_adult returns FALSE for minors", {
             </div>
             <div>
               <EyebrowLabel>
-                <span class="text-success mr-1">✓</span>the fix
+                <span class="text-success mr-1">✓ the fix</span>
               </EyebrowLabel>
-              <Card variant="success">
+              <Card variant="bordered">
                 <Code
                   lang="r"
                   transformers={[transformerNotationDiff()]}
@@ -361,8 +359,7 @@ test_that("is_adult is TRUE at the boundary", { # [!code ++]
       <div class="pt-12 pb-8">
         <a href="https://jakubsobolewski.com/muttest/" target="_blank">
           <Button size="xl" className="text-2xl" variant="pill" shape="pill">
-            Patch the gaps in your tests
-            <CircleArrowRight className="inline-block size-[1.5em] ml-2" />
+            Patch the gaps in your tests →
           </Button>
         </a>
       </div>

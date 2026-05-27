@@ -5,7 +5,7 @@ import type { BundledLanguage } from "shiki";
 type Variant = "default" | "destructive" | "success";
 
 const variantBorder: Record<Variant, string> = {
-  default: "hover:border-muted",
+  default: "",
   destructive: "border-destructive/60",
   success: "border-success/60",
 };
@@ -20,7 +20,7 @@ const { code, lang = "text", variant = "default" } = Astro.props;
 ---
 
 <div
-  class={`code-block rounded-[var(--radius-surface)] border bg-card shadow-sm w-full overflow-hidden transition-colors ${variantBorder[variant]}`}
+  class={`code-block rounded-[var(--radius-surface)] border bg-card w-full overflow-hidden transition-colors ${variantBorder[variant]}`}
 >
   <div class="flex items-center h-10 px-3 border-b border-border">
     <button

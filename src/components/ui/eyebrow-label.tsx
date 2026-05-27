@@ -10,12 +10,12 @@ const EyebrowLabel = React.forwardRef<HTMLParagraphElement, EyebrowLabelProps>(
       ref={ref}
       className={cn(
         "text-xs uppercase tracking-[0.2em] text-muted-foreground mb-3",
-        className
+        className,
       )}
       {...props}
     />
-  )
-)
+  ),
+);
 EyebrowLabel.displayName = "EyebrowLabel"
 
 export { EyebrowLabel }

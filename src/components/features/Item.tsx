@@ -2,30 +2,27 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const itemVariants = cva(
-  "bg-card border border-border rounded-[var(--radius-surface)] transition-all duration-300 group-hover/card:shadow-md group-hover/card:-translate-y-0.5",
+  "bg-card border border-border dark:border-muted-foreground/10 rounded-[var(--radius-surface)] transition-all duration-300 group-hover/card:-translate-y-0.5",
   {
     variants: {
       variant: {
-        featured: "p-8",
-        card: "p-4",
-      },
-    },
-    defaultVariants: { variant: "card" },
-  }
-);
-
-const titleVariants = cva(
-  "transition-colors group-hover/card:text-muted-foreground flex items-center gap-2",
-  {
-    variants: {
-      variant: {
-        featured: "text-2xl mb-3",
-        card: "text-xl mb-2",
+        featured: "p-8 bg-secondary border-none group-hover/card:shadow-md",
+        card: "p-4 border-none ",
       },
     },
     defaultVariants: { variant: "card" },
   },
 );
+
+const titleVariants = cva("transition-colors flex items-center gap-2", {
+  variants: {
+    variant: {
+      featured: "text-2xl mb-3",
+      card: "text-xl mb-2",
+    },
+  },
+  defaultVariants: { variant: "card" },
+});
 
 const descriptionVariants = cva("text-muted-foreground", {
   variants: {

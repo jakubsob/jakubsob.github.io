@@ -124,7 +124,7 @@ export function GlobalSearch({ isOpen, onClose }: GlobalSearchProps) {
       <div
         className={cn(
           "absolute h-screen inset-0 bg-black/50 backdrop-blur-sm z-50 transition-opacity duration-200",
-          isOpen ? "opacity-100" : "opacity-0"
+          isOpen ? "opacity-100" : "opacity-0",
         )}
         onClick={handleOverlayClick}
         aria-hidden="true"
@@ -134,7 +134,7 @@ export function GlobalSearch({ isOpen, onClose }: GlobalSearchProps) {
       <div
         className={cn(
           "fixed top-20 left-1/2 -translate-x-1/2 w-full max-w-[65ch] z-50 transition-all duration-200",
-          isOpen ? "opacity-100 scale-100" : "opacity-0 scale-95"
+          isOpen ? "opacity-100 scale-100" : "opacity-0 scale-95",
         )}
       >
         <Card className="shadow-2xl border">
@@ -167,8 +167,12 @@ export function GlobalSearch({ isOpen, onClose }: GlobalSearchProps) {
             {isEmpty ? (
               <div className="text-center py-8 text-muted-foreground">
                 <Search className="h-12 w-12 mx-auto mb-4 opacity-50" />
-                <p className="text-sm">Start typing to search across all content...</p>
-                <p className="text-xs mt-2">Search blog posts, pages, and R Tests Gallery</p>
+                <p className="text-sm">
+                  Start typing to search across all content...
+                </p>
+                <p className="text-xs mt-2">
+                  Search blog posts, pages, and R Tests Gallery
+                </p>
               </div>
             ) : isSearching ? (
               <div className="text-center py-8 text-muted-foreground">
@@ -179,45 +183,47 @@ export function GlobalSearch({ isOpen, onClose }: GlobalSearchProps) {
               <div className="text-center py-8 text-muted-foreground">
                 <FileText className="h-12 w-12 mx-auto mb-4 opacity-50" />
                 <p className="text-sm">No results found for "{searchQuery}"</p>
-                  <p className="text-xs mt-2">Try different keywords or browse all content</p>
-                  <div className="flex gap-2 justify-center mt-4">
-                    <a
-                      href="/blog"
-                      className="inline-block text-primary hover:underline text-sm"
-                      onClick={onClose}
-                    >
-                      View all blog posts →
-                    </a>
-                    <span className="text-muted-foreground">•</span>
-                    <a
-                      href="/r-tests-gallery"
-                      className="inline-block text-primary hover:underline text-sm"
-                      onClick={onClose}
-                    >
-                      Browse R Tests Gallery →
-                    </a>
-                  </div>
+                <p className="text-xs mt-2">
+                  Try different keywords or browse all content
+                </p>
+                <div className="flex gap-2 justify-center mt-4">
+                  <a
+                    href="/blog"
+                    className="inline-block text-primary link-underline text-sm"
+                    onClick={onClose}
+                  >
+                    View all blog posts →
+                  </a>
+                  <span className="text-muted-foreground">•</span>
+                  <a
+                    href="/r-tests-gallery"
+                    className="inline-block text-primary link-underline text-sm"
+                    onClick={onClose}
+                  >
+                    Browse R Tests Gallery →
+                  </a>
+                </div>
               </div>
-                ) : hasResults ? (
-                  <div className="space-y-6">
-                    {Object.entries(searchResults).map(([type, group]) => (
-                      <div key={type} className="space-y-2">
-                        {/* Group Header */}
-                        <div className="flex items-center gap-2 px-2 py-1 text-sm font-medium text-muted-foreground border-b">
-                          {getTypeIcon(type)}
-                          <span>{group.label}</span>
-                          <Badge variant="secondary" className="ml-auto text-xs">
-                            {group.totalCount}
-                          </Badge>
-                        </div>
+            ) : hasResults ? (
+              <div className="space-y-6">
+                {Object.entries(searchResults).map(([type, group]) => (
+                  <div key={type} className="space-y-2">
+                    {/* Group Header */}
+                    <div className="flex items-center gap-2 px-2 py-1 text-sm font-medium text-muted-foreground border-b">
+                      {getTypeIcon(type)}
+                      <span>{group.label}</span>
+                      <Badge variant="secondary" className="ml-auto text-xs">
+                        {group.totalCount}
+                      </Badge>
+                    </div>
 
-                        {/* Group Results */}
-                        <div className="space-y-1">
-                          {group.results.map((result, index) => (
-                            <button
+                    {/* Group Results */}
+                    <div className="space-y-1">
+                      {group.results.map((result, index) => (
+                        <button
                           key={`${result.id}-${index}`}
                           onClick={() => handleResultClick(result)}
-                              className="w-full text-left p-3 rounded-lg transition-colors border border-transparent hover:border-muted group"
+                          className="w-full text-left p-3 rounded-lg transition-colors border border-transparent hover:border-muted group"
                         >
                           <div className="flex items-start gap-3">
                             {getTypeIcon(result.type)}
@@ -241,15 +247,17 @@ export function GlobalSearch({ isOpen, onClose }: GlobalSearchProps) {
                                   <div className="flex items-center gap-1">
                                     <Tag className="h-3 w-3 text-muted-foreground" />
                                     <div className="flex gap-1">
-                                      {result.tags.slice(0, 3).map((tag: string) => (
-                                        <Badge
-                                          key={tag}
-                                          variant="outline"
-                                          className="text-xs px-1.5 py-0.5 h-auto"
-                                        >
-                                          {tag}
-                                        </Badge>
-                                      ))}
+                                      {result.tags
+                                        .slice(0, 3)
+                                        .map((tag: string) => (
+                                          <Badge
+                                            key={tag}
+                                            variant="outline"
+                                            className="text-xs px-1.5 py-0.5 h-auto"
+                                          >
+                                            {tag}
+                                          </Badge>
+                                        ))}
                                       {result.tags.length > 3 && (
                                         <span className="text-xs text-muted-foreground">
                                           +{result.tags.length - 3}

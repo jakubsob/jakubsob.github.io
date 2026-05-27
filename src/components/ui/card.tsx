@@ -4,13 +4,14 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const cardVariants = cva(
-  "rounded-[var(--radius-surface)] border bg-card shadow-sm w-full overflow-hidden transition-colors",
+  "rounded-[var(--radius-surface)] bg-card w-full overflow-hidden transition-colors",
   {
     variants: {
       variant: {
-        default: "hover:border-muted",
-        destructive: "border-destructive/60",
-        success: "border-success/60",
+        default: "",
+        destructive: "border border-destructive/60",
+        success: "border border-success/60",
+        bordered: "border",
       },
     },
     defaultVariants: { variant: "default" },

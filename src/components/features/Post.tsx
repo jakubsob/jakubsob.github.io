@@ -1,3 +1,4 @@
+import type { CollectionEntry } from "astro:content";
 import { getReadingTime } from "@/utils/getReadingTime";
 import FormattedDate from "@/components/features/FormattedDate";
 import { TagList } from "@/components/features/TagList";
@@ -6,22 +7,18 @@ import { Item } from "@/components/features/Item";
 export type PostVariant = "card" | "featured";
 
 interface PostProps {
-  post: {
-    slug: string;
-    data: {
-      title: string;
-      description: string;
-      pubDate: Date;
-      tags: string[];
-    };
-    body: string;
-  };
+  post: CollectionEntry<"blog">;
   selectedTags?: Set<string>;
   variant?: PostVariant;
   className?: string;
 }
 
-export function Post({ post, selectedTags, variant = "card", className }: PostProps) {
+export function Post({
+  post,
+  selectedTags,
+  variant = "card",
+  className,
+}: PostProps) {
   const meta = (
     <>
       <FormattedDate date={post.data.pubDate} />

@@ -21,7 +21,9 @@ function PostList({ posts, showControls = true, variant = "card" }) {
       getTags={(post) => post.data.tags}
       keyExtractor={(post) => post.slug}
       renderItem={(post, selectedTags) => (
-        <Post post={post} selectedTags={selectedTags} variant={variant} />
+        <Animate key={post.slug}>
+          <Post post={post} selectedTags={selectedTags} variant={variant} />
+        </Animate>
       )}
     />
   );

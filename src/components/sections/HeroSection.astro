@@ -31,7 +31,10 @@ const cols = Array.from({ length: 8 });
       h1 with display:contents — children become direct grid items.
       aria-label preserves semantics for screen readers.
     -->
-    <h1 aria-label="Building Quality By Testing" class="[display:contents]">
+    <h1
+      aria-label="Building Quality By Testing"
+      class="[display:contents] select-none"
+    >
       <div
         class="col-span-8 flex items-end overflow-hidden relative z-10 px-6 md:px-12 lg:px-16"
       >
@@ -43,7 +46,7 @@ const cols = Array.from({ length: 8 });
         </Animate>
       </div>
       <div
-        class="col-span-8 flex items-end overflow-hidden relative z-10 px-6 md:px-12 lg:px-16"
+        class="col-span-8 flex items-end relative z-10 px-6 md:px-12 lg:px-16"
       >
         <Animate variant="header" className="motion-delay-[300ms]">
           <span
@@ -80,7 +83,7 @@ const cols = Array.from({ length: 8 });
 
     <!-- Buttons: full-width on mobile, cols 6-8 on lg (same row as description) -->
     <div
-      class="col-span-8 lg:col-span-3 flex items-start overflow-hidden relative z-10 pr-6 pl-6 lg:pl-0 lg:justify-end"
+      class="col-span-8 lg:col-span-3 flex items-start relative z-10 pr-6 pl-6 lg:pl-0 lg:justify-end"
     >
       <div class="flex flex-row gap-3 shrink-0">
         <Animate variant="expand" className="motion-delay-[650ms]">

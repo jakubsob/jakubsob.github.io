@@ -51,15 +51,13 @@ const posts = (await getCollection("blog"))
               prose-code:font-mono
               prose-pre:font-code
               prose-pre:rounded-[var(--radius-surface)]
-              prose-blockquote:bg-destructive/20
-              prose-blockquote:border
-              prose-blockquote:border-destructive/30
+              prose-blockquote:bg-secondary
+              prose-blockquote:border-none
               prose-blockquote:rounded-[--radius-surface]
               prose-blockquote:py-4
-              prose-blockquote:shadow-md
+              hover:prose-blockquote:translate-y-[-2px]
               prose-blockquote:not-italic
               prose-blockquote:transition-all
-              hover:prose-blockquote:bg-destructive/10
               prose-img:w-full
               px-2"
         >
