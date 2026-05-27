@@ -114,9 +114,10 @@ const cols = Array.from({ length: 8 });
   <Animate variant="header" className="motion-delay-[1000ms]">
     <a
       href="#blog"
-      class="cursor-pointer text-foreground/40 border-foreground/40 absolute bottom-0 left-1/2 -translate-x-1/2 size-8 mb-2 rounded-full border-2 animate-pulse"
+      aria-label="Scroll to blog section"
+      class="cursor-pointer text-foreground/40 border-foreground/40 absolute bottom-0 left-1/2 -translate-x-1/2 size-11 mb-2 rounded-full border-2 animate-pulse hidden md:flex items-center justify-center"
     >
-      <ArrowDown className="block size-full" />
+      <ArrowDown className="block size-6" aria-hidden="true" />
     </a>
   </Animate>
 </Section>

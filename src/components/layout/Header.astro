@@ -42,7 +42,7 @@ const { class: className } = Astro.props;
       left: 0;
       width: 100%;
       height: 100svh;
-      background-color: hsl(var(--background) / 0.85);
+      background-color: oklch(var(--background) / 0.85);
       background-image: url("/noise-sky.svg");
       backdrop-filter: blur(10px);
       z-index: 50;
@@ -93,6 +93,8 @@ const { class: className } = Astro.props;
         id="mobile-menu-toggle"
         class="hover:text-primary transition-colors"
         aria-label="Toggle mobile menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
       >
         <svg
           class="w-6 h-6"
@@ -181,34 +183,36 @@ const { class: className } = Astro.props;
     const mobileMenuClose = document.getElementById("mobile-menu-close");
     const mobileMenu = document.getElementById("mobile-menu");
 
+    function openMenu() {
+      mobileMenu.classList.add("open");
+      document.body.style.overflow = "hidden";
+      mobileMenuToggle.setAttribute("aria-expanded", "true");
+    }
+
+    function closeMenu() {
+      mobileMenu.classList.remove("open");
+      document.body.style.overflow = "auto";
+      mobileMenuToggle.setAttribute("aria-expanded", "false");
+    }
+
     if (mobileMenuToggle && mobileMenu) {
-      mobileMenuToggle.addEventListener("click", function () {
-        mobileMenu.classList.add("open");
-        document.body.style.overflow = "hidden";
-      });
+      mobileMenuToggle.addEventListener("click", openMenu);
     }
 
     if (mobileMenuClose && mobileMenu) {
-      mobileMenuClose.addEventListener("click", function () {
-        mobileMenu.classList.remove("open");
-        document.body.style.overflow = "auto";
-      });
+      mobileMenuClose.addEventListener("click", closeMenu);
     }
 
     // Close mobile menu when clicking on a link
     const mobileMenuLinks = mobileMenu?.querySelectorAll("a");
     mobileMenuLinks?.forEach((link) => {
-      link.addEventListener("click", function () {
-        mobileMenu.classList.remove("open");
-        document.body.style.overflow = "auto";
-      });
+      link.addEventListener("click", closeMenu);
     });
 
     // Close mobile menu when clicking outside
     mobileMenu?.addEventListener("click", function (e) {
       if (e.target === mobileMenu) {
-        mobileMenu.classList.remove("open");
-        document.body.style.overflow = "auto";
+        closeMenu();
       }
     });
   });

@@ -46,7 +46,7 @@ const shouldLoadAnalytics = import.meta.env.PROD;
   <meta name="description" content={description} />
 
   <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="webp" />
+  <meta property="og:type" content="website" />
   <meta property="og:url" content={Astro.url} />
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
@@ -132,5 +132,6 @@ const shouldLoadAnalytics = import.meta.env.PROD;
       <link rel="preconnect" href="https://www.googletagmanager.com/" />
     </>
   )}
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
 </head>

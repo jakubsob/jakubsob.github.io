@@ -4,22 +4,20 @@ import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
 
-const animateVariants = cva(
-  "",
-  {
-    variants: {
-      variant: {
-        default: "intersect-once intersect:motion-opacity-in-0 intersect:motion-translate-y-in-25",
-        header: "motion-preset-slide-up-lg md:motion-duration-1000",
-        fadeIn: "motion-preset-fade-lg",
-        expand: "motion-preset-expand",
-      },
+const animateVariants = cva("", {
+  variants: {
+    variant: {
+      default:
+        "[&[no-intersect]]:opacity-0 intersect-once intersect:motion-opacity-in-0 intersect:motion-translate-y-in-25",
+      header: "motion-preset-slide-up-lg md:motion-duration-1000",
+      fadeIn: "motion-preset-fade-lg",
+      expand: "motion-preset-expand",
     },
-    defaultVariants: {
-      variant: "default",
-    },
-  }
-)
+  },
+  defaultVariants: {
+    variant: "default",
+  },
+});
 
 export interface AnimateProps
   extends React.HTMLAttributes<HTMLDivElement>,
