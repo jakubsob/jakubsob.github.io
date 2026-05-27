@@ -40,7 +40,7 @@ const cols = Array.from({ length: 8 });
       >
         <Animate variant="header" className="motion-delay-[200ms]">
           <span
-            class="hero-line block text-[clamp(3.5rem,16vw,14rem)] font-bold uppercase leading-[0.88] tracking-[-0.04em] whitespace-nowrap mb-[-0.175em]"
+            class="hero-line block text-[clamp(3.5rem,16vw,14rem)] font-bold uppercase leading-[0.88] tracking-[-0.04em] whitespace-nowrap"
             set:html={splitLetters("Building")}
           />
         </Animate>
@@ -50,7 +50,7 @@ const cols = Array.from({ length: 8 });
       >
         <Animate variant="header" className="motion-delay-[300ms]">
           <span
-            class="hero-line block text-[clamp(3.5rem,16vw,14rem)] font-bold uppercase leading-[0.88] tracking-[-0.04em] whitespace-nowrap mb-[-0.175em]"
+            class="hero-line block text-[clamp(3.5rem,16vw,14rem)] font-bold uppercase leading-[0.88] tracking-[-0.04em] whitespace-nowrap"
             set:html={splitLetters("Quality")}
           />
         </Animate>
@@ -60,7 +60,7 @@ const cols = Array.from({ length: 8 });
       >
         <Animate variant="header" className="motion-delay-[400ms]">
           <span
-            class="hero-line block text-[clamp(3.5rem,16vw,14rem)] font-bold uppercase leading-[0.88] tracking-[-0.04em] whitespace-nowrap mb-[-0.175em] text-primary"
+            class="hero-line block text-[clamp(3.5rem,16vw,14rem)] font-bold uppercase leading-[0.88] tracking-[-0.04em] whitespace-nowrap text-primary"
             set:html={splitLetters("By Testing")}
           />
         </Animate>
@@ -69,7 +69,7 @@ const cols = Array.from({ length: 8 });
 
     <!-- Description: full-width on mobile, cols 1-5 on lg -->
     <div
-      class="col-span-8 lg:col-span-5 flex items-start overflow-hidden relative z-10 pl-6 md:pl-12 lg:pl-16"
+      class="col-span-8 lg:col-span-5 flex items-start relative z-10 pl-6 md:pl-12 lg:pl-16"
     >
       <Animate variant="header" className="motion-delay-[550ms]">
         <p
@@ -170,10 +170,9 @@ const cols = Array.from({ length: 8 });
     }
   }
 
-  /* text-box-trim removes descender space so cap baseline sits on the grid line */
+  /* Progressive enhancement: precise cap-height trim where supported (Chrome) */
   @supports (text-box-trim: trim-end) {
     .hero-line {
-      margin-bottom: 0;
       text-box-trim: trim-end;
       text-box-edge: cap alphabetic;
     }
