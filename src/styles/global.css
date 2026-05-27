@@ -10,95 +10,105 @@
 
 @layer base {
   :root {
+    /* Format: L C H (channels only — wrapped in oklch() by Tailwind config) */
+
     /* Orange primary: OKLCH hue ~55° */
-    --primary: oklch(0.66 0.19 55);
-    --primary-foreground: oklch(0.14 0.008 55);
+    --primary: 0.66 0.19 55;
+    --primary-foreground: 0.14 0.008 55;
 
     /* Neutrals: tinted toward brand hue (55°) at chroma 0.005–0.008 */
-    --background: oklch(0.98 0.006 75);
-    --foreground: oklch(0.14 0.008 55);
-    --card: oklch(0.99 0.004 75);
-    --card-foreground: oklch(0.14 0.008 55);
-    --popover: oklch(0.99 0.004 75);
-    --popover-foreground: oklch(0.14 0.008 55);
-    --light: oklch(0.95 0.005 75);
-    --dark: oklch(0.13 0.008 55);
+    --background: 0.98 0.006 75;
+    --foreground: 0.14 0.008 55;
+    --card: 0.99 0.004 75;
+    --card-foreground: 0.14 0.008 55;
+    --popover: 0.99 0.004 75;
+    --popover-foreground: 0.14 0.008 55;
+    --light: 0.95 0.005 75;
+    --dark: 0.13 0.008 55;
 
     /* Secondary: warm pale tint */
-    --secondary: oklch(0.95 0.018 65);
-    --secondary-foreground: oklch(0.20 0.008 55);
+    --secondary: 0.95 0.018 65;
+    --secondary-foreground: 0.20 0.008 55;
 
     /* Muted: passes 4.5:1 on --background */
-    --muted: oklch(0.74 0.003 75);
-    --muted-foreground: oklch(0.42 0.005 55);
+    --muted: 0.74 0.003 75;
+    --muted-foreground: 0.42 0.005 55;
 
     /* Accent: warm pale */
-    --accent: oklch(0.95 0.010 75);
-    --accent-foreground: oklch(0.14 0.008 55);
+    --accent: 0.95 0.010 75;
+    --accent-foreground: 0.14 0.008 55;
 
     /* Semantic */
-    --destructive: oklch(0.55 0.19 25);
-    --destructive-foreground: oklch(0.98 0.005 25);
-    --success: oklch(0.55 0.13 155);
-    --success-foreground: oklch(0.98 0.005 155);
+    --destructive: 0.55 0.19 25;
+    --destructive-foreground: 0.98 0.005 25;
+    --success: 0.55 0.13 155;
+    --success-foreground: 0.98 0.005 155;
 
     /* Structure */
-    --border: oklch(0.91 0.005 75);
-    --input: oklch(0.50 0.005 75);
-    --ring: oklch(0.66 0.19 55);
+    --border: 0.91 0.005 75;
+    --input: 0.50 0.005 75;
+    --ring: 0.66 0.19 55;
 
     --radius: 0.5rem;
     --radius-surface: 0;
 
-    --gradient: linear-gradient(0deg, var(--foreground), var(--light));
+    --gradient: linear-gradient(
+      0deg,
+      oklch(var(--foreground)),
+      oklch(var(--light))
+    );
 
     /* Diff highlighting */
-    --diff-add-bg: oklch(0.94 0.05 155);
-    --diff-add-text: oklch(0.38 0.11 155);
-    --diff-remove-bg: oklch(0.95 0.04 25);
-    --diff-remove-text: oklch(0.42 0.12 25);
+    --diff-add-bg: 0.94 0.05 155;
+    --diff-add-text: 0.38 0.11 155;
+    --diff-remove-bg: 0.95 0.04 25;
+    --diff-remove-text: 0.42 0.12 25;
   }
 
   .dark {
-    /* Warm dark canvas (orange-tinted, replaces former green split) */
-    --background: oklch(0.12 0.008 55);
-    --foreground: oklch(0.95 0.005 75);
-    --card: oklch(0.16 0.008 55);
-    --card-foreground: oklch(0.95 0.005 75);
-    --popover: oklch(0.15 0.008 55);
-    --popover-foreground: oklch(0.95 0.005 75);
-    --light: oklch(0.19 0.007 55);
-    --dark: oklch(0.10 0.008 55);
+    /* Warm dark canvas — orange-tinted, unified with primary */
+    --background: 0.12 0.008 55;
+    --foreground: 0.95 0.005 75;
+    --card: 0.16 0.008 55;
+    --card-foreground: 0.95 0.005 75;
+    --popover: 0.15 0.008 55;
+    --popover-foreground: 0.95 0.005 75;
+    --light: 0.19 0.007 55;
+    --dark: 0.10 0.008 55;
 
-    --primary: oklch(0.68 0.19 55);
-    --primary-foreground: oklch(0.10 0.008 55);
+    --primary: 0.68 0.19 55;
+    --primary-foreground: 0.10 0.008 55;
 
-    --secondary: oklch(0.22 0.018 55);
-    --secondary-foreground: oklch(0.92 0.005 75);
+    --secondary: 0.22 0.018 55;
+    --secondary-foreground: 0.92 0.005 75;
 
     /* Muted: passes 4.5:1 on dark --background (~6.7:1) */
-    --muted: oklch(0.30 0.005 55);
-    --muted-foreground: oklch(0.65 0.005 55);
+    --muted: 0.30 0.005 55;
+    --muted-foreground: 0.65 0.005 55;
 
-    /* Accent: corrected for dark (was orphaned light-mode value) */
-    --accent: oklch(0.22 0.010 55);
-    --accent-foreground: oklch(0.95 0.005 75);
+    /* Accent: corrected for dark */
+    --accent: 0.22 0.010 55;
+    --accent-foreground: 0.95 0.005 75;
 
-    --destructive: oklch(0.50 0.17 25);
-    --destructive-foreground: oklch(0.98 0.005 25);
-    --success: oklch(0.55 0.13 155);
-    --success-foreground: oklch(0.98 0.005 155);
+    --destructive: 0.50 0.17 25;
+    --destructive-foreground: 0.98 0.005 25;
+    --success: 0.55 0.13 155;
+    --success-foreground: 0.98 0.005 155;
 
-    --border: oklch(0.22 0.006 55);
-    --input: oklch(0.50 0.005 55);
-    --ring: oklch(0.68 0.19 55);
+    --border: 0.22 0.006 55;
+    --input: 0.50 0.005 55;
+    --ring: 0.68 0.19 55;
 
-    --gradient: linear-gradient(0deg, var(--background), var(--light));
+    --gradient: linear-gradient(
+      0deg,
+      oklch(var(--background)),
+      oklch(var(--light))
+    );
 
-    --diff-add-bg: oklch(0.22 0.06 155);
-    --diff-add-text: oklch(0.72 0.12 155);
-    --diff-remove-bg: oklch(0.20 0.05 25);
-    --diff-remove-text: oklch(0.72 0.13 25);
+    --diff-add-bg: 0.22 0.06 155;
+    --diff-add-text: 0.72 0.12 155;
+    --diff-remove-bg: 0.20 0.05 25;
+    --diff-remove-text: 0.72 0.13 25;
   }
 }
 
@@ -108,24 +118,24 @@
 
 .astro-code,
 .astro-code span {
-  background-color: var(--card) !important;
+  background-color: oklch(var(--card)) !important;
 }
 
 html.dark .astro-code,
 html.dark .astro-code span {
   color: var(--shiki-dark) !important;
-  background-color: var(--card) !important;
+  background-color: oklch(var(--card)) !important;
 }
 
 .shiki,
 .shiki span {
-  background-color: var(--card) !important;
+  background-color: oklch(var(--card)) !important;
 }
 
 html.dark .shiki,
 html.dark .shiki span {
   color: var(--shiki-dark) !important;
-  background-color: var(--card) !important;
+  background-color: oklch(var(--card)) !important;
 }
 
 @layer components {
@@ -178,7 +188,7 @@ pre code {
 
 /* Style inline code */
 :not(pre) > code {
-  background-color: color-mix(in oklch, var(--muted) 20%, transparent);
+  background-color: oklch(var(--muted) / 0.2);
   @apply rounded text-sm;
   @apply before:content-none after:content-none;
 }
@@ -206,7 +216,7 @@ pre code {
 }
 
 .astro-code .diff.add {
-  background-color: var(--diff-add-bg) !important;
+  background-color: oklch(var(--diff-add-bg)) !important;
 }
 
 .astro-code .diff.add span {
@@ -214,7 +224,7 @@ pre code {
 }
 
 .astro-code .diff.remove {
-  background-color: var(--diff-remove-bg) !important;
+  background-color: oklch(var(--diff-remove-bg)) !important;
 }
 
 .astro-code .diff.remove span {
@@ -228,11 +238,11 @@ pre code {
 }
 
 .astro-code .diff.add:before {
-  color: var(--diff-add-text) !important;
+  color: oklch(var(--diff-add-text)) !important;
 }
 
 .astro-code .diff.remove:before {
-  color: var(--diff-remove-text) !important;
+  color: oklch(var(--diff-remove-text)) !important;
 }
 
 .focused .line {
