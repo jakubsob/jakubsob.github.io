@@ -10,80 +10,95 @@
 
 @layer base {
   :root {
-    --background: 0 0% 98%;
-    --foreground: 0 0% 5%;
-    --card: 0 0% 100%;
-    --light: 0 0% 95%;
-    --dark: 0 0% 5%;
-    --card-foreground: 0 0% 5%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 28 90% 52%;
-    --primary-foreground: 0 0% 8%;
-    --cta: 28 90% 52%;
-    --cta-foreground: 0 0% 8%;
-    --secondary: 24 68% 94%;
-    --secondary-foreground: 222.2 84% 4.9%;
-    --muted: 0 0% 75%;
-    --muted-foreground: 0 0% 50%;
-    --accent: 210 40% 96%;
-    --accent-foreground: 222.2 84% 4.9%;
-    --destructive: 0 60% 50%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 0 0% 90%;
-    --input: 0 0% 50%;
-    --ring: 28 90% 52%;
+    /* Orange primary: OKLCH hue ~55° */
+    --primary: oklch(0.66 0.19 55);
+    --primary-foreground: oklch(0.14 0.008 55);
+
+    /* Neutrals: tinted toward brand hue (55°) at chroma 0.005–0.008 */
+    --background: oklch(0.98 0.006 75);
+    --foreground: oklch(0.14 0.008 55);
+    --card: oklch(0.99 0.004 75);
+    --card-foreground: oklch(0.14 0.008 55);
+    --popover: oklch(0.99 0.004 75);
+    --popover-foreground: oklch(0.14 0.008 55);
+    --light: oklch(0.95 0.005 75);
+    --dark: oklch(0.13 0.008 55);
+
+    /* Secondary: warm pale tint */
+    --secondary: oklch(0.95 0.018 65);
+    --secondary-foreground: oklch(0.20 0.008 55);
+
+    /* Muted: passes 4.5:1 on --background */
+    --muted: oklch(0.74 0.003 75);
+    --muted-foreground: oklch(0.42 0.005 55);
+
+    /* Accent: warm pale */
+    --accent: oklch(0.95 0.010 75);
+    --accent-foreground: oklch(0.14 0.008 55);
+
+    /* Semantic */
+    --destructive: oklch(0.55 0.19 25);
+    --destructive-foreground: oklch(0.98 0.005 25);
+    --success: oklch(0.55 0.13 155);
+    --success-foreground: oklch(0.98 0.005 155);
+
+    /* Structure */
+    --border: oklch(0.91 0.005 75);
+    --input: oklch(0.50 0.005 75);
+    --ring: oklch(0.66 0.19 55);
+
     --radius: 0.5rem;
     --radius-surface: 0;
-    --gradient: linear-gradient(
-      0deg,
-      hsl(var(--foreground)),
-      hsl(var(--light))
-    );
-    --success: 155 50% 43%;
-    --success-foreground: 210 40% 98%;
-    --diff-add-bg: 155 55% 91%;
-    --diff-add-text: 155 55% 28%;
-    --diff-remove-bg: 0 70% 95%;
-    --diff-remove-text: 0 60% 38%;
+
+    --gradient: linear-gradient(0deg, var(--foreground), var(--light));
+
+    /* Diff highlighting */
+    --diff-add-bg: oklch(0.94 0.05 155);
+    --diff-add-text: oklch(0.38 0.11 155);
+    --diff-remove-bg: oklch(0.95 0.04 25);
+    --diff-remove-text: oklch(0.42 0.12 25);
   }
 
   .dark {
-    --background: 155 4% 5%;
-    --foreground: 0 0% 95%;
-    --card: 155 3% 8%;
-    --light: 155 3% 10%;
-    --dark: 0 0% 5%;
-    --card-foreground: 0 0% 100%;
-    --popover: 0 0% 5%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 28 90% 55%;
-    --primary-foreground: 0 0% 8%;
-    --cta: 28 90% 55%;
-    --cta-foreground: 0 0% 8%;
-    --secondary: 24 68% 10%;
-    --secondary-foreground: 0 0% 90%;
-    --muted: 0 0% 75%;
-    --muted-foreground: 0 0% 50%;
-    --accent: 210 40% 96%;
-    --accent-foreground: 222.2 84% 4.9%;
-    --destructive: 0 60% 40%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 0 0% 10%;
-    --input: 0 0% 50%;
-    --ring: 155 50% 43%;
-    --radius: 0.5rem;
-    --gradient: linear-gradient(
-      0deg,
-      hsl(var(--background)),
-      hsl(var(--light))
-    );
-    --success: 155 50% 43%;
-    --success-foreground: 210 40% 98%;
-    --diff-add-bg: 155 40% 13%;
-    --diff-add-text: 155 60% 58%;
-    --diff-remove-bg: 0 45% 14%;
-    --diff-remove-text: 0 65% 62%;
+    /* Warm dark canvas (orange-tinted, replaces former green split) */
+    --background: oklch(0.12 0.008 55);
+    --foreground: oklch(0.95 0.005 75);
+    --card: oklch(0.16 0.008 55);
+    --card-foreground: oklch(0.95 0.005 75);
+    --popover: oklch(0.15 0.008 55);
+    --popover-foreground: oklch(0.95 0.005 75);
+    --light: oklch(0.19 0.007 55);
+    --dark: oklch(0.10 0.008 55);
+
+    --primary: oklch(0.68 0.19 55);
+    --primary-foreground: oklch(0.10 0.008 55);
+
+    --secondary: oklch(0.22 0.018 55);
+    --secondary-foreground: oklch(0.92 0.005 75);
+
+    /* Muted: passes 4.5:1 on dark --background (~6.7:1) */
+    --muted: oklch(0.30 0.005 55);
+    --muted-foreground: oklch(0.65 0.005 55);
+
+    /* Accent: corrected for dark (was orphaned light-mode value) */
+    --accent: oklch(0.22 0.010 55);
+    --accent-foreground: oklch(0.95 0.005 75);
+
+    --destructive: oklch(0.50 0.17 25);
+    --destructive-foreground: oklch(0.98 0.005 25);
+    --success: oklch(0.55 0.13 155);
+    --success-foreground: oklch(0.98 0.005 155);
+
+    --border: oklch(0.22 0.006 55);
+    --input: oklch(0.50 0.005 55);
+    --ring: oklch(0.68 0.19 55);
+
+    --gradient: linear-gradient(0deg, var(--background), var(--light));
+
+    --diff-add-bg: oklch(0.22 0.06 155);
+    --diff-add-text: oklch(0.72 0.12 155);
+    --diff-remove-bg: oklch(0.20 0.05 25);
+    --diff-remove-text: oklch(0.72 0.13 25);
   }
 }
 
@@ -93,24 +108,24 @@
 
 .astro-code,
 .astro-code span {
-  background-color: hsl(var(--card)) !important;
+  background-color: var(--card) !important;
 }
 
 html.dark .astro-code,
 html.dark .astro-code span {
   color: var(--shiki-dark) !important;
-  background-color: hsl(var(--card)) !important;
+  background-color: var(--card) !important;
 }
 
 .shiki,
 .shiki span {
-  background-color: hsl(var(--card)) !important;
+  background-color: var(--card) !important;
 }
 
 html.dark .shiki,
 html.dark .shiki span {
   color: var(--shiki-dark) !important;
-  background-color: hsl(var(--card)) !important;
+  background-color: var(--card) !important;
 }
 
 @layer components {
@@ -163,7 +178,8 @@ pre code {
 
 /* Style inline code */
 :not(pre) > code {
-  @apply bg-muted/20 rounded text-sm;
+  background-color: color-mix(in oklch, var(--muted) 20%, transparent);
+  @apply rounded text-sm;
   @apply before:content-none after:content-none;
 }
 
@@ -190,7 +206,7 @@ pre code {
 }
 
 .astro-code .diff.add {
-  background-color: hsl(var(--diff-add-bg)) !important;
+  background-color: var(--diff-add-bg) !important;
 }
 
 .astro-code .diff.add span {
@@ -198,7 +214,7 @@ pre code {
 }
 
 .astro-code .diff.remove {
-  background-color: hsl(var(--diff-remove-bg)) !important;
+  background-color: var(--diff-remove-bg) !important;
 }
 
 .astro-code .diff.remove span {
@@ -212,11 +228,11 @@ pre code {
 }
 
 .astro-code .diff.add:before {
-  color: hsl(var(--diff-add-text)) !important;
+  color: var(--diff-add-text) !important;
 }
 
 .astro-code .diff.remove:before {
-  color: hsl(var(--diff-remove-text)) !important;
+  color: var(--diff-remove-text) !important;
 }
 
 .focused .line {
