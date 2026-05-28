@@ -1,6 +1,6 @@
 ---
 import { getCollection } from "astro:content";
-import PostList from "@/components/features/PostList.jsx";
+import { Post } from "@/components/features/Post";
 import { Button } from "@/components/ui/button";
 import { Section } from "@/components/ui/section";
 import { Animate } from "@/components/ui/animate";
@@ -12,14 +12,12 @@ const posts = (await getCollection("blog"))
 ---
 
 <Section id="blog" size="fit" variant="light">
-  <div class="py-16 md:py-28 space-y-16 md:space-y-40">
-    <div class="container grid grid-cols-1 lg:grid-cols-2">
-      <div class="mb-12">
+  <div class="py-16 md:py-28">
+    <div class="container">
+      <div class="flex items-baseline justify-between mb-12">
         <Animate>
-          <h2 class="flex text-clamp-sm uppercase">New on the blog</h2>
+          <h2 class="text-clamp-sm uppercase">New on the blog</h2>
         </Animate>
-      </div>
-      <div class="order-3 mt-12 md:order-2 md:self-end">
         <Animate>
           <a href="/blog">
             <Button variant="pill" size="xl" shape="pill">
@@ -28,13 +26,12 @@ const posts = (await getCollection("blog"))
           </a>
         </Animate>
       </div>
-      <div class="h-full max-w-[65ch] row-span-2">
-        <PostList
-          client:load
-          posts={posts}
-          showControls={false}
-          variant="featured"
-        />
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {posts.map((post) => (
+          <Animate>
+            <Post post={post} variant="featured" client:visible />
+          </Animate>
+        ))}
       </div>
     </div>
   </div>

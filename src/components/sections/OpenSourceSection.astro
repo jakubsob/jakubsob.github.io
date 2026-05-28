@@ -59,7 +59,7 @@ import { transformerStepAnimation } from "@/lib/transformerStepAnimation";
             >
               Comments encode intent but not procedure. They don't separate
               precondition from action from outcome. They can't be run, so they
-              drift — and a stale comment is worse than no comment.
+              drift. A stale comment is worse than no comment.
             </p>
           </div>
           <Card variant="bordered">
@@ -105,7 +105,7 @@ import { transformerStepAnimation } from "@/lib/transformerStepAnimation";
       <div
         id="cucumber-corr"
         data-step-animate
-        class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start py-16 border-b border-foreground/10"
+        class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start py-16"
       >
         <!-- Left: Gherkin spec -->
         <div>
@@ -142,7 +142,7 @@ import { transformerStepAnimation } from "@/lib/transformerStepAnimation";
             class="text-sm text-muted-foreground leading-relaxed max-w-[36ch] mb-6"
           >
             Each line of the spec maps to one R function. The English phrase
-            becomes the function signature — the same words, now executable.
+            becomes the function signature: the same words, now executable.
           </p>
           <Card variant="bordered">
             <Code
@@ -230,14 +230,14 @@ then("the sales trend plot for {string} is shown", function(category, context) {
       <div>
         <Animate>
           <div
-            class="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-8 lg:gap-16 items-start pb-10 border-b border-foreground/10"
+            class="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-8 lg:gap-16 items-start pb-12"
           >
             <div>
               <EyebrowLabel>the code</EyebrowLabel>
               <p
                 class="text-sm text-muted-foreground leading-relaxed max-w-[36ch]"
               >
-                A simple boundary check. Two tests cover adults and minors — but
+                A simple boundary check. Two tests cover adults and minors, but
                 never the edge.
               </p>
             </div>
@@ -255,7 +255,7 @@ is_adult <- function(age) {
 
         <Animate>
           <div
-            class="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-8 lg:gap-16 items-start py-10 border-b border-foreground/10"
+            class="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-8 lg:gap-16 items-start py-12"
           >
             <div>
               <EyebrowLabel>mutation score</EyebrowLabel>
@@ -269,7 +269,7 @@ is_adult <- function(age) {
                 class="text-muted-foreground mt-4 text-sm leading-relaxed max-w-[36ch]"
               >
                 The <code class="font-mono text-xs">{">"} 18</code> mutant survived.
-                Boundary value 18 is never tested — your suite can't tell <code
+                Boundary value 18 is never tested. Your suite can't tell <code
                   class="font-mono text-xs">{">="}</code
                 > from <code class="font-mono text-xs">{">"}</code>.
               </p>
@@ -295,7 +295,7 @@ test_that("is_adult returns FALSE for minors", {
         </Animate>
 
         <Animate>
-          <div class="py-10 border-b border-foreground/10">
+          <div class="py-12">
             <EyebrowLabel>run mutation testing</EyebrowLabel>
             <Card variant="bordered">
               <Code
@@ -320,7 +320,7 @@ test_that("is_adult returns FALSE for minors", {
 
         <Animate>
           <div
-            class="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-8 lg:gap-16 items-start pt-10 pb-0"
+            class="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-8 lg:gap-16 items-start pt-12 pb-0"
           >
             <div>
               <EyebrowLabel>after the fix</EyebrowLabel>

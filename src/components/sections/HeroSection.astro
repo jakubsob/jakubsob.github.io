@@ -2,7 +2,6 @@
 import { Button } from "@/components/ui/button";
 import { Section } from "@/components/ui/section";
 import { Animate } from "@/components/ui/animate";
-import { ArrowDown } from "lucide-react";
 
 const splitLetters = (text: string) =>
   text
@@ -18,7 +17,7 @@ const cols = Array.from({ length: 8 });
 ---
 
 <Section variant="dark" size="full" id="hero">
-  <div class="hero-grid h-[100svh] w-full relative overflow-hidden">
+  <div class="hero-grid min-h-[100dvh] w-full relative overflow-hidden">
     <!-- Vertical column lines -->
     <div class="absolute inset-0 z-[1] pointer-events-none flex hero-cols">
       {cols.map(() => <div class="flex-1 border-r border-foreground/[0.07]" />)}
@@ -111,15 +110,6 @@ const cols = Array.from({ length: 8 });
     </div>
   </div>
 
-  <Animate variant="header" className="motion-delay-[1000ms]">
-    <a
-      href="#blog"
-      aria-label="Scroll to blog section"
-      class="cursor-pointer text-foreground/40 border-foreground/40 absolute bottom-0 left-1/2 -translate-x-1/2 size-11 mb-2 rounded-full border-2 animate-pulse hidden md:flex items-center justify-center"
-    >
-      <ArrowDown className="block size-6" aria-hidden="true" />
-    </a>
-  </Animate>
 </Section>
 
 <style>
