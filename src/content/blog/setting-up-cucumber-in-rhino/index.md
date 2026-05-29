@@ -182,7 +182,7 @@ We also need to add an empty `e2e.js` file to `tests/cypress/support/` directory
 
 Now we're ready to start adding `.feature` files and their corresponding `.js` step definitions.
 
-```feature
+```gherkin
 # cypress/e2e/featureDisplay.feature
 Feature: Formula display
   Scenario: Selecting Transmission as the grouping variable
