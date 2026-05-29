@@ -1,9 +1,8 @@
 ---
-title: 'Behavior-Driven Development in R Shiny: Writing Then Steps That Assert Outcomes'
+title: 'Behavior-Driven Development in R Shiny: Asserting Outcomes with Then Steps'
 description: 'Learn how to write Then steps that assert outcomes without coupling to implementation. Build custom testthat expectations and keep your BDD assertions at the right level.'
-pubDate: 'May 23 2026'
+pubDate: 'May 29 2026'
 tags: ["r", "tests", "bdd", "shiny", "shinytest2"]
-draft: true
 ---
 
 You’ve set up all the preconditions.
@@ -249,12 +248,3 @@ Then steps are where a specification earns its credibility.
 A specification that only tests easy outcomes produces false confidence. One that asserts user-visible state, system state, and side effects actually catches real problems. Assert outcomes, not implementations. Group assertions by observable behavior and split them only where they can genuinely diverge. Write failure messages that save time. Push implementation details down to unit and module tests.
 
 With Given, When, and Then steps in place, the specifications read like requirements and run on every build. That’s worth more than any testing framework on its own.
-
-## Further Reading
-
-- [Behavior-Driven Development in R Shiny: A Step-By-Step Example](https://jakubsobolewski.com/blog/bdd-shiny-feature/)
-- [Setting Up Test Preconditions with Given Steps](https://jakubsobolewski.com/blog/bdd-shiny-given/)
-- [Writing When Steps That Model User Behavior](https://jakubsobolewski.com/blog/bdd-shiny-when/)
-- [Designing testable R6 interfaces](https://jakubsobolewski.com/blog/testable-r6-interfaces/)
-- [How to write robust shinytest2 tests](https://jakubsobolewski.com/blog/robust-shinytest2/)
-- [Mocks test your assumptions, not your code](https://jakubsobolewski.com/blog/the-problem-with-mocking/)
