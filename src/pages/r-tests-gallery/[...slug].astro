@@ -3,6 +3,12 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import { Section } from "@/components/ui/section";
 import IDEInterface from "../../components/file-viewer/IDEInterface.jsx";
 import { createMarkdownProcessor } from "@astrojs/markdown-remark";
+import {
+  buildRepositoryFileTree,
+  createGitHubAuthHeaders,
+  fetchDirectoryReadme,
+  fetchTopLevelDirectories,
+} from "@/lib/rTestsGallery";
 
 // Create markdown processor with the same config as astro.config.mjs
 const markdownProcessor = await createMarkdownProcessor({
@@ -27,106 +33,10 @@ const renderMarkdown = async (content: string) => {
 };
 
 export async function getStaticPaths() {
-  // GitHub API authentication for higher rate limits
-  const GITHUB_TOKEN = import.meta.env.PRIVATE_GITHUB_TOKEN;
-  const headers = GITHUB_TOKEN
-    ? { Authorization: `token ${GITHUB_TOKEN}` }
-    : {};
-
-  // Helper function to build file tree with rate limit handling
-  const buildFileTree = async (
-    path: string,
-    maxDepth: number = 3,
-    currentDepth: number = 0
-  ): Promise<any[]> => {
-    if (currentDepth >= maxDepth) {
-      return [];
-    }
-
-    try {
-      const response = await fetch(
-        `https://api.github.com/repos/jakubsob/r-tests-gallery/contents/${path}`,
-        { headers }
-      );
-
-      if (!response.ok) {
-        console.error(
-          `API failed for ${path}: ${response.status} ${response.statusText}`
-        );
-        return [];
-      }
-
-      const contents = await response.json();
-
-      if (!Array.isArray(contents)) {
-        console.error(`Contents for ${path} is not an array, using fallback`);
-        return [];
-      }
-
-      const tree: any[] = [];
-
-      for (const item of contents) {
-        if (item.type === "dir") {
-          const children = await buildFileTree(
-            item.path,
-            maxDepth,
-            currentDepth + 1
-          );
-          tree.push({
-            ...item,
-            children: children,
-            isExpanded: true,
-          });
-        } else {
-          tree.push(item);
-        }
-      }
-
-      return tree;
-    } catch (error) {
-      console.error(`Error fetching contents for ${path}:`, error);
-      return [];
-    }
-  };
+  const headers = createGitHubAuthHeaders(import.meta.env.PRIVATE_GITHUB_TOKEN);
 
   try {
-    // Use GitHub Tree API for more efficient data fetching
-    const treeResponse = await fetch(
-      "https://api.github.com/repos/jakubsob/r-tests-gallery/git/trees/main?recursive=1",
-      { headers }
-    );
-
-    let relevantDirs: any[] = [];
-
-    if (treeResponse.ok) {
-      const treeData = await treeResponse.json();
-
-      // Extract top-level directories from the tree
-      const directories = new Set<string>();
-
-      treeData.tree.forEach((item: any) => {
-        if (item.type === "tree" && item.path) {
-          // Only get top-level directories (no nested paths)
-          const topLevelDir = item.path.split("/")[0];
-          if (!topLevelDir.startsWith(".") && topLevelDir !== "renv") {
-            directories.add(topLevelDir);
-          }
-        }
-      });
-
-      // Convert to array with structure similar to contents API
-      relevantDirs = Array.from(directories).map((dirName) => ({
-        name: dirName,
-        type: "dir",
-        path: dirName,
-      }));
-    } else {
-      console.error(
-        "GitHub Tree API request failed:",
-        treeResponse.status,
-        treeResponse.statusText
-      );
-    }
+    const relevantDirs = await fetchTopLevelDirectories(headers);
 
     // If API failed or returned no dirs, return empty paths
     if (relevantDirs.length === 0) {
@@ -136,38 +46,23 @@ export async function getStaticPaths() {
 
     const paths: any[] = [];
 
-    for (const dir of relevantDirs) {
+    for (const dirName of relevantDirs) {
       let fileTree: any[] = [];
       let hasError = false;
 
-      // Try to build file tree from API
-      if (treeResponse.ok) {
-        fileTree = await buildFileTree(dir.name, 3);
-      }
+      fileTree = await buildRepositoryFileTree(dirName, headers, 3);
 
       // If API failed or returned empty tree, mark as error
       if (fileTree.length === 0) {
         hasError = true;
       }
 
-      // Try to get README content
-      let readmeContent = "";
-      try {
-        const readmeResponse = await fetch(
-          `https://raw.githubusercontent.com/jakubsob/r-tests-gallery/main/${dir.name}/README.md`,
-          { headers }
-        );
-        if (readmeResponse.ok) {
-          readmeContent = await readmeResponse.text();
-        }
-      } catch (error) {
-        console.log(`No README found for ${dir.name}`);
-      }
+      const readmeContent = await fetchDirectoryReadme(dirName, headers);
 
       paths.push({
-        params: { slug: dir.name },
+        params: { slug: dirName },
         props: {
-          dirName: dir.name,
+          dirName,
           fileTree: fileTree,
           readmeContent: readmeContent,
           hasError: hasError,

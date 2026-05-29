@@ -9,36 +9,110 @@ export interface RouteConfig {
   hidden?: boolean; // To hide from navigation
 }
 
+export interface HeaderMenuSubItem {
+  title: string;
+  href: string;
+  description: string;
+}
+
+export interface HeaderMenuItem {
+  title: string;
+  href?: string;
+  description?: string;
+  className?: string;
+  brand?: boolean;
+  items?: HeaderMenuSubItem[];
+}
+
+export const APP_PATHS = {
+  home: "/",
+  blog: "/blog",
+  resources: "/resources",
+  dashboardTemplates: "/dashboard-templates",
+  getRoadmap: "/get-roadmap",
+  rTestsGallery: "/r-tests-gallery",
+  course: "https://courses.jakubsobolewski.com",
+} as const;
+
 // Main application routes - these are manually curated for better control
 export const routes: RouteConfig[] = [
   // Main navigation routes
   {
-    path: "/",
+    path: APP_PATHS.home,
     label: "Home",
     description: "Homepage",
     category: "main",
     order: 1
   },
   {
-    path: "/blog",
+    path: APP_PATHS.blog,
     label: "Blog",
     description: "Blog posts about R development",
     category: "main",
     order: 2
   },
   {
-    path: "/resources",
+    path: APP_PATHS.resources,
     label: "Resources",
     description: "Helpful resources and tools",
     category: "main",
     order: 3
   },
   {
-    path: "/r-tests-gallery",
+    path: APP_PATHS.rTestsGallery,
     label: "R Tests Gallery",
     description: "Collection of R testing patterns",
     category: "tools",
     order: 4
+  },
+];
+
+export const headerMenuItems: HeaderMenuItem[] = [
+  {
+    title: "Jakub Sobolewski",
+    href: APP_PATHS.home,
+    description: "Go to homepage",
+    className: "uppercase",
+    brand: true,
+  },
+  {
+    title: "blog",
+    href: APP_PATHS.blog,
+    className: "uppercase",
+  },
+  {
+    title: "resources",
+    className: "uppercase",
+    items: [
+      {
+        title: "Learning resources",
+        href: APP_PATHS.resources,
+        description: "Browse what helped me become a better engineer.",
+      },
+      {
+        title: "Dashboard Templates",
+        href: APP_PATHS.dashboardTemplates,
+        description:
+          "Beautiful Shiny dashboard templates ready to use for your applications.",
+      },
+      {
+        title: "Advance Your R Testing Roadmap",
+        href: APP_PATHS.getRoadmap,
+        description:
+          "Step-by-step guide to building better tests for R developers.",
+      },
+    ],
+  },
+  {
+    title: "R Tests Gallery",
+    href: APP_PATHS.rTestsGallery,
+    description: "Explore a collection of R tests and examples.",
+    className: "uppercase",
+  },
+  {
+    title: "course",
+    href: APP_PATHS.course,
+    className: "uppercase",
   },
 ];
 

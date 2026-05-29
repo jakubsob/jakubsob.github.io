@@ -1,4 +1,9 @@
 import { type SearchItem } from '@/lib/smartSearch';
+import {
+  createGitHubAuthHeaders,
+  fetchDirectoryReadmeParsed,
+  fetchTopLevelDirectories,
+} from '@/lib/rTestsGallery';
 
 /**
  * Fetches R Tests Gallery directories and populates search index
@@ -7,89 +12,21 @@ export async function populateRTestsGallerySearch(): Promise<SearchItem[]> {
   const galleryItems: SearchItem[] = [];
 
   try {
-    // GitHub API authentication for higher rate limits (same as used in the gallery pages)
-    // Note: PRIVATE_GITHUB_TOKEN should only be used in server-side contexts
     const GITHUB_TOKEN = typeof import.meta !== 'undefined' && import.meta.env
       ? import.meta.env.PRIVATE_GITHUB_TOKEN
       : undefined;
 
-    const headers = GITHUB_TOKEN
-      ? { Authorization: `token ${GITHUB_TOKEN}` }
-      : {};
+    const headers = createGitHubAuthHeaders(GITHUB_TOKEN);
+    const directories = await fetchTopLevelDirectories(headers);
 
-    // Fetch repository tree to get directories
-    const treeResponse = await fetch(
-      "https://api.github.com/repos/jakubsob/r-tests-gallery/git/trees/main?recursive=1",
-      { headers }
-    );
-
-    const treeData = await treeResponse.json();
-
-    // Extract top-level directories
-    const directories = new Set<string>();
-    treeData.tree.forEach((item: any) => {
-      if (item.type === "tree" && item.path) {
-        const topLevelDir = item.path.split("/")[0];
-        if (!topLevelDir.startsWith(".") && topLevelDir !== "renv") {
-          directories.add(topLevelDir);
-        }
-      }
-    });
-
-    // Fetch README files for each directory to get titles and descriptions
-    for (const dirName of Array.from(directories)) {
+    for (const dirName of directories) {
       try {
-        const readmeResponse = await fetch(
-          `https://raw.githubusercontent.com/jakubsob/r-tests-gallery/main/${dirName}/README.md`,
-          { headers }
-        );
-
-        let title = dirName.replace(/-/g, " ");
-        let description = `Testing patterns and examples for ${title}`;
-        let content = title;
-
-        if (readmeResponse.ok) {
-          const readmeText = await readmeResponse.text();
-
-          // Parse README content
-          const lines = readmeText.split("\n");
-
-          // Find the first header (title)
-          const titleMatch = lines.find((line) => line.startsWith("#"));
-          if (titleMatch) {
-            title = titleMatch.replace(/^#+\s*/, "").trim();
-          }
-
-          // Find description after "## When to use this pattern?"
-          let foundWhenToUse = false;
-          let descriptionLines: string[] = [];
-
-          for (const line of lines) {
-            if (line.startsWith("## When to use this pattern?")) {
-              foundWhenToUse = true;
-              continue;
-            }
-
-            if (foundWhenToUse) {
-              if (line.startsWith("#")) {
-                break; // Stop at next header
-              }
-
-              if (line.trim()) {
-                descriptionLines.push(line.trim());
-              } else if (descriptionLines.length > 0) {
-                break; // Stop at first empty line after content
-              }
-            }
-          }
-
-          if (descriptionLines.length > 0) {
-            description = descriptionLines.join(" ").trim();
-          }
-
-          // Use full README as searchable content
-          content = readmeText;
-        }
+        const parsedReadme = await fetchDirectoryReadmeParsed(dirName, headers);
+        const fallbackTitle = dirName.replace(/-/g, ' ');
+        const title = parsedReadme.title;
+        const description = parsedReadme.description
+          || `Testing patterns and examples for ${fallbackTitle}`;
+        const content = parsedReadme.fullContent;
 
         galleryItems.push({
           id: `r-tests-gallery-${dirName}`,
@@ -105,13 +42,15 @@ export async function populateRTestsGallerySearch(): Promise<SearchItem[]> {
       } catch (error) {
         console.warn(`Failed to fetch README for ${dirName}:`, error);
 
+        const fallbackTitle = dirName.replace(/-/g, ' ');
+
         // Add basic entry even if README fetch fails
         galleryItems.push({
           id: `r-tests-gallery-${dirName}`,
           type: 'r-tests-gallery',
-          title: dirName.replace(/-/g, " "),
-          description: `Testing patterns and examples for ${dirName.replace(/-/g, " ")}`,
-          content: dirName.replace(/-/g, " "),
+          title: fallbackTitle,
+          description: `Testing patterns and examples for ${fallbackTitle}`,
+          content: fallbackTitle,
           url: `/r-tests-gallery/${dirName}/`,
           category: 'Testing Patterns'
         });

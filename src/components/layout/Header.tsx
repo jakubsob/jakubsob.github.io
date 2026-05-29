@@ -3,6 +3,7 @@
 import * as React from "react";
 import { cn } from "@/lib/utils";
 import { Menu, X, ChevronDown } from "lucide-react";
+import { headerMenuItems } from "@/lib/routes";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -35,70 +36,6 @@ const Logo = ({ className }: { className?: string }) => (
   </svg>
 );
 
-type MenuItemType = {
-  title: string;
-  href?: string;
-  description?: string;
-  className?: string;
-  icon?: React.ReactNode;
-  brand?: boolean;
-  items?: {
-    title: string;
-    href: string;
-    description: string;
-    icon?: React.ReactNode;
-  }[];
-};
-
-const menuItems: MenuItemType[] = [
-  {
-    title: "Jakub Sobolewski",
-    href: "/",
-    description: "Go to homepage",
-    className: "uppercase",
-    brand: true,
-  },
-  {
-    title: "blog",
-    href: "/blog/",
-    className: "uppercase",
-  },
-  {
-    title: "resources",
-    className: "uppercase",
-    items: [
-      {
-        title: "Learning resources",
-        href: "/resources/",
-        description: "Browse what helped me become a better engineer.",
-      },
-      {
-        title: "Dashboard Templates",
-        href: "/dashboard-templates/",
-        description:
-          "Beautiful Shiny dashboard templates ready to use for your applications.",
-      },
-      {
-        title: "Advance Your R Testing Roadmap",
-        href: "/get-roadmap/",
-        description:
-          "Step-by-step guide to building better tests for R developers.",
-      },
-    ],
-  },
-  {
-    title: "R Tests Gallery",
-    href: "/r-tests-gallery/",
-    description: "Explore a collection of R tests and examples.",
-    className: "uppercase",
-  },
-  {
-    title: "course",
-    href: "https://courses.jakubsobolewski.com",
-    className: "uppercase",
-  },
-];
-
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
   const [openDropdown, setOpenDropdown] = React.useState<string | null>(null);
@@ -118,7 +55,7 @@ export default function Header() {
       <div className="hidden md:block">
         <NavigationMenu>
           <NavigationMenuList>
-            {menuItems.map((item, index) => (
+            {headerMenuItems.map((item, index) => (
               <NavigationMenuItem key={index}>
                 {item.items ? (
                   // Dropdown menu
@@ -217,7 +154,7 @@ export default function Header() {
           <div className="absolute left-0 right-0 top-full bg-background/95 backdrop-blur-sm border-b shadow-lg">
             <nav className="container mx-auto px-4 py-4">
               <ul className="space-y-2">
-                {menuItems.map((item, index) => (
+                {headerMenuItems.map((item, index) => (
                   <li key={index}>
                     {item.items ? (
                       // Mobile dropdown

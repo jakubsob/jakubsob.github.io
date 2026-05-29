@@ -6,6 +6,11 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import { Button } from "@/components/ui/button";
 import { ExternalLink, Asterisk } from "lucide-react";
 import PageHeader from "@/components/features/PageHeader.astro";
+import {
+  createGitHubAuthHeaders,
+  fetchDirectoryReadmeParsed,
+  fetchTopLevelDirectories,
+} from "@/lib/rTestsGallery";
 
 // Create markdown processor with the same config as astro.config.mjs
 const markdownProcessor = await createMarkdownProcessor({
@@ -30,142 +35,44 @@ const renderInlineMarkdown = async (content: string) => {
   }
 };
 
-// GitHub API authentication for higher rate limits
-const GITHUB_TOKEN = import.meta.env.PRIVATE_GITHUB_TOKEN;
-const headers = GITHUB_TOKEN ? { Authorization: `token ${GITHUB_TOKEN}` } : {};
-console.log("GitHub token available:", !!GITHUB_TOKEN); // Log presence of token, not the actual value
-
-// Use GitHub Tree API - single API call for entire repo structure
+const headers = createGitHubAuthHeaders(import.meta.env.PRIVATE_GITHUB_TOKEN);
 let relevantDirs: any[] = [];
 try {
-  const treeResponse = await fetch(
-    "https://api.github.com/repos/jakubsob/r-tests-gallery/git/trees/main?recursive=1",
-    { headers }
-  );
+  const directories = await fetchTopLevelDirectories(headers);
 
-  if (treeResponse.ok) {
-    const treeData = await treeResponse.json();
+  relevantDirs = directories.map((dirName) => ({
+    name: dirName,
+    type: "dir",
+    path: dirName,
+  }));
 
-    // Extract top-level directories from the tree
-    const directories = new Set<string>();
+  for (const dir of relevantDirs) {
+    try {
+      const parsed = await fetchDirectoryReadmeParsed(dir.name, headers);
+      const titleHtml = await renderInlineMarkdown(parsed.title);
+      const descriptionHtml = await renderInlineMarkdown(parsed.description);
 
-    treeData.tree.forEach((item: any) => {
-      if (item.type === "tree" && item.path) {
-        // Only get top-level directories (no nested paths)
-        const topLevelDir = item.path.split("/")[0];
-        if (!topLevelDir.startsWith(".") && topLevelDir !== "renv") {
-          directories.add(topLevelDir);
-        }
-      }
-    });
+      dir.readme = {
+        ...parsed,
+        titleHtml,
+        descriptionHtml,
+      };
+    } catch (error) {
+      console.error(`Error fetching README for ${dir.name}:`, error);
+      const title = dir.name.replace(/-/g, " ");
+      const description = "";
 
-    // Convert to array with structure similar to contents API
-    relevantDirs = Array.from(directories).map((dirName) => ({
-      name: dirName,
-      type: "dir",
-      path: dirName,
-    }));
-
-    // Fetch README files for each directory
-    for (const dir of relevantDirs) {
-      try {
-        const readmeResponse = await fetch(
-          `https://raw.githubusercontent.com/jakubsob/r-tests-gallery/main/${dir.name}/README.md`,
-          { headers }
-        );
-        if (readmeResponse.ok) {
-          const readmeText = await readmeResponse.text();
-
-          // Parse the README content
-          const parseReadme = (content: string) => {
-            const lines = content.split("\n");
-            let title = dir.name.replace(/-/g, " "); // Default fallback
-            let description = ""; // Default fallback
-            let fullContent = content;
-
-            // Find the first header (title)
-            const titleMatch = lines.find((line) => line.startsWith("#"));
-            if (titleMatch) {
-              title = titleMatch.replace(/^#+\s*/, "").trim();
-            }
-
-            // Find the paragraph after "## When to use this pattern?"
-            let foundWhenToUse = false;
-            let descriptionLines: string[] = [];
-
-            for (const line of lines) {
-              if (line.startsWith("## When to use this pattern?")) {
-                foundWhenToUse = true;
-                continue;
-              }
-
-              if (foundWhenToUse) {
-                if (line.startsWith("#")) {
-                  break; // Stop at next header
-                }
-
-                if (line.trim()) {
-                  descriptionLines.push(line.trim());
-                } else if (descriptionLines.length > 0) {
-                  break; // Stop at first empty line after content
-                }
-              }
-            }
-
-            if (descriptionLines.length > 0) {
-              description = descriptionLines.join(" ").trim();
-            }
-
-            return { title, description, fullContent };
-          };
-
-          const parsed = parseReadme(readmeText);
-          // Render title and description as HTML
-          const titleHtml = await renderInlineMarkdown(parsed.title);
-          const descriptionHtml = await renderInlineMarkdown(
-            parsed.description
-          );
-
-          dir.readme = {
-            ...parsed,
-            titleHtml,
-            descriptionHtml,
-          };
-        } else {
-          // Fallback if no README found
-          const title = dir.name.replace(/-/g, " ");
-          const description = "";
-          dir.readme = {
-            title,
-            description,
-            fullContent: "No README available.",
-            titleHtml: await renderInlineMarkdown(title),
-            descriptionHtml: await renderInlineMarkdown(description),
-          };
-        }
-      } catch (error) {
-        console.error(`Error fetching README for ${dir.name}:`, error);
-        // Fallback if fetch fails
-        const title = dir.name.replace(/-/g, " ");
-        const description = "";
-        dir.readme = {
-          title,
-          description,
-          fullContent: "No README available.",
-          titleHtml: await renderInlineMarkdown(title),
-          descriptionHtml: await renderInlineMarkdown(description),
-        };
-      }
+      dir.readme = {
+        title,
+        description,
+        fullContent: "No README available.",
+        titleHtml: await renderInlineMarkdown(title),
+        descriptionHtml: await renderInlineMarkdown(description),
+      };
     }
-  } else {
-    console.error(
-      "GitHub Tree API request failed:",
-      treeResponse.status,
-      treeResponse.statusText
-    );
   }
 } catch (error) {
-  console.error("Error fetching repository tree:", error);
+  console.error("Error fetching R Tests Gallery directories:", error);
 }
 ---
 
