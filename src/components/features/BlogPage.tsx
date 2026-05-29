@@ -7,16 +7,15 @@ import { cn } from "@/lib/utils";
 import { proseClasses } from "@/lib/prose";
 import { SearchX } from "lucide-react";
 import ReactMarkdown from "react-markdown";
+import { Notebook } from "@/components/ui/notebook/Notebook";
 
 interface BlogPageProps {
   posts: CollectionEntry<"blog">[];
   featuredSlugs: string[];
 }
 
-const ROW_H = 200;
+const ROW_H = "240px";
 const BLOG_LETTERS = ["B", "L", "O", "G"];
-const FIRST_POST_ROW = 4;
-const SEP_ROW = 3;
 
 function PostMeta({
   post,
@@ -67,70 +66,36 @@ export function BlogPage({ posts, featuredSlugs }: BlogPageProps) {
       noneSelected
         ? posts
         : posts.filter((p) => p.data.tags.some((t) => selectedTags.has(t))),
-    [posts, selectedTags, noneSelected]
+    [posts, selectedTags, noneSelected],
   );
 
   const numPostRows = Math.ceil(Math.max(filteredRegular.length, 1) / 2);
-  const cell = "bg-background";
-
-  // Gap cell helper: renders an invisible but outline-bearing cell in col 1 or 12
-  // Gap cells are only visible at lg (12-col grid). They're hidden via CSS below lg,
-  // but we still need safe column values to avoid creating implicit columns on the 10-col md grid.
-  const gap = (col: 1 | 12, row: number, rowSpan = 1) => (
-    <div
-      key={`gap-${col}-${row}`}
-      aria-hidden="true"
-      className={cn(cell, "blog-gap", col === 1 ? "blog-gap-left" : "blog-gap-right")}
-      style={{
-        gridRowStart: row,
-        gridRowEnd: row + rowSpan,
-      }}
-    />
-  );
 
   return (
     <div className="pt-14">
-      {/*
-       * One unified 12-column grid. Every row has explicit gap cells in col 1
-       * and col 12, so their outlines always render and stay in sync with the grid.
-       *
-       * col 1        — left gap
-       * cols 2-3     — BLOG letters (rows 1-2) / Topics sidebar (rows 3+)
-       * cols 4-7     — Post A (rows 1-2) / odd regular posts
-       * cols 8-11    — Post B (row 1), Post C (row 2) / even regular posts
-       * col 12       — right gap
-       */}
-      <div
-        className="blog-grid grid grid-cols-1 md:grid-cols-10 lg:grid-cols-12 *:outline *:outline-1 *:outline-border"
-        style={{
-          gridTemplateRows: `${ROW_H}px ${ROW_H}px var(--sep-row-h, 3rem)`,
-          gridAutoRows: `minmax(var(--blog-row-min, ${ROW_H}px), auto)`,
-        }}
+      {/* ═══════════════════════════════════════════════════════════════
+          FEATURED AREA — lines='both' with uniform 240px rows
+          ═══════════════════════════════════════════════════════════════ */}
+      <Notebook
+        lines="both"
+        rowH={ROW_H}
+        cellGap="2px"
+        className="notebook--cell-separators"
       >
-        {/* ── GAP CELLS: featured rows 1-2 ── */}
-        {gap(1, 1, 2)}
-        {gap(12, 1, 2)}
-
-        {/* ── SEPARATOR ROW: col 1-12, row 3 (desktop only) ── */}
+        {/* BLOG letters — cols 1-2, rows 1-2 (md+) */}
         <div
           aria-hidden="true"
-          className="hidden md:block md:col-start-1 md:col-span-10 lg:col-span-12"
-          style={{ gridRowStart: SEP_ROW } as React.CSSProperties}
-        />
-
-        {/* ── BLOG LETTERS: cols 2-3, rows 1-2 ── */}
-        <div
-          aria-hidden="true"
-          className="hidden md:grid grid-cols-2 md:col-start-1 md:col-span-2 lg:col-start-2 lg:col-span-2 md:row-start-1 md:row-span-2 overflow-hidden"
+          className={cn(
+            "hidden md:grid grid-cols-2",
+            "md:col-[1/3] md:row-[1/3]",
+            "overflow-hidden",
+          )}
         >
           {BLOG_LETTERS.map((letter) => (
-            <div
-              key={letter}
-              className={cn(cell, "flex items-end overflow-hidden px-3 pb-2 outline outline-1 outline-border")}
-            >
+            <div key={letter} className="flex items-end overflow-hidden">
               <span
                 className="font-bold uppercase leading-[0.88] tracking-[-0.04em] text-foreground select-none"
-                style={{ fontSize: "clamp(3.5rem,16vw,14rem)" }}
+                style={{ fontSize: "clamp(3.5rem,16vw,12rem)" }}
               >
                 {letter}
               </span>
@@ -138,15 +103,15 @@ export function BlogPage({ posts, featuredSlugs }: BlogPageProps) {
           ))}
         </div>
 
-        {/* ── POST A: cols 4-7, rows 1-2 ── */}
+        {/* Post A — wide featured slot, rows 1-2 */}
         {postA && (
           <a
             href={`/blog/${postA.slug}/`}
             className={cn(
-              cell,
-              "md:col-start-3 md:col-span-4 lg:col-start-4 lg:col-span-4 md:row-start-1 md:row-span-2",
+              "col-[1/-1] md:col-[3/6] lg:col-[3/8]",
+              "md:row-[1/3]",
               "group/post flex flex-col p-7 md:p-8 min-w-0",
-              "bg-secondary",
+              "bg-secondary overflow-hidden",
             )}
           >
             <h2 className="text-2xl md:text-3xl font-medium leading-tight mb-4 transition-colors group-hover/post:text-primary line-clamp-2">
@@ -156,22 +121,21 @@ export function BlogPage({ posts, featuredSlugs }: BlogPageProps) {
               <div className={`${proseClasses} prose-sm`}>
                 <ReactMarkdown>{postA.body ?? ""}</ReactMarkdown>
               </div>
-              {/* Fade-out mask — works regardless of block children */}
               <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-secondary to-transparent" />
             </div>
             <PostMeta post={postA} selectedTags={selectedTags} />
           </a>
         )}
 
-        {/* ── POST B: cols 8-11, row 1 ── */}
+        {/* Post B — row 1 */}
         {postB && (
           <a
             href={`/blog/${postB.slug}/`}
             className={cn(
-              cell,
-              "md:col-start-7 md:col-span-4 lg:col-start-8 lg:col-span-4 md:row-start-1",
+              "col-[1/-1] md:col-[6/9] lg:col-[8/-1]",
+              "md:row-[1/2]",
               "group/post flex flex-col p-6 min-w-0",
-              "bg-secondary",
+              "bg-secondary overflow-hidden",
             )}
           >
             <h2 className="text-xl font-medium leading-tight mb-3 transition-colors group-hover/post:text-primary line-clamp-2">
@@ -187,15 +151,15 @@ export function BlogPage({ posts, featuredSlugs }: BlogPageProps) {
           </a>
         )}
 
-        {/* ── POST C: cols 8-11, row 2 ── */}
+        {/* Post C — row 2 */}
         {postC && (
           <a
             href={`/blog/${postC.slug}/`}
             className={cn(
-              cell,
-              "md:col-start-7 md:col-span-4 lg:col-start-8 lg:col-span-4 md:row-start-2",
+              "col-[1/-1] md:col-[6/9] lg:col-[8/-1]",
+              "md:row-[2/3]",
               "group/post flex flex-col p-6 min-w-0",
-              "bg-secondary",
+              "bg-secondary overflow-hidden",
             )}
           >
             <h2 className="text-xl font-medium leading-tight mb-3 transition-colors group-hover/post:text-primary line-clamp-2">
@@ -210,23 +174,31 @@ export function BlogPage({ posts, featuredSlugs }: BlogPageProps) {
             <PostMeta post={postC} selectedTags={selectedTags} />
           </a>
         )}
+      </Notebook>
 
-        {/* ── GAP CELLS: one per post row ── */}
-        {Array.from({ length: numPostRows }, (_, i) => [
-          gap(1, FIRST_POST_ROW + i),
-          gap(12, FIRST_POST_ROW + i),
-        ])}
-
-        {/* ── TOPICS SIDEBAR: cols 2-3, rows 3+ (sticky) ── */}
+      {/* ═══════════════════════════════════════════════════════════════
+          POSTS AREA — lines='both' with the SAME row height as featured,
+          so horizontal lines continue uninterrupted down the page.
+          Regular posts are transparent so the lines pass through them.
+          ═══════════════════════════════════════════════════════════════ */}
+      <Notebook
+        lines="both"
+        rowH={ROW_H}
+        cellGap="2px"
+        className="notebook--cell-separators"
+      >
+        {/* Topics sidebar — cols 1-2, spans all post rows; sticky on desktop */}
         <div
           className={cn(
-            "bg-background blog-sidebar",
-            "md:sticky md:top-14 md:self-start"
+            "col-[1/-1] md:col-[1/3]",
+            "md:sticky md:top-14 md:self-start",
           )}
-          style={{
-            gridRowStart: FIRST_POST_ROW,
-            gridRowEnd: FIRST_POST_ROW + numPostRows,
-          } as React.CSSProperties}
+          style={
+            {
+              gridRowStart: 1,
+              gridRowEnd: 1 + numPostRows,
+            } as React.CSSProperties
+          }
         >
           {/* Mobile: horizontal scrolling filter strip */}
           <div className="md:hidden flex flex-wrap items-stretch">
@@ -244,7 +216,9 @@ export function BlogPage({ posts, featuredSlugs }: BlogPageProps) {
                     "px-4 py-3 text-xs uppercase tracking-wide shrink-0 transition-colors",
                     active && "text-foreground",
                     dimmed && "text-muted-foreground/25",
-                    !active && !dimmed && "text-muted-foreground/60 hover:text-foreground"
+                    !active &&
+                      !dimmed &&
+                      "text-muted-foreground/60 hover:text-foreground",
                   )}
                 >
                   {value}
@@ -262,8 +236,8 @@ export function BlogPage({ posts, featuredSlugs }: BlogPageProps) {
             )}
           </div>
 
-          {/* Desktop: vertical sidebar */}
-          <div className="hidden md:block p-6">
+          {/* Desktop: vertical sidebar (transparent — lines show through) */}
+          <div className="hidden md:block p-6 bg-background border-b">
             <p className="text-xs uppercase tracking-widest text-muted-foreground mb-5">
               Topics
             </p>
@@ -279,7 +253,9 @@ export function BlogPage({ posts, featuredSlugs }: BlogPageProps) {
                       "flex items-center justify-between py-2 text-xs uppercase tracking-wide transition-colors text-left",
                       active && "text-foreground",
                       dimmed && "text-muted-foreground/25",
-                      !active && !dimmed && "text-muted-foreground hover:text-foreground"
+                      !active &&
+                        !dimmed &&
+                        "text-muted-foreground hover:text-foreground",
                     )}
                   >
                     <span>{value}</span>
@@ -299,21 +275,26 @@ export function BlogPage({ posts, featuredSlugs }: BlogPageProps) {
           </div>
         </div>
 
-        {/* ── REGULAR POSTS: each a direct grid child ── */}
+        {/* Regular posts — each takes exactly one row. Transparent so
+            lines pass through. Long descriptions get clamped/faded. */}
         {filteredRegular.length > 0 ? (
           filteredRegular.map((post, i) => {
-            const row = FIRST_POST_ROW + Math.floor(i / 2);
+            const row = Math.floor(i / 2) + 1;
             const isLeft = i % 2 === 0;
             return (
               <a
                 key={post.slug}
                 href={`/blog/${post.slug}/`}
-                className={cn("group/post flex flex-col p-6 min-w-0", cell, isLeft ? "blog-post-left" : "blog-post-right")}
-                style={{
-                  gridRowStart: row,
-                }}
+                className={cn(
+                  "group/post flex flex-col p-6 min-w-0 overflow-hidden bg-background",
+                  "col-[1/-1]",
+                  isLeft
+                    ? "md:col-[3/6] lg:col-[3/8]"
+                    : "md:col-[6/9] lg:col-[8/-1]",
+                )}
+                style={{ gridRowStart: row }}
               >
-                <h2 className="text-lg font-medium leading-snug mb-2 transition-colors group-hover/post:text-primary">
+                <h2 className="text-lg font-medium leading-snug mb-2 transition-colors group-hover/post:text-primary line-clamp-2">
                   {post.data.title}
                 </h2>
                 <p className="text-muted-foreground text-sm leading-relaxed line-clamp-3 flex-1">
@@ -326,13 +307,10 @@ export function BlogPage({ posts, featuredSlugs }: BlogPageProps) {
         ) : (
           <div
             className={cn(
-              "flex flex-col items-center justify-center gap-3 text-muted-foreground/30 blog-empty-state",
-              cell
+              "flex flex-col items-center justify-center gap-3 text-muted-foreground/30",
+              "col-[1/-1] md:col-[3/9] lg:col-[3/-1]",
             )}
-            style={{
-              gridRowStart: FIRST_POST_ROW,
-              minHeight: ROW_H * 2,
-            }}
+            style={{ gridRowStart: 1, gridRowEnd: 3 }}
           >
             <SearchX className="h-6 w-6" />
             <p className="text-xs uppercase tracking-widest">
@@ -340,7 +318,7 @@ export function BlogPage({ posts, featuredSlugs }: BlogPageProps) {
             </p>
           </div>
         )}
-      </div>
+      </Notebook>
     </div>
   );
 }

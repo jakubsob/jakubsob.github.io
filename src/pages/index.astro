@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import NotebookPage from "@/components/ui/notebook/NotebookPage.astro";
 import HeroSection from "@/components/sections/HeroSection.astro";
 import BlogSection from "@/components/sections/BlogSection.astro";
 import OpenSourceSection from "@/components/sections/OpenSourceSection.astro";
@@ -8,9 +9,11 @@ import AboutSection from "@/components/sections/AboutSection.astro";
 ---
 
 <BaseLayout>
-  <HeroSection />
-  <BlogSection />
-  <AboutSection />
-  <OpenSourceSection />
-  <TutorialsSection />
+  <NotebookPage>
+    <HeroSection />
+    <BlogSection />
+    <AboutSection />
+    <OpenSourceSection />
+    <TutorialsSection />
+  </NotebookPage>
 </BaseLayout>

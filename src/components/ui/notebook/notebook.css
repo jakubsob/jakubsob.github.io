@@ -1,0 +1,182 @@
+/*
+ * Notebook system — shared CSS for Notebook.astro and Notebook.tsx.
+ *
+ * Imported once at the layout level so the rules are available on every
+ * page, regardless of whether the consumer is an Astro or React file.
+ */
+
+/* ─── NotebookPage: page-level defaults ───
+   Sets the inheritable defaults. Any descendant .notebook reads these via
+   plain inheritance. Override at any level by setting the variables on a
+   more-specific element (e.g. an inline style on a particular Notebook). */
+.notebook-page {
+  --nb-cols-base: 4;
+  --nb-cols-md: 8;
+  --nb-cols-lg: 12;
+  /* Match Tailwind container max-width progression. */
+  --nb-container-max: 100%;
+  --nb-col-w-max: 9999px;
+  --nb-row-h: 6rem;
+  /* Use the foreground color at low alpha so the line has decent contrast
+     against both light and dark backgrounds without going full --border
+     (which is nearly the same lightness as --background in light mode). */
+  --nb-line: oklch(var(--border));
+  /* Total separator width between neighboring cells.
+      Each cell gets half of this as transparent border so neighboring cards
+      reveal exactly one separator width from the underlying grid. */
+  --nb-cell-gap: 1px;
+}
+
+@media (min-width: 1280px) {
+  .notebook-page {
+    --nb-container-max: 1280px;
+    --nb-col-w-max: 120px;
+  }
+}
+
+@media (min-width: 1536px) {
+  .notebook-page {
+    --nb-container-max: 1400px;
+  }
+}
+
+/* ─── Notebook: per-section grid + lines ───
+   No self-referencing declarations here. The variables flow in from
+   NotebookPage by inheritance; var() fallbacks supply sane defaults if
+   a Notebook is used outside a NotebookPage. */
+.notebook {
+  /* Active column count for the current breakpoint. */
+  --nb-cols: var(--nb-cols-base, 4);
+
+  /* Below the cap, columns scale with the container so the inner grid fills
+     it. At/above the cap, columns are fixed and the inner grid is centered
+     with full-bleed lines extending past it.
+     `100%` (not `100vw`) so the value tracks the .notebook element's own
+     width — avoids the scrollbar offset that 100vw introduces. */
+  --nb-grid-frame-w: min(100%, var(--nb-container-max, 100%));
+
+  --nb-col-w: min(calc(var(--nb-grid-frame-w) / var(--nb-cols)), var(--nb-col-w-max, 100px));
+
+  /* y-anchor for horizontal lines: 'top' (default) or 'bottom'. */
+  --nb-y-anchor: top;
+
+  position: relative;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .notebook {
+    --nb-cols: var(--nb-cols-md, 8);
+  }
+}
+
+@media (min-width: 1280px) {
+  .notebook {
+    --nb-cols: var(--nb-cols-lg, 12);
+  }
+}
+
+.notebook--anchor-bottom {
+  --nb-y-anchor: bottom;
+}
+
+/* ─── Line painting ───
+   Grid lines are painted only on .notebook-inner so line positions and
+   cell geometry share one coordinate space. This removes outer/inner drift
+   artifacts on responsive resize. */
+.notebook--lines-vertical > .notebook-inner {
+  background-image: linear-gradient(
+    to right,
+    var(--nb-line, oklch(var(--border))) 1px,
+    transparent 1px
+  );
+  background-size: var(--nb-col-w) 100%;
+  background-position: 0 top;
+  background-repeat: repeat;
+  box-shadow: inset -1px 0 0 var(--nb-line, oklch(var(--border)));
+}
+
+.notebook--lines-horizontal > .notebook-inner {
+  background-image: linear-gradient(
+    to bottom,
+    var(--nb-line, oklch(var(--border))) 1px,
+    transparent 1px
+  );
+  background-size: 100% var(--nb-row-h, 6rem);
+  background-position: 0 var(--nb-y-anchor);
+  background-repeat: repeat;
+}
+
+.notebook--lines-both > .notebook-inner {
+  background-image:
+    linear-gradient(
+      to right,
+      var(--nb-line, oklch(var(--border))) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      to bottom,
+      var(--nb-line, oklch(var(--border))) 1px,
+      transparent 1px
+    );
+  background-size:
+    var(--nb-col-w) 100%,
+    100% var(--nb-row-h, 6rem);
+  background-position:
+    0 top,
+    0 var(--nb-y-anchor);
+  background-repeat: repeat, repeat;
+  box-shadow: inset -1px 0 0 var(--nb-line, oklch(var(--border)));
+}
+
+/* ─── Inner grid ─── */
+.notebook-inner {
+  width: min(calc(var(--nb-cols) * var(--nb-col-w)), var(--nb-grid-frame-w));
+  max-width: 100%;
+  margin-inline: auto;
+  display: grid;
+  /* Use the same unit as line tiling so tracks and painted lines stay
+     mathematically identical even after fractional resize rounding. */
+  grid-template-columns: repeat(var(--nb-cols), var(--nb-col-w));
+  grid-auto-rows: var(--nb-row-h, 6rem);
+  position: relative;
+  min-height: 100%;
+}
+
+.notebook--anchor-bottom > .notebook-inner {
+  align-content: end;
+}
+
+/* ─── Cell separators ───
+  Every direct child of .notebook-inner is treated as a "cell".
+  Instead of using margins (which reveal the notebook background as a halo),
+  cells use transparent half-borders so the inner grid lines stay visible
+  underneath card edges.
+
+  --nb-cell-gap is the total separator width between neighboring cells;
+  each cell reserves half on each side so shared edges remain single-width.
+
+  Opt out per-cell with the .notebook-flush class. */
+.notebook--cell-separators .notebook-inner > *:not(.notebook-flush) {
+  --nb-cell-half: calc(var(--nb-cell-gap, 0px) / 2);
+  border-style: solid;
+  border-color: transparent;
+  box-sizing: border-box;
+  background-clip: padding-box;
+}
+
+.notebook--cell-separators.notebook--lines-both .notebook-inner > *:not(.notebook-flush) {
+  border-width: var(--nb-cell-half);
+}
+
+.notebook--cell-separators.notebook--lines-vertical .notebook-inner > *:not(.notebook-flush) {
+  border-width: 0 var(--nb-cell-half);
+}
+
+.notebook--cell-separators.notebook--lines-horizontal .notebook-inner > *:not(.notebook-flush) {
+  border-width: var(--nb-cell-half) 0;
+}
+
+.notebook--cell-separators.notebook--lines-none .notebook-inner > *:not(.notebook-flush) {
+  border-width: 0;
+}

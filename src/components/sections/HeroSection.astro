@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Section } from "@/components/ui/section";
 import { Animate } from "@/components/ui/animate";
+import Notebook from "@/components/ui/notebook/Notebook.astro";
 
 const splitLetters = (text: string) =>
   text
@@ -12,63 +13,52 @@ const splitLetters = (text: string) =>
         : `<span class="hero-letter" aria-hidden="true">${char}</span>`,
     )
     .join("");
-
-const cols = Array.from({ length: 8 });
 ---
 
 <Section variant="dark" size="full" id="hero">
-  <div class="hero-grid min-h-[100dvh] w-full relative overflow-hidden">
-    <!-- Vertical column lines -->
-    <div class="absolute inset-0 z-[1] pointer-events-none flex hero-cols">
-      {cols.map(() => <div class="flex-1 border-r" />)}
-    </div>
-
-    <!-- Spacer: absorbs height above text rows -->
-    <div aria-hidden="true" class="col-span-8"></div>
-
+  <Notebook
+    lines="both"
+    rowAnchor="bottom"
+    rowH="calc(0.88 * clamp(3.5rem, 16vw, 14rem))"
+    cellGap="0"
+    class="hero-notebook h-full overflow-hidden"
+  >
     <!--
-      h1 with display:contents — children become direct grid items.
-      aria-label preserves semantics for screen readers.
+      h1 with display:contents — children become direct grid items so each
+      text line lands in its own row, while the h1 keeps its semantics for
+      assistive tech.
     -->
     <h1
       aria-label="Building Quality By Testing"
       class="[display:contents] select-none"
     >
-      <div
-        class="col-span-8 flex items-end relative z-10 px-6 md:px-12 lg:px-16"
-      >
+      <div class="hero-line-cell col-[1/-1] row-start-[var(--hero-row-build)]">
         <Animate variant="header" className="motion-delay-[200ms]">
-          <span
-            class="hero-line block text-[clamp(3.5rem,16vw,14rem)] font-bold uppercase leading-[0.88] tracking-[-0.04em] whitespace-nowrap"
-            set:html={splitLetters("Building")}
-          />
+          <span class="hero-line" set:html={splitLetters("Building")} />
         </Animate>
       </div>
       <div
-        class="col-span-8 flex items-end relative z-10 px-6 md:px-12 lg:px-16"
+        class="hero-line-cell col-[1/-1] row-start-[var(--hero-row-quality)]"
       >
         <Animate variant="header" className="motion-delay-[300ms]">
-          <span
-            class="hero-line block text-[clamp(3.5rem,16vw,14rem)] font-bold uppercase leading-[0.88] tracking-[-0.04em] whitespace-nowrap"
-            set:html={splitLetters("Quality")}
-          />
+          <span class="hero-line" set:html={splitLetters("Quality")} />
         </Animate>
       </div>
       <div
-        class="col-span-8 flex items-end relative z-10 px-6 md:px-12 lg:px-16"
+        class="hero-line-cell col-[1/-1] row-start-[var(--hero-row-by-testing)]"
       >
         <Animate variant="header" className="motion-delay-[400ms]">
           <span
-            class="hero-line block text-[clamp(3.5rem,16vw,14rem)] font-bold uppercase leading-[0.88] tracking-[-0.04em] whitespace-nowrap text-primary"
+            class="hero-line text-primary"
             set:html={splitLetters("By Testing")}
           />
         </Animate>
       </div>
     </h1>
 
-    <!-- Description: full-width on mobile, cols 1-5 on lg -->
+    <!-- Description: full-width on small, cols 1-7 at lg (same row as buttons) -->
     <div
-      class="col-span-8 lg:col-span-5 flex items-start relative z-10 pl-6 md:pl-12 lg:pl-16"
+      class="col-[1/-1] lg:col-[1/8] row-start-[var(--hero-row-desc)] flex items-start relative z-10 pl-4"
     >
       <Animate variant="header" className="motion-delay-[550ms]">
         <p
@@ -80,9 +70,9 @@ const cols = Array.from({ length: 8 });
       </Animate>
     </div>
 
-    <!-- Buttons: full-width on mobile, cols 6-8 on lg (same row as description) -->
+    <!-- Buttons: full-width on small (own row), cols 8-12 at lg (same row as desc) -->
     <div
-      class="col-span-8 lg:col-span-3 flex items-start relative z-10 pr-6 pl-6 lg:pl-0 lg:justify-end"
+      class="col-[1/-1] lg:col-[8/-1] row-start-[var(--hero-row-buttons)] lg:row-start-[var(--hero-row-desc)] flex items-start relative z-10 px-4 md:px-6 lg:px-8 lg:justify-end"
     >
       <div class="flex flex-row gap-3 shrink-0">
         <Animate variant="expand" className="motion-delay-[650ms]">
@@ -108,58 +98,57 @@ const cols = Array.from({ length: 8 });
         </Animate>
       </div>
     </div>
-  </div>
+  </Notebook>
 </Section>
 
 <style>
-  .hero-grid {
-    --row-h: calc(0.88 * clamp(3.5rem, 16vw, 14rem));
-    display: grid;
-    grid-template-columns: repeat(8, 1fr);
-    grid-template-rows: 1fr repeat(5, var(--row-h));
-    background-image: linear-gradient(
-      to bottom,
-      oklch(var(--border)) 1px,
-      transparent 1px
-    );
-    background-size: 100% var(--row-h);
-    background-position: 0 bottom;
-    animation: grid-fade-in 1.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
-  }
-
-  @media (max-width: 639px) {
-    .hero-grid {
-      grid-template-rows: 1fr repeat(3, var(--row-h)) auto auto;
-      padding-bottom: 1.5rem;
-    }
-  }
-
-  @media (min-width: 640px) and (max-width: 1023px) {
-    .hero-grid {
-      padding-bottom: var(--row-h);
-    }
+  /*
+   * Row assignments per breakpoint. Rows are counted from the TOP of the
+   * inner grid, but content is anchored to the bottom via Notebook's
+   * `rowAnchor="bottom"` (which sets align-content: end). What actually
+   * controls visual placement is the order of the three text lines + the
+   * desc/buttons row stacked together at the bottom of the section.
+   *
+   * Mobile/tablet: 5 rows (3 text + desc + buttons stacked).
+   * Desktop (lg+):  4 rows (3 text + desc/buttons sharing one row).
+   */
+  .hero-notebook {
+    --hero-row-build: 1;
+    --hero-row-quality: 2;
+    --hero-row-by-testing: 3;
+    --hero-row-desc: 4;
+    --hero-row-buttons: 5;
   }
 
   @media (min-width: 1024px) {
-    .hero-grid {
-      grid-template-rows: 1fr repeat(4, var(--row-h));
+    .hero-notebook {
+      --hero-row-buttons: 4; /* same row as desc */
     }
   }
 
-  .hero-cols {
-    animation: grid-fade-in 1.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+  /* Each hero text line is a grid cell exactly --nb-row-h tall. The text
+     itself uses `align-items: end` so the glyph baseline sits on the bottom
+     edge of the cell — which is also where the horizontal line is painted. */
+  .hero-line-cell {
+    display: flex;
+    align-items: end;
+    justify-content: flex-start;
+    position: relative;
+    z-index: 10;
+    overflow: visible;
   }
 
-  @keyframes grid-fade-in {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
+  .hero-line {
+    display: block;
+    font-size: clamp(3.5rem, 16vw, 14rem);
+    font-weight: 700;
+    text-transform: uppercase;
+    line-height: 0.88;
+    letter-spacing: -0.04em;
+    white-space: nowrap;
   }
 
-  /* Progressive enhancement: precise cap-height trim where supported (Chrome) */
+  /* Progressive enhancement: precise cap-height trim where supported. */
   @supports (text-box-trim: trim-end) {
     .hero-line {
       text-box-trim: trim-end;
@@ -175,17 +164,20 @@ const cols = Array.from({ length: 8 });
     transform: translateY(-10px);
   }
 
-  :global(.dark) .hero-grid {
-    background-image: linear-gradient(
-      to bottom,
-      rgba(255, 255, 255, 0.08) 1px,
-      transparent 1px
-    );
+  /* Fade-in animation on the notebook itself (lines + content). */
+  .hero-notebook {
+    animation: hero-fade-in 1.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
   }
-
+  @keyframes hero-fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
   @media (prefers-reduced-motion: reduce) {
-    .hero-grid,
-    .hero-cols {
+    .hero-notebook {
       animation: none;
     }
     :global(.hero-letter) {

@@ -8,7 +8,7 @@ const sectionVariants = cva("w-full", {
     variant: {
       light: "bg-light text-foreground text-sm lg:text-base",
       dark: "bg-background text-foreground text-sm lg:text-base",
-      darker: "bg-secondary text-foreground text-sm lg:text-base",
+      secondary: "bg-secondary text-foreground text-sm lg:text-base",
     },
     size: {
       fit: "h-fit",

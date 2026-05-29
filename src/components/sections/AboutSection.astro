@@ -3,59 +3,59 @@ import { Picture } from "astro:assets";
 import { Section } from "@/components/ui/section";
 import { Animate } from "@/components/ui/animate";
 import authorImage from "/public/author.png";
-import Grid from "../../pages/grid.png";
 ---
 
-<Section id="about" variant="dark">
-  <div class="pt-16 pb-24 md:pt-20 md:pb-32 relative">
-    <div class="absolute z-0 bottom-0 left-0 size-full">
-      <Picture
-        src={Grid}
-        class="size-full object-cover object-[center_top] invert opacity-10"
-        alt="Hero background"
-      />
-    </div>
-    <div class="container">
+<Section id="about" variant="secondary">
+  <div
+    class="w-full xl:max-w-screen-xl 2xl:max-w-[1400px] xl:mx-auto px-4 pt-16 pb-24 md:pt-20 md:pb-32"
+  >
+    <div
+      class="grid grid-cols-1 lg:grid-cols-12 place-items-center lg:place-items-start"
+    >
+      <div class="lg:col-[2/6] lg:row-[1/2]">
+        <Animate>
+          <h2
+            class="w-full text-[clamp(2.8rem,5.6vw,6rem)] font-bold uppercase leading-[0.86] tracking-[-0.04em]"
+          >
+            I'm Jakub Sobolewski
+          </h2>
+        </Animate>
+      </div>
+      <div class="lg:col-[2/6] lg:row-[2/3] max-w-[62ch]">
+        <Animate>
+          <div
+            class="space-y-6 font-light font-serif text-base md:text-lg leading-relaxed"
+          >
+            <p>
+              Software engineer specializing in R, with 5+ years writing and
+              testing production code in the R and Shiny ecosystem.
+            </p>
+            <p>
+              My conviction: automated testing is how teams build software they
+              can trust. I started caring about this after working on a project
+              where every code change required a live connection to production.
+              Terrible experience, fixable problem.
+            </p>
+            <p>
+              Tests should make development faster and more confident, not
+              slower and more ceremonial. I write about finding strategies that
+              actually fit the way real teams work.
+            </p>
+          </div>
+        </Animate>
+      </div>
       <div
-        class="grid grid-cols-1 lg:grid-cols-[2fr_7fr] gap-12 lg:gap-16 items-start"
+        class="lg:col-[6/11] lg:row-[1/3] lg:w-full lg:place-self-end lg:flex lg:flex-row lg:justify-end lg:border-r lg:border-b"
       >
         <Animate>
-          <div class="w-full max-w-[200px] lg:max-w-none">
+          <div class="min-w-0 max-w-[380px]">
             <Picture
               src={authorImage}
               alt="Jakub Sobolewski"
-              class="w-full h-auto object-cover border bg-card aspect-[3/4]"
-              widths={[200, 320, 480]}
-              sizes="(min-width: 1024px) 18vw, 200px"
+              class="w-full h-auto object-cover aspect-[3/4]"
+              widths={[220, 320, 480, 640]}
+              sizes="(min-width: 1024px) 28vw, 70vw"
             />
-          </div>
-        </Animate>
-        <Animate>
-          <div class="space-y-0">
-            <h2
-              class="text-[clamp(2.5rem,5vw,5.5rem)] font-bold uppercase leading-[0.88] tracking-[-0.03em] mb-8 md:mb-10"
-            >
-              I'm Jakub<br />Sobolewski
-            </h2>
-            <div
-              class="space-y-6 font-light font-serif text-base md:text-lg leading-relaxed"
-            >
-              <p>
-                Software engineer specializing in R, with 5+ years writing and
-                testing production code in the R and Shiny ecosystem.
-              </p>
-              <p>
-                My conviction: automated testing is how teams build software
-                they can trust. I started caring about this after working on a
-                project where every code change required a live connection to
-                production. Terrible experience, fixable problem.
-              </p>
-              <p>
-                Tests should make development faster and more confident, not
-                slower and more ceremonial. I write about finding strategies
-                that actually fit the way real teams work.
-              </p>
-            </div>
           </div>
         </Animate>
       </div>

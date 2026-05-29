@@ -16,7 +16,7 @@ interface PostProps {
 export function Post({
   post,
   selectedTags,
-  variant = "card",
+  variant = "featured",
   className,
 }: PostProps) {
   const meta = (

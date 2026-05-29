@@ -34,9 +34,9 @@ const posts = (await getCollection("blog"))
 
 <BaseLayout {...post.data} image={`/blog/${post.slug}/og-image.png`}>
   <BlogPostJSONLD slot="head" {...post.data} />
-  <Section variant="dark" className="pt-[60px]">
+  <Section variant="dark" className="pt-14">
     <div
-      class="container mx-auto grid grid-cols-1 lg:grid-cols-[1fr_65ch_1fr] gap-8"
+      class="w-full xl:max-w-screen-xl 2xl:max-w-[1400px] xl:mx-auto border-x px-4 grid grid-cols-1 lg:grid-cols-[1fr_65ch_1fr] gap-8"
     >
       <div class="lg:col-start-2">
         <article class={`mx-auto ${proseClasses} px-2`}>

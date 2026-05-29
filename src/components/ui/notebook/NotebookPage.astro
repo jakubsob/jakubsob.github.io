@@ -1,0 +1,21 @@
+---
+/**
+ * NotebookPage
+ * ------------
+ * Wraps a page (or layout) and defines the canonical "notebook" CSS variables
+ * for every <Notebook> below it. Per-section <Notebook> components inherit
+ * these defaults and may override them to change resolution.
+ */
+
+import "./notebook.css";
+
+interface Props {
+  class?: string;
+}
+
+const { class: className, ...rest } = Astro.props;
+---
+
+<div class:list={["notebook-page", className]} {...rest}>
+  <slot />
+</div>

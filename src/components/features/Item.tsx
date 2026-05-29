@@ -2,11 +2,11 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const itemVariants = cva(
-  "bg-card border border-border dark:border-muted-foreground/10 rounded-[var(--radius-surface)] transition-all duration-300 group-hover/card:-translate-y-0.5",
+  "bg-card border border-border dark:border-muted-foreground/10 rounded-[var(--radius-surface)] transition-all",
   {
     variants: {
       variant: {
-        featured: "p-8 bg-secondary border-none group-hover/card:shadow-md",
+        featured: "p-8 bg-secondary border-none",
         card: "p-4 border-none ",
       },
     },

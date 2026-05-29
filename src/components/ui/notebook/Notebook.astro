@@ -1,0 +1,94 @@
+---
+/**
+ * Notebook
+ * --------
+ * A full-bleed section that paints grid lines and exposes a centered inner
+ * grid for content placement. Verticals tile at `--nb-col-w` from the
+ * viewport center; horizontals tile at `--nb-row-h` from the top of the
+ * notebook. The inner grid is `--nb-cols × --nb-col-w` wide and centered,
+ * so column boundaries line up with the painted verticals.
+ *
+ * Props:
+ *   lines      — "both" | "vertical" | "horizontal" | "none" (default "both")
+ *   rowH       — override --nb-row-h for this section (e.g. "5rem")
+ *   colWMax    — override --nb-col-w-max (e.g. "96px")
+ *   cols       — override column counts. Number applies to all breakpoints;
+ *                object form lets you set per-breakpoint counts.
+ *   cellGap    — override --nb-cell-gap (total separator width between
+ *                neighboring cells; each cell gets half on each side).
+ *                Pass "0" for sections where cells should fill their grid
+ *                area edge-to-edge (e.g. the hero).
+ *   rowAnchor  — "top" (default) or "bottom". When "bottom", horizontal
+ *                lines tile from the bottom of the notebook and the inner
+ *                grid's content is packed at the bottom. Use for hero-style
+ *                sections that want content sitting on the viewport floor.
+ *   class      — extra classes on the outer (full-bleed) container
+ *   innerClass — extra classes on the inner (centered) grid
+ *   as         — outer tag (default 'div')
+ *
+ * Placement: children use `grid-column` / `grid-row` (or Tailwind
+ * `col-[1/-1] row-[2/3]`) on the inner grid.
+ */
+
+import "./notebook.css";
+
+interface Props {
+  lines?: "both" | "vertical" | "horizontal" | "none";
+  rowH?: string;
+  colWMax?: string;
+  cols?:
+    | number
+    | { base?: number; md?: number; lg?: number };
+  cellGap?: string;
+  rowAnchor?: "top" | "bottom";
+  class?: string;
+  innerClass?: string;
+  as?: keyof HTMLElementTagNameMap;
+  id?: string;
+}
+
+const {
+  lines = "both",
+  rowH,
+  colWMax,
+  cols,
+  cellGap,
+  rowAnchor = "top",
+  class: className,
+  innerClass,
+  as: Tag = "div",
+  id,
+  ...rest
+} = Astro.props;
+
+const styleParts: string[] = [];
+if (rowH) styleParts.push(`--nb-row-h: ${rowH}`);
+if (colWMax) styleParts.push(`--nb-col-w-max: ${colWMax}`);
+if (cellGap != null) styleParts.push(`--nb-cell-gap: ${cellGap}`);
+if (typeof cols === "number") {
+  styleParts.push(`--nb-cols-base: ${cols}`);
+  styleParts.push(`--nb-cols-md: ${cols}`);
+  styleParts.push(`--nb-cols-lg: ${cols}`);
+} else if (cols && typeof cols === "object") {
+  if (cols.base != null) styleParts.push(`--nb-cols-base: ${cols.base}`);
+  if (cols.md != null) styleParts.push(`--nb-cols-md: ${cols.md}`);
+  if (cols.lg != null) styleParts.push(`--nb-cols-lg: ${cols.lg}`);
+}
+const style = styleParts.join("; ") || undefined;
+---
+
+<Tag
+  class:list={[
+    "notebook",
+    `notebook--lines-${lines}`,
+    `notebook--anchor-${rowAnchor}`,
+    className,
+  ]}
+  style={style}
+  id={id}
+  {...rest}
+>
+  <div class:list={["notebook-inner", innerClass]}>
+    <slot />
+  </div>
+</Tag>
