@@ -119,7 +119,11 @@ export function BlogPage({ posts, featuredSlugs }: BlogPageProps) {
             </h2>
             <div className="relative flex-1 overflow-hidden pointer-events-none min-h-0">
               <div className={`${proseClasses} prose-sm`}>
-                <ReactMarkdown>{postA.body ?? ""}</ReactMarkdown>
+                <ReactMarkdown
+                  components={{ a: ({ children }) => <span>{children}</span> }}
+                >
+                  {postA.body ?? ""}
+                </ReactMarkdown>
               </div>
               <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-secondary to-transparent" />
             </div>
