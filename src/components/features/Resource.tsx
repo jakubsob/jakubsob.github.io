@@ -1,6 +1,7 @@
 import { ExternalLink } from "lucide-react";
 import { TagList } from "@/components/features/TagList";
-import { Item } from "@/components/features/Item";
+import { CardMetaRow } from "@/components/features/CardMetaRow";
+import { NotebookLinkCard } from "@/components/features/NotebookLinkCard";
 
 export type ResourceVariant = "card" | "featured";
 
@@ -34,25 +35,29 @@ export function Resource({ item, selectedTags, variant = "card", className }: Re
 
   const meta =
     variant === "featured" ? (
-      <TagList
-        tags={[item.group, item.format, item.actionability]}
-        selectedTags={selectedTags}
-      />
+      <CardMetaRow>
+        <TagList
+          tags={[item.group, item.format, item.actionability]}
+          selectedTags={selectedTags}
+        />
+      </CardMetaRow>
     ) : (
-      <>
+      <CardMetaRow>
         <TagList tags={[item.group]} selectedTags={selectedTags} />
         <span className="uppercase">{item.actionability}</span>
         <span className="ml-auto uppercase">{item.format}</span>
-      </>
+      </CardMetaRow>
     );
 
   return (
-    <Item
+    <NotebookLinkCard
       href={item.href}
       title={title}
       description={item.description}
       meta={meta}
-      variant={variant}
+      size={variant === "featured" ? "hero" : "featured"}
+      tone={variant === "featured" ? "secondary" : "background"}
+      descriptionClamp={variant === "featured" ? 4 : 3}
       external
       className={className}
     />

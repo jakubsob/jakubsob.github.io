@@ -3,6 +3,7 @@ import { createMarkdownProcessor } from "@astrojs/markdown-remark";
 import { Section } from "@/components/ui/section";
 import { DirectoryListing } from "../../components/features/DirectoryListing.tsx";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import NotebookPage from "@/components/ui/notebook/NotebookPage.astro";
 import { Button } from "@/components/ui/button";
 import { ExternalLink, Asterisk } from "lucide-react";
 import PageHeader from "@/components/features/PageHeader.astro";
@@ -77,33 +78,42 @@ try {
 ---
 
 <BaseLayout title="R Tests Gallery" image="/ogimg-home.png">
-  <Section variant="dark">
-    <div class="container mx-auto py-16 lg:py-24 max-w-[65ch]">
-      <PageHeader label="R Tests Gallery" subtitle="A collection of testing patterns I've used in R projects." />
-      <div class="mb-24">
-        <DirectoryListing directories={relevantDirs} />
+  <NotebookPage>
+    <Section variant="dark">
+      <div class="container mx-auto py-16 lg:py-24 px-4">
+        <PageHeader
+          label="R Tests Gallery"
+          subtitle="A collection of testing patterns I've used in R projects."
+        />
+
+        <div class="mb-24">
+          <DirectoryListing directories={relevantDirs} />
+        </div>
+
+        <div class="border-t py-16">
+          <div class="max-w-[65ch]">
+            <h3 class="text-3xl mb-6 flex items-center">
+              <Asterisk className="size-[1em] inline-block" />
+              Haven't found what you're looking for?
+            </h3>
+            <p class="mb-8 text-balance">
+              Tell me what you struggle with in R testing. <br /> Let's create a comprehensive
+              list of examples together!
+            </p>
+            <a
+              href="https://github.com/jakubsob/r-tests-gallery/issues/new/choose"
+              target="_blank"
+              class="flex items-center gap-2"
+              rel="noopener noreferrer"
+            >
+              <Button variant="pill" shape="pill" size="xl">
+                <ExternalLink className="size-6" />
+                <span class="text-xl">Submit a request</span>
+              </Button>
+            </a>
+          </div>
+        </div>
       </div>
-      <div class="border-t py-16">
-        <h3 class="text-3xl mb-6 flex items-center">
-          <Asterisk className="size-[1em] inline-block" />
-          Haven't found what you're looking for?
-        </h3>
-        <p class="mb-8 text-balance">
-          Tell me what you struggle with in R testing. <br /> Let's create a comprehensive
-          list of examples together!
-        </p>
-        <a
-          href="https://github.com/jakubsob/r-tests-gallery/issues/new/choose"
-          target="_blank"
-          class="flex items-center gap-2"
-          rel="noopener noreferrer"
-        >
-          <Button variant="pill" shape="pill" size="xl">
-            <ExternalLink className="size-6" />
-            <span class="text-xl">Submit a request</span>
-          </Button>
-        </a>
-      </div>
-    </div>
-  </Section>
+    </Section>
+  </NotebookPage>
 </BaseLayout>

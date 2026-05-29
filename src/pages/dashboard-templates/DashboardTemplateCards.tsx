@@ -1,81 +1,89 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Animate } from "@/components/ui/animate"
+import { Button } from "@/components/ui/button";
+import { Animate } from "@/components/ui/animate";
+import { Notebook } from "@/components/ui/notebook/Notebook";
+import { NotebookLinkCard } from "@/components/features/NotebookLinkCard";
+import { CardMetaRow } from "@/components/features/CardMetaRow";
+import { dashboardTemplates } from "@/data/dashboardTemplates";
+import { cn } from "@/lib/utils";
 
-const dashboardTemplates = [
-  {
-    id: "01",
-    title: "Template 01",
-    description: "Intersection of sidebar and tabset navigation",
-    imageUrl: "https://jakubsobolewski.com/shiny-dashboard-templates/assets/01.png",
-    demoUrl: "https://jakubsobolewski.com/shiny-dashboard-templates/01",
-    codeUrl: "https://github.com/jakubsob/shiny-dashboard-templates/tree/main/01"
-  },
-  {
-    id: "02",
-    title: "Template 02",
-    description: "Sidebar icon navigation with cards main layout",
-    imageUrl: "https://jakubsobolewski.com/shiny-dashboard-templates/assets/02.png",
-    demoUrl: "https://jakubsobolewski.com/shiny-dashboard-templates/02",
-    codeUrl: "https://github.com/jakubsob/shiny-dashboard-templates/tree/main/02"
-  }
-]
+const ROW_H = "320px";
 
 export default function DashboardTemplateCards() {
   return (
-    <div className="py-12">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-        {dashboardTemplates.map((template, index) => (
-          <Animate key={template.id} delay={index * 200}>
-            <Card className="overflow-hidden h-full transition-shadow duration-200 group">
-              <div className="aspect-video overflow-hidden">
-                <img
-                  src={template.imageUrl}
-                  alt={template.title}
-                  className="w-full h-full object-cover object-top transition-transform duration-200 group-hover:scale-105"
+    <div className="pt-8 lg:pt-12">
+      <Notebook
+        lines="both"
+        rowH={ROW_H}
+        cellGap="2px"
+        className="notebook--cell-separators"
+      >
+        {dashboardTemplates.map((template, index) => {
+          const row = Math.floor(index / 2) + 1;
+          const isLeft = index % 2 === 0;
+
+          return (
+            <div
+              key={template.id}
+              className={cn(
+                "col-[1/-1]",
+                isLeft
+                  ? "md:col-[1/5] lg:col-[1/7]"
+                  : "md:col-[5/-1] lg:col-[7/-1]",
+              )}
+              style={{ gridRowStart: row }}
+            >
+              <Animate delay={index * 160} className="h-full">
+                <NotebookLinkCard
+                  as="div"
+                  title={template.title}
+                  description={template.description}
+                  tone="background"
+                  size="featured"
+                  descriptionClamp={3}
+                  media={
+                    <div className="aspect-video overflow-hidden -mx-6 -mt-6 mb-4">
+                      <img
+                        src={template.imageUrl}
+                        alt={template.title}
+                        className="w-full h-full object-cover object-top transition-transform duration-200 group-hover/post:scale-105"
+                        loading="lazy"
+                      />
+                    </div>
+                  }
+                  meta={
+                    <CardMetaRow className="pt-4">
+                      <span className="uppercase">Template</span>
+                      <span className="tabular-nums">{template.id}</span>
+                    </CardMetaRow>
+                  }
+                  actions={
+                    <>
+                      <Button size="sm" asChild>
+                        <a
+                          href={template.demoUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          Live App
+                        </a>
+                      </Button>
+                      <Button variant="secondary" size="sm" asChild>
+                        <a
+                          href={template.codeUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          Get The Code
+                        </a>
+                      </Button>
+                    </>
+                  }
                 />
-              </div>
-            <CardHeader>
-              <CardTitle>
-                {template.title}
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-muted-foreground group-hover:text-foreground transition-colors mb-4">
-                {template.description}
-              </p>
-              <div className="flex items-center space-x-2">
-                <Button
-                  size="sm"
-                >
-                  <a
-                    href={template.demoUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Live App
-                  </a>
-                </Button>
-                <Button
-                  variant="secondary"
-                  size="sm"
-                  asChild
-                >
-                  <a
-                    href={template.codeUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <svg className="w-4 h-4 mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
-                    Get The Code
-                  </a>
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-          </Animate>
-        ))}
-      </div>
+              </Animate>
+            </div>
+          );
+        })}
+      </Notebook>
     </div>
-  )
+  );
 }

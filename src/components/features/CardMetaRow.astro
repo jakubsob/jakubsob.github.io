@@ -1,0 +1,13 @@
+---
+import { NOTEBOOK_META_ROW_CLASSES } from "@/components/features/notebookCardStyles";
+
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<div class:list={[NOTEBOOK_META_ROW_CLASSES, className]}>
+  <slot />
+</div>

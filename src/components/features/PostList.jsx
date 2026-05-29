@@ -20,6 +20,9 @@ function PostList({ posts, showControls = true, variant = "card" }) {
       items={posts}
       getTags={(post) => post.data.tags}
       keyExtractor={(post) => post.slug}
+      layout="notebook"
+      rowH="240px"
+      sidebarTitle="Topics"
       renderItem={(post, selectedTags) => (
         <Animate key={post.slug}>
           <Post post={post} selectedTags={selectedTags} variant={variant} />

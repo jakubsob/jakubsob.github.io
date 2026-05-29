@@ -1,8 +1,6 @@
 import type { CollectionEntry } from "astro:content";
-import { getReadingTime } from "@/utils/getReadingTime";
-import FormattedDate from "@/components/features/FormattedDate";
-import { TagList } from "@/components/features/TagList";
-import { Item } from "@/components/features/Item";
+import { NotebookLinkCard } from "@/components/features/NotebookLinkCard";
+import { PostMeta } from "@/components/features/PostMeta";
 
 export type PostVariant = "card" | "featured";
 
@@ -19,23 +17,19 @@ export function Post({
   variant = "featured",
   className,
 }: PostProps) {
-  const meta = (
-    <>
-      <FormattedDate date={post.data.pubDate} />
-      <TagList tags={post.data.tags} selectedTags={selectedTags} />
-      <span className="ml-auto uppercase tabular-nums">
-        {getReadingTime(post.body)}
-      </span>
-    </>
-  );
+  const featured = variant === "featured";
 
   return (
-    <Item
+    <NotebookLinkCard
       href={`/blog/${post.slug}/`}
       title={post.data.title}
       description={post.data.description}
-      meta={meta}
-      variant={variant}
+      meta={<PostMeta post={post} selectedTags={selectedTags} />}
+      size={featured ? "featured" : "regular"}
+      tone={featured ? "secondary" : "background"}
+      descriptionClamp={featured ? 4 : 3}
+      titleClassName={featured ? "text-2xl mb-3" : undefined}
+      bodyClassName={featured ? "text-base mb-6" : undefined}
       className={className}
     />
   );

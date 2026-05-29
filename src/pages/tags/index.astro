@@ -1,31 +1,71 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
-import { SITE_TITLE, SITE_DESCRIPTION } from "../../consts";
+import { Section } from "@/components/ui/section";
+import NotebookPage from "@/components/ui/notebook/NotebookPage.astro";
+import Notebook from "@/components/ui/notebook/Notebook.astro";
+import PageHeader from "@/components/features/PageHeader.astro";
+import NotebookLinkCard from "@/components/features/NotebookLinkCard.astro";
+import CardMetaRow from "@/components/features/CardMetaRow.astro";
 
-const posts = await getCollection("blog");
-const tags = [...new Set(posts.map((post) => post.data.tags).flat())];
+const posts = (await getCollection("blog")).filter((post) => !post.data.draft);
+
+const tagsWithCounts = [...new Set(posts.flatMap((post) => post.data.tags))]
+  .sort((a, b) => a.localeCompare(b))
+  .map((tag) => ({
+    tag,
+    count: posts.filter((post) => post.data.tags.includes(tag)).length,
+  }));
 ---
 
-<!doctype html>
-<html lang="en">
-  <BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION} >
-    <main>
-      <section>
-        <ul class="list-none">
-          {
-            tags.map((tag) => (
-              <li>
-                <a href={`${tag}`}>
-                  <h4 class="hover:text-gray-500">
-                    {tag}
-                  </h4>
-                </a>
-              </li>
-            ))
-          }
-        </ul>
-      </section>
-    </main>
-  </BaseLayout>
-</html>
+<BaseLayout
+  title="Blog Tags"
+  description="Browse all blog topics and jump directly to posts grouped by tag."
+>
+  <NotebookPage>
+    <Section variant="dark">
+      <div class="container mx-auto py-16 lg:py-24 px-4">
+        <PageHeader
+          label="Tags"
+          subtitle={`${tagsWithCounts.length} topic${
+            tagsWithCounts.length === 1 ? "" : "s"
+          }`}
+        />
+      </div>
+
+      <Notebook
+        lines="both"
+        rowH="220px"
+        cellGap="2px"
+        class="notebook--cell-separators"
+      >
+        {
+          tagsWithCounts.map(({ tag, count }, index) => (
+            <div
+              class:list={[
+                "col-[1/-1]",
+                index % 2 === 0
+                  ? "md:col-[1/5] lg:col-[1/7]"
+                  : "md:col-[5/-1] lg:col-[7/-1]",
+              ]}
+            >
+              <NotebookLinkCard
+                href={`/tags/${encodeURIComponent(tag)}/`}
+                title={tag}
+                description={`${count} post${count === 1 ? "" : "s"}`}
+                tone="background"
+                size="featured"
+                descriptionClamp={2}
+              >
+                <CardMetaRow slot="meta" class="pt-4">
+                  <span class="uppercase">Topic</span>
+                  <span class="ml-auto tabular-nums">{count}</span>
+                </CardMetaRow>
+              </NotebookLinkCard>
+            </div>
+          ))
+        }
+      </Notebook>
+    </Section>
+  </NotebookPage>
+</BaseLayout>

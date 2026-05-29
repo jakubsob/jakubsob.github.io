@@ -4,6 +4,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import { Section } from "@/components/ui/section";
 import PostList from "../../components/features/PostList.jsx";
 import PageHeader from "@/components/features/PageHeader.astro";
+import NotebookPage from "@/components/ui/notebook/NotebookPage.astro";
 
 export async function getStaticPaths() {
   const posts = (await getCollection("blog"))
@@ -24,13 +25,17 @@ const { posts } = Astro.props;
 ---
 
 <BaseLayout>
-  <Section variant="dark">
-    <div class="container mx-auto py-16 lg:py-24">
-      <PageHeader
-        label="Tag"
-        subtitle={`${posts.length} post${posts.length === 1 ? "" : "s"} tagged "${tag}"`}
-      />
-      <PostList client:load posts={posts} showControls={true} />
-    </div>
-  </Section>
+  <NotebookPage>
+    <Section variant="dark">
+      <div class="container mx-auto py-16 lg:py-24 px-4">
+        <PageHeader
+          label="Tag"
+          subtitle={`${posts.length} post${
+            posts.length === 1 ? "" : "s"
+          } tagged "${tag}"`}
+        />
+        <PostList client:load posts={posts} showControls={true} />
+      </div>
+    </Section>
+  </NotebookPage>
 </BaseLayout>

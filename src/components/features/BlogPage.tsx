@@ -1,13 +1,13 @@
-import { useState, useMemo } from "react";
+import { useMemo } from "react";
 import type { CollectionEntry } from "astro:content";
-import { getReadingTime } from "@/utils/getReadingTime";
-import FormattedDate from "@/components/features/FormattedDate";
-import { TagList } from "@/components/features/TagList";
 import { cn } from "@/lib/utils";
 import { proseClasses } from "@/lib/prose";
 import { SearchX } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import { Notebook } from "@/components/ui/notebook/Notebook";
+import { PostMeta } from "@/components/features/PostMeta";
+import { NotebookLinkCard } from "@/components/features/NotebookLinkCard";
+import { useTagFilters } from "@/components/features/useTagFilters";
 
 interface BlogPageProps {
   posts: CollectionEntry<"blog">[];
@@ -17,57 +17,25 @@ interface BlogPageProps {
 const ROW_H = "240px";
 const BLOG_LETTERS = ["B", "L", "O", "G"];
 
-function PostMeta({
-  post,
-  selectedTags,
-}: {
-  post: CollectionEntry<"blog">;
-  selectedTags: Set<string>;
-}) {
-  return (
-    <div className="flex flex-wrap items-center gap-3 text-xs text-muted-foreground/50 mt-auto pt-5">
-      <FormattedDate date={post.data.pubDate} />
-      <TagList tags={post.data.tags} selectedTags={selectedTags} />
-      <span className="ml-auto uppercase tabular-nums shrink-0">
-        {getReadingTime(post.body)}
-      </span>
-    </div>
-  );
-}
-
 export function BlogPage({ posts, featuredSlugs }: BlogPageProps) {
-  const [selectedTags, setSelectedTags] = useState<Set<string>>(new Set());
-  const noneSelected = selectedTags.size === 0;
+  const {
+    selectedTags,
+    noneSelected,
+    tagsWithCounts,
+    filteredItems: filteredRegular,
+    toggleTag,
+    clearTags,
+  } = useTagFilters(posts, (post) => post.data.tags);
 
-  const allTags = useMemo(() => {
-    const tags = [...new Set(posts.flatMap((p) => p.data.tags))].sort();
-    return tags.map((tag) => ({
-      value: tag,
-      count: posts.filter((p) => p.data.tags.includes(tag)).length,
-    }));
-  }, [posts]);
-
-  const toggleTag = (tag: string) => {
-    setSelectedTags((prev) => {
-      const next = new Set(prev);
-      next.has(tag) ? next.delete(tag) : next.add(tag);
-      return next;
-    });
-  };
-
-  const featuredPosts = featuredSlugs
-    .map((slug) => posts.find((p) => p.slug === slug))
-    .filter(Boolean) as CollectionEntry<"blog">[];
+  const featuredPosts = useMemo(
+    () =>
+      featuredSlugs
+        .map((slug) => posts.find((p) => p.slug === slug))
+        .filter(Boolean) as CollectionEntry<"blog">[],
+    [featuredSlugs, posts],
+  );
 
   const [postA, postB, postC] = featuredPosts;
-
-  const filteredRegular = useMemo(
-    () =>
-      noneSelected
-        ? posts
-        : posts.filter((p) => p.data.tags.some((t) => selectedTags.has(t))),
-    [posts, selectedTags, noneSelected],
-  );
 
   const numPostRows = Math.ceil(Math.max(filteredRegular.length, 1) / 2);
 
@@ -105,78 +73,76 @@ export function BlogPage({ posts, featuredSlugs }: BlogPageProps) {
 
         {/* Post A — wide featured slot, rows 1-2 */}
         {postA && (
-          <a
+          <NotebookLinkCard
             href={`/blog/${postA.slug}/`}
+            title={postA.data.title}
+            size="hero"
+            tone="secondary"
             className={cn(
               "col-[1/-1] md:col-[3/6] lg:col-[3/8]",
               "md:row-[1/3]",
-              "group/post flex flex-col p-7 md:p-8 min-w-0",
-              "bg-secondary overflow-hidden",
             )}
-          >
-            <h2 className="text-2xl md:text-3xl font-medium leading-tight mb-4 transition-colors group-hover/post:text-primary line-clamp-2">
-              {postA.data.title}
-            </h2>
-            <div className="relative flex-1 overflow-hidden pointer-events-none min-h-0">
+            bodyClassName="relative overflow-hidden pointer-events-none"
+            body={
               <div className={`${proseClasses} prose-sm`}>
                 <ReactMarkdown
                   components={{ a: ({ children }) => <span>{children}</span> }}
                 >
                   {postA.body ?? ""}
                 </ReactMarkdown>
+                <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-secondary to-transparent" />
               </div>
-              <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-secondary to-transparent" />
-            </div>
-            <PostMeta post={postA} selectedTags={selectedTags} />
-          </a>
+            }
+            meta={<PostMeta post={postA} selectedTags={selectedTags} />}
+          />
         )}
 
         {/* Post B — row 1 */}
         {postB && (
-          <a
+          <NotebookLinkCard
             href={`/blog/${postB.slug}/`}
+            title={postB.data.title}
+            size="featured"
+            tone="secondary"
             className={cn(
               "col-[1/-1] md:col-[6/9] lg:col-[8/-1]",
               "md:row-[1/2]",
-              "group/post flex flex-col p-6 min-w-0",
-              "bg-secondary overflow-hidden",
             )}
-          >
-            <h2 className="text-xl font-medium leading-tight mb-3 transition-colors group-hover/post:text-primary line-clamp-2">
-              {postB.data.title}
-            </h2>
-            <div className="relative flex-1 overflow-hidden min-h-0">
-              <p className="text-muted-foreground text-sm leading-relaxed">
-                {postB.data.description}
-              </p>
-              <div className="absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-secondary to-transparent" />
-            </div>
-            <PostMeta post={postB} selectedTags={selectedTags} />
-          </a>
+            bodyClassName="relative overflow-hidden"
+            body={
+              <>
+                <p className="text-muted-foreground text-sm leading-relaxed">
+                  {postB.data.description}
+                </p>
+                <div className="absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-secondary to-transparent" />
+              </>
+            }
+            meta={<PostMeta post={postB} selectedTags={selectedTags} />}
+          />
         )}
 
         {/* Post C — row 2 */}
         {postC && (
-          <a
+          <NotebookLinkCard
             href={`/blog/${postC.slug}/`}
+            title={postC.data.title}
+            size="featured"
+            tone="secondary"
             className={cn(
               "col-[1/-1] md:col-[6/9] lg:col-[8/-1]",
               "md:row-[2/3]",
-              "group/post flex flex-col p-6 min-w-0",
-              "bg-secondary overflow-hidden",
             )}
-          >
-            <h2 className="text-xl font-medium leading-tight mb-3 transition-colors group-hover/post:text-primary line-clamp-2">
-              {postC.data.title}
-            </h2>
-            <div className="relative flex-1 overflow-hidden min-h-0">
-              <p className="text-muted-foreground text-sm leading-relaxed">
-                {postC.data.description}
-              </p>
-              <div className="absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-secondary to-transparent" />
-            </div>
-            <PostMeta post={postC} selectedTags={selectedTags} />
-          </a>
+            bodyClassName="relative overflow-hidden"
+            body={
+              <>
+                <p className="text-muted-foreground text-sm leading-relaxed">
+                  {postC.data.description}
+                </p>
+                <div className="absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-secondary to-transparent" />
+              </>
+            }
+            meta={<PostMeta post={postC} selectedTags={selectedTags} />}
+          />
         )}
       </Notebook>
 
@@ -209,7 +175,7 @@ export function BlogPage({ posts, featuredSlugs }: BlogPageProps) {
             <span className="px-4 py-3 text-xs uppercase tracking-widest text-muted-foreground/40 border-r border-foreground/[0.07] shrink-0 flex items-center">
               Topics
             </span>
-            {allTags.map(({ value, count }) => {
+            {tagsWithCounts.map(({ value, count }) => {
               const active = selectedTags.has(value);
               const dimmed = !noneSelected && !active;
               return (
@@ -232,7 +198,7 @@ export function BlogPage({ posts, featuredSlugs }: BlogPageProps) {
             })}
             {!noneSelected && (
               <button
-                onClick={() => setSelectedTags(new Set())}
+                onClick={clearTags}
                 className="ml-auto px-4 py-3 text-xs text-muted-foreground/40 hover:text-foreground transition-colors shrink-0"
               >
                 Clear
@@ -246,7 +212,7 @@ export function BlogPage({ posts, featuredSlugs }: BlogPageProps) {
               Topics
             </p>
             <div className="flex flex-col">
-              {allTags.map(({ value, count }) => {
+              {tagsWithCounts.map(({ value, count }) => {
                 const active = selectedTags.has(value);
                 const dimmed = !noneSelected && !active;
                 return (
@@ -269,7 +235,7 @@ export function BlogPage({ posts, featuredSlugs }: BlogPageProps) {
               })}
               {!noneSelected && (
                 <button
-                  onClick={() => setSelectedTags(new Set())}
+                  onClick={clearTags}
                   className="mt-5 text-xs text-muted-foreground/40 hover:text-foreground transition-colors text-left"
                 >
                   Clear all
@@ -286,26 +252,23 @@ export function BlogPage({ posts, featuredSlugs }: BlogPageProps) {
             const row = Math.floor(i / 2) + 1;
             const isLeft = i % 2 === 0;
             return (
-              <a
+              <NotebookLinkCard
                 key={post.slug}
                 href={`/blog/${post.slug}/`}
+                title={post.data.title}
+                description={post.data.description}
+                size="regular"
+                tone="background"
+                descriptionClamp={3}
                 className={cn(
-                  "group/post flex flex-col p-6 min-w-0 overflow-hidden bg-background",
                   "col-[1/-1]",
                   isLeft
                     ? "md:col-[3/6] lg:col-[3/8]"
                     : "md:col-[6/9] lg:col-[8/-1]",
                 )}
                 style={{ gridRowStart: row }}
-              >
-                <h2 className="text-lg font-medium leading-snug mb-2 transition-colors group-hover/post:text-primary line-clamp-2">
-                  {post.data.title}
-                </h2>
-                <p className="text-muted-foreground text-sm leading-relaxed line-clamp-3 flex-1">
-                  {post.data.description}
-                </p>
-                <PostMeta post={post} selectedTags={selectedTags} />
-              </a>
+                meta={<PostMeta post={post} selectedTags={selectedTags} />}
+              />
             );
           })
         ) : (

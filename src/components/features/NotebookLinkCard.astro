@@ -1,0 +1,109 @@
+---
+import {
+  NOTEBOOK_CARD_ACTIONS_CLASSES,
+  NOTEBOOK_CARD_DESCRIPTION_BASE_CLASSES,
+  NOTEBOOK_CARD_DESCRIPTION_CLAMP_CLASSES,
+  NOTEBOOK_CARD_PADDING_CLASSES,
+  NOTEBOOK_CARD_ROOT_CLASSES,
+  NOTEBOOK_CARD_TITLE_CLASSES,
+  NOTEBOOK_CARD_TONE_CLASSES,
+  type NotebookCardSize,
+  type NotebookCardTone,
+} from "@/components/features/notebookCardStyles";
+
+interface Props {
+  href?: string;
+  title: string;
+  description?: string;
+  tone?: NotebookCardTone;
+  size?: NotebookCardSize;
+  titleTag?: "h2" | "h3";
+  descriptionClamp?: 2 | 3 | 4 | 5;
+  external?: boolean;
+  class?: string;
+  titleClass?: string;
+  bodyClass?: string;
+  actionsClass?: string;
+  as?: "a" | "div";
+}
+
+const props = Astro.props as Props;
+
+const {
+  href,
+  title,
+  description,
+  tone = "secondary",
+  size = "regular",
+  titleTag = "h2",
+  descriptionClamp,
+  external = false,
+  as = "a",
+  class: className,
+  titleClass,
+  bodyClass,
+  actionsClass,
+} = props;
+
+const hasMedia = Astro.slots.has("media");
+const hasBody = Astro.slots.has("body");
+const hasMeta = Astro.slots.has("meta");
+const hasActions = Astro.slots.has("actions");
+
+const clampClass = descriptionClamp
+  ? NOTEBOOK_CARD_DESCRIPTION_CLAMP_CLASSES[descriptionClamp]
+  : undefined;
+
+const TitleTag = titleTag;
+
+const linkAttrs = external && as === "a"
+  ? { target: "_blank", rel: "noopener noreferrer" }
+  : {};
+
+const Tag = as;
+---
+
+<Tag
+  href={as === "a" ? href : undefined}
+  class:list={[
+    NOTEBOOK_CARD_ROOT_CLASSES,
+    NOTEBOOK_CARD_TONE_CLASSES[tone],
+    NOTEBOOK_CARD_PADDING_CLASSES[size],
+    className,
+  ]}
+  {...linkAttrs}
+>
+  {hasMedia ? <slot name="media" /> : null}
+
+  <TitleTag class:list={[NOTEBOOK_CARD_TITLE_CLASSES[size], titleClass]}>
+    {title}
+  </TitleTag>
+
+  {
+    hasBody ? (
+      <div class:list={["flex-1 min-h-0", bodyClass]}>
+        <slot name="body" />
+      </div>
+    ) : description ? (
+      <p
+        class:list={[
+          NOTEBOOK_CARD_DESCRIPTION_BASE_CLASSES,
+          clampClass,
+          bodyClass,
+        ]}
+      >
+        {description}
+      </p>
+    ) : null
+  }
+
+  {hasMeta ? <slot name="meta" /> : null}
+
+  {
+    hasActions ? (
+      <div class:list={[NOTEBOOK_CARD_ACTIONS_CLASSES, actionsClass]}>
+        <slot name="actions" />
+      </div>
+    ) : null
+  }
+</Tag>

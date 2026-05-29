@@ -5,7 +5,8 @@ import { Badge } from "@/components/ui/badge";
 import { EyebrowLabel } from "@/components/ui/eyebrow-label";
 import { Search, X, FileText } from "lucide-react";
 import { smartSearchService, type GroupedSearchResults, type SearchResult } from "@/lib/smartSearch";
-import { Item } from "@/components/features/Item";
+import { NotebookLinkCard } from "@/components/features/NotebookLinkCard";
+import { CardMetaRow } from "@/components/features/CardMetaRow";
 import { TagList } from "@/components/features/TagList";
 import FormattedDate from "@/components/features/FormattedDate";
 
@@ -64,13 +65,13 @@ export function GlobalSearch({ isOpen, onClose }: GlobalSearchProps) {
   };
 
   const getResultMeta = (result: SearchResult) => (
-    <>
+    <CardMetaRow className="pt-3 text-muted-foreground/60">
       {result.pubDate && <FormattedDate date={new Date(result.pubDate)} />}
       {result.tags && result.tags.length > 0 && <TagList tags={result.tags} />}
       {result.category && (
         <span className="uppercase tracking-wide">{result.category}</span>
       )}
-    </>
+    </CardMetaRow>
   );
 
   const totalResults = Object.values(searchResults).reduce(
@@ -168,11 +169,17 @@ export function GlobalSearch({ isOpen, onClose }: GlobalSearchProps) {
 
                     <div className="flex flex-col gap-2">
                       {group.results.map((result, index) => (
-                        <Item
+                        <NotebookLinkCard
                           key={`${result.id}-${index}`}
                           href={result.url}
                           title={result.title}
                           description={result.description ?? ""}
+                          size="regular"
+                          tone="background"
+                          descriptionClamp={3}
+                          className="rounded-[var(--radius-surface)] p-4"
+                          titleClassName="text-xl mb-2"
+                          bodyClassName="mb-4"
                           meta={getResultMeta(result)}
                         />
                       ))}
