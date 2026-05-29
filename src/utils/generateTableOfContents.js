@@ -7,14 +7,8 @@ export function generateTableOfContents(content) {
   tempDiv.innerHTML = content;
 
   const allHeadings = Array.from(tempDiv.querySelectorAll('h1, h2, h3, h4'));
-  let firstH2Index = allHeadings.findIndex(h => h.tagName.toLowerCase() === 'h2');
 
-  // Filter out the first h1 and h2, and any h1s (usually the post title)
-  const headings = allHeadings.filter((heading, index) => {
-    const tagName = heading.tagName.toLowerCase();
-    // Skip all h1 elements and the first h2
-    return tagName !== 'h1' && !(tagName === 'h2' && index === firstH2Index);
-  });
+  const headings = allHeadings.filter(heading => heading.tagName.toLowerCase() !== 'h1');
 
   return headings.map(heading => {
     // Create an id from the heading text if it doesn't have one already
