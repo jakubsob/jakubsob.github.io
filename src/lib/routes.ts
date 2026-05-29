@@ -74,27 +74,6 @@ export const socialLinks: RouteConfig[] = [
   }
 ];
 
-// Helper function to get routes by category
-export function getRoutesByCategory(category: string): RouteConfig[] {
-  return routes
-    .filter(route => route.category === category)
-    .sort((a, b) => (a.order || 0) - (b.order || 0));
-}
-
-// Helper function to get all main navigation routes (excluding hidden ones)
-export function getMainRoutes(): RouteConfig[] {
-  return routes
-    .filter(route => route.category === 'main' && !route.hidden)
-    .sort((a, b) => (a.order || 0) - (b.order || 0));
-}
-
-// Helper function to get all tool routes
-export function getToolRoutes(): RouteConfig[] {
-  return routes
-    .filter(route => route.category === 'tools')
-    .sort((a, b) => (a.order || 0) - (b.order || 0));
-}
-
 // Helper function to get all social links
 export function getSocialLinks(): RouteConfig[] {
   return socialLinks.sort((a, b) => (a.order || 0) - (b.order || 0));
@@ -104,12 +83,5 @@ export function getSocialLinks(): RouteConfig[] {
 export function getFooterRoutes(): RouteConfig[] {
   return routes
     .filter(route => !route.external)
-    .sort((a, b) => (a.order || 0) - (b.order || 0));
-}
-
-// Helper function to get navigation routes (for header)
-export function getNavigationRoutes(): RouteConfig[] {
-  return routes
-    .filter(route => !route.external && !route.hidden)
     .sort((a, b) => (a.order || 0) - (b.order || 0));
 }

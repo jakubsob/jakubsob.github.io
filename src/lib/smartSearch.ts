@@ -229,50 +229,6 @@ class SmartSearchService {
     this.searchItems = [];
     this.fuse = null;
   }
-
-  /**
-   * Highlight matching text in search results
-   */
-  public static highlightMatches(text: string, matches?: readonly FuseResultMatch[]): string {
-    if (!matches || matches.length === 0) {
-      return text;
-    }
-
-    // Find matches for the text field
-    const textMatches = matches.filter(match =>
-      match.key === 'title' || match.key === 'description'
-    );
-
-    if (textMatches.length === 0) {
-      return text;
-    }
-
-    let highlightedText = text;
-    const highlights: Array<{ start: number; end: number }> = [];
-
-    // Collect all highlight ranges
-    textMatches.forEach(match => {
-      if (match.indices) {
-        match.indices.forEach(([start, end]) => {
-          highlights.push({ start, end });
-        });
-      }
-    });
-
-    // Sort by start position (descending to process from end to start)
-    highlights.sort((a, b) => b.start - a.start);
-
-    // Apply highlights
-    highlights.forEach(({ start, end }) => {
-      const beforeMatch = highlightedText.slice(0, start);
-      const matchText = highlightedText.slice(start, end + 1);
-      const afterMatch = highlightedText.slice(end + 1);
-
-      highlightedText = `${beforeMatch}<mark class="bg-yellow-200 px-1 rounded">${matchText}</mark>${afterMatch}`;
-    });
-
-    return highlightedText;
-  }
 }
 
 // Export singleton instance
