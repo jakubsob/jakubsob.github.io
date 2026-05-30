@@ -115,10 +115,10 @@ const shouldLoadAnalytics = import.meta.env.PROD;
   <link rel="dns-prefetch" href="https://www.google-analytics.com" />
 
   <!--
-    Defer third-party scripts to keep them off the critical path. MailerLite
-    can load once the browser is idle (it powers the subscribe form), but
-    analytics waits for the first real interaction so gtag.js never competes
-    with initial render.
+    Defer third-party scripts (MailerLite + GA) until the first real
+    interaction, keeping them entirely off initial render. The subscribe form
+    posts directly to MailerLite via a native form POST, so it works before
+    universal.js loads; events queue on the gtag/ml stubs until then.
   -->
   <script is:inline define:vars={{ gtagUrl, googleAnalyticsID, shouldLoadAnalytics }}>
     (function () {
@@ -171,12 +171,6 @@ const shouldLoadAnalytics = import.meta.env.PROD;
       events.forEach((e) =>
         window.addEventListener(e, onInteraction, { once: true, passive: true })
       );
-
-      if ("requestIdleCallback" in window) {
-        requestIdleCallback(loadMailerLite, { timeout: 5000 });
-      } else {
-        setTimeout(loadMailerLite, 4000);
-      }
     })();
   </script>
 
