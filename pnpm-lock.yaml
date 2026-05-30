@@ -35,18 +35,12 @@ importers:
       '@fontsource-variable/source-serif-4':
         specifier: ^5.2.9
         version: 5.2.9
-      '@fontsource-variable/syne':
-        specifier: ^5.2.6
-        version: 5.2.6
       '@fontsource/barlow':
         specifier: ^5.2.8
         version: 5.2.8
       '@fontsource/geist-sans':
         specifier: ^5.2.5
         version: 5.2.5
-      '@fontsource/monoton':
-        specifier: ^5.2.6
-        version: 5.2.6
       '@radix-ui/react-checkbox':
         specifier: ^1.3.3
         version: 1.3.3(@types/react-dom@18.3.7(@types/react@18.3.23))(@types/react@18.3.23)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -674,17 +668,11 @@ packages:
   '@fontsource-variable/source-serif-4@5.2.9':
     resolution: {integrity: sha512-PPcxjLFk/fS0WHg79pDM2YNvz61kC+oYZ5cWZZyCS0DHpJncmuYOuiZAsvj4tDxlWPBEvxxcRLQQNmSaRbPkqw==}
 
-  '@fontsource-variable/syne@5.2.6':
-    resolution: {integrity: sha512-aUeK7LuZs0+bAbNMIF1I4gom+sOvhNcEhFqVh88MvqWmk6mBauKUH3JaO3yvfFOgeJPf2owymiNuay3YqotvKg==}
-
   '@fontsource/barlow@5.2.8':
     resolution: {integrity: sha512-iuFOnY4OI2cd1STrJ3NdJNzWjhcwv6JarmqfdoZzAmz9g0jTVjES86MNbuBxqVR3ydbTEjo4opEl24GXScRM7w==}
 
   '@fontsource/geist-sans@5.2.5':
     resolution: {integrity: sha512-anllOHyJbElRs9fV15TeDRqAeb1IKm4bSknPl6ZMoyPTx1BBy7logudcUwpNjmQLkzn4Q0JGQLRCUKJYoyST6A==}
-
-  '@fontsource/monoton@5.2.6':
-    resolution: {integrity: sha512-Tsw1P00EXvDMAfnB0BGuSXNB6MRIsGaV+TJv7keu0KfWlJPArSQLK2BeL9XfmRu4iCM/KkFuDDaSuuXGFP2i+Q==}
 
   '@img/sharp-darwin-arm64@0.33.5':
     resolution: {integrity: sha512-UT4p+iz/2H4twwAoLCqfA9UH5pI6DggwKEGuaPy7nCVQ8ZsiY5PIcrRvD1DzuY3qYL07NtIQcWnBSY/heikIFQ==}
@@ -4516,13 +4504,9 @@ snapshots:
 
   '@fontsource-variable/source-serif-4@5.2.9': {}
 
-  '@fontsource-variable/syne@5.2.6': {}
-
   '@fontsource/barlow@5.2.8': {}
 
   '@fontsource/geist-sans@5.2.5': {}
-
-  '@fontsource/monoton@5.2.6': {}
 
   '@img/sharp-darwin-arm64@0.33.5':
     optionalDependencies:

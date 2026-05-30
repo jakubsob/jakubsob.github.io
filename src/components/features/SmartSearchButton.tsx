@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import { Search } from "lucide-react";
 import { GlobalSearch } from "./GlobalSearch";
-import { smartSearchService } from "@/lib/smartSearch";
-import { populateRTestsGallerySearch } from "@/lib/gallerySearchData";
+import { smartSearchService, type SearchItem } from "@/lib/smartSearch";
 import { Button } from "@/components/ui/button";
 
 // Global search state interface
@@ -19,47 +18,22 @@ declare global {
 
 interface SmartSearchButtonProps {
   posts: any[];
+  galleryItems?: SearchItem[];
 }
 
-export function SmartSearchButton({ posts }: SmartSearchButtonProps) {
+export function SmartSearchButton({ posts, galleryItems = [] }: SmartSearchButtonProps) {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isInitialized, setIsInitialized] = useState(false);
 
-  // Initialize search service with all data
+  // Initialize search service with build-time data (no client-side fetching)
   useEffect(() => {
-    async function initializeSearch() {
-      try {
-        // Clear existing data
-        smartSearchService.clear();
-
-        // Add blog posts
-        smartSearchService.addBlogPosts(posts);
-
-        // Add static pages
-        smartSearchService.addStaticPages();
-
-        // Fetch and add R Tests Gallery items
-        const galleryItems = await populateRTestsGallerySearch();
-        smartSearchService.addRTestsGalleryItems(galleryItems);
-
-        // Initialize the search index
-        smartSearchService.initialize(smartSearchService.getAllItems());
-
-        setIsInitialized(true);
-      } catch (error) {
-        console.warn('Failed to initialize search service:', error);
-        // Initialize with fallback data
-        smartSearchService.clear();
-        smartSearchService.addBlogPosts(posts);
-        smartSearchService.addStaticPages();
-        smartSearchService.addRTestsGalleryItems(); // Uses fallback data
-        smartSearchService.initialize(smartSearchService.getAllItems());
-        setIsInitialized(true);
-      }
-    }
-
-    initializeSearch();
-  }, [posts]);
+    smartSearchService.clear();
+    smartSearchService.addBlogPosts(posts);
+    smartSearchService.addStaticPages();
+    smartSearchService.addRTestsGalleryItems(galleryItems);
+    smartSearchService.initialize(smartSearchService.getAllItems());
+    setIsInitialized(true);
+  }, [posts, galleryItems]);
 
   // Subscribe to global search state
   useEffect(() => {

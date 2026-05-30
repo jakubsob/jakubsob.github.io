@@ -1,7 +1,7 @@
 ---
 import type { CollectionEntry } from "astro:content";
 
-type Props = CollectionEntry<"blog">["data"];
+type Props = CollectionEntry<"blog">["data"] & { slug: string };
 const {
   title,
   titleSEO,
@@ -10,7 +10,17 @@ const {
   pubDate,
   updatedDate,
   tags,
+  slug,
 } = Astro.props;
+
+const postUrl = new URL(`/blog/${slug}/`, Astro.site).href;
+const imageUrl = new URL(`/blog/${slug}/og-image.png`, Astro.site).href;
+
+const author = {
+  "@type": "Person",
+  name: "Jakub Sobolewski",
+  url: "https://jakubsobolewski.com",
+};
 
 const schema = {
   "@context": "https://schema.org",
@@ -18,11 +28,13 @@ const schema = {
   headline: titleSEO || title,
   description: descriptionSEO || description,
   keywords: tags,
-  author: {
-    "@type": "Person",
-    name: "Jakub Sobolewski",
-    url: "https://jakubsob.github.io",
+  image: imageUrl,
+  mainEntityOfPage: {
+    "@type": "WebPage",
+    "@id": postUrl,
   },
+  author,
+  publisher: author,
   /* the schema expects Date or DateTime using ISO 8601 format. For Date that is yyyy-MM-dd */
   datePublished: pubDate.toISOString().substring(0, 10),
   /* updateDate is optional frontmatter, so we conditionally add dateModified if it exists */
@@ -30,10 +42,40 @@ const schema = {
     dateModified: updatedDate.toISOString().substring(0, 10),
   }),
 };
+
+const breadcrumb = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Home",
+      item: new URL("/", Astro.site).href,
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "Blog",
+      item: new URL("/blog/", Astro.site).href,
+    },
+    {
+      "@type": "ListItem",
+      position: 3,
+      name: title,
+      item: postUrl,
+    },
+  ],
+};
 ---
 
 <script
   is:inline
   type="application/ld+json"
   set:html={JSON.stringify(schema)}
+/>
+<script
+  is:inline
+  type="application/ld+json"
+  set:html={JSON.stringify(breadcrumb)}
 />

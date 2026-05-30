@@ -7,9 +7,40 @@ import BlogSection from "@/components/sections/BlogSection.astro";
 import OpenSourceSection from "@/components/sections/OpenSourceSection.astro";
 import TutorialsSection from "@/components/sections/TutorialsSection.astro";
 import AboutSection from "@/components/sections/AboutSection.astro";
+
+const personId = new URL("/#person", Astro.site).href;
+const siteUrl = new URL("/", Astro.site).href;
+const person = {
+  "@type": "Person",
+  "@id": personId,
+  name: "Jakub Sobolewski",
+  url: siteUrl,
+  image: new URL("/author.png", Astro.site).href,
+  jobTitle: "Software Engineer",
+  description:
+    "The R & Shiny testing authority — tools, talks, and playbooks for teams that ship software they trust.",
+  sameAs: ["https://github.com/jakubsob"],
+};
+const website = {
+  "@type": "WebSite",
+  "@id": new URL("/#website", Astro.site).href,
+  url: siteUrl,
+  name: "Jakub Sobolewski",
+  publisher: { "@id": personId },
+};
+const homeSchema = {
+  "@context": "https://schema.org",
+  "@graph": [person, website],
+};
 ---
 
 <BaseLayout>
+  <script
+    slot="head"
+    is:inline
+    type="application/ld+json"
+    set:html={JSON.stringify(homeSchema)}
+  />
   <NotebookPage>
     <HeroSection />
     <ProofStrip />
