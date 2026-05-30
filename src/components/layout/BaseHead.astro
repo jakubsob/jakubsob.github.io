@@ -107,29 +107,72 @@ const shouldLoadAnalytics = import.meta.env.PROD;
     href={new URL("rss-r.xml", Astro.site)}
   />
 
-  <!-- MailerLite Universal -->
-  <script is:inline>
-    (function (w, d, e, u, f, l, n) {
-      (w[f] =
-        w[f] ||
+  <!-- Preconnect to deferred third-party origins -->
+  <link rel="preconnect" href="https://assets.mailerlite.com" crossorigin />
+  <link rel="dns-prefetch" href="https://assets.mailerlite.com" />
+  <link rel="preconnect" href="https://assets.mlcdn.com" crossorigin />
+  <link rel="dns-prefetch" href="https://assets.mlcdn.com" />
+  <link rel="preconnect" href="https://www.google-analytics.com" crossorigin />
+  <link rel="dns-prefetch" href="https://www.google-analytics.com" />
+
+  <!--
+    Defer third-party scripts (GA + MailerLite) until the browser is idle or
+    the user first interacts, keeping them off the critical path.
+  -->
+  <script is:inline define:vars={{ gtagUrl, googleAnalyticsID, shouldLoadAnalytics }}>
+    (function () {
+      let loaded = false;
+
+      function inject(src) {
+        const s = document.createElement("script");
+        s.async = true;
+        s.src = src;
+        document.head.appendChild(s);
+      }
+
+      // MailerLite stub so calls queue before universal.js arrives.
+      window.ml =
+        window.ml ||
         function () {
-          (w[f].q = w[f].q || []).push(arguments);
-        }),
-        (l = d.createElement(e)),
-        (l.async = 1),
-        (l.src = u),
-        (n = d.getElementsByTagName(e)[0]),
-        n.parentNode.insertBefore(l, n);
-    })(
-      window,
-      document,
-      "script",
-      "https://assets.mailerlite.com/js/universal.js",
-      "ml"
-    );
-    ml("account", "1677606");
+          (window.ml.q = window.ml.q || []).push(arguments);
+        };
+
+      if (shouldLoadAnalytics) {
+        // GA stub so events queue before gtag.js arrives.
+        window.dataLayer = window.dataLayer || [];
+        window.gtag = function () {
+          window.dataLayer.push(arguments);
+        };
+        window.gtag("js", new Date());
+        window.gtag("config", googleAnalyticsID);
+      }
+
+      function loadThirdParty() {
+        if (loaded) return;
+        loaded = true;
+        inject("https://assets.mailerlite.com/js/universal.js");
+        window.ml("account", "1677606");
+        if (shouldLoadAnalytics) {
+          inject(gtagUrl);
+        }
+      }
+
+      const events = ["scroll", "pointerdown", "keydown", "touchstart"];
+      function onInteraction() {
+        events.forEach((e) => window.removeEventListener(e, onInteraction));
+        loadThirdParty();
+      }
+      events.forEach((e) =>
+        window.addEventListener(e, onInteraction, { once: true, passive: true })
+      );
+
+      if ("requestIdleCallback" in window) {
+        requestIdleCallback(loadThirdParty, { timeout: 5000 });
+      } else {
+        setTimeout(loadThirdParty, 4000);
+      }
+    })();
   </script>
-  <!-- End MailerLite Universal -->
 
   <!-- Developer Easter egg -->
   <script is:inline>
@@ -155,20 +198,8 @@ const shouldLoadAnalytics = import.meta.env.PROD;
   <!-- Follow.it  -->
   <meta name="follow.it-verification-code" content="UzA851QwnL0Gqry6AJNE" />
 
-  <!-- Google Analytics -->
   {shouldLoadAnalytics && (
-    <>
-      <script is:inline async src={gtagUrl}></script>
-      <script is:inline define:vars={{ googleAnalyticsID }}>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() {
-          dataLayer.push(arguments);
-        }
-        gtag("js", new Date());
-        gtag("config", googleAnalyticsID);
-      </script>
-      <link rel="preconnect" href="https://www.googletagmanager.com/" />
-    </>
+    <link rel="preconnect" href="https://www.googletagmanager.com/" />
   )}
   {
     math && (
