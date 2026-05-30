@@ -13,9 +13,10 @@ import FormattedDate from "@/components/features/FormattedDate";
 interface GlobalSearchProps {
   isOpen: boolean;
   onClose: () => void;
+  isReady?: boolean;
 }
 
-export function GlobalSearch({ isOpen, onClose }: GlobalSearchProps) {
+export function GlobalSearch({ isOpen, onClose, isReady = true }: GlobalSearchProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<GroupedSearchResults>({});
   const [isSearching, setIsSearching] = useState(false);
@@ -27,6 +28,12 @@ export function GlobalSearch({ isOpen, onClose }: GlobalSearchProps) {
       return;
     }
 
+    if (!isReady) {
+      // Index still loading; keep showing the loading state until it arrives.
+      setIsSearching(true);
+      return;
+    }
+
     setIsSearching(true);
     const timeoutId = setTimeout(() => {
       const results = smartSearchService.search(searchQuery, 15);
@@ -35,7 +42,7 @@ export function GlobalSearch({ isOpen, onClose }: GlobalSearchProps) {
     }, 100);
 
     return () => clearTimeout(timeoutId);
-  }, [searchQuery]);
+  }, [searchQuery, isReady]);
 
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {

@@ -1,16 +1,5 @@
 ---
-import { getCollection } from "astro:content";
 import { SmartSearchButton } from "./SmartSearchButton";
-import { populateRTestsGallerySearch } from "@/lib/gallerySearchData";
-
-// Get all published blog posts
-const posts = (await getCollection("blog"))
-  .filter((post) => post.data.draft !== true)
-  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
-
-// Build the R Tests Gallery search index at build time (authenticated,
-// cached in the static output) instead of fetching GitHub from the browser.
-const galleryItems = await populateRTestsGallerySearch();
 ---
 
-<SmartSearchButton client:load posts={posts} galleryItems={galleryItems} />
+<SmartSearchButton client:idle />
