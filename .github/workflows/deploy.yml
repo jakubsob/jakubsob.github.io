@@ -50,7 +50,7 @@ jobs:
       uses: foo-software/lighthouse-check-action@master
       with:
         outputDirectory: ${{ github.workspace }}/tmp/artifacts
-        urls: 'https://jakubsob.github.io,https://jakubsob.github.io/blog/,https://jakubsob.github.io/resources/'
+        urls: 'https://jakubsobolewski.com,https://jakubsobolewski.com/blog/,https://jakubsobolewski.com/resources/'
     - name: Upload artifacts
       uses: actions/upload-artifact@master
       with:
