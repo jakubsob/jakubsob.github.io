@@ -3,9 +3,9 @@ import { renderOgImage } from "@/lib/ogImage";
 
 export const GET: APIRoute = async function GET() {
   const png = await renderOgImage({
-    eyebrow: "R & Shiny",
-    lines: ["Jakub", "Sobolewski"],
-    subline: "open source tools · tdd · bdd · testing playbooks",
+    eyebrow: "Resources",
+    lines: ["Testing &", "Engineering"],
+    subline: "the references that shaped how I build R & Shiny",
   });
 
   return new Response(new Uint8Array(png), {

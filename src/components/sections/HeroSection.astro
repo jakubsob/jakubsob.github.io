@@ -62,10 +62,11 @@ const splitLetters = (text: string) =>
     >
       <Animate variant="header" className="motion-delay-[550ms]">
         <p
-          class="text-foreground/70 text-base md:text-lg font-serif font-light leading-relaxed max-w-[44ch]"
+          class="text-foreground/70 text-base md:text-lg font-serif font-light leading-relaxed max-w-[60ch]"
         >
-          I'm Jakub. Practical articles and open-source tools for developers who
-          want to build software they trust.
+          I'm Jakub Sobolewski. <br />
+          I build the open-source tools <br />
+          and write the playbooks that define how R and Shiny teams test.
         </p>
       </Animate>
     </div>
@@ -76,23 +77,23 @@ const splitLetters = (text: string) =>
     >
       <div class="flex flex-row gap-3 shrink-0">
         <Animate variant="expand" className="motion-delay-[650ms]">
-          <a href="/course" class="block">
+          <a href="/get-roadmap" class="block">
             <Button
               variant="primary"
               size="xl"
               shape="pill"
               className="uppercase tracking-wide text-sm md:text-base font-bold whitespace-nowrap"
             >
-              <span class="sm:hidden">Testing course</span>
-              <span class="hidden sm:inline">Take the testing course</span>
+              <span class="sm:hidden">Roadmap</span>
+              <span class="hidden sm:inline">Get Roadmap</span>
             </Button>
           </a>
         </Animate>
         <Animate variant="expand" className="motion-delay-[750ms]">
-          <a href="/get-roadmap" class="block">
+          <a href="https://courses.jakubsobolewski.com" class="block">
             <Button size="xl" variant="link">
-              <span class="sm:hidden">Roadmap</span>
-              <span class="hidden sm:inline">Get Roadmap</span>
+              <span class="sm:hidden">Testing course</span>
+              <span class="hidden sm:inline">Join testing course waitlist</span>
             </Button>
           </a>
         </Animate>

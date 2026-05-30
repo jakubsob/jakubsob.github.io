@@ -7,12 +7,16 @@ import { resources } from "@/data/resources";
 ---
 
 <BaseLayout
-  title="Resources for learning Shiny"
-  meta="A collection of resources to help you learn Shiny, a web application framework for R. Learn software and UI design."
+  title="Testing & engineering resources for R developers"
+  description="The books, talks, and references on testing, TDD, BDD, and software engineering that shaped how I build R and Shiny apps — plus a few design picks."
+  image="/ogimg-resources.png"
 >
   <Section variant="dark">
     <div class="container mx-auto py-16 lg:py-24 px-4">
-      <PageHeader label="Resources" subtitle="What made me a better engineer" />
+      <PageHeader
+        label="Resources"
+        subtitle="The resources that shaped how I work"
+      />
       <ResourceList client:load items={resources} />
     </div>
   </Section>

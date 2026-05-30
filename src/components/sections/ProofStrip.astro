@@ -1,0 +1,186 @@
+---
+import { Section } from "@/components/ui/section";
+import { Animate } from "@/components/ui/animate";
+import { createGitHubAuthHeaders } from "@/lib/rTestsGallery";
+
+const PACKAGES = ["cucumber", "muttest"];
+
+// Fallbacks keep the build green (and the numbers honest) if a network
+// fetch fails at build time. Refresh these if the live values drift far.
+const FALLBACK_STARS = 50;
+const FALLBACK_DOWNLOADS = 14877;
+
+const headers = createGitHubAuthHeaders(import.meta.env.PRIVATE_GITHUB_TOKEN);
+
+async function fetchStars(): Promise<number> {
+  const results = await Promise.all(
+    PACKAGES.map(async (pkg) => {
+      const res = await fetch(`https://api.github.com/repos/jakubsob/${pkg}`, {
+        headers,
+      });
+      if (!res.ok) throw new Error(`GitHub ${pkg}: ${res.status}`);
+      const data = (await res.json()) as { stargazers_count: number };
+      return data.stargazers_count;
+    }),
+  );
+  return results.reduce((sum, n) => sum + n, 0);
+}
+
+async function fetchDownloads(): Promise<number> {
+  const res = await fetch(
+    `https://cranlogs.r-pkg.org/downloads/total/2000-01-01:2100-01-01/${PACKAGES.join(",")}`,
+  );
+  if (!res.ok) throw new Error(`cranlogs: ${res.status}`);
+  const data = (await res.json()) as { downloads: number }[];
+  return data.reduce((sum, row) => sum + row.downloads, 0);
+}
+
+const [starsResult, downloadsResult] = await Promise.allSettled([
+  fetchStars(),
+  fetchDownloads(),
+]);
+
+const stars =
+  starsResult.status === "fulfilled" ? starsResult.value : FALLBACK_STARS;
+const downloads =
+  downloadsResult.status === "fulfilled"
+    ? downloadsResult.value
+    : FALLBACK_DOWNLOADS;
+
+const compact = new Intl.NumberFormat("en-US", {
+  notation: "compact",
+  maximumFractionDigits: 1,
+});
+
+type Format = "compact" | "plain";
+
+interface Stat {
+  target: number;
+  format: Format;
+  suffix?: string;
+  label: string;
+  sub: string;
+}
+
+const stats: Stat[] = [
+  {
+    target: downloads,
+    format: "compact",
+    label: "CRAN downloads",
+    sub: "Cucumber + muttest",
+  },
+  {
+    target: stars,
+    format: "plain",
+    label: "GitHub stars",
+    sub: "on my testing packages",
+  },
+  {
+    target: 3,
+    format: "plain",
+    label: "Conference talks",
+    sub: "ShinyConf '24 · useR! '24 · useR! '25",
+  },
+  {
+    target: 5,
+    format: "plain",
+    suffix: "+",
+    label: "Years testing",
+    sub: "production R & Shiny",
+  },
+];
+
+const display = (stat: Stat) =>
+  (stat.format === "compact"
+    ? compact.format(stat.target)
+    : stat.target.toLocaleString("en-US")) + (stat.suffix ?? "");
+---
+
+<Section id="proof" variant="secondary" size="fit">
+  <div
+    class="w-full xl:max-w-screen-xl 2xl:max-w-[1400px] xl:mx-auto px-4 py-12 md:py-16"
+  >
+    <Animate>
+      <dl class="grid grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-10 md:gap-y-12">
+        {
+          stats.map((stat) => (
+            <div class="flex flex-col">
+              <dd
+                class="text-[clamp(2.75rem,7vw,4.5rem)] font-bold leading-none tabular-nums tracking-[-0.03em] js-proof-count"
+                data-target={String(stat.target)}
+                data-format={stat.format}
+                data-suffix={stat.suffix ?? ""}
+              >
+                {display(stat)}
+              </dd>
+              <dt class="mt-3 text-sm md:text-base font-medium uppercase tracking-wide">
+                {stat.label}
+              </dt>
+              <span class="mt-1 text-xs md:text-sm text-muted-foreground">
+                {stat.sub}
+              </span>
+            </div>
+          ))
+        }
+      </dl>
+    </Animate>
+  </div>
+</Section>
+
+<script>
+  const compactFmt = new Intl.NumberFormat("en-US", {
+    notation: "compact",
+    maximumFractionDigits: 1,
+  });
+
+  function formatValue(value: number, format: string): string {
+    if (format === "compact") return compactFmt.format(value);
+    return Math.round(value).toLocaleString("en-US");
+  }
+
+  function animateCount(
+    el: HTMLElement,
+    target: number,
+    format: string,
+    suffix: string,
+    duration: number,
+  ) {
+    const start = performance.now();
+    const update = (now: number) => {
+      const progress = Math.min((now - start) / duration, 1);
+      // ease-out-quart — matches the muttest score animation
+      const eased = 1 - Math.pow(1 - progress, 4);
+      el.textContent = formatValue(eased * target, format) + suffix;
+      if (progress < 1) {
+        requestAnimationFrame(update);
+      } else {
+        el.textContent = formatValue(target, format) + suffix;
+      }
+    };
+    requestAnimationFrame(update);
+  }
+
+  const prefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const el = entry.target as HTMLElement;
+        observer.unobserve(el);
+        if (prefersReducedMotion) return;
+        const target = parseFloat(el.dataset.target ?? "0");
+        const format = el.dataset.format ?? "plain";
+        const suffix = el.dataset.suffix ?? "";
+        animateCount(el, target, format, suffix, 1200);
+      });
+    },
+    { threshold: 0.5 },
+  );
+
+  document.querySelectorAll<HTMLElement>(".js-proof-count").forEach((el) => {
+    observer.observe(el);
+  });
+</script>

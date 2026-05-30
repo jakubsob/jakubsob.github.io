@@ -8,6 +8,13 @@ import { EyebrowLabel } from "@/components/ui/eyebrow-label";
 import SectionHeading from "@/components/ui/section-heading.astro";
 import { transformerNotationDiff } from "@shikijs/transformers";
 import { transformerStepAnimation } from "@/lib/transformerStepAnimation";
+import PackageStats from "@/components/features/PackageStats.astro";
+import { fetchPackageStats } from "@/lib/packageStats";
+
+const [cucumberStats, muttestStats] = await Promise.all([
+  fetchPackageStats("cucumber"),
+  fetchPackageStats("muttest"),
+]);
 ---
 
 <Section id="opensource" size="fit" variant="light">
@@ -42,6 +49,10 @@ import { transformerStepAnimation } from "@/lib/transformerStepAnimation";
               R functions, and run them as tests. Requirements stay in sync with
               the code because they are the code.
             </p>
+            <PackageStats
+              stars={cucumberStats.stars}
+              downloads={cucumberStats.downloads}
+            />
           </div>
         </div>
       </Animate>
@@ -207,8 +218,8 @@ then("the sales trend plot for {string} is shown", function(category, context) {
     >
       <div class="pt-12 pb-16">
         <Animate>
-          <div class="flex items-start gap-6">
-            <div class="size-[120px] flex-shrink-0">
+          <div class="flex flex-col sm:flex-row items-start gap-5 sm:gap-6">
+            <div class="size-[80px] sm:size-[120px] flex-shrink-0">
               <img
                 class="w-full h-full object-contain"
                 src="https://raw.githubusercontent.com/jakubsob/muttest/main/man/figures/logo.png"
@@ -229,6 +240,10 @@ then("the sales trend plot for {string} is shown", function(category, context) {
                 code and checks whether your tests catch them. Reveals gaps that
                 code coverage misses.
               </p>
+              <PackageStats
+                stars={muttestStats.stars}
+                downloads={muttestStats.downloads}
+              />
             </div>
           </div>
         </Animate>

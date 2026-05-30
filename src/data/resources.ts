@@ -3,7 +3,7 @@ import type { ResourceItem } from "@/components/features/Resource";
 export const resources: ResourceItem[] = [
   {
     title: "Continuous Delivery",
-    group: "Software Design",
+    group: "Testing & Engineering",
     actionability: "Back to back",
     format: "Youtube",
     href: "https://www.youtube.com/@ModernSoftwareEngineeringYT",
@@ -12,7 +12,7 @@ export const resources: ResourceItem[] = [
   },
   {
     title: "Modern Software Engineering",
-    group: "Software Design",
+    group: "Testing & Engineering",
     actionability: "Back to back",
     format: "Book",
     href: "https://www.goodreads.com/book/show/57345270-modern-software-engineerin",
@@ -21,7 +21,7 @@ export const resources: ResourceItem[] = [
   },
   {
     title: "XUnit Test Patterns",
-    group: "Software Design",
+    group: "Testing & Engineering",
     actionability: "Lookup",
     format: "Website",
     href: "http://xunitpatterns.com/",
@@ -30,7 +30,7 @@ export const resources: ResourceItem[] = [
   },
   {
     title: "Refactoring Guru: Design Patterns",
-    group: "Software Design",
+    group: "Testing & Engineering",
     actionability: "Lookup",
     format: "Website",
     href: "https://refactoring.guru/design-patterns",
@@ -39,7 +39,7 @@ export const resources: ResourceItem[] = [
   },
   {
     title: "Refactoring UI",
-    group: "UI/UX Design",
+    group: "Design",
     actionability: "Back to back",
     format: "Book",
     href: "https://www.refactoringui.com/",
@@ -48,7 +48,7 @@ export const resources: ResourceItem[] = [
   },
   {
     title: "Dribbble",
-    group: "UI/UX Design",
+    group: "Design",
     actionability: "Lookup",
     format: "Website",
     href: "https://dribbble.com",
@@ -57,7 +57,7 @@ export const resources: ResourceItem[] = [
   },
   {
     title: "Nielsen Norman",
-    group: "UI/UX Design",
+    group: "Design",
     actionability: "Lookup",
     format: "Website",
     href: "https://www.nngroup.com/",
@@ -66,7 +66,7 @@ export const resources: ResourceItem[] = [
   },
   {
     title: "Flux Academy",
-    group: "UI/UX Design",
+    group: "Design",
     actionability: "Back to back",
     format: "Youtube",
     href: "https://www.Youtube.com/@FluxAcademy",
@@ -75,7 +75,7 @@ export const resources: ResourceItem[] = [
   },
   {
     title: "Design Course",
-    group: "UI/UX Design",
+    group: "Design",
     actionability: "Back to back",
     format: "Youtube",
     href: "https://www.Youtube.com/@DesignCourse",
@@ -84,7 +84,7 @@ export const resources: ResourceItem[] = [
   },
   {
     title: "UnDraw",
-    group: "UI/UX Design",
+    group: "Design",
     actionability: "Lookup",
     format: "Website",
     href: "https://undraw.co/",

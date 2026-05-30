@@ -92,8 +92,8 @@ class SmartSearchService {
       {
         id: 'page-home',
         type: 'page',
-        title: 'Home - Building Quality by Testing',
-        description: 'Automated testing in R, TDD, BDD, and quality software development',
+        title: 'Jakub Sobolewski — R & Shiny Testing',
+        description: 'Jakub Sobolewski: open-source tools, talks, and playbooks for testing in R and Shiny — TDD, BDD, and quality software development',
         content: 'Building quality by testing automated testing R software development TDD BDD cucumber muttest shiny testing patterns quality software development practices',
         url: '/',
         category: 'Main'
@@ -101,8 +101,8 @@ class SmartSearchService {
       {
         id: 'page-blog',
         type: 'page',
-        title: 'Blog - Automated Testing in R',
-        description: 'Advanced testing and development practices in R',
+        title: 'Blog — Jakub Sobolewski on R & Shiny Testing',
+        description: 'Jakub Sobolewski on advanced testing and development practices in R and Shiny',
         content: 'blog posts automated testing R development practices TDD BDD testing tutorials articles',
         url: '/blog/',
         category: 'Blog'
@@ -119,20 +119,11 @@ class SmartSearchService {
       {
         id: 'page-resources',
         type: 'page',
-        title: 'Resources - What made me a better engineer',
-        description: 'Learning TDD, BDD, software and UI design',
-        content: 'resources learning materials TDD BDD software design UI design books courses youtube videos career development',
+        title: 'Resources - Testing & engineering for R developers',
+        description: 'Testing, TDD, BDD, and software engineering resources — plus a few design picks',
+        content: 'resources learning materials testing TDD BDD software engineering design books youtube videos career development',
         url: '/resources/',
         category: 'Resources'
-      },
-      {
-        id: 'page-course',
-        type: 'page',
-        title: 'Course - Shiny Acceptance Test-Driven Development',
-        description: 'See how you can turn your app descriptions into robust acceptance tests, fast',
-        content: 'course shiny acceptance test driven development ATDD testing course training',
-        url: '/course/',
-        category: 'Course'
       }
     ];
 

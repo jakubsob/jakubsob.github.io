@@ -1,0 +1,29 @@
+---
+import { Star, Download } from "lucide-react";
+
+interface Props {
+  stars: number;
+  downloads: number;
+}
+
+const { stars, downloads } = Astro.props;
+
+const fmt = new Intl.NumberFormat("en-US");
+---
+
+<div
+  class="flex flex-wrap items-center gap-x-5 gap-y-1.5 mt-5 text-sm text-muted-foreground"
+>
+  <span class="inline-flex items-center gap-1.5">
+    <Star className="size-4 text-primary" aria-hidden="true" />
+    <span class="font-semibold text-foreground tabular-nums">{stars}</span>
+    GitHub stars
+  </span>
+  <span class="inline-flex items-center gap-1.5">
+    <Download className="size-4 text-primary" aria-hidden="true" />
+    <span class="font-semibold text-foreground tabular-nums">
+      {fmt.format(downloads)}
+    </span>
+    CRAN downloads
+  </span>
+</div>

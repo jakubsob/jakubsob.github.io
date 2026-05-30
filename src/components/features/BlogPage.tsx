@@ -9,8 +9,23 @@ import { PostMeta } from "@/components/features/PostMeta";
 import { NotebookLinkCard } from "@/components/features/NotebookLinkCard";
 import { useTagFilters } from "@/components/features/useTagFilters";
 
+// Lightweight shape passed from the server. Crucially this omits each post's
+// full markdown `body`, which previously bloated the hydrated island to ~3.7MB.
+// We also ship only the four `data` fields the cards actually render, rather
+// than the entire frontmatter (titleSEO, descriptionSEO, updatedDate, etc.).
+export interface BlogListItem {
+  slug: string;
+  data: Pick<
+    CollectionEntry<"blog">["data"],
+    "title" | "description" | "pubDate" | "tags"
+  >;
+  readingTime: string;
+  // Short, server-trimmed preview used only by the featured hero card.
+  excerpt?: string;
+}
+
 interface BlogPageProps {
-  posts: CollectionEntry<"blog">[];
+  posts: BlogListItem[];
   featuredSlugs: string[];
 }
 
@@ -31,7 +46,7 @@ export function BlogPage({ posts, featuredSlugs }: BlogPageProps) {
     () =>
       featuredSlugs
         .map((slug) => posts.find((p) => p.slug === slug))
-        .filter(Boolean) as CollectionEntry<"blog">[],
+        .filter(Boolean) as BlogListItem[],
     [featuredSlugs, posts],
   );
 
@@ -88,12 +103,18 @@ export function BlogPage({ posts, featuredSlugs }: BlogPageProps) {
                 <ReactMarkdown
                   components={{ a: ({ children }) => <span>{children}</span> }}
                 >
-                  {postA.body ?? ""}
+                  {postA.excerpt ?? ""}
                 </ReactMarkdown>
                 <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-secondary to-transparent" />
               </div>
             }
-            meta={<PostMeta post={postA} selectedTags={selectedTags} />}
+            meta={
+              <PostMeta
+                post={postA}
+                readingTime={postA.readingTime}
+                selectedTags={selectedTags}
+              />
+            }
           />
         )}
 
@@ -117,7 +138,13 @@ export function BlogPage({ posts, featuredSlugs }: BlogPageProps) {
                 <div className="absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-secondary to-transparent" />
               </>
             }
-            meta={<PostMeta post={postB} selectedTags={selectedTags} />}
+            meta={
+              <PostMeta
+                post={postB}
+                readingTime={postB.readingTime}
+                selectedTags={selectedTags}
+              />
+            }
           />
         )}
 
@@ -141,7 +168,13 @@ export function BlogPage({ posts, featuredSlugs }: BlogPageProps) {
                 <div className="absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-secondary to-transparent" />
               </>
             }
-            meta={<PostMeta post={postC} selectedTags={selectedTags} />}
+            meta={
+              <PostMeta
+                post={postC}
+                readingTime={postC.readingTime}
+                selectedTags={selectedTags}
+              />
+            }
           />
         )}
       </Notebook>
@@ -267,7 +300,13 @@ export function BlogPage({ posts, featuredSlugs }: BlogPageProps) {
                     : "md:col-[6/9] lg:col-[8/-1]",
                 )}
                 style={{ gridRowStart: row }}
-                meta={<PostMeta post={post} selectedTags={selectedTags} />}
+                meta={
+                  <PostMeta
+                    post={post}
+                    readingTime={post.readingTime}
+                    selectedTags={selectedTags}
+                  />
+                }
               />
             );
           })
