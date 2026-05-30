@@ -25,7 +25,7 @@ function runStepAnimation(container: HTMLElement) {
         (el) => el.dataset.step!
       )
     )
-  ).sort();
+  ).sort((a, b) => Number(a) - Number(b));
 
   steps.forEach((step, i) => {
     setTimeout(() => {

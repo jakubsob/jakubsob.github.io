@@ -182,24 +182,23 @@ then("the sales trend plot for {string} is shown", function(category, context) {
         </div>
       </div>
 
-      <Animate>
-        <div class="pt-8 pb-12">
-          <EyebrowLabel>
-            <span class="text-success mr-1">✓ verification</span>
-          </EyebrowLabel>
-          <Card variant="bordered">
-            <Code
-              lang="r"
-              code={`> cucumber::test()
-#> ✔ | F W  S  OK | Context
-#> ✔ |          1 | Feature: Sales Trends
-#>
-#> ══ Results ═══════════════════════════════════════════════════
-#> [ FAIL 0 | WARN 0 | SKIP 0 | PASS 1 ]`}
-            />
-          </Card>
-        </div>
-      </Animate>
+      <div class="pt-8 pb-12" data-step-animate>
+        <EyebrowLabel>
+          <span class="text-success mr-1">✓ verification</span>
+        </EyebrowLabel>
+        <Card variant="bordered">
+          <Code
+            lang="r"
+            transformers={[transformerStepAnimation()]}
+            code={`> cucumber::test()
+#> ✔ | F W  S  OK | Context # [!code step:1]
+#> ✔ |          1 | Feature: Sales Trends # [!code step:2]
+#> # [!code step:3]
+#> ══ Results ═══════════════════════════════════════════════════ # [!code step:3]
+#> [ FAIL 0 | WARN 0 | SKIP 0 | PASS 1 ] # [!code step:3]`}
+          />
+        </Card>
+      </div>
     </div>
 
     <div class="pt-6 pb-12">
@@ -319,29 +318,28 @@ test_that("is_adult returns FALSE for minors", {
           </div>
         </Animate>
 
-        <Animate>
-          <div class="py-12">
-            <EyebrowLabel>run mutation testing</EyebrowLabel>
-            <Card variant="bordered">
-              <Code
-                lang="r"
-                code={`> muttest::muttest(plan)
-#> ℹ Mutation Testing
-#>   |   K |   S |   E |   T |   % | Mutator  | File
-#> ✔ |   1 |   0 |   0 |   1 | 100 | >= → <=  | is_adult.R
-#> x |   1 |   1 |   0 |   2 |  50 | >= → >   | is_adult.R
-#>
-#> ── Survived Mutants ─────────────────────────────────────────────────────────
-#> is_adult.R  >= → >
-#>   2-   age >= 18
-#>   2+   age > 18
-#>
-#> ── Results ──────────────────────────────────────────────────────────────────
-#> [ KILLED 1 | SURVIVED 1 | ERRORS 0 | TOTAL 2 | SCORE 50.0% ]`}
-              />
-            </Card>
-          </div>
-        </Animate>
+        <div class="py-12" data-step-animate>
+          <EyebrowLabel>run mutation testing</EyebrowLabel>
+          <Card variant="bordered">
+            <Code
+              lang="r"
+              transformers={[transformerStepAnimation()]}
+              code={`> muttest::muttest(plan)
+#> ℹ Mutation Testing # [!code step:1]
+#>   |   K |   S |   E |   T |   % | Mutator  | File # [!code step:2]
+#> ✔ |   1 |   0 |   0 |   1 | 100 | >= → <=  | is_adult.R # [!code step:3]
+#> x |   1 |   1 |   0 |   2 |  50 | >= → >   | is_adult.R # [!code step:4]
+#> # [!code step:5]
+#> ── Survived Mutants ───────────────────────────────────────────────────────── # [!code step:5]
+#> is_adult.R  >= → > # [!code step:5]
+#>   2-   age >= 18 # [!code step:5]
+#>   2+   age > 18 # [!code step:5]
+#> # [!code step:5]
+#> ── Results ────────────────────────────────────────────────────────────────── # [!code step:5]
+#> [ KILLED 1 | SURVIVED 1 | ERRORS 0 | TOTAL 2 | SCORE 50.0% ] # [!code step:5]`}
+            />
+          </Card>
+        </div>
 
         <Animate>
           <div
