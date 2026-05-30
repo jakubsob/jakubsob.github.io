@@ -2,7 +2,6 @@
 // Import the global.css file here so that it is included on
 // all pages through the use of the <BaseHead /> component.
 import "../../styles/global.css";
-import { ClientRouter } from "astro:transitions";
 
 interface Props {
   title: string;
@@ -116,12 +115,15 @@ const shouldLoadAnalytics = import.meta.env.PROD;
   <link rel="dns-prefetch" href="https://www.google-analytics.com" />
 
   <!--
-    Defer third-party scripts (GA + MailerLite) until the browser is idle or
-    the user first interacts, keeping them off the critical path.
+    Defer third-party scripts to keep them off the critical path. MailerLite
+    can load once the browser is idle (it powers the subscribe form), but
+    analytics waits for the first real interaction so gtag.js never competes
+    with initial render.
   -->
   <script is:inline define:vars={{ gtagUrl, googleAnalyticsID, shouldLoadAnalytics }}>
     (function () {
-      let loaded = false;
+      let mlLoaded = false;
+      let gaLoaded = false;
 
       function inject(src) {
         const s = document.createElement("script");
@@ -147,29 +149,33 @@ const shouldLoadAnalytics = import.meta.env.PROD;
         window.gtag("config", googleAnalyticsID);
       }
 
-      function loadThirdParty() {
-        if (loaded) return;
-        loaded = true;
+      function loadMailerLite() {
+        if (mlLoaded) return;
+        mlLoaded = true;
         inject("https://assets.mailerlite.com/js/universal.js");
         window.ml("account", "1677606");
-        if (shouldLoadAnalytics) {
-          inject(gtagUrl);
-        }
+      }
+
+      function loadAnalytics() {
+        if (gaLoaded || !shouldLoadAnalytics) return;
+        gaLoaded = true;
+        inject(gtagUrl);
       }
 
       const events = ["scroll", "pointerdown", "keydown", "touchstart"];
       function onInteraction() {
         events.forEach((e) => window.removeEventListener(e, onInteraction));
-        loadThirdParty();
+        loadMailerLite();
+        loadAnalytics();
       }
       events.forEach((e) =>
         window.addEventListener(e, onInteraction, { once: true, passive: true })
       );
 
       if ("requestIdleCallback" in window) {
-        requestIdleCallback(loadThirdParty, { timeout: 5000 });
+        requestIdleCallback(loadMailerLite, { timeout: 5000 });
       } else {
-        setTimeout(loadThirdParty, 4000);
+        setTimeout(loadMailerLite, 4000);
       }
     })();
   </script>
@@ -212,5 +218,4 @@ const shouldLoadAnalytics = import.meta.env.PROD;
       </>
     )
   }
-  <ClientRouter />
 </head>
