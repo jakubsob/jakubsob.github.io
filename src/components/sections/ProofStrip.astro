@@ -1,7 +1,9 @@
 ---
+import { getCollection } from "astro:content";
 import { Section } from "@/components/ui/section";
 import { Animate } from "@/components/ui/animate";
 import { createGitHubAuthHeaders } from "@/lib/rTestsGallery";
+import { fetchRweeklyHighlightCount } from "@/lib/rweeklyStats";
 
 const PACKAGES = ["cucumber", "muttest"];
 
@@ -9,6 +11,7 @@ const PACKAGES = ["cucumber", "muttest"];
 // fetch fails at build time. Refresh these if the live values drift far.
 const FALLBACK_STARS = 50;
 const FALLBACK_DOWNLOADS = 14877;
+const FALLBACK_RWEEKLY = 6;
 
 const headers = createGitHubAuthHeaders(import.meta.env.PRIVATE_GITHUB_TOKEN);
 
@@ -28,16 +31,19 @@ async function fetchStars(): Promise<number> {
 
 async function fetchDownloads(): Promise<number> {
   const res = await fetch(
-    `https://cranlogs.r-pkg.org/downloads/total/2000-01-01:2100-01-01/${PACKAGES.join(",")}`,
+    `https://cranlogs.r-pkg.org/downloads/total/2000-01-01:2100-01-01/${PACKAGES.join(
+      ",",
+    )}`,
   );
   if (!res.ok) throw new Error(`cranlogs: ${res.status}`);
   const data = (await res.json()) as { downloads: number }[];
   return data.reduce((sum, row) => sum + row.downloads, 0);
 }
 
-const [starsResult, downloadsResult] = await Promise.allSettled([
+const [starsResult, downloadsResult, rweeklyResult] = await Promise.allSettled([
   fetchStars(),
   fetchDownloads(),
+  fetchRweeklyHighlightCount(headers),
 ]);
 
 const stars =
@@ -46,6 +52,16 @@ const downloads =
   downloadsResult.status === "fulfilled"
     ? downloadsResult.value
     : FALLBACK_DOWNLOADS;
+const rweekly =
+  rweeklyResult.status === "fulfilled" && rweeklyResult.value > 0
+    ? rweeklyResult.value
+    : FALLBACK_RWEEKLY;
+
+// Articles published — counted from the blog content collection so it stays
+// in sync as new posts ship.
+const articleCount = (await getCollection("blog")).filter(
+  (post) => post.data.draft !== true,
+).length;
 
 const compact = new Intl.NumberFormat("en-US", {
   notation: "compact",
@@ -67,7 +83,7 @@ const stats: Stat[] = [
     target: downloads,
     format: "compact",
     label: "CRAN downloads",
-    sub: "Cucumber + muttest",
+    sub: "cucumber + muttest",
   },
   {
     target: stars,
@@ -75,18 +91,30 @@ const stats: Stat[] = [
     label: "GitHub stars",
     sub: "on my testing packages",
   },
+  // {
+  //   target: 3,
+  //   format: "plain",
+  //   label: "Conference talks",
+  //   sub: "ShinyConf '24 · useR! '24 · useR! '25",
+  // },
+  // {
+  //   target: 5,
+  //   format: "plain",
+  //   suffix: "+",
+  //   label: "Years testing",
+  //   sub: "production R & Shiny",
+  // },
   {
-    target: 3,
+    target: articleCount,
     format: "plain",
-    label: "Conference talks",
-    sub: "ShinyConf '24 · useR! '24 · useR! '25",
+    label: "Articles published",
+    sub: "on testing R & Shiny",
   },
   {
-    target: 5,
+    target: rweekly,
     format: "plain",
-    suffix: "+",
-    label: "Years testing",
-    sub: "production R & Shiny",
+    label: "R Weekly highlights",
+    sub: "featured in the highlights of the newsletter",
   },
 ];
 
