@@ -15,9 +15,9 @@ interface Props {
   tags?: string[];
   author?: string;
   math?: boolean;
+  /** Override the canonical URL (e.g. an alternate route pointing at /blog). */
+  canonicalURL?: string;
 }
-
-const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
 const {
   title: titlePrimary,
@@ -31,7 +31,13 @@ const {
   tags = [],
   author = "Jakub Sobolewski",
   math = false,
+  canonicalURL: canonicalOverride,
 } = Astro.props;
+
+const canonicalURL = new URL(
+  canonicalOverride ?? Astro.url.pathname,
+  Astro.site
+);
 
 const title = titleSEO || titlePrimary;
 const description = descriptionSEO || descriptionPrimary;

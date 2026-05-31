@@ -1,0 +1,42 @@
+---
+import { getCollection } from "astro:content";
+import BlogPost from "@/layouts/BlogPost.astro";
+import {
+  learningTiers,
+  resolveTrack,
+  indexPosts,
+  toTrackContext,
+} from "@/data/learningPaths";
+
+// One page per (track, lesson). Same article body as /blog/[slug], but wrapped
+// with in-track navigation. Bridge posts get one page per track they belong to,
+// each with the correct neighbours. Canonical points back at /blog/[slug].
+export async function getStaticPaths() {
+  const posts = await getCollection("blog");
+  const bySlug = indexPosts(posts);
+
+  return learningTiers.flatMap((tier) =>
+    tier.tracks.flatMap((track) => {
+      const resolved = resolveTrack(tier, track, bySlug);
+      return resolved.lessons.map((lesson) => ({
+        params: { track: track.id, lesson: lesson.slug },
+        props: {
+          post: lesson.post,
+          trackContext: toTrackContext(resolved, lesson.slug),
+        },
+      }));
+    })
+  );
+}
+
+const { post, trackContext } = Astro.props;
+const { Content } = await post.render();
+---
+
+<BlogPost
+  post={post}
+  trackContext={trackContext}
+  canonicalURL={`/blog/${post.slug}/`}
+>
+  <Content />
+</BlogPost>

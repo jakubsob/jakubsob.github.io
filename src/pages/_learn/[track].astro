@@ -1,0 +1,114 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import NotebookPage from "@/components/ui/notebook/NotebookPage.astro";
+import { Section } from "@/components/ui/section";
+import { Animate } from "@/components/ui/animate";
+import PageHeader from "@/components/features/PageHeader.astro";
+import { Button } from "@/components/ui/button";
+import { ArrowLeft, ArrowRight } from "lucide-react";
+import { getReadingTime } from "@/utils/getReadingTime";
+import { learningTiers, resolveTrack, indexPosts } from "@/data/learningPaths";
+import { APP_PATHS } from "@/lib/routes";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog");
+  const bySlug = indexPosts(posts);
+  return learningTiers.flatMap((tier) =>
+    tier.tracks
+      .map((track) => resolveTrack(tier, track, bySlug))
+      .filter((resolved) => resolved.lessons.length > 0)
+      .map((resolved) => ({
+        params: { track: resolved.track.id },
+        props: { resolved },
+      }))
+  );
+}
+
+const { resolved } = Astro.props;
+const { tier, track, lessons } = resolved;
+---
+
+<BaseLayout
+  title={`${track.title} — Learning Path | Jakub Sobolewski`}
+  description={track.promise}
+>
+  <NotebookPage>
+    <Section variant="dark">
+      <div class="container mx-auto py-16 lg:py-24 px-4 max-w-4xl">
+        <Animate>
+          <a
+            href="/learn"
+            class="inline-flex items-center gap-2 text-sm uppercase tracking-wide text-muted-foreground hover:text-foreground transition-colors mb-8"
+          >
+            <ArrowLeft className="size-[1em]" /> All learning paths
+          </a>
+        </Animate>
+
+        <PageHeader label={tier.title} subtitle={track.title} />
+        <Animate>
+          <p class="max-w-[65ch] text-lg text-muted-foreground -mt-6 mb-12">
+            {track.promise}
+          </p>
+        </Animate>
+
+        <ol class="border-t">
+          {
+            lessons.map((lesson, index) => (
+              <li class="border-b">
+                <Animate>
+                  <a
+                    href={`/learn/${track.id}/${lesson.slug}/`}
+                    class="group flex items-start gap-5 py-6 no-underline"
+                  >
+                    <span class="text-sm tabular-nums text-muted-foreground/60 font-medium pt-1 shrink-0 w-8">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <div class="flex-1 min-w-0">
+                      <h2 class="text-xl lg:text-2xl group-hover:text-primary transition-colors text-balance">
+                        {lesson.post.data.title}
+                      </h2>
+                      {lesson.post.data.description && (
+                        <p class="text-muted-foreground mt-2 text-balance">
+                          {lesson.post.data.description}
+                        </p>
+                      )}
+                      <span class="block text-xs uppercase tracking-wide text-muted-foreground/60 tabular-nums mt-3">
+                        {getReadingTime(lesson.post.body)}
+                      </span>
+                    </div>
+                    <ArrowRight className="size-5 mt-1 shrink-0 text-muted-foreground/40 group-hover:text-primary group-hover:translate-x-1 transition-all" />
+                  </a>
+                </Animate>
+              </li>
+            ))
+          }
+        </ol>
+
+        {
+          track.courseCTA && (
+            <div class="border-t mt-16 pt-16 max-w-[65ch]">
+              <Animate>
+                <h2 class="text-2xl lg:text-3xl mb-4 uppercase tracking-tight">
+                  Want the full playbook?
+                </h2>
+                <p class="mb-8 text-muted-foreground text-balance">
+                  These articles are the free path. The hands-on course walks an
+                  untested project end to end — building a safety net, breaking
+                  dependencies, and driving change with confidence. Join the
+                  waitlist.
+                </p>
+                <a href={APP_PATHS.course} class="inline-flex">
+                  <Button variant="pill" shape="pill" size="xl">
+                    <span class="text-xl">See the course</span>
+                    <ArrowRight className="size-6" />
+                  </Button>
+                </a>
+              </Animate>
+            </div>
+          )
+        }
+      </div>
+    </Section>
+  </NotebookPage>
+</BaseLayout>

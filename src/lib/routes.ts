@@ -1,4 +1,5 @@
 // Route configuration for automatic link generation
+
 export interface RouteConfig {
   path: string;
   label: string;
@@ -56,14 +57,14 @@ export const routes: RouteConfig[] = [
     label: "Resources",
     description: "Helpful resources and tools",
     category: "main",
-    order: 3
+    order: 4
   },
   {
     path: APP_PATHS.rTestsGallery,
     label: "R Tests Gallery",
     description: "Collection of R testing patterns",
     category: "tools",
-    order: 4
+    order: 5
   },
 ];
 

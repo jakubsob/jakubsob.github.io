@@ -1,0 +1,116 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import NotebookPage from "@/components/ui/notebook/NotebookPage.astro";
+import { Section } from "@/components/ui/section";
+import { Animate } from "@/components/ui/animate";
+import PageHeader from "@/components/features/PageHeader.astro";
+import NotebookLinkCard from "@/components/features/NotebookLinkCard.astro";
+import { Button } from "@/components/ui/button";
+import { ArrowRight } from "lucide-react";
+import { learningTiers, resolveTrack, indexPosts } from "@/data/learningPaths";
+import { APP_PATHS } from "@/lib/routes";
+
+const posts = await getCollection("blog");
+const bySlug = indexPosts(posts);
+
+// Resolve every tier's tracks once, dropping drafts/missing lessons.
+const tiers = learningTiers.map((tier, index) => ({
+  tier,
+  number: index + 1,
+  tracks: tier.tracks
+    .map((track) => resolveTrack(tier, track, bySlug))
+    .filter((resolved) => resolved.lessons.length > 0),
+}));
+---
+
+<BaseLayout
+  title="Start Here — Learning Paths for Testing R & Shiny | Jakub Sobolewski"
+  description="Follow a guided track from your first test to testing legacy and AI-generated code. Nine reading paths across three tiers — pick where you are and read start to finish."
+>
+  <NotebookPage>
+    <Section variant="dark">
+      <div class="container mx-auto py-16 lg:py-24 px-4">
+        <PageHeader
+          label="Start here"
+          subtitle="Learning paths"
+        />
+        <Animate>
+          <p class="max-w-[65ch] text-lg text-muted-foreground -mt-6 mb-16">
+            Dozens of articles, organised into nine tracks you can read start to
+            finish. Pick the tier that matches where you are — then follow a
+            track lesson by lesson.
+          </p>
+        </Animate>
+
+        {
+          tiers.map(({ tier, number, tracks }) => (
+            <section class="mb-20" aria-labelledby={`tier-${tier.id}`}>
+              <Animate>
+                <div class="flex items-baseline gap-4 border-b pb-4 mb-8">
+                  <span class="text-sm tabular-nums text-muted-foreground/60 font-medium">
+                    {String(number).padStart(2, "0")}
+                  </span>
+                  <div>
+                    <h2
+                      id={`tier-${tier.id}`}
+                      class="text-2xl lg:text-3xl uppercase tracking-tight"
+                    >
+                      {tier.title}
+                    </h2>
+                    <p class="text-muted-foreground mt-1">{tier.subtitle}</p>
+                  </div>
+                </div>
+              </Animate>
+
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-border border">
+                {tracks.map((resolved) => (
+                  <Animate className="h-full">
+                    <NotebookLinkCard
+                      href={`/learn/${resolved.track.id}/`}
+                      title={resolved.track.title}
+                      description={resolved.track.promise}
+                      titleTag="h3"
+                      class="h-full bg-background"
+                    >
+                      <div slot="meta" class="flex items-center justify-between text-xs uppercase tracking-wide text-muted-foreground/70 mt-4">
+                        <span class="tabular-nums">
+                          {resolved.lessons.length}{" "}
+                          {resolved.lessons.length === 1 ? "lesson" : "lessons"}
+                        </span>
+                        <span class="inline-flex items-center gap-1">
+                          Start <ArrowRight className="size-[1em]" />
+                        </span>
+                      </div>
+                    </NotebookLinkCard>
+                  </Animate>
+                ))}
+              </div>
+            </section>
+          ))
+        }
+
+        <div class="border-t pt-16">
+          <div class="max-w-[65ch]">
+            <Animate>
+              <h2 class="text-2xl lg:text-3xl mb-4 uppercase tracking-tight">
+                Going deeper on legacy &amp; AI-generated code?
+              </h2>
+              <p class="mb-8 text-muted-foreground text-balance">
+                The last two tracks are the subject of a hands-on course on
+                adding tests to code you didn't write — legacy and
+                LLM-generated alike. Join the waitlist to hear when it opens.
+              </p>
+              <a href={APP_PATHS.course} class="inline-flex">
+                <Button variant="primary" shape="pill" size="xl">
+                  <span class="text-xl">Join the course waitlist</span>
+                  <ArrowRight className="size-6" />
+                </Button>
+              </a>
+            </Animate>
+          </div>
+        </div>
+      </div>
+    </Section>
+  </NotebookPage>
+</BaseLayout>

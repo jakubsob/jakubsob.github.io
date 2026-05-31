@@ -12,11 +12,17 @@ import TableOfContents from "../components/features/TableOfContents";
 import PostList from "@/components/features/PostList";
 import { getCollection } from "astro:content";
 import { proseClasses } from "@/lib/prose";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 
-const { post } = Astro.props;
+// `trackContext` is only supplied by the /learn/[track]/[lesson] reading route.
+// On the plain /blog route it is undefined, so no lesson navigation renders —
+// a reader arriving cold via search/blog isn't pushed into a sequence.
+// `canonicalURL` lets the lesson route point back at the canonical /blog page.
+const { post, trackContext, canonicalURL } = Astro.props;
 const readingTime = getReadingTime(post.body);
 const { title, description, pubDate, updatedDate, tags } = post.data;
-const posts = (await getCollection("blog"))
+const allPosts = await getCollection("blog");
+const posts = allPosts
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
   .filter((post) => post.data.tags.some((tag) => tags.includes(tag)))
   .filter((post) => post.data.title !== title)
@@ -32,7 +38,12 @@ const posts = (await getCollection("blog"))
   }
 </style>
 
-<BaseLayout {...post.data} ogType="article" image={`/blog/${post.slug}/og-image.png`}>
+<BaseLayout
+  {...post.data}
+  ogType="article"
+  image={`/blog/${post.slug}/og-image.png`}
+  canonicalURL={canonicalURL}
+>
   <BlogPostJSONLD slot="head" {...post.data} slug={post.slug} />
   <Section variant="dark" className="pt-14">
     <div
@@ -41,6 +52,25 @@ const posts = (await getCollection("blog"))
       <div class="lg:col-start-2">
         <article class={`mx-auto ${proseClasses} px-2`}>
           <header class="border-b pb-6">
+            {
+              trackContext && (
+                <a
+                  href={`/learn/${trackContext.track.id}/`}
+                  class="not-prose group inline-flex items-center gap-2 text-xs uppercase tracking-wide text-muted-foreground hover:text-foreground transition-colors no-underline mb-2"
+                >
+                  <span>
+                    Part of{" "}
+                    <strong class="font-medium">
+                      {trackContext.track.title}
+                    </strong>
+                  </span>
+                  <span class="text-muted-foreground/50">·</span>
+                  <span class="tabular-nums">
+                    Lesson {trackContext.position} of {trackContext.total}
+                  </span>
+                </a>
+              )
+            }
             <h1 class="text-balance">{title}</h1>
             {
               description && (
@@ -69,8 +99,54 @@ const posts = (await getCollection("blog"))
             </div>
           </header>
           <slot />
+          {
+            trackContext && (trackContext.prev || trackContext.next) && (
+              <nav
+                aria-label="Track navigation"
+                class="not-prose pt-10 mt-10 bg-secondary"
+              >
+                <a
+                  href={`/learn/${trackContext.track.id}/`}
+                  class="block text-xs uppercase tracking-wide text-muted-foreground hover:text-foreground transition-colors no-underline mb-4"
+                >
+                  {trackContext.track.title} · Lesson {trackContext.position} of{" "}
+                  {trackContext.total}
+                </a>
+                <div class="grid grid-cols-1 sm:grid-cols-2">
+                  {trackContext.prev ? (
+                    <a
+                      href={`/learn/${trackContext.track.id}/${trackContext.prev.slug}/`}
+                      class="group flex flex-col gap-1 border p-4 no-underline hover:bg-light transition-colors"
+                    >
+                      <span class="inline-flex items-center gap-1 text-xs uppercase tracking-wide text-muted-foreground">
+                        <ArrowLeft className="size-[1em]" /> Previous
+                      </span>
+                      <span class="font-medium text-balance group-hover:text-primary transition-colors">
+                        {trackContext.prev.post.data.title}
+                      </span>
+                    </a>
+                  ) : (
+                    <div />
+                  )}
+                  {trackContext.next && (
+                    <a
+                      href={`/learn/${trackContext.track.id}/${trackContext.next.slug}/`}
+                      class="group flex flex-col gap-1 border p-4 no-underline hover:bg-light transition-colors sm:text-right"
+                    >
+                      <span class="inline-flex items-center gap-1 text-xs uppercase tracking-wide text-muted-foreground sm:justify-end">
+                        Next <ArrowRight className="size-[1em]" />
+                      </span>
+                      <span class="font-medium text-balance group-hover:text-primary transition-colors">
+                        {trackContext.next.post.data.title}
+                      </span>
+                    </a>
+                  )}
+                </div>
+              </nav>
+            )
+          }
           <div
-            class="flex flex-col md:flex-row gap-6 md:gap-12 justify-between py-24 border-t"
+            class="flex flex-col md:flex-row gap-6 md:gap-12 justify-between py-24"
           >
             <div class="w-full">
               <GetRoadmapButton />
