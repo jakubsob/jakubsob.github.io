@@ -35,7 +35,7 @@ export default function TableOfContents() {
   }
 
   return (
-    <nav className="hidden lg:block sticky top-20 self-start w-[200px] max-h-[calc(100vh-120px)] overflow-y-auto">
+    <nav className="hidden lg:block sticky top-14 py-2 self-start w-[200px] max-h-[calc(100vh-120px)] overflow-y-auto">
       <p className="text-xs uppercase tracking-widest text-muted-foreground/60 font-medium mb-3">
         On this page
       </p>
@@ -44,9 +44,11 @@ export default function TableOfContents() {
           <li
             key={heading.id}
             className={
-              heading.level === 2 ? "ml-0" :
-              heading.level === 3 ? "ml-3" :
-              "ml-6"
+              heading.level === 2
+                ? "ml-0"
+                : heading.level === 3
+                ? "ml-3"
+                : "ml-6"
             }
           >
             <a
