@@ -49,6 +49,78 @@ const posts = allPosts
     <div
       class="w-full xl:max-w-screen-xl 2xl:max-w-[1400px] xl:mx-auto border-x px-4 grid grid-cols-1 lg:grid-cols-[1fr_65ch_1fr] gap-8"
     >
+      <div class="hidden lg:block">
+        <div
+          id="pkg-banner"
+          class="sticky top-14 py-2 flex flex-col gap-3 p-4 text-xs"
+        >
+          <button
+            id="pkg-banner-toggle"
+            aria-label="Toggle packages"
+            aria-expanded="true"
+            class="flex items-center justify-between w-full text-left cursor-pointer hover:text-foreground transition-colors"
+          >
+            <span
+              class="uppercase tracking-wide text-muted-foreground font-medium"
+              >Try out my testing packages!</span
+            >
+            <span
+              id="pkg-banner-caret"
+              class="inline-block text-muted-foreground leading-none transition-transform duration-300 rotate-0"
+              >⌄</span
+            >
+          </button>
+          <div
+            id="pkg-banner-content"
+            class="grid [grid-template-rows:1fr] overflow-hidden transition-all duration-300 opacity-100"
+          >
+            <a
+              href="https://github.com/jakubsob/cucumber"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="flex items-center gap-2 no-underline group"
+            >
+              <img
+                src="https://raw.githubusercontent.com/jakubsob/cucumber/main/man/figures/logo.png"
+                alt="cucumber logo"
+                width="28"
+                height="28"
+                class="object-contain flex-shrink-0 grayscale opacity-50"
+              />
+              <div>
+                <div
+                  class="font-medium group-hover:text-primary transition-colors"
+                >
+                  cucumber
+                </div>
+                <div class="text-muted-foreground">BDD testing for R</div>
+              </div>
+            </a>
+            <a
+              href="https://github.com/jakubsob/muttest"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="flex items-center gap-2 no-underline group grayscale"
+            >
+              <img
+                src="https://raw.githubusercontent.com/jakubsob/muttest/main/man/figures/logo.png"
+                alt="muttest logo"
+                width="28"
+                height="28"
+                class="object-contain flex-shrink-0 grayscale opacity-30"
+              />
+              <div>
+                <div
+                  class="font-medium group-hover:text-primary transition-colors"
+                >
+                  muttest
+                </div>
+                <div class="text-muted-foreground">Mutation testing for R</div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
       <div class="lg:col-start-2">
         <article class={`mx-auto ${proseClasses} px-2`}>
           <header class="border-b pb-6">
@@ -186,6 +258,47 @@ const posts = allPosts
       </div>
     </div>
   </Section>
+  <script is:inline>
+    const content = document.getElementById("pkg-banner-content");
+    const toggleBtn = document.getElementById("pkg-banner-toggle");
+    const caret = document.getElementById("pkg-banner-caret");
+    if (content) {
+      const inner = document.createElement("div");
+      inner.className = "min-h-0 flex flex-col gap-3";
+      while (content.firstChild) inner.appendChild(content.firstChild);
+      content.appendChild(inner);
+    }
+    function setCollapsed(collapsed, animate) {
+      if (!content || !toggleBtn) return;
+      if (!animate) content.classList.add("!transition-none");
+      content.classList.toggle("[grid-template-rows:0fr]", collapsed);
+      content.classList.toggle("[grid-template-rows:1fr]", !collapsed);
+      content.classList.toggle("opacity-0", collapsed);
+      content.classList.toggle("opacity-100", !collapsed);
+      if (!animate)
+        requestAnimationFrame(() =>
+          content.classList.remove("!transition-none"),
+        );
+      toggleBtn.setAttribute("aria-expanded", String(!collapsed));
+      if (caret) {
+        caret.classList.toggle("-rotate-90", collapsed);
+        caret.classList.toggle("rotate-0", !collapsed);
+      }
+      try {
+        sessionStorage.setItem("pkg-banner-collapsed", String(collapsed));
+      } catch (_) {}
+    }
+    if (toggleBtn) {
+      try {
+        const stored = sessionStorage.getItem("pkg-banner-collapsed");
+        if (stored === "true") setCollapsed(true, false);
+      } catch (_) {}
+      toggleBtn.addEventListener("click", () => {
+        const collapsed = toggleBtn.getAttribute("aria-expanded") === "true";
+        setCollapsed(collapsed, true);
+      });
+    }
+  </script>
   <script is:inline>
     const headings = Array.from(document.querySelectorAll("h2, h3, h4"));
     headings.forEach((heading) => {
