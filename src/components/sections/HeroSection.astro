@@ -32,20 +32,22 @@ const splitLetters = (text: string) =>
       aria-label="Building Quality By Testing"
       class="[display:contents] select-none"
     >
-      <div class="hero-line-cell col-[1/-1] row-start-[var(--hero-row-build)]">
+      <div
+        class="hero-line-cell col-[1/-1] row-start-[var(--hero-row-build)] pl-4 md:pl-0"
+      >
         <Animate variant="header" className="motion-delay-[200ms]">
           <span class="hero-line" set:html={splitLetters("Building")} />
         </Animate>
       </div>
       <div
-        class="hero-line-cell col-[1/-1] row-start-[var(--hero-row-quality)]"
+        class="hero-line-cell col-[1/-1] row-start-[var(--hero-row-quality)] pl-4 md:pl-0"
       >
         <Animate variant="header" className="motion-delay-[300ms]">
           <span class="hero-line" set:html={splitLetters("Quality")} />
         </Animate>
       </div>
       <div
-        class="hero-line-cell col-[1/-1] row-start-[var(--hero-row-by-testing)]"
+        class="hero-line-cell col-[1/-1] row-start-[var(--hero-row-by-testing)] pl-4 md:pl-0"
       >
         <Animate variant="header" className="motion-delay-[400ms]">
           <span
@@ -118,7 +120,28 @@ const splitLetters = (text: string) =>
     --hero-row-quality: 2;
     --hero-row-by-testing: 3;
     --hero-row-desc: 4;
-    --hero-row-buttons: 5;
+    --hero-row-buttons: 6;
+  }
+
+  /* Base (<768px): 6 rows — anchor offset for even row count keeps lines aligned */
+  @media (max-width: 767px) {
+    .hero-notebook {
+      --nb-y-anchor: calc(50% - 5 * var(--nb-row-h) / 2);
+    }
+    .hero-notebook :global(.notebook-inner) {
+      align-content: center;
+    }
+  }
+
+  /* md (768–1023px): 5 rows, buttons one row higher — center anchor aligns lines */
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .hero-notebook {
+      --hero-row-buttons: 5;
+      --nb-y-anchor: center;
+    }
+    .hero-notebook :global(.notebook-inner) {
+      align-content: center;
+    }
   }
 
   @media (min-width: 1024px) {

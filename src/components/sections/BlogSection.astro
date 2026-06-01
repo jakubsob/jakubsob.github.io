@@ -17,7 +17,6 @@ const posts = (await getCollection("blog"))
   <Notebook
     lines="vertical"
     class="notebook--cell-separators blog-notebook"
-    cols={{ base: 2, md: 4, lg: 6 }}
     cellGap="2px"
     rowH="auto"
   >
@@ -35,11 +34,11 @@ const posts = (await getCollection("blog"))
           class:list={[
             "col-[1/-1] row-auto h-full",
             index === 0 &&
-              "md:col-[1/3] md:row-[2/3] lg:col-[1/3] lg:row-[2/3]",
+              "md:col-[1/5] md:row-[2/3] xl:col-[1/5] xl:row-[2/3]",
             index === 1 &&
-              "md:col-[3/-1] md:row-[2/3] lg:col-[3/5] lg:row-[2/3]",
+              "md:col-[5/-1] md:row-[2/3] xl:col-[5/9] xl:row-[2/3]",
             index === 2 &&
-              "md:col-[1/-1] md:row-[3/4] lg:col-[5/-1] lg:row-[2/3]",
+              "md:col-[1/-1] md:row-[3/4] xl:col-[9/-1] xl:row-[2/3]",
           ]}
         >
           <Animate className="h-full">
@@ -74,10 +73,6 @@ const posts = (await getCollection("blog"))
 </Section>
 
 <style>
-  .blog-notebook {
-    --nb-col-w-max: 200px;
-  }
-
   @media (min-width: 768px) {
     .blog-notebook {
       --nb-col-w-max: 220px;
