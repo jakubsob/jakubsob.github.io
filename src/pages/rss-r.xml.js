@@ -26,10 +26,17 @@ export async function GET(context) {
       });
 
       const link = new URL(`/blog/${post.slug}`, context.url.origin).toString();
-      let heroImage = post.data.heroImage;
-      if (!heroImage) {
-        heroImage = `ogimg-home.png`;
-      }
+
+      // Use the per-post generated OG image so reblogged posts (e.g. on
+      // R-bloggers) show with an image. R-bloggers picks up the first <img>
+      // in the content, so embed it there; also expose it via media:content.
+      const ogImageUrl = new URL(
+        post.data.heroImage ?? `/blog/${post.slug}/og-image.png`,
+        context.url.origin
+      ).toString();
+
+      content =
+        `<p><img src="${ogImageUrl}" alt="${post.data.title}" /></p>` + content;
 
       return {
         ...post,
@@ -42,7 +49,8 @@ export async function GET(context) {
         customData: `<media:content
           type="image/png"
           medium="image"
-          url="${context.site + heroImage}" />`,
+          url="${ogImageUrl}" />
+          <media:thumbnail url="${ogImageUrl}" />`,
       };
     })
   );
