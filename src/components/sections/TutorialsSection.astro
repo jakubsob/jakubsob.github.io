@@ -6,53 +6,73 @@ import { Animate } from "@/components/ui/animate";
 import { Card } from "@/components/ui/card";
 import { EyebrowLabel } from "@/components/ui/eyebrow-label";
 import SectionHeading from "@/components/ui/section-heading.astro";
+import Notebook from "@/components/ui/notebook/Notebook.astro";
+import Cell from "@/components/ui/notebook/Cell.astro";
 ---
 
 <Section id="tutorials" size="fit" variant="light">
-  <div
-    class="w-full xl:max-w-screen-xl 2xl:max-w-[1400px] xl:mx-auto border-x px-4 py-16"
-  >
-    <SectionHeading title="Tutorials" />
-    <!-- Tutorial 1: Shiny Acceptance TDD -->
-    <div class="pb-16">
-      <Animate>
-        <div class="flex items-start gap-6">
-          <div>
-            <a
-              href="https://github.com/jakubsob/shiny-acceptance-tdd"
-              class="link-underline"
-            >
-              <h3 class="text-clamp-sm uppercase leading-none">
-                Shiny Acceptance TDD
-              </h3>
-            </a>
-            <p class="text-muted-foreground mt-3 max-w-[55ch]">
-              Build Shiny apps from the outside in. Write acceptance tests
-              first, then let them drive every design decision down to the
-              module level.
-            </p>
-          </div>
-        </div>
-      </Animate>
-    </div>
+  <Notebook lines="vertical" sparseLines rowH="auto" cellGap="0">
+    <Cell px="half" pt="half" pb="quarter">
+      <SectionHeading title="Tutorials" />
+    </Cell>
 
-    <div>
-      <Animate>
-        <div
-          class="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-8 lg:gap-16 items-start py-16"
-        >
-          <div>
-            <EyebrowLabel>
-              <span class="text-destructive mr-1">✗ vague requirements</span>
-            </EyebrowLabel>
-            <p
-              class="text-sm text-muted-foreground leading-relaxed max-w-[36ch]"
-            >
-              Stories written in prose stay prose. They can't be run, so nobody
-              knows when the app actually satisfies them. Requirements drift the
-              moment code ships.
-            </p>
-          </div>
+    <Cell span="half-left" px="half" py="half" border="top">
+        <Animate>
+          <a href="https://github.com/jakubsob/shiny-acceptance-tdd" class="link-underline">
+            <h3 class="text-clamp-sm uppercase leading-none">
+              Shiny Acceptance TDD
+            </h3>
+          </a>
+          <p class="text-muted-foreground mt-3 max-w-[48ch]">
+            Build Shiny apps from the outside in. Write acceptance tests
+            first, then let them drive every design decision down to the
+            module level.
+          </p>
+        </Animate>
+    </Cell>
+    <Cell span="half-right" px="half" py="half" border="top" class="lg:border-t-0">
+        <Animate>
+          <EyebrowLabel>what you'll learn</EyebrowLabel>
+          <ul class="mt-4 text-sm text-muted-foreground leading-relaxed space-y-2">
+            <li class="flex items-start gap-2">
+              <span class="text-success shrink-0">✓</span>Transform user
+              stories into runnable tests
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-success shrink-0">✓</span>Build a DSL that
+              hides UI details from specs
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-success shrink-0">✓</span>Keep tests green as
+              the UI evolves
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-success shrink-0">✓</span>Structure Shiny
+              modules for testability
+            </li>
+          </ul>
+        </Animate>
+    </Cell>
+
+    <!-- vague requirements + code -->
+    <Cell span="third-left" px="half" py="quarter">
+        <Animate>
+          <EyebrowLabel>
+            <span class="text-destructive mr-1">✗ vague requirements</span>
+          </EyebrowLabel>
+          <p class="text-sm text-muted-foreground leading-relaxed max-w-[36ch]">
+            Stories written in prose stay prose. They can't be run, so nobody
+            knows when the app actually satisfies them. Requirements drift the
+            moment code ships.
+          </p>
+        </Animate>
+    </Cell>
+    <Cell
+      span="two-thirds-right"
+      py="quarter"
+      innerClass="nb-px-half lg:!px-0"
+    >
+        <Animate>
           <Card variant="bordered">
             <Code
               lang="text"
@@ -64,25 +84,28 @@ import SectionHeading from "@/components/ui/section-heading.astro";
   // ← lives in a doc, never executed`}
             />
           </Card>
-        </div>
-      </Animate>
+        </Animate>
+    </Cell>
 
-      <Animate>
-        <div
-          class="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-8 lg:gap-16 items-start py-16"
-        >
-          <div>
-            <EyebrowLabel>
-              <span class="text-success mr-1">✓ executable specification</span>
-            </EyebrowLabel>
-            <p
-              class="text-sm text-muted-foreground leading-relaxed max-w-[36ch]"
-            >
-              The same scenario becomes a test. Given-When-Then forces you to
-              name preconditions, actions, and outcomes. When it passes, the
-              feature is done.
-            </p>
-          </div>
+    <!-- executable specification + code -->
+    <Cell span="third-left" px="half" py="quarter">
+        <Animate>
+          <EyebrowLabel>
+            <span class="text-success mr-1">✓ executable specification</span>
+          </EyebrowLabel>
+          <p class="text-sm text-muted-foreground leading-relaxed max-w-[36ch]">
+            The same scenario becomes a test. Given-When-Then forces you to
+            name preconditions, actions, and outcomes. When it passes, the
+            feature is done.
+          </p>
+        </Animate>
+    </Cell>
+    <Cell
+      span="two-thirds-right"
+      py="quarter"
+      innerClass="nb-px-half lg:!px-0"
+    >
+        <Animate>
           <Card variant="bordered">
             <Code
               lang="r"
@@ -101,83 +124,68 @@ test_that("Scenario: I can inspect my net balance", {
 })`}
             />
           </Card>
-        </div>
-      </Animate>
-
-      <Animate>
-        <div class="py-12">
-          <div>
-            <EyebrowLabel>what you'll learn</EyebrowLabel>
-            <ul
-              class="text-sm text-muted-foreground leading-relaxed space-y-2 md:columns-2 max-w-[56ch]"
-            >
-              <li class="flex items-start gap-2">
-                <span class="text-success shrink-0">✓</span>Transform user
-                stories into runnable tests
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="text-success shrink-0">✓</span>Build a DSL that
-                hides UI details from specs
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="text-success shrink-0">✓</span>Keep tests green as
-                the UI evolves
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="text-success shrink-0">✓</span>Structure Shiny
-                modules for testability
-              </li>
-            </ul>
-          </div>
-        </div>
-      </Animate>
-    </div>
-
-    <div class="pt-6 pb-12">
-      <a
-        href="https://github.com/jakubsob/shiny-acceptance-tdd"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <Button size="xl" className="text-2xl" variant="pill" shape="pill">
-          View on GitHub →
-        </Button>
-      </a>
-    </div>
-
-    <!-- Tutorial 2: Shiny TDD (ShinyConf 2024) -->
-    <div class="mt-16 pt-12">
-      <div class="pb-16">
-        <Animate>
-          <div class="flex items-start gap-6">
-            <div>
-              <a
-                href="https://jakubsobolewski.com/shinyconf2024/"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="link-underline"
-              >
-                <h3 class="text-clamp-sm uppercase leading-none">
-                  Shiny Test-Driven Development
-                </h3>
-              </a>
-              <p class="text-muted-foreground mt-3 max-w-[55ch]">
-                ShinyConf 2024. A structured approach to testing Shiny apps:
-                inside-out unit tests, outside-in acceptance tests, and the loop
-                that connects them.
-              </p>
-            </div>
-          </div>
         </Animate>
-      </div>
+    </Cell>
 
-      <Animate>
-        <div
-          class="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-8 lg:gap-16 items-start py-16"
-        >
-          <div
-            class="aspect-video w-full overflow-hidden rounded-[--radius-surface]"
+    <Cell px="half" py="half" border="top">
+        <a href="https://github.com/jakubsob/shiny-acceptance-tdd" target="_blank" rel="noopener noreferrer">
+          <Button size="xl" className="text-2xl" variant="pill" shape="pill">
+            View on GitHub →
+          </Button>
+        </a>
+    </Cell>
+
+    <!-- ── Tutorial 2: Shiny TDD (ShinyConf 2024) ────────────────────────  -->
+    <Cell px="half" py="half" border="top">
+        <Animate>
+          <a
+            href="https://jakubsobolewski.com/shinyconf2024/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="link-underline"
           >
+            <h3 class="text-clamp-sm uppercase leading-none">
+              Shiny Test-Driven Development
+            </h3>
+          </a>
+          <p class="text-muted-foreground mt-3 max-w-[48ch]">
+            ShinyConf 2024. A structured approach to testing Shiny apps:
+            inside-out unit tests, outside-in acceptance tests, and the loop
+            that connects them.
+          </p>
+        </Animate>
+    </Cell>
+
+    <Cell span="third-left" px="half" py="quarter">
+        <Animate>
+          <EyebrowLabel>what you'll learn</EyebrowLabel>
+          <ul class="mt-4 text-sm text-muted-foreground leading-relaxed space-y-2">
+            <li class="flex items-start gap-2">
+              <span class="text-success shrink-0">✓</span>Inside-out vs.
+              outside-in strategies
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-success shrink-0">✓</span>Automate acceptance
+              criteria
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-success shrink-0">✓</span>Isolate and test
+              Shiny modules
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-success shrink-0">✓</span>Inject fake
+              dependencies
+            </li>
+          </ul>
+        </Animate>
+    </Cell>
+    <Cell
+      span="two-thirds-right"
+      py="quarter"
+      innerClass="nb-px-half lg:!px-0"
+    >
+        <Animate>
+          <div class="aspect-video w-full overflow-hidden rounded-[--radius-surface]">
             <button
               class="yt-facade w-full h-full relative group block cursor-pointer"
               data-video-id="HKMhDzLRqM0"
@@ -190,81 +198,70 @@ test_that("Scenario: I can inspect my net balance", {
                 class="w-full h-full object-cover"
                 loading="lazy"
               />
-              <div
-                class="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/20 transition-colors"
-              >
-                <div
-                  class="size-16 rounded-full bg-white/90 flex items-center justify-center group-hover:scale-110 transition-transform"
-                >
-                  <svg
-                    viewBox="0 0 24 24"
-                    class="size-7 fill-black translate-x-0.5"
-                    aria-hidden="true"
-                  >
+              <div class="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/20 transition-colors">
+                <div class="size-16 rounded-full bg-white/90 flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <svg viewBox="0 0 24 24" class="size-7 fill-black translate-x-0.5" aria-hidden="true">
                     <path d="M8 5v14l11-7z"></path>
                   </svg>
                 </div>
               </div>
             </button>
           </div>
-          <div>
-            <EyebrowLabel>what you'll learn</EyebrowLabel>
-            <ul class="text-sm text-muted-foreground leading-relaxed space-y-2">
-              <li class="flex items-start gap-2">
-                <span class="text-success shrink-0">✓</span>Inside-out vs.
-                outside-in strategies
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="text-success shrink-0">✓</span>Automate acceptance
-                criteria
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="text-success shrink-0">✓</span>Isolate and test
-                Shiny modules
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="text-success shrink-0">✓</span>Inject fake
-                dependencies
-              </li>
-            </ul>
-          </div>
-        </div>
-      </Animate>
-    </div>
-
-    <!-- Tutorial 3: BDD -->
-    <div class="mt-16 pt-12">
-      <div class="pb-16">
-        <Animate>
-          <div class="flex items-start gap-6">
-            <div>
-              <a
-                href="/assets/user2025.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="link-underline"
-              >
-                <h3 class="text-clamp-sm uppercase leading-none">
-                  Behavior-Driven Development
-                </h3>
-              </a>
-              <p class="text-muted-foreground mt-3 max-w-[55ch]">
-                useR! 2025. From vague wish to working code: how to cooperate
-                with stakeholders, write Gherkin scenarios, and execute them
-                with Cucumber for R.
-              </p>
-            </div>
-          </div>
         </Animate>
-      </div>
+    </Cell>
 
-      <Animate>
-        <div
-          class="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-8 lg:gap-16 items-start"
-        >
-          <div
-            class="aspect-video w-full overflow-hidden rounded-[--radius-surface]"
+    <!-- ── Tutorial 3: BDD (useR! 2025) ──────────────────────────────────  -->
+    <Cell px="half" py="half" border="top">
+        <Animate>
+          <a
+            href="/assets/user2025.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="link-underline"
           >
+            <h3 class="text-clamp-sm uppercase leading-none">
+              Behavior-Driven Development
+            </h3>
+          </a>
+          <p class="text-muted-foreground mt-3 max-w-[48ch]">
+            useR! 2025. From vague wish to working code: how to cooperate
+            with stakeholders, write Gherkin scenarios, and execute them
+            with Cucumber for R.
+          </p>
+        </Animate>
+    </Cell>
+
+    <Cell span="third-left" px="half" py="quarter" pb="half">
+        <Animate>
+          <EyebrowLabel>what you'll learn</EyebrowLabel>
+          <ul class="mt-4 text-sm text-muted-foreground leading-relaxed space-y-2">
+            <li class="flex items-start gap-2">
+              <span class="text-success shrink-0">✓</span>BDD fundamentals and
+              why they work
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-success shrink-0">✓</span>Given-When-Then
+              scenario structure
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-success shrink-0">✓</span>Run specs with
+              Cucumber for R
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-success shrink-0">✓</span>Align code with
+              business language
+            </li>
+          </ul>
+        </Animate>
+    </Cell>
+    <Cell
+      span="two-thirds-right"
+      py="quarter"
+      pb="half"
+      innerClass="nb-px-half lg:!px-0"
+    >
+        <Animate>
+          <div class="aspect-video w-full overflow-hidden rounded-[--radius-surface]">
             <button
               class="yt-facade w-full h-full relative group block cursor-pointer"
               data-video-id="e4H28G2J05U"
@@ -277,48 +274,18 @@ test_that("Scenario: I can inspect my net balance", {
                 class="w-full h-full object-cover"
                 loading="lazy"
               />
-              <div
-                class="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/20 transition-colors"
-              >
-                <div
-                  class="size-16 rounded-full bg-white/90 flex items-center justify-center group-hover:scale-110 transition-transform"
-                >
-                  <svg
-                    viewBox="0 0 24 24"
-                    class="size-7 fill-black translate-x-0.5"
-                    aria-hidden="true"
-                  >
+              <div class="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/20 transition-colors">
+                <div class="size-16 rounded-full bg-white/90 flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <svg viewBox="0 0 24 24" class="size-7 fill-black translate-x-0.5" aria-hidden="true">
                     <path d="M8 5v14l11-7z"></path>
                   </svg>
                 </div>
               </div>
             </button>
           </div>
-          <div>
-            <EyebrowLabel>what you'll learn</EyebrowLabel>
-            <ul class="text-sm text-muted-foreground leading-relaxed space-y-2">
-              <li class="flex items-start gap-2">
-                <span class="text-success shrink-0">✓</span>BDD fundamentals and
-                why they work
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="text-success shrink-0">✓</span>Given-When-Then
-                scenario structure
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="text-success shrink-0">✓</span>Run specs with
-                Cucumber for R
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="text-success shrink-0">✓</span>Align code with
-                business language
-              </li>
-            </ul>
-          </div>
-        </div>
-      </Animate>
-    </div>
-  </div>
+        </Animate>
+    </Cell>
+  </Notebook>
 </Section>
 
 <script>

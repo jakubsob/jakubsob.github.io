@@ -10,6 +10,8 @@ import { transformerNotationDiff } from "@shikijs/transformers";
 import { transformerStepAnimation } from "@/lib/transformerStepAnimation";
 import PackageStats from "@/components/features/PackageStats.astro";
 import { fetchPackageStats } from "@/lib/packageStats";
+import Notebook from "../ui/notebook/Notebook.astro";
+import Cell from "../ui/notebook/Cell.astro";
 
 const [cucumberStats, muttestStats] = await Promise.all([
   fetchPackageStats("cucumber"),
@@ -18,11 +20,13 @@ const [cucumberStats, muttestStats] = await Promise.all([
 ---
 
 <Section id="opensource" size="fit" variant="light">
-  <div
-    class="w-full xl:max-w-screen-xl 2xl:max-w-[1400px] xl:mx-auto border-x px-4 pt-4 pb-16"
-  >
-    <SectionHeading title="My Open Source" />
-    <div class="pb-12">
+  <!-- ── Notebook 1: Cucumber header + problem statement ──────────────────── -->
+  <Notebook lines="vertical" rowH="auto" cellGap="0">
+    <Cell px="half" pt="half" pb="quarter">
+      <SectionHeading title="My Open Source" />
+    </Cell>
+
+    <Cell px="half" py="half">
       <Animate>
         <div
           class="flex flex-col sm:flex-row items-start gap-5 sm:gap-6"
@@ -58,29 +62,31 @@ const [cucumberStats, muttestStats] = await Promise.all([
           </div>
         </div>
       </Animate>
-    </div>
+    </Cell>
 
-    <div>
+    <!--
+      These two cells carry nb-px-half at sm so content isn't flush with the
+      viewport edge, but drop to no padding at lg so content lands exactly on
+      the grid-line boundary at col 5.
+    -->
+    <Cell span="third-left" px="half">
       <Animate>
-        <div
-          class="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-8 lg:gap-16 items-start pb-16"
-        >
-          <div>
-            <EyebrowLabel>
-              <span class="text-destructive mr-1">✗ comments as specs</span>
-            </EyebrowLabel>
-            <p
-              class="text-sm text-muted-foreground leading-relaxed max-w-[36ch]"
-            >
-              Comments encode intent but not procedure. They don't separate
-              precondition from action from outcome. They can't be run, so they
-              drift. A stale comment is worse than no comment.
-            </p>
-          </div>
-          <Card variant="bordered">
-            <Code
-              lang="r"
-              code={`test_that("sales trend works for Electronics", {
+        <EyebrowLabel>
+          <span class="text-destructive mr-1">✗ comments as specs</span>
+        </EyebrowLabel>
+        <p class="text-sm text-muted-foreground leading-relaxed max-w-[36ch]">
+          Comments encode intent but not procedure. They don't separate
+          precondition from action from outcome. They can't be run, so they
+          drift. A stale comment is worse than no comment.
+        </p>
+      </Animate>
+    </Cell>
+    <Cell span="two-thirds-right" class="nb-px-half lg:!px-0 nb-pb-half">
+      <Animate>
+        <Card variant="bordered">
+          <Code
+            lang="r"
+            code={`test_that("sales trend works for Electronics", {
   # load the sales data
   # get trend for "Electronics"
   # make sure it looks right
@@ -88,13 +94,13 @@ const [cucumberStats, muttestStats] = await Promise.all([
   result <- get_sales_trend(data, "Electronics")
   expect_s3_class(result, "ggplot")
 })`}
-            />
-          </Card>
-        </div>
+          />
+        </Card>
       </Animate>
-    </div>
-  </div>
+    </Cell>
+  </Notebook>
 
+  <!-- ── Strike animation: full-bleed, outside Notebook ───────────────────── -->
   <div class="bg-secondary py-16 js-strike-reveal select-none">
     <div class="w-full xl:max-w-screen-xl 2xl:max-w-[1400px] xl:mx-auto px-4">
       <div class="relative inline-block">
@@ -115,57 +121,60 @@ const [cucumberStats, muttestStats] = await Promise.all([
     </div>
   </div>
 
-  <div
-    class="w-full xl:max-w-screen-xl 2xl:max-w-[1400px] xl:mx-auto border-x px-4"
-  >
-    <div>
-      <div
-        id="cucumber-corr"
-        data-step-animate
-        class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start py-16"
+  <!-- ── Notebook 2: Cucumber corrections + verification + CTA ────────────── -->
+  <Notebook lines="vertical" rowH="auto" cellGap="0">
+    <!-- Gherkin spec (left, cols 1–6) | R implementation (right, cols 7–12) -->
+    <Cell
+      span="col-[1/-1] lg:col-[1/6]"
+      py="half"
+      class="nb-px-half"
+      id="cucumber-corr"
+      data-step-animate
+    >
+      <EyebrowLabel>
+        <span class="text-success mr-1">✓ the specification</span>
+      </EyebrowLabel>
+      <p
+        class="text-sm text-muted-foreground leading-relaxed max-w-[42ch] mb-6"
       >
-        <!-- Left: Gherkin spec -->
-        <div>
-          <EyebrowLabel>
-            <span class="text-success mr-1">✓ the specification</span>
-          </EyebrowLabel>
-          <p
-            class="text-sm text-muted-foreground leading-relaxed max-w-[42ch] mb-6"
-          >
-            Gherkin forces you to think in procedure: what state is required,
-            what action is taken, what outcome is observable. Vague intent
-            doesn't survive the structure.
-          </p>
-          <Card variant="bordered">
-            <Code
-              lang="gherkin"
-              transformers={[transformerStepAnimation()]}
-              code={`Feature: Sales Trends
+        Gherkin forces you to think in procedure: what state is required, what
+        action is taken, what outcome is observable. Vague intent doesn't
+        survive the structure.
+      </p>
+      <Card variant="bordered">
+        <Code
+          lang="gherkin"
+          transformers={[transformerStepAnimation()]}
+          code={`Feature: Sales Trends
 
   Scenario: User views trend for a category
     Given the sales data is loaded # [!code step:1]
     When the user views the trend for "Electronics" # [!code step:2]
     Then the sales trend plot for "Electronics" is shown # [!code step:3]`}
-            />
-          </Card>
-        </div>
+        />
+      </Card>
+    </Cell>
 
-        <!-- Right: R implementation -->
-        <div>
-          <EyebrowLabel>
-            <span class="text-success mr-1">✓ the implementation</span>
-          </EyebrowLabel>
-          <p
-            class="text-sm text-muted-foreground leading-relaxed max-w-[36ch] mb-6"
-          >
-            Each line of the spec maps to one R function. The English phrase
-            becomes the function signature: the same words, now executable.
-          </p>
-          <Card variant="bordered">
-            <Code
-              lang="r"
-              transformers={[transformerStepAnimation()]}
-              code={`given("the sales data is loaded", function(context) { # [!code step:1]
+    <Cell
+      span="half-right"
+      py="half"
+      class="nb-px-half"
+      data-step-animate
+    >
+      <EyebrowLabel>
+        <span class="text-success mr-1">✓ the implementation</span>
+      </EyebrowLabel>
+      <p
+        class="text-sm text-muted-foreground leading-relaxed max-w-[36ch] mb-6"
+      >
+        Each line of the spec maps to one R function. The English phrase becomes
+        the function signature: the same words, now executable.
+      </p>
+      <Card variant="bordered">
+        <Code
+          lang="r"
+          transformers={[transformerStepAnimation()]}
+          code={`given("the sales data is loaded", function(context) { # [!code step:1]
   context$data <- load_sales_data() # [!code step:1]
 }) # [!code step:1]
 
@@ -177,31 +186,34 @@ then("the sales trend plot for {string} is shown", function(category, context) {
   expect_s3_class(context$plot, "ggplot") # [!code step:3]
   expect_equal(context$plot$labels$title, category) # [!code step:3]
 }) # [!code step:3]`}
-            />
-          </Card>
-        </div>
-      </div>
+        />
+      </Card>
+    </Cell>
 
-      <div class="pt-8 pb-12" data-step-animate>
-        <EyebrowLabel>
-          <span class="text-success mr-1">✓ verification</span>
-        </EyebrowLabel>
-        <Card variant="bordered">
-          <Code
-            lang="r"
-            transformers={[transformerStepAnimation()]}
-            code={`> cucumber::test()
+    <!-- Verification: cols 1–8 -->
+    <Cell
+      span="col-[1/-1] lg:col-[1/9]"
+      px="half"
+      data-step-animate
+    >
+      <EyebrowLabel>
+        <span class="text-success mr-1">✓ verification</span>
+      </EyebrowLabel>
+      <Card variant="bordered">
+        <Code
+          lang="r"
+          transformers={[transformerStepAnimation()]}
+          code={`> cucumber::test()
 #> ✔ | F W  S  OK | Context # [!code step:1]
 #> ✔ |          1 | Feature: Sales Trends # [!code step:2]
 #> # [!code step:3]
 #> ══ Results ═══════════════════════════════════════════════════ # [!code step:3]
 #> [ FAIL 0 | WARN 0 | SKIP 0 | PASS 1 ] # [!code step:3]`}
-          />
-        </Card>
-      </div>
-    </div>
+        />
+      </Card>
+    </Cell>
 
-    <div class="pt-6 pb-12">
+    <Cell px="half" py="half">
       <a
         href="https://jakubsobolewski.com/cucumber/"
         target="_blank"
@@ -211,120 +223,123 @@ then("the sales trend plot for {string} is shown", function(category, context) {
           Try it out →
         </Button>
       </a>
-    </div>
-  </div>
-  <div class="bg-background">
-    <div
-      class="w-full xl:max-w-screen-xl 2xl:max-w-[1400px] xl:mx-auto border-x px-4 py-16"
-    >
-      <div class="pt-12 pb-16">
-        <Animate>
-          <div class="flex flex-col sm:flex-row items-start gap-5 sm:gap-6">
-            <div class="size-[80px] sm:size-[120px] flex-shrink-0">
-              <img
-                class="w-full h-full object-contain"
-                src="https://raw.githubusercontent.com/jakubsob/muttest/main/man/figures/logo.png"
-                alt="muttest logo"
-                width="120"
-                height="120"
-                loading="lazy"
-                decoding="async"
-              />
-            </div>
-            <div>
-              <a
-                href="https://github.com/jakubsob/muttest"
-                class="link-underline"
-              >
-                <h3 class="text-clamp-sm uppercase leading-none">Muttest</h3>
-              </a>
-              <p class="text-muted-foreground mt-3 max-w-[55ch]">
-                Mutation testing for R. Introduces small changes to your source
-                code and checks whether your tests catch them. Reveals gaps that
-                code coverage misses.
-              </p>
-              <PackageStats
-                stars={muttestStats.stars}
-                downloads={muttestStats.downloads}
-              />
-            </div>
+    </Cell>
+  </Notebook>
+
+  <!-- ── Notebook 3: Muttest ───────────────────────────────────────────────── -->
+  <Notebook
+    lines="outer"
+    rowH="auto"
+    cellGap="0"
+    class="bg-background"
+  >
+    <Cell px="half" pt="half">
+      <Animate>
+        <div class="flex flex-col sm:flex-row items-start gap-5 sm:gap-6">
+          <div class="size-[80px] sm:size-[120px] flex-shrink-0">
+            <img
+              class="w-full h-full object-contain"
+              src="https://raw.githubusercontent.com/jakubsob/muttest/main/man/figures/logo.png"
+              alt="muttest logo"
+              width="120"
+              height="120"
+              loading="lazy"
+              decoding="async"
+            />
           </div>
-        </Animate>
-      </div>
-      <div>
-        <Animate>
-          <div
-            class="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-8 lg:gap-16 items-start pb-12"
-          >
-            <div>
-              <EyebrowLabel>the code</EyebrowLabel>
-              <p
-                class="text-sm text-muted-foreground leading-relaxed max-w-[36ch]"
-              >
-                A simple boundary check. Two tests cover adults and minors, but
-                never the edge.
-              </p>
-            </div>
-            <Card variant="bordered">
-              <Code
-                lang="r"
-                code={`# R/is_adult.R
+          <div>
+            <a
+              href="https://github.com/jakubsob/muttest"
+              class="link-underline"
+            >
+              <h3 class="text-clamp-sm uppercase leading-none">Muttest</h3>
+            </a>
+            <p class="text-muted-foreground mt-3 max-w-[55ch]">
+              Mutation testing for R. Introduces small changes to your source
+              code and checks whether your tests catch them. Reveals gaps that
+              code coverage misses.
+            </p>
+            <PackageStats
+              stars={muttestStats.stars}
+              downloads={muttestStats.downloads}
+            />
+          </div>
+        </div>
+      </Animate>
+    </Cell>
+
+    <!-- The code: label + text (1fr) | code card (2fr) -->
+    <Cell span="third-left" px="half" py="quarter">
+      <Animate>
+        <EyebrowLabel>the code</EyebrowLabel>
+        <p class="text-sm text-muted-foreground leading-relaxed max-w-[36ch]">
+          A simple boundary check. Two tests cover adults and minors, but never
+          the edge.
+        </p>
+      </Animate>
+    </Cell>
+    <Cell span="two-thirds-right" px="half" py="quarter" innerClass="lg:!px-0">
+      <Animate>
+        <Card variant="bordered">
+          <Code
+            lang="r"
+            code={`# R/is_adult.R
 is_adult <- function(age) {
   age >= 18
 }`}
-              />
-            </Card>
-          </div>
-        </Animate>
+          />
+        </Card>
+      </Animate>
+    </Cell>
 
-        <Animate>
-          <div
-            class="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-8 lg:gap-16 items-start py-12"
-          >
-            <div>
-              <EyebrowLabel>mutation score</EyebrowLabel>
-              <div
-                class="text-[clamp(5rem,12vw,9rem)] font-bold leading-none tabular-nums text-destructive js-count-up"
-                data-target="50"
-              >
-                0%
-              </div>
-              <p
-                class="text-muted-foreground mt-4 text-sm leading-relaxed max-w-[36ch]"
-              >
-                The <code class="font-mono text-xs">{">"} 18</code> mutant survived.
-                Boundary value 18 is never tested. Your suite can't tell <code
-                  class="font-mono text-xs">{">="}</code
-                > from <code class="font-mono text-xs">{">"}</code>.
-              </p>
-            </div>
-            <div>
-              <EyebrowLabel>
-                <span class="text-destructive mr-1">✗ the tests</span>
-              </EyebrowLabel>
-              <Card variant="bordered">
-                <Code
-                  lang="r"
-                  code={`test_that("is_adult returns TRUE for adults", {
+    <!-- Mutation score (1fr) | ✗ the tests (2fr) -->
+    <Cell span="third-left" px="half" py="quarter">
+      <Animate>
+        <EyebrowLabel className="text-destructive">mutation score</EyebrowLabel>
+        <div
+          class="text-[clamp(5rem,12vw,9rem)] font-bold leading-none tabular-nums text-destructive js-count-up"
+          data-target="50"
+        >
+          0%
+        </div>
+        <p
+          class="text-muted-foreground mt-4 text-sm leading-relaxed max-w-[36ch]"
+        >
+          The <code class="font-mono text-xs">{">"} 18</code> mutant survived. Boundary
+          value 18 is never tested. Your suite can't tell <code
+            class="font-mono text-xs">{">="}</code
+          > from <code class="font-mono text-xs">{">"}</code>.
+        </p>
+      </Animate>
+    </Cell>
+    <Cell span="two-thirds-right" px="half" py="quarter" innerClass="lg:!px-0">
+      <Animate>
+        <EyebrowLabel>
+          <span class="text-destructive mr-1">✗ the tests</span>
+        </EyebrowLabel>
+        <Card variant="bordered">
+          <Code
+            lang="r"
+            code={`test_that("is_adult returns TRUE for adults", {
   expect_true(is_adult(25))  # passes even with age > 18
 })
 
 test_that("is_adult returns FALSE for minors", {
   expect_false(is_adult(10))  # passes even with age > 18
 })`}
-                />
-              </Card>
-            </div>
-          </div>
-        </Animate>
+          />
+        </Card>
+      </Animate>
+    </Cell>
 
-        <div class="py-12" data-step-animate>
-          <EyebrowLabel>run mutation testing</EyebrowLabel>
-          <Card variant="bordered">
-            <Code
-              lang="r"
-              transformers={[transformerStepAnimation()]}
-              code={`> muttest::muttest(plan)
+    <!-- Run mutation testing: full width -->
+    <Cell px="half" py="quarter" innerClass="lg:!px-0" data-step-animate>
+      <EyebrowLabel className="nb-px-half">run mutation testing</EyebrowLabel>
+      <Card variant="bordered">
+        <Code
+          lang="r"
+          transformers={[transformerStepAnimation()]}
+          code={`> muttest::muttest(plan)
 #> ℹ Mutation Testing # [!code step:1]
 #>   |   K |   S |   E |   T |   % | Mutator  | File # [!code step:2]
 #> ✔ |   1 |   0 |   0 |   1 | 100 | >= → <=  | is_adult.R # [!code step:3]
@@ -337,38 +352,38 @@ test_that("is_adult returns FALSE for minors", {
 #> # [!code step:5]
 #> ── Results ────────────────────────────────────────────────────────────────── # [!code step:5]
 #> [ KILLED 1 | SURVIVED 1 | ERRORS 0 | TOTAL 2 | SCORE 50.0% ] # [!code step:5]`}
-            />
-          </Card>
-        </div>
+        />
+      </Card>
+    </Cell>
 
-        <Animate>
-          <div
-            class="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-8 lg:gap-16 items-start pt-12 pb-0"
-          >
-            <div>
-              <EyebrowLabel>after the fix</EyebrowLabel>
-              <div
-                class="text-[clamp(5rem,12vw,9rem)] font-bold leading-none tabular-nums text-success js-count-up"
-                data-target="100"
-              >
-                0%
-              </div>
-              <p
-                class="text-muted-foreground mt-4 text-sm leading-relaxed max-w-[36ch]"
-              >
-                Every mutation triggers a failure. Adding the boundary test
-                kills the survivor.
-              </p>
-            </div>
-            <div>
-              <EyebrowLabel>
-                <span class="text-success mr-1">✓ the fix</span>
-              </EyebrowLabel>
-              <Card variant="bordered">
-                <Code
-                  lang="r"
-                  transformers={[transformerNotationDiff()]}
-                  code={`test_that("is_adult returns TRUE for adults", {
+    <!-- After the fix: score (1fr) | ✓ the fix (2fr) -->
+    <Cell span="third-left" px="half" py="quarter">
+      <Animate>
+        <EyebrowLabel className="text-success">after the fix</EyebrowLabel>
+        <div
+          class="text-[clamp(5rem,12vw,9rem)] font-bold leading-none tabular-nums text-success js-count-up"
+          data-target="100"
+        >
+          0%
+        </div>
+        <p
+          class="text-muted-foreground mt-4 text-sm leading-relaxed max-w-[36ch]"
+        >
+          Every mutation triggers a failure. Adding the boundary test kills the
+          survivor.
+        </p>
+      </Animate>
+    </Cell>
+    <Cell span="two-thirds-right" px="half" py="quarter" innerClass="lg:!px-0">
+      <Animate>
+        <EyebrowLabel>
+          <span class="text-success mr-1">✓ the fix</span>
+        </EyebrowLabel>
+        <Card variant="bordered">
+          <Code
+            lang="r"
+            transformers={[transformerNotationDiff()]}
+            code={`test_that("is_adult returns TRUE for adults", {
   expect_true(is_adult(25))
 })
 
@@ -379,26 +394,28 @@ test_that("is_adult returns FALSE for minors", {
 test_that("is_adult is TRUE at the boundary", { # [!code ++]
   expect_true(is_adult(18))  # kills >= → > # [!code ++]
 }) # [!code ++]`}
-                />
-              </Card>
-            </div>
-          </div>
-        </Animate>
-      </div>
+          />
+        </Card>
+      </Animate>
+    </Cell>
 
-      <div class="pt-12 pb-8">
-        <a
-          href="https://jakubsobolewski.com/muttest/"
-          target="_blank"
-          rel="noopener noreferrer"
+    <Cell px="half" py="half">
+      <a
+        href="https://jakubsobolewski.com/muttest/"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <Button
+          size="xl"
+          className="text-base md:text-2xl whitespace-normal text-center"
+          variant="pill"
+          shape="pill"
         >
-          <Button size="xl" className="text-2xl" variant="pill" shape="pill">
-            Patch the gaps in your tests →
-          </Button>
-        </a>
-      </div>
-    </div>
-  </div>
+          Patch the gaps in your tests →
+        </Button>
+      </a>
+    </Cell>
+  </Notebook>
 </Section>
 
 <script>

@@ -9,12 +9,12 @@ interface Props {
 const { title } = Astro.props;
 ---
 
-<div class="container mx-auto flex justify-center pt-24 md:pt-36 pb-12">
+<div class="container mx-auto flex justify-center pt-16 md:pt-36 pb-12">
   <Animate>
     <h2 class="text-clamp-md font-bold uppercase flex items-center">
-      <Asterisk className="inline-block size-[1em] text-primary mr-4" />
-      <span>{title}</span>
-      <Asterisk className="inline-block size-[1em] text-primary ml-4" />
+      <Asterisk className="inline-block size-[1em] shrink-0 text-primary mr-4" />
+      <span class="text-center">{title}</span>
+      <Asterisk className="inline-block size-[1em] shrink-0 text-primary ml-4" />
     </h2>
   </Animate>
 </div>

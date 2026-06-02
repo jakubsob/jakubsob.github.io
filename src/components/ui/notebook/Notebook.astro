@@ -33,7 +33,10 @@
 import "./notebook.css";
 
 interface Props {
-  lines?: "both" | "vertical" | "horizontal" | "none";
+  lines?: "both" | "vertical" | "horizontal" | "none" | "outer";
+  /** Paint vertical lines at a coarser interval (every 2 cols at md,
+   *  every 3 at lg) so the grid reads quieter behind dense content. */
+  sparseLines?: boolean;
   rowH?: string;
   colWMax?: string;
   cols?:
@@ -41,6 +44,7 @@ interface Props {
     | { base?: number; md?: number; lg?: number };
   cellGap?: string;
   rowAnchor?: "top" | "bottom";
+  keepLines?: boolean;
   class?: string;
   innerClass?: string;
   as?: keyof HTMLElementTagNameMap;
@@ -49,11 +53,13 @@ interface Props {
 
 const {
   lines = "both",
+  sparseLines = false,
   rowH,
   colWMax,
   cols,
   cellGap,
   rowAnchor = "top",
+  keepLines = false,
   class: className,
   innerClass,
   as: Tag = "div",
@@ -82,6 +88,8 @@ const style = styleParts.join("; ") || undefined;
     "notebook",
     `notebook--lines-${lines}`,
     `notebook--anchor-${rowAnchor}`,
+    sparseLines && "notebook--sparse-lines",
+    keepLines && "notebook--mobile-lines",
     className,
   ]}
   style={style}

@@ -55,13 +55,44 @@
      width — avoids the scrollbar offset that 100vw introduces. */
   --nb-grid-frame-w: min(100%, var(--nb-container-max, 100%));
 
-  --nb-col-w: min(calc(var(--nb-grid-frame-w) / var(--nb-cols)), var(--nb-col-w-max, 100px));
+  --nb-col-w: min(
+    calc(var(--nb-grid-frame-w) / var(--nb-cols)),
+    var(--nb-col-w-max, 100px)
+  );
 
   /* y-anchor for horizontal lines: 'top' (default) or 'bottom'. */
   --nb-y-anchor: top;
 
+  /* Fixed inset steps for the nb-p* spacing utilities. Intentionally NOT
+     derived from --nb-col-w: a column's width changes with how many columns
+     the breakpoint shows (4 → 8 → 12), so a col-fraction inset resolved to a
+     different pixel value per breakpoint/notebook even with the same class.
+     Fixed steps keep "quarter/half/1" identical everywhere. Tuned to the
+     desktop 12-col half-column (~52px) so the desktop look is unchanged. */
+  --nb-pad-quarter: 1.625rem;
+  --nb-pad-half: 3.25rem;
+  --nb-pad-1: 6.5rem;
+
+  /* Multiplier for vertical line spacing. 1 = one line per column.
+     Bumped by .notebook--sparse-lines so dense sections show fewer lines. */
+  --nb-vline-step: 1;
+
   position: relative;
   width: 100%;
+}
+
+/* Sparser verticals: a line every 2 columns at md, every 3 at lg.
+   Lines still land on column boundaries, just fewer of them. */
+@media (min-width: 768px) {
+  .notebook--sparse-lines {
+    --nb-vline-step: 2;
+  }
+}
+
+@media (min-width: 1280px) {
+  .notebook--sparse-lines {
+    --nb-vline-step: 3;
+  }
 }
 
 @media (min-width: 768px) {
@@ -80,17 +111,14 @@
   --nb-y-anchor: bottom;
 }
 
-/* ─── Line painting ───
-   Grid lines are painted only on .notebook-inner so line positions and
-   cell geometry share one coordinate space. This removes outer/inner drift
-   artifacts on responsive resize. */
+/* ─── Line painting ─── */
 .notebook--lines-vertical > .notebook-inner {
   background-image: linear-gradient(
     to right,
     var(--nb-line, oklch(var(--border))) 1px,
     transparent 1px
   );
-  background-size: var(--nb-col-w) 100%;
+  background-size: calc(var(--nb-col-w) * var(--nb-vline-step, 1)) 100%;
   background-position: 0 top;
   background-repeat: repeat;
   box-shadow: inset -1px 0 0 var(--nb-line, oklch(var(--border)));
@@ -108,8 +136,7 @@
 }
 
 .notebook--lines-both > .notebook-inner {
-  background-image:
-    linear-gradient(
+  background-image: linear-gradient(
       to right,
       var(--nb-line, oklch(var(--border))) 1px,
       transparent 1px
@@ -120,13 +147,44 @@
       transparent 1px
     );
   background-size:
-    var(--nb-col-w) 100%,
+    calc(var(--nb-col-w) * var(--nb-vline-step, 1)) 100%,
     100% var(--nb-row-h, 6rem);
   background-position:
     0 top,
     0 var(--nb-y-anchor);
   background-repeat: repeat, repeat;
   box-shadow: inset -1px 0 0 var(--nb-line, oklch(var(--border)));
+}
+
+/* Outer lines only: left border via background, right border via box-shadow. */
+.notebook--lines-outer > .notebook-inner {
+  background-image: linear-gradient(
+    to right,
+    var(--nb-line, oklch(var(--border))) 1px,
+    transparent 1px
+  );
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  box-shadow: inset -1px 0 0 var(--nb-line, oklch(var(--border)));
+}
+
+/* Vertical lines hidden below md — too dense on a 4-col grid.
+   Add keepLines prop (→ .notebook--mobile-lines) to opt back in. */
+@media (max-width: 767px) {
+  .notebook--lines-vertical:not(.notebook--mobile-lines) > .notebook-inner {
+    background-image: none;
+    box-shadow: none;
+  }
+  .notebook--lines-both:not(.notebook--mobile-lines) > .notebook-inner {
+    background-image: linear-gradient(
+      to bottom,
+      var(--nb-line, oklch(var(--border))) 1px,
+      transparent 1px
+    );
+    background-size: 100% var(--nb-row-h, 6rem);
+    background-position: 0 var(--nb-y-anchor);
+    box-shadow: none;
+  }
 }
 
 /* ─── Inner grid ─── */
@@ -147,6 +205,83 @@
   align-content: end;
 }
 
+/* ─── Spacing utilities ───
+   Fixed insets so a given step is the SAME pixel value no matter how many
+   columns the current breakpoint renders. (Previously derived from
+   --nb-col-w, which made the same class resolve to different widths across
+   breakpoints/notebooks.) Surfaces still align to grid lines by dropping
+   padding to 0 (e.g. `lg:!px-0`); these steps only inset text/content.
+
+   quarter — standard inset
+   half    — generous; section headers and major blocks
+   1       — structural
+
+   Same specificity (0-1-0) as Tailwind utilities; use Tailwind arbitrary values
+   to override if needed: [padding-inline:...] beats any class. */
+
+.nb-px-quarter {
+  padding-left: var(--nb-pad-quarter);
+  padding-right: var(--nb-pad-quarter);
+}
+
+.nb-py-quarter {
+  padding-top: var(--nb-pad-quarter);
+  padding-bottom: var(--nb-pad-quarter);
+}
+
+.nb-p-quarter {
+  padding-left: var(--nb-pad-quarter);
+  padding-right: var(--nb-pad-quarter);
+}
+
+.nb-px-half {
+  padding-left: var(--nb-pad-half);
+  padding-right: var(--nb-pad-half);
+}
+
+.nb-py-half {
+  padding-top: var(--nb-pad-half);
+  padding-bottom: var(--nb-pad-half);
+}
+
+.nb-p-half {
+  padding: var(--nb-pad-half);
+}
+
+.nb-px-1 {
+  padding-left: var(--nb-pad-1);
+  padding-right: var(--nb-pad-1);
+}
+
+.nb-py-1 {
+  padding-top: var(--nb-pad-1);
+  padding-bottom: var(--nb-pad-1);
+}
+
+.nb-p-1 {
+  padding: var(--nb-pad-1);
+}
+
+/* Single-side shorthands for asymmetric blocks (e.g. section tops vs bottoms) */
+.nb-pt-quarter {
+  padding-top: var(--nb-pad-quarter);
+}
+.nb-pb-quarter {
+  padding-bottom: var(--nb-pad-quarter);
+}
+.nb-pt-half {
+  padding-top: var(--nb-pad-half);
+}
+.nb-pb-half {
+  padding-bottom: var(--nb-pad-half);
+}
+.nb-pt-1 {
+  padding-top: var(--nb-pad-1);
+}
+.nb-pb-1 {
+  padding-bottom: var(--nb-pad-1);
+}
+
 /* ─── Cell separators ───
   Every direct child of .notebook-inner is treated as a "cell".
   Instead of using margins (which reveal the notebook background as a halo),
@@ -165,18 +300,26 @@
   background-clip: padding-box;
 }
 
-.notebook--cell-separators.notebook--lines-both .notebook-inner > *:not(.notebook-flush) {
+.notebook--cell-separators.notebook--lines-both
+  .notebook-inner
+  > *:not(.notebook-flush) {
   border-width: var(--nb-cell-half);
 }
 
-.notebook--cell-separators.notebook--lines-vertical .notebook-inner > *:not(.notebook-flush) {
+.notebook--cell-separators.notebook--lines-vertical
+  .notebook-inner
+  > *:not(.notebook-flush) {
   border-width: 0 var(--nb-cell-half);
 }
 
-.notebook--cell-separators.notebook--lines-horizontal .notebook-inner > *:not(.notebook-flush) {
+.notebook--cell-separators.notebook--lines-horizontal
+  .notebook-inner
+  > *:not(.notebook-flush) {
   border-width: var(--nb-cell-half) 0;
 }
 
-.notebook--cell-separators.notebook--lines-none .notebook-inner > *:not(.notebook-flush) {
+.notebook--cell-separators.notebook--lines-none
+  .notebook-inner
+  > *:not(.notebook-flush) {
   border-width: 0;
 }

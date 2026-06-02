@@ -18,6 +18,7 @@ const splitLetters = (text: string) =>
 <Section variant="dark" size="full" id="hero">
   <Notebook
     lines="both"
+    keepLines
     rowAnchor="bottom"
     rowH="calc(0.88 * clamp(3.5rem, 16vw, 14rem))"
     cellGap="0"
@@ -60,14 +61,14 @@ const splitLetters = (text: string) =>
 
     <!-- Description: full-width on small, cols 1-7 at lg (same row as buttons) -->
     <div
-      class="col-[1/-1] lg:col-[1/8] row-start-[var(--hero-row-desc)] flex items-start relative z-10 pl-4"
+      class="col-[1/-1] lg:col-[1/8] row-start-[var(--hero-row-desc)] flex items-start relative z-10 px-4 lg:pr-0"
     >
       <Animate variant="header" className="motion-delay-[550ms]">
         <p
           class="text-foreground/70 text-base md:text-lg font-serif font-light leading-relaxed max-w-[60ch]"
         >
-          I'm Jakub Sobolewski. <br />
-          I build the open-source tools <br />
+          I'm Jakub Sobolewski. <br class="hidden md:inline" />
+          I build the open-source tools <br class="hidden md:inline" />
           and write the playbooks that define how R and Shiny teams test.
         </p>
       </Animate>

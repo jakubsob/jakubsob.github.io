@@ -1,0 +1,107 @@
+---
+/**
+ * Cell
+ * ----
+ * A grid-aware cell for use inside a Notebook. Encapsulates the
+ * outer (placement) + inner (padding) double-div pattern so that
+ * usage sites only describe *what*, not *how*.
+ *
+ * Props:
+ *   span       — named column slot or raw Tailwind col class(es).
+ *                Named slots encode the responsive behaviour:
+ *                  "full"            col-[1/-1] at all sizes
+ *                  "half-left"       col-[1/-1] → lg:col-[1/7]
+ *                  "half-right"      col-[1/-1] → lg:col-[7/-1]
+ *                  "third-left"      col-[1/-1] → lg:col-[1/5]
+ *                  "two-thirds-right" col-[1/-1] → lg:col-[5/-1]
+ *                Pass a raw string (e.g. "col-[1/-1] lg:col-[1/8]")
+ *                for anything else.
+ *   px/py/p    — grid-aligned padding: "quarter" | "half" | "1"
+ *   pt/pb      — grid-aligned single-side y padding
+ *   border     — shorthand for common border utilities
+ *   row        — Tailwind row class (e.g. "row-auto")
+ *   class      — extra classes on the outer placement div
+ *   innerClass — extra classes on the inner padding div
+ *   as         — inner content tag (default "div")
+ */
+
+type PadSize = "quarter" | "half" | "1";
+type BorderProp = "top" | "bottom" | "left" | "right" | "none";
+
+interface Props {
+  span?:
+    | "full"
+    | "half-left"
+    | "half-right"
+    | "third-left"
+    | "two-thirds-right"
+    | (string & {});
+  px?: PadSize;
+  py?: PadSize;
+  p?: PadSize;
+  pt?: PadSize;
+  pb?: PadSize;
+  border?: BorderProp | BorderProp[];
+  row?: string;
+  class?: string;
+  innerClass?: string;
+  as?: keyof HTMLElementTagNameMap;
+  [key: string]: unknown;
+}
+
+const {
+  span = "full",
+  px,
+  py,
+  p,
+  pt,
+  pb,
+  border,
+  row = "row-auto",
+  class: className,
+  innerClass,
+  as: Tag = "div",
+  ...rest
+} = Astro.props;
+void rest;
+
+const SPANS: Record<string, string> = {
+  "full":             "col-[1/-1]",
+  "half-left":        "col-[1/-1] lg:col-[1/7]",
+  "half-right":       "col-[1/-1] lg:col-[7/-1]",
+  "third-left":       "col-[1/-1] lg:col-[1/5]",
+  "two-thirds-right": "col-[1/-1] lg:col-[5/-1]",
+};
+
+const colClass = SPANS[span] ?? span;
+
+const borders = Array.isArray(border) ? border : border ? [border] : [];
+const borderClass = borders.map((b) => b === "none" ? "" : `border-${b}`).join(" ");
+
+const outerClasses = [colClass, row, borderClass, className];
+
+const PAD: Record<PadSize, string> = {
+  quarter: "quarter",
+  half:    "half",
+  "1":     "1",
+};
+
+const innerPadClasses: string[] = [];
+if (p)  innerPadClasses.push(`nb-p-${PAD[p as PadSize]}`);
+if (px) innerPadClasses.push(`nb-px-${PAD[px as PadSize]}`);
+if (py) innerPadClasses.push(`nb-py-${PAD[py as PadSize]}`);
+if (pt) innerPadClasses.push(`nb-pt-${PAD[pt as PadSize]}`);
+if (pb) innerPadClasses.push(`nb-pb-${PAD[pb as PadSize]}`);
+
+const hasInnerWrapper = innerPadClasses.length > 0 || innerClass;
+---
+
+<div class:list={outerClasses} {...rest}>
+  {hasInnerWrapper ? (
+    <Tag class:list={[...innerPadClasses, innerClass]}>
+      <slot />
+    </Tag>
+  ) : (
+    <slot />
+  )}
+</div>
