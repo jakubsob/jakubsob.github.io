@@ -186,6 +186,76 @@ pre code {
   padding: 0 !important;
 }
 
+/* Copy-to-clipboard button injected into each code block by BlogPost.astro */
+.prose pre {
+  position: relative;
+}
+
+.copy-code-button {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid oklch(var(--border));
+  border-radius: var(--radius-surface);
+  background-color: oklch(var(--background) / 0.7);
+  color: oklch(var(--muted-foreground));
+  cursor: pointer;
+  opacity: 0;
+  transition:
+    opacity 0.15s ease,
+    color 0.15s ease,
+    background-color 0.15s ease;
+}
+
+.prose pre:hover .copy-code-button,
+.copy-code-button:focus-visible {
+  opacity: 1;
+}
+
+.copy-code-button:hover {
+  color: oklch(var(--foreground));
+  background-color: oklch(var(--background));
+}
+
+.copy-code-button.copied {
+  color: oklch(var(--primary));
+  opacity: 1;
+}
+
+.copy-code-button svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+/* Touch devices have no hover, so keep the button visible there */
+@media (hover: none) {
+  .copy-code-button {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .copy-code-button {
+    transition: none;
+  }
+}
+
+/* Code blocks are denser on mobile so more of each line is visible before
+   horizontal scroll kicks in — the explanatory comments and diff markers
+   that carry the teaching point would otherwise sit off-screen. */
+@media (max-width: 767px) {
+  .astro-code,
+  .shiki {
+    font-size: 0.75rem;
+    line-height: 1.45;
+  }
+}
+
 /* Style inline code */
 :not(pre) > code {
   background-color: oklch(var(--muted) / 0.2);
