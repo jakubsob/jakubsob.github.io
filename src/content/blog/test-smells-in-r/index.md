@@ -1,20 +1,19 @@
 ---
 title: '11 Test Smells That Make Your Tests Lie to You'
 description: 'Learn to recognize problems in R test code that cause your test suite to pass while hiding real bugs. Detect those issues and start writing more trustworthy tests.'
-pubDate: 2026-05-19
-draft: true
+pubDate: 2026-06-02
 tags: ["r", "tests"]
 ---
 
 Green tests don't automatically mean correct code.
 
-Tests can be written in ways that pass reliably, survive every `testthat::test()` run, and still tell you almost nothing about whether your code works. The software engineering community has a name for these patterns: test smells. They're structural problems in test code — not bugs, but patterns that signal the tests are doing less or something different than they appear.
+Tests can be written in ways that pass reliably, survive every `devtools::test()` run, and still tell you almost nothing about whether your code works. The software engineering community has a name for these patterns: test smells. They're structural problems in test code — not bugs, but patterns that signal the tests are doing less or something different than they appear.
 
 Have you ever reviewed a pull request and only skimmed the test code, because why bother if you see in CI they're green?
 
 The problem with test code is that:
 
-- it can be written in ways that look fine but are actually misleading,
+- it can be written in ways that it looks fine but is actually misleading,
 - you may not review test code with the same seriousness as production code,
 - you may not know what to look for in test code.
 
@@ -43,6 +42,22 @@ test_that("report uses the correct currency symbol", {
     result <- format_currency(1000)
     expect_equal(result, "£1,000")
   })
+})
+```
+
+It might be also a default value in the function itself that is critical to the behavior being tested. In that case, the test should set it explicitly:
+
+```r
+test_that("report uses the correct currency symbol", {
+  # Arrange
+  currency <- "GBP"
+  amount <- 1000
+
+  # Act
+  result <- format_currency(amount, currency = currency)
+
+  # Assert
+  expect_equal(result, "£1,000")
 })
 ```
 
@@ -106,7 +121,9 @@ This test suite has more lines, yes. Is it bad? No.
 
 We're not optimising memory, we're optimising for clarity. It's also much easier to maintain — when a requirement changes, you know exactly which test to update and why.
 
-Adding `# Arrange`, `# Act`, and `# Assert` comments is a simple habit that makes this smell hard to miss. When the `# Assert` block has five `expect_*` calls testing unrelated things, the label might prompt you to notice — and question whether they all belong together. The structure doesn't fix the test, but it makes the problem easier to spot at a glance. The test is no longer a blob of code doing everything at once. It has a structure that invites you to think about what belongs in each section.
+Adding `# Arrange`, `# Act`, and `# Assert` comments is a simple habit that makes this smell hard to miss. When the `# Assert` block has five `expect_*` calls testing unrelated things, the label might prompt you to notice — and question whether they all belong together. When the `# Act` creates multiple results, it becomes clear that the test is doing too much.
+
+The structure doesn't fix the test, but it makes the problem easier to spot at a glance. The test is no longer a blob of code doing everything at once. It has a structure that invites you to think about what belongs in each section.
 
 ## 3. Over-specification
 
@@ -195,9 +212,13 @@ test_that("filters inactive users", {
 
 The expectation was created when this test was first written. Since then, the `users` data frame has gained two new columns. Every test asserting against the full snapshot now fails — not because the filtering logic is wrong, but because the expected object is stale.
 
-Asserting on a whole object isn't always wrong. A test that documents the full shape of the output — its columns, types, and structure — is genuinely useful. It acts as a contract: this is what `filter_active_users` returns. When that contract changes intentionally, the test tells you.
+Asserting on a whole object isn't always wrong.
 
-This matters especially in R. In a statically typed language the compiler enforces what a function returns — change the return type and the code won't build. R has no such guarantee. A function can return a data frame today and a list tomorrow, drop a column, silently change a type, and nothing outside the tests will catch it. A full-object contract test fills that gap, giving you the kind of output verification the language doesn't provide for free.
+A test that documents the full shape of the output — its columns, types, and structure — is genuinely useful. It acts as a contract: this is what `filter_active_users` returns. When that contract changes intentionally, the test tells you.
+
+This matters especially in R. In a statically typed language the compiler enforces what a function returns — change the return type and the code won't build. R has no such guarantee. A function can return a data frame today and a list tomorrow, drop a column, silently change a type, and nothing outside the tests will catch it.
+
+A full-object contract test fills the loose-typing gap, giving you the kind of output verification the language doesn't provide for free.
 
 The smell appears when *every* test does this, or when the full-object assertion is used to check a behavior where most of the fields are irrelevant. If you're testing that the filter removed inactive users, the output's column names and data types are noise — and noise breaks tests for the wrong reasons.
 
@@ -266,6 +287,8 @@ By the time you reach the assertion, you've waded through 20 lines of setup. Why
 The fix is to extract a builder that encodes sensible defaults and lets each test express only what's relevant to that case:
 
 ```r
+# If only used in this test file, keep alongside the tests.
+# If shared across multiple files, move to a `setup-*.R` file.
 make_user <- function(...) {
   defaults <- list(
     id = "u_default", name = "Test User",
@@ -278,7 +301,11 @@ make_user <- function(...) {
 test_that("pro users receive a 15% discount", {
   # Arrange
   user <- make_user(plan = "pro")
-  product <- list(id = "p99", base_price = 200, category = "software")
+  product <- list(
+    id = "p99",
+    base_price = 200,
+    category = "software"
+  )
 
   # Act
   result <- calculate_discount(user, product)
@@ -308,6 +335,10 @@ test_that("calculate_discount works", {
   expect_equal(result$discount_pct, 0.15)
 })
 ```
+
+This is by far the most common test smell I see.
+
+Naming things is hard. I don't blame anyone for struggling to find a good test title. But a meaningless title is as useless as no title at all. Let's make some effort here! If we can pause to come up with a good name for a function — we can think of a name for a test too.
 
 `"calculate_discount works"` is not a test title — it's a function name with "works" appended. When this test fails, the output tells you that `calculate_discount` stopped working. It doesn't tell you *what it's supposed to do* or *under what conditions it broke*.
 
@@ -442,7 +473,7 @@ test_that("stores a value in the cache", {
 })
 ```
 
-The second test silently depends on the first having run. If you run it in isolation — or if `testthat` reorders tests — it fails with an error about the cache not being initialized, which looks like a cache bug but is actually a test structure bug.
+The second test silently depends on the first having run. If you run it in isolation it fails with an error about the cache not being initialized, which looks like a cache bug but is actually a test structure bug.
 
 The symptom is tests that pass with `devtools::test()` and fail with `testthat::test_file()` on a single file, or tests that break when you move them to a different `describe()` block.
 
@@ -519,9 +550,16 @@ Each test now executes its assertion unconditionally, every time.
 **🫣 The smell:** production code contains special branches that only exist to make tests pass.
 
 ```r
-process_payment <- function(amount, user_id, env = Sys.getenv("APP_ENV")) {
+process_payment <- function(
+  amount,
+  user_id,
+  env = Sys.getenv("APP_ENV")
+) {
   if (env == "test") {
-    return(list(status = "ok", transaction_id = "test-txn-001"))
+    return(list(
+      status = "ok",
+      transaction_id = "test-txn-001"
+    ))
   }
   # ... real payment logic
 }
@@ -534,17 +572,29 @@ This smell often starts as a quick fix — "I'll just skip the real API call in 
 The correct fix is dependency injection: pass the thing you want to replace as an argument, and substitute it in tests:
 
 ```r
-process_payment <- function(amount, user_id, payment_gateway = real_gateway) {
+process_payment <- function(
+  amount,
+  user_id,
+  payment_gateway = real_gateway
+) {
   result <- payment_gateway(amount, user_id)
   list(status = result$status, transaction_id = result$id)
 }
 
 test_that("returns ok status on successful payment", {
   # Arrange
-  fake_gateway <- function(amount, user_id) list(status = "ok", id = "txn-001")
+  fake_gateway <- function(amount, user_id) {
+    list(status = "ok", id = "txn-001")
+  }
+  amount <- 100
+  user_id <- "u42"
 
   # Act
-  result <- process_payment(100, "u42", payment_gateway = fake_gateway)
+  result <- process_payment(
+    amount,
+    user_id,
+    payment_gateway = fake_gateway
+  )
 
   # Assert
   expect_equal(result$status, "ok")
@@ -581,4 +631,49 @@ Here's a quick reference to keep nearby:
 
 None of these require a major rewrite to fix. Each one has a mechanical correction: extract the state, split the block, inject the dependency, narrow the assertion, introduce a builder, rename the case. The value is in learning to *see* them first.
 
-Once you can spot these smells, you can start to eliminate them, one by one — and build a test suite that tells you the truth about your code, every time.
+Once you can spot these smells, you can start to eliminate them, one by one — and build a better test suite that tells you the truth about your code.
+
+## Apply this
+
+Reading about smells is easy. Spotting them in your own suite is the hard part. The fastest way to make them stick is to point an AI agent at your real test code, have it find the smells, then fix the worst few yourself — that's where the learning happens.
+
+Open a test file in your AI coding agent (Claude Code, Cursor, Copilot Chat) and paste this prompt:
+
+```text
+You are a senior R engineer reviewing test code for "test smells" — structural patterns that let tests pass while hiding bugs or obscuring intent.
+
+Scope: audit the test file(s) I've shared. Also read the production code they exercise — several smells can't be judged from the test alone. Use testthat and withr idioms in your fixes.
+
+Detect these 11 smells. For each, here's the tell and the fix I prefer:
+
+1. Mystery Guest — depends on options / env vars / .Rprofile set elsewhere → set and scope it inside the test with withr::with_options / local_envvar, or pass the value in as an argument.
+2. Eager Test — one test_that asserts many unrelated behaviors → split to one behavior per test_that, each titled with the behavior it checks.
+3. Over-specification — asserts on internal calls via mockery::stub / mock (expect_called, expect_call) → inject a fake as an argument and assert on the observable result, not the call.
+4. Sensitive Equality — full-object expect_equal where only part matters → assert the specific fields. Keep ONE deliberate full-object "shape contract" test; that one is legitimate, not a smell.
+5. Obscure Test — long setup buries the point → extract a make_*() builder with modifyList defaults, set only the field under test; move shared builders to setup-*.R.
+6. Meaningless Title — title is "<fn> works" or just the function name → rewrite to state the expected behavior and the condition; it should still make sense if the implementation were rewritten.
+7. Flaky Test — depends on seed / time / network / order, or asserts exact floats or incidental ordering → set withr::local_seed(), add a tolerance, assert on what matters not the order it came back in.
+8. Never-Failing Test — expect_error() with no expected message, or asserts only a type (is.list, is.numeric) → assert the specific error message and the actual values.
+9. Test Order Dependency — relies on state another test left behind → make it self-contained; set up what it needs and clean up with withr::defer().
+10. Conditional Test Logic — if / else / tryCatch in the test body → split into unconditional tests whose setup guarantees each branch's state.
+11. Test Logic in Production — `if (env == "test")`-style branches in the source → remove them and use dependency injection so tests and production run one path.
+
+Rules:
+- Only flag clear instances. Don't invent smells to look thorough, and don't flag the legitimate patterns above (injected fakes, a single shape-contract test, AAA comments).
+- Quote the offending lines and cite file:line for every finding.
+- Never change what the production code does — only its testability. If a fix needs a signature change (dependency injection), say so and describe the new interface.
+
+Output:
+1. A triage table: smell | file:line | severity (high/med/low) | one-line why.
+2. Then fix the highest-severity findings as before/after code blocks — the smallest change that removes the smell. Stop after three and ask before continuing if more remain.
+3. Tell me how to re-run just these tests to confirm they still pass.
+```
+
+Before you commit a test, run it past this checklist:
+
+- [ ] The title states the behavior and the condition, and would still make sense if the implementation were rewritten.
+- [ ] Everything the test depends on is visible inside the test (or its `withr` / `setup-*.R` scaffolding).
+- [ ] It asserts on a specific outcome — not just a type, and not just "some error happened."
+- [ ] It passes or fails for exactly one reason, and that reason lives in the test, not in the run order.
+
+Want a checklist for the whole suite, not just one file? The [R testing roadmap](https://jakubsobolewski.com/get-roadmap) turns these habits into a step-by-step path you can work through.
