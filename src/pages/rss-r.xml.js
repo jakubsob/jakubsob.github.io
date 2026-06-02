@@ -29,7 +29,9 @@ export async function GET(context) {
 
       // Use the per-post generated OG image so reblogged posts (e.g. on
       // R-bloggers) show with an image. R-bloggers picks up the first <img>
-      // in the content, so embed it there; also expose it via media:content.
+      // in the content, so embed it there. We intentionally do NOT also emit
+      // media:content/media:thumbnail, as that makes readers render the same
+      // image twice.
       const ogImageUrl = new URL(
         post.data.heroImage ?? `/blog/${post.slug}/og-image.png`,
         context.url.origin
@@ -46,11 +48,6 @@ export async function GET(context) {
         link,
         content,
         pubDate: post.data.pubDate,
-        customData: `<media:content
-          type="image/png"
-          medium="image"
-          url="${ogImageUrl}" />
-          <media:thumbnail url="${ogImageUrl}" />`,
       };
     })
   );
@@ -61,9 +58,6 @@ export async function GET(context) {
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
     site: context.site,
-    xmlns: {
-      media: "http://search.yahoo.com/mrss/",
-    },
     items,
   });
 }
