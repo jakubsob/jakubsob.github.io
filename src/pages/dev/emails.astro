@@ -1,0 +1,116 @@
+---
+// Dev-only preview of the newsletter emails. Run `pnpm dev` and open
+// /dev/emails. Editing newsletter/lib/templates.js (or excerpt/config) triggers
+// an HMR reload here, so you can iterate on the design in the browser. Gated
+// out of the production build.
+import {
+  confirmEmail,
+  leadMagnetEmail,
+  broadcastEmail,
+} from "../../../newsletter/lib/templates.js";
+import { LEAD_MAGNETS } from "../../../newsletter/lib/config.js";
+// Pull in Tailwind utilities + the site's design tokens (this page bypasses
+// BaseLayout, so it needs the stylesheet explicitly).
+import "@/styles/global.css";
+
+const isProd = import.meta.env.PROD;
+
+const confirmUrl = "https://example.workers.dev/confirm?token=SAMPLE_TOKEN";
+const unsubscribeUrl =
+  "https://example.workers.dev/unsubscribe?token=SAMPLE_TOKEN";
+
+// A representative article intro (matches what extractExcerpt produces).
+const sampleExcerpt = `
+  <p>A specification tells a story.</p>
+  <p>Given describes the world before the action. When describes the action
+    itself. Then describes what changed as a result.</p>
+  <p>If Given is the setup and Then is the payoff, When is where the plot
+    happens, and how you write it determines whether your specifications stay
+    readable for months or decay after the very first change.</p>
+  <ol>
+    <li><strong><a href="#">Behavior-Driven Development in R Shiny: A
+      Step-By-Step Example</a></strong></li>
+    <li><strong><a href="#">Setting Up Test Preconditions with Given
+      Steps</a></strong></li>
+  </ol>`;
+
+const samples = isProd
+  ? []
+  : [
+      {
+        label: "Confirmation — double opt-in",
+        ...confirmEmail({ confirmUrl }),
+      },
+      {
+        label: "Lead magnet — roadmap (with download)",
+        ...leadMagnetEmail({ magnet: LEAD_MAGNETS.roadmap, unsubscribeUrl }),
+      },
+      {
+        label: "Lead magnet — default (welcome, no file)",
+        ...leadMagnetEmail({ magnet: LEAD_MAGNETS.default, unsubscribeUrl }),
+      },
+      {
+        label: "Broadcast — teaser",
+        ...broadcastEmail({
+          title:
+            "Behavior-Driven Development in R Shiny: Modeling User Behavior",
+          url: "https://jakubsobolewski.com/blog/bdd-shiny-when",
+          excerptHtml: sampleExcerpt,
+          unsubscribeUrl,
+        }),
+      },
+    ];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>Email preview</title>
+  </head>
+  <body class="m-0 bg-muted text-foreground">
+    <header class="px-6 py-5 bg-background border-b border-border">
+      <h1 class="m-0 text-base font-semibold">Newsletter email preview</h1>
+      <p class="mt-1 text-[13px] text-muted-foreground">
+        Dev only. Edit <code>newsletter/lib/templates.js</code> and this page
+        hot-reloads.
+      </p>
+    </header>
+
+    {
+      isProd ? (
+        <p class="p-7">Not available in production.</p>
+      ) : (
+        <div class="flex flex-wrap items-start gap-7 p-7">
+          {samples.map((s) => (
+            <div class="w-[624px] max-w-full overflow-hidden rounded-lg border border-border bg-card">
+              <div class="border-b border-border px-3.5 py-2.5 text-[13px]">
+                <div class="font-semibold">{s.label}</div>
+                <div class="text-muted-foreground">Subject: {s.subject}</div>
+              </div>
+              <iframe
+                srcdoc={s.html}
+                title={s.label}
+                class="block h-[700px] w-full border-0 bg-white"
+              />
+            </div>
+          ))}
+        </div>
+      )
+    }
+
+    <script is:inline>
+      // Auto-size each iframe to its email content (srcdoc is same-origin).
+      for (const f of document.querySelectorAll("iframe")) {
+        f.addEventListener("load", () => {
+          try {
+            f.style.height =
+              f.contentDocument.documentElement.scrollHeight + "px";
+          } catch (e) {}
+        });
+      }
+    </script>
+  </body>
+</html>

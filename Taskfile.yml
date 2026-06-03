@@ -66,3 +66,54 @@ tasks:
         find src/content/blog -name "*.qmd" | while read qmd; do
           task quarto -- "$qmd"
         done
+
+  newsletter:enqueue:
+    desc: 'Build a campaign from the live RSS feed and queue confirmed subscribers. Optional slug: task newsletter:enqueue -- my-post-slug (blank = newest post)'
+    dotenv: ['newsletter/.env']
+    preconditions:
+      - sh: test -f newsletter/.env
+        msg: "Create newsletter/.env first: cp newsletter/.env.example newsletter/.env"
+    cmds:
+      - CAMPAIGN_SLUG="{{.CLI_ARGS}}" node newsletter/scripts/enqueue.js
+
+  newsletter:drain:
+    desc: 'Send up to DAILY_BUDGET queued broadcast emails to confirmed subscribers (marks each sent immediately).'
+    dotenv: ['newsletter/.env']
+    preconditions:
+      - sh: test -f newsletter/.env
+        msg: "Create newsletter/.env first: cp newsletter/.env.example newsletter/.env"
+    cmds:
+      - node newsletter/scripts/drain.js
+
+  newsletter:test:
+    desc: 'Test a broadcast without publishing: enqueue then drain. Optional slug: task newsletter:test -- my-post-slug. Sends to all CONFIRMED subscribers — run while only test addresses are confirmed.'
+    cmds:
+      - task newsletter:enqueue -- "{{.CLI_ARGS}}"
+      - task newsletter:drain
+
+  newsletter:worker:secrets:
+    desc: 'Set required Cloudflare Worker secrets for newsletter (interactive prompts for GITHUB_TOKEN and BREVO_API_KEY).'
+    preconditions:
+      - sh: command -v npx
+        msg: "npx is required (install Node.js first)."
+    cmds:
+      - cd newsletter/worker && npx wrangler secret put GITHUB_TOKEN
+      - cd newsletter/worker && npx wrangler secret put BREVO_API_KEY
+
+  newsletter:worker:deploy:
+    desc: 'Redeploy the newsletter Cloudflare Worker using wrangler.toml settings.'
+    preconditions:
+      - sh: command -v npx
+        msg: "npx is required (install Node.js first)."
+    cmds:
+      - cd newsletter/worker && npx wrangler deploy
+
+  newsletter:worker:dev:
+    desc: 'Run the newsletter Worker locally on http://localhost:8787. Reads secrets from newsletter/worker/.dev.vars; with TURNSTILE_SECRET unset it skips bot verification.'
+    preconditions:
+      - sh: command -v npx
+        msg: "npx is required (install Node.js first)."
+      - sh: test -f newsletter/worker/.dev.vars
+        msg: "Create newsletter/worker/.dev.vars first: cp newsletter/worker/.dev.vars.example newsletter/worker/.dev.vars"
+    cmds:
+      - cd newsletter/worker && npx wrangler dev

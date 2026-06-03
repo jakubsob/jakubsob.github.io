@@ -1,0 +1,29 @@
+name: Newsletter — drain queue
+
+# Sends up to the daily budget of queued broadcast emails, once per day. Marks
+# each entry sent immediately on success, so a mid-run failure never
+# double-sends; the next run picks up whatever is left.
+on:
+  schedule:
+    - cron: "0 8 * * *" # daily 08:00 UTC
+  workflow_dispatch: {}
+
+jobs:
+  drain:
+    runs-on: ubuntu-latest
+    concurrency:
+      group: newsletter-drain
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Drain queue
+        working-directory: newsletter
+        # Non-secret config (DATA_REPO, MAIL_FROM_*, WORKER_PUBLIC_URL, ...) is
+        # read from worker/wrangler.toml; only the two secrets are passed here.
+        env:
+          GITHUB_TOKEN: ${{ secrets.NEWSLETTER_DATA_TOKEN }}
+          BREVO_API_KEY: ${{ secrets.BREVO_API_KEY }}
+        run: node scripts/drain.js

@@ -1,0 +1,24 @@
+# Cloudflare Worker config for the newsletter HTTP endpoints.
+#
+# Secrets are NOT stored here. Set them with `wrangler secret put <NAME>`:
+#   GITHUB_TOKEN   - PAT with contents:write on the private data repo
+#   BREVO_API_KEY  - Brevo transactional API key
+#
+# Non-secret vars live under [vars] below. Deploy with `wrangler deploy`.
+
+name = "jakubsobolewski-newsletter"
+main = "src/index.js"
+compatibility_date = "2024-11-01"
+
+[vars]
+DATA_REPO = "jakubsob/newsletter-data"
+DATA_BRANCH = "main"
+MAIL_PROVIDER = "brevo"
+MAIL_FROM_NAME = "Jakub Sobolewski"
+MAIL_FROM_EMAIL = "contact.jakub.sobolewski@gmail.com"
+MAIL_REPLY_TO = "contact.jakub.sobolewski@gmail.com"
+SITE_URL = "https://jakubsobolewski.com"
+# Public URL this Worker is reachable at (used to build confirm/unsub links).
+WORKER_PUBLIC_URL = "https://jakubsobolewski-newsletter.jakubsobolewski.workers.dev"
+# Comma-separated origins allowed to POST /subscribe.
+ALLOWED_ORIGINS = "https://jakubsobolewski.com,http://localhost:4321"

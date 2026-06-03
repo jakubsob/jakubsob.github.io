@@ -1,0 +1,39 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { Section } from "@/components/ui/section";
+import { Animate } from "@/components/ui/animate";
+import { CircleCheck, CircleArrowLeft } from "lucide-react";
+
+const title = "Subscription confirmed";
+const description = "You're on the list.";
+---
+
+<BaseLayout title={title} description={description}>
+  <Section id="hero" variant="dark" size="full">
+    <div
+      class="container mx-auto h-full flex flex-col justify-center items-center text-center"
+    >
+      <Animate variant="header">
+        <CircleCheck className="size-16 text-ocean-green-500 mb-6" />
+      </Animate>
+      <Animate variant="header" className="motion-delay-[200ms]">
+        <h1 class="text-4xl md:text-5xl font-light uppercase mb-4">
+          You're confirmed
+        </h1>
+      </Animate>
+      <Animate variant="fadeIn" className="motion-delay-[400ms]">
+        <p class="text-muted-foreground text-lg max-w-[55ch] mb-8">
+          Thanks for confirming. Check your inbox — anything I owe you is on its
+          way, and you'll hear from me when there's something worth reading.
+        </p>
+        <a
+          href="/blog"
+          class="text-lg text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"
+        >
+          <CircleArrowLeft className="size-[1em] mt-2" />
+          Read the blog
+        </a>
+      </Animate>
+    </div>
+  </Section>
+</BaseLayout>

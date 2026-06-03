@@ -28,10 +28,41 @@
   }
 }
 
-@keyframes success-fade-up {
+/* ───────────────────────── Subscribe success motion ─────────────────────────
+   The "after subscribing" moment, framed as a passing test (this is the R/Shiny
+   testing brand): the form lifts away, a testthat-style result line prints in
+   like console output, then the headline and instruction rise in sequence.
+   Ease-out-expo throughout; no bounce. Resolves in ~1s and plays once. */
+
+/* Form exit: lift + fade just before it leaves the flow. */
+.row-form {
+  transition:
+    opacity 190ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 190ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.row-form.is-leaving {
+  opacity: 0;
+  transform: translateY(-6px) scale(0.985);
+  pointer-events: none;
+}
+
+/* The result line prints left-to-right, like terminal output appearing. */
+@keyframes result-print {
   from {
     opacity: 0;
-    transform: translateY(8px);
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes success-rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
   }
   to {
     opacity: 1;
@@ -39,49 +70,98 @@
   }
 }
 
-@keyframes circle-draw {
-  from {
-    stroke-dashoffset: 160;
-  }
-  to {
-    stroke-dashoffset: 0;
-  }
+/* A small terminal panel. Dark in both themes (a console reads as a console),
+   brand-tinted toward hue 55, sharp corners per the surface language. */
+.newsletter-console {
+  max-width: 30rem;
+  text-align: left;
+  background: oklch(0.17 0.008 55);
+  border: 1px solid oklch(0.27 0.008 55);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.12);
 }
 
-@keyframes check-draw {
-  from {
-    stroke-dashoffset: 48;
-  }
-  to {
-    stroke-dashoffset: 0;
-  }
-}
-
-.success-animate {
-  animation: success-fade-up 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-.checkmark-wrap {
+.nc-bar {
   display: flex;
-  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: oklch(0.21 0.008 55);
+  border-bottom: 1px solid oklch(0.27 0.008 55);
 }
 
-.checkmark {
-  width: 52px;
-  height: 52px;
-  color: #37A577;
+.nc-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 9999px;
+  background: oklch(0.72 0.15 155);
 }
 
-.checkmark-circle {
-  stroke-dasharray: 160;
-  stroke-dashoffset: 160;
-  animation: circle-draw 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+.nc-title {
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: oklch(0.62 0.005 75);
 }
 
-.checkmark-check {
-  stroke-dasharray: 48;
-  stroke-dashoffset: 48;
-  animation: check-draw 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
+.nc-body {
+  padding: 14px 16px 16px;
+  font-size: 13px;
+  line-height: 1.75;
+  color: oklch(0.88 0.005 75);
+}
+
+.nc-line {
+  margin: 0;
+  opacity: 0;
+}
+
+.nc-prompt {
+  color: oklch(0.6 0.005 75);
+}
+
+.nc-caret {
+  color: oklch(0.72 0.15 155);
+}
+
+.nc-email {
+  display: inline-block;
+  max-width: 20ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: bottom;
+  color: oklch(0.85 0.005 75);
+}
+
+.nc-info {
+  color: oklch(0.82 0.005 75);
+}
+
+.nc-confirm {
+  color: oklch(0.95 0.005 75);
+}
+
+.nc-summary {
+  color: oklch(0.58 0.005 75);
+  white-space: nowrap;
+}
+
+.nc-pass {
+  color: oklch(0.74 0.15 155);
+  font-weight: 500;
+}
+
+/* Print the prompt (typed), then each output line in sequence. */
+.nc-line--1 {
+  animation: result-print 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.05s forwards;
+}
+.nc-line--2 {
+  animation: success-rise 0.34s cubic-bezier(0.16, 1, 0.3, 1) 0.34s forwards;
+}
+.nc-line--3 {
+  animation: success-rise 0.34s cubic-bezier(0.16, 1, 0.3, 1) 0.52s forwards;
+}
+.nc-line--4 {
+  animation: success-rise 0.34s cubic-bezier(0.16, 1, 0.3, 1) 0.72s forwards;
 }
 
 /* Error states styling - required for JS validation */
@@ -102,4 +182,20 @@
 /* Form state visibility control */
 .ml-form-successBody {
   display: none;
+}
+
+/* Reduced motion: skip the choreography, show the resolved success state. */
+@media (prefers-reduced-motion: reduce) {
+  .row-form {
+    transition: none;
+  }
+
+  .success-result,
+  .success-headline,
+  .success-note {
+    animation: none;
+    opacity: 1;
+    transform: none;
+    clip-path: none;
+  }
 }

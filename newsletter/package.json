@@ -1,0 +1,11 @@
+{
+  "name": "jakubsobolewski-newsletter",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Self-owned newsletter: shared lib + enqueue/drain scripts.",
+  "scripts": {
+    "enqueue": "node scripts/enqueue.js",
+    "drain": "node scripts/drain.js"
+  }
+}

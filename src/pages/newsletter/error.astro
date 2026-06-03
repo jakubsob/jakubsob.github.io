@@ -1,0 +1,40 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { Section } from "@/components/ui/section";
+import { Animate } from "@/components/ui/animate";
+import { CircleAlert, CircleArrowLeft } from "lucide-react";
+
+const title = "Link expired or invalid";
+const description = "We couldn't process that link.";
+---
+
+<BaseLayout title={title} description={description}>
+  <Section id="hero" variant="dark" size="full">
+    <div
+      class="container mx-auto h-full flex flex-col justify-center items-center text-center"
+    >
+      <Animate variant="header">
+        <CircleAlert className="size-16 text-destructive mb-6" />
+      </Animate>
+      <Animate variant="header" className="motion-delay-[200ms]">
+        <h1 class="text-4xl md:text-5xl font-light uppercase mb-4">
+          That link didn't work
+        </h1>
+      </Animate>
+      <Animate variant="fadeIn" className="motion-delay-[400ms]">
+        <p class="text-muted-foreground text-lg max-w-[55ch] mb-8">
+          The confirmation or unsubscribe link may have expired or already been
+          used. Try subscribing again, or contact me directly and I'll sort it
+          out.
+        </p>
+        <a
+          href="/"
+          class="text-lg text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"
+        >
+          <CircleArrowLeft className="size-[1em] mt-2" />
+          Take me home
+        </a>
+      </Animate>
+    </div>
+  </Section>
+</BaseLayout>

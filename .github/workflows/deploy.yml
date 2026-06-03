@@ -19,6 +19,9 @@ jobs:
     runs-on: ubuntu-latest
     env:
       PRIVATE_GITHUB_TOKEN: ${{ secrets.PRIVATE_GITHUB_TOKEN }}
+      # Build-time public vars consumed by Astro on the newsletter form.
+      PUBLIC_NEWSLETTER_API: ${{ secrets.PUBLIC_NEWSLETTER_API }}
+      PUBLIC_TURNSTILE_SITEKEY: ${{ secrets.PUBLIC_TURNSTILE_SITEKEY }}
     steps:
       - name: Checkout your repository using git
         uses: actions/checkout@v4

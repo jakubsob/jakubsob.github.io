@@ -1,0 +1,32 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# CLOUDFLARE WORKER secrets — for LOCAL `wrangler dev` only.
+# Copy to `newsletter/worker/.dev.vars` (gitignored) and fill in.
+#
+# In PRODUCTION these are NOT files — push each one with:
+#     npx wrangler secret put <NAME>
+# (run from newsletter/worker/). Never commit real values.
+#
+# Non-secret config (DATA_REPO, MAIL_FROM_*, WORKER_PUBLIC_URL, …) is NOT here —
+# it lives in wrangler.toml [vars].
+# ─────────────────────────────────────────────────────────────────────────────
+
+# Data-repo access. Fine-grained GitHub PAT, scoped to the private data repo,
+# Contents: Read and write. (Same token used as the NEWSLETTER_DATA_TOKEN
+# GitHub Actions secret.)
+#   prod: npx wrangler secret put GITHUB_TOKEN
+GITHUB_TOKEN=github_pat_xxx
+
+# Email provider API key (current provider: Brevo).
+# Where: Brevo → SMTP & API → API Keys (a transactional key).
+#   prod: npx wrangler secret put BREVO_API_KEY
+BREVO_API_KEY=xkeysib-xxx
+
+# Cloudflare Turnstile **Secret Key** (the PRIVATE half of the key pair).
+# Where: Cloudflare dashboard → Turnstile → your widget → "Secret Key".
+# This is the counterpart of PUBLIC_TURNSTILE_SITEKEY (which lives in the SITE
+# .env). Keep it secret — it must never reach the browser.
+#   prod: npx wrangler secret put TURNSTILE_SECRET
+# Optional locally: if unset, the Worker skips challenge verification. To test
+# the real path, use Cloudflare's always-pass test secret:
+#   1x0000000000000000000000000000000AA
+TURNSTILE_SECRET=
