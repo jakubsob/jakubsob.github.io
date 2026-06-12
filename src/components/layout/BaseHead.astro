@@ -52,6 +52,25 @@ const shouldLoadAnalytics = import.meta.env.PROD;
   <!-- Global Metadata -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+  <!--
+    Legacy-host redirect. This build is deployed to GitHub Pages at
+    jakubsob.github.io, but the canonical site lives at jakubsobolewski.com
+    (served elsewhere). GitHub Pages can't issue a real 301, so bounce
+    browsers client-side, preserving the path. The <link rel="canonical">
+    below gives crawlers the right signal. Runs first so it fires before the
+    rest of the document renders; static feeds (*.xml) are unaffected.
+  -->
+  <script is:inline>
+    (function () {
+      if (location.hostname === "jakubsob.github.io") {
+        location.replace(
+          "https://jakubsobolewski.com" +
+            location.pathname + location.search + location.hash
+        );
+      }
+    })();
+  </script>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <meta name="generator" content={Astro.generator} />
   <link rel="sitemap" href="/sitemap-index.xml" />

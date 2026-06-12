@@ -1,0 +1,49 @@
+name: Mirror legacy RSS feed
+
+# Keeps https://jakubsob.github.io/rss-r.xml alive after the site moves to
+# Netlify, by mirroring the canonical feed served from the custom domain.
+# Used by the "Option B" (serve real XML) approach in LEGACY-FEED.md.
+
+on:
+  schedule:
+    - cron: "17 */6 * * *" # every 6 hours
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: mirror-legacy-feed
+  cancel-in-progress: true
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch canonical feed(s)
+        run: |
+          set -euo pipefail
+          # Astro only deploys files under public/, so the mirror must land
+          # there to be served at https://jakubsob.github.io/rss-r.xml.
+          # rss-r.xml is the one the aggregators subscribed to.
+          curl -fsSL --retry 3 https://jakubsobolewski.com/rss-r.xml \
+            -o public/rss-r.xml
+          curl -fsSL --retry 3 https://jakubsobolewski.com/rss.xml \
+            -o public/rss.xml
+          # curl -fsSL --retry 3 https://jakubsobolewski.com/rss-rendered-code.xml \
+          #   -o public/rss-rendered-code.xml
+
+      - name: Commit if changed
+        run: |
+          set -euo pipefail
+          if git status --porcelain | grep -q .; then
+            git config user.name "feed-mirror[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add public/rss-r.xml public/rss.xml
+            git commit -m "chore: mirror rss-r.xml and rss.xml ($(date -u +%FT%TZ))"
+            git push
+          else
+            echo "No feed changes."
+          fi
