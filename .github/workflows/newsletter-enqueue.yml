@@ -1,8 +1,12 @@
 name: Newsletter — enqueue on publish
 
-# Queues a broadcast for the newest (or a chosen) post. Triggered manually,
-# or automatically a few minutes after a deploy so the live RSS feed has the
-# post rendered. The drain workflow then sends within the daily budget.
+# Queues a broadcast for the newest (or a chosen) post. The drain workflow
+# then sends within the daily budget.
+#
+# DISABLED: newsletter automation moved to the canonical jakubsobolewski.com
+# repo. The `workflow_run` auto-trigger is removed — critically, it used to
+# fire on every "Deploy to GitHub Pages", which the 6-hourly feed mirror now
+# triggers, so it would have enqueued spuriously. Manual dispatch only.
 on:
   workflow_dispatch:
     inputs:
@@ -10,17 +14,10 @@ on:
         description: "Blog slug to enqueue (blank = newest post)"
         required: false
         type: string
-  workflow_run:
-    workflows: ["Deploy to GitHub Pages"]
-    types: [completed]
 
 jobs:
   enqueue:
     runs-on: ubuntu-latest
-    # On auto-trigger, only run for successful deploys of the main branch.
-    if: >
-      github.event_name == 'workflow_dispatch' ||
-      github.event.workflow_run.conclusion == 'success'
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4

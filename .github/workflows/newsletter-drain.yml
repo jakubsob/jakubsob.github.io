@@ -3,9 +3,11 @@ name: Newsletter — drain queue
 # Sends up to the daily budget of queued broadcast emails, once per day. Marks
 # each entry sent immediately on success, so a mid-run failure never
 # double-sends; the next run picks up whatever is left.
+#
+# DISABLED: newsletter automation moved to the canonical jakubsobolewski.com
+# repo. The daily schedule is removed so this mirror never sends; left as
+# workflow_dispatch only for emergency manual use.
 on:
-  schedule:
-    - cron: "0 8 * * *" # daily 08:00 UTC
   workflow_dispatch: {}
 
 jobs:
